@@ -1,0 +1,14 @@
+var field = arguments[0],
+    value = arguments[1],
+    $ = skuid.$;
+
+switch(field.mode) {
+    case 'edit':
+        skuid.ui.fieldRenderers.TEXT.edit(field, value);
+        field.element.find("input").mask('(000) 000-0000');
+        break;
+
+    default:
+        skuid.ui.fieldRenderers[field.displaytype][field.mode](field, value);
+	break;
+}
