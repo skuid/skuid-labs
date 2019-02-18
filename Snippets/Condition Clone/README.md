@@ -6,7 +6,7 @@ The purpose of 'Condition Clone' is to synchronize condition states and values a
 
 This script runs on page load and builds an index of all conditions present on all models tagged with the above prefixes.
 
-## RunCC InlineShippet.js
+## RunCC InlineSnippet.js
 
 This snippet should be called from a "change condition" action for every model that may initiate a condition change that needs to be propagated.
 
