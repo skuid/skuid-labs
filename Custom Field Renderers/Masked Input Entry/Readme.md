@@ -1,3 +1,3 @@
-Include as a resource:
+# Masked field entry with jQuery Mask
 
-`https://igorescobar.github.io/jQuery-Mask-Plugin/`
+Source code to include as a resource: [link](https://github.com/igorescobar/jQuery-Mask-Plugin/blob/master/src/jquery.mask.js)

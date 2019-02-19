@@ -1,0 +1,18 @@
+{
+  "id": "skuiddemos",
+  "components": [
+    {
+      "id": "awesomemap"
+    }
+  ],
+  "js": [
+    {
+      "path": "runtime.js"
+    }
+  ],
+  "css": [
+    {
+      "path": "runtime.css"
+    }
+  ]
+}
