@@ -2,21 +2,21 @@
 //expects input of math__avg('ModelName','FieldId') for the corresponding model and field you want to average
 //Matt Davis
 
-skuid.formula.Formula (
+skuid.formula.Formula(
 	'avg',
 	function (modelname, fieldname) {
-		var model=skuid.$M(modelname),
+		var model = skuid.$M(modelname),
 			arr = model.data;
 		var initialValue = 0;
 
 		var sum = arr.reduce(function (accumulator, currentValue) {
 			return accumulator + currentValue[fieldname];
-		},initialValue)
+		}, initialValue)
 
-		return (sum/arr.length);
-	},{
+		return (sum / arr.length);
+	}, {
 		namespace: 'math',
-		numArgs : 2,
-		returnType : 'string'
+		numArgs: 2,
+		returnType: 'number'
 	}
 );

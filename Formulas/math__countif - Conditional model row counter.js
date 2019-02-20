@@ -3,15 +3,15 @@
 //example: I want to find the average Oppty Amount where the Stage is Commit -> math__avgif('Oppty','Amount','StageName','Commit')
 //Matt Davis
 
-skuid.formula.Formula (
+skuid.formula.Formula(
 	'countif',
-	function (modelname, fieldname,iffield,ifvalue) {
-		model=skuid.$M(modelname),
+	function (modelname, fieldname, iffield, ifvalue) {
+		model = skuid.$M(modelname),
 			arr = model.data;
 		var initialValue = 0;
 
 		function filterByField(item) {
-			if (item[iffield]===ifvalue) {
+			if (item[iffield] === ifvalue) {
 				return true;
 			}
 			return false;
@@ -20,9 +20,9 @@ skuid.formula.Formula (
 		var filtarr = arr.filter(filterByField);
 
 		return (filtarr.length);
-	},{
+	}, {
 		namespace: 'math',
-		numArgs : 4,
-		returnType : 'string'
+		numArgs: 4,
+		returnType: 'number'
 	}
 );

@@ -2,21 +2,21 @@
 //expects input of math__sum('ModelName','FieldId') for the corresponding model and field you want to sum
 //Matt Davis
 
-skuid.formula.Formula (
+skuid.formula.Formula(
 	'sum',
 	function (modelname, fieldname) {
-		model=skuid.$M(modelname),
+		model = skuid.$M(modelname),
 			arr = model.data;
 		var initialValue = 0;
 
 		var sum = arr.reduce(function (accumulator, currentValue) {
 			return accumulator + currentValue[fieldname];
-		},initialValue)
+		}, initialValue)
 
 		return sum;
-	},{
+	}, {
 		namespace: 'math',
-		numArgs : 2,
-		returnType : 'string'
+		numArgs: 2,
+		returnType: 'number'
 	}
 );
