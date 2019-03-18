@@ -4,11 +4,13 @@ var field = arguments[0],
 
 switch(field.mode) {
     case 'edit':
-        skuid.ui.fieldRenderers.TEXT.edit(field, value);
+        //Deprecated: skuid.ui.fieldRenderers.TEXT.edit(field, value);
+        skuid.ui.getFieldRenderer('TEXT').edit(field, value);
         field.element.find("input").mask('(000) 000-0000');
         break;
 
     default:
-        skuid.ui.fieldRenderers[field.displaytype][field.mode](field, value);
-	break;
+        //Deprecated: skuid.ui.fieldRenderers[field.displaytype][field.mode](field, value);
+        skuid.ui.getFieldRenderer(displayType, model.getDataSource())[mode](field, value);
+		break;
 }
