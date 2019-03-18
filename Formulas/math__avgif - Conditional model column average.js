@@ -21,7 +21,7 @@ skuid.formula.Formula(
 
 		var sumif = filtarr.reduce(function (accumulator, currentValue) {
 			return accumulator + currentValue[fieldname];
-		}, initialValue)
+		}, initialValue);
 
 		return (sumif / filtarr.length);
 	}, {

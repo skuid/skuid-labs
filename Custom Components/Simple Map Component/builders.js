@@ -3,8 +3,8 @@
 	skuid.builder.core.registerBuilder(new skuid.builder.core.Builder({
 		id: "skuiddemos__awesomemap",
 		name: "Awesome Map",
-		icon: "sk-icon-contact",
-		description: "This component says Hello to someone",
+		icon: "sk-bi-navigation",
+		description: "This component builds a map with pins on it.",
 		componentRenderer: function (component) {
 			var self = component;
 			component.header.html(component.builder.name);

@@ -11,7 +11,7 @@ skuid.formula.Formula(
 
 		var sum = arr.reduce(function (accumulator, currentValue) {
 			return accumulator + currentValue[fieldname];
-		}, initialValue)
+		}, initialValue);
 
 		return (sum / arr.length);
 	}, {
