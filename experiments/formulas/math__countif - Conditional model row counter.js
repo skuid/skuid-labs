@@ -1,7 +1,8 @@
-//average conditionally
-//expects input of math__avgif('ModelName','FieldId', 'ConiditionFieldId','ConditionValue') for the corresponding model and field you want to sum conditionally
-//example: I want to find the average Oppty Amount where the Stage is Commit -> math__avgif('Oppty','Amount','StageName','Commit')
-//Matt Davis
+// Conditional model row counter
+// average conditionally
+// expects input of math__avgif('ModelName','FieldId', 'ConiditionFieldId','ConditionValue') for the corresponding model and field you want to sum conditionally
+// example: I want to find the average Oppty Amount where the Stage is Commit -> math__avgif('Oppty','Amount','StageName','Commit')
+// Matt Davis
 
 skuid.formula.Formula(
 	'countif',

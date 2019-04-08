@@ -1,6 +1,7 @@
-//avg field
-//expects input of math__avg('ModelName','FieldId') for the corresponding model and field you want to average
-//Matt Davis
+// Average model column
+// avg field
+// expects input of math__avg('ModelName','FieldId') for the corresponding model and field you want to average
+// Matt Davis
 
 skuid.formula.Formula(
 	'avg',

@@ -1,6 +1,7 @@
-//sum field
-//expects input of math__sum('ModelName','FieldId') for the corresponding model and field you want to sum
-//Matt Davis
+// Sum model column
+// sum field
+// expects input of math__sum('ModelName','FieldId') for the corresponding model and field you want to sum
+// Matt Davis
 
 skuid.formula.Formula(
 	'sum',
