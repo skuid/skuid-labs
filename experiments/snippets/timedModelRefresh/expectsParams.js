@@ -1,3 +1,4 @@
+// To be used as an inline snippet
 var model = skuid.$M(arguments[0].$Input.Model),
 	refreshInSeconds = +arguments[0].$Input.Timeout || 10;
 
