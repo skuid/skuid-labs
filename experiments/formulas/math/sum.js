@@ -7,12 +7,12 @@ skuid.formula.Formula(
 	'sum',
 	function (modelname, fieldname) {
 		model = skuid.$M(modelname),
-			arr = model.data;
+		arr = model.data;
 		var initialValue = 0;
 
 		var sum = arr.reduce(function (accumulator, currentValue) {
 			return accumulator + currentValue[fieldname];
-		}, initialValue)
+		}, initialValue);
 
 		return sum;
 	}, {

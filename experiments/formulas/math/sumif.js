@@ -8,7 +8,7 @@ skuid.formula.Formula(
 	'sumif',
 	function (modelname, fieldname, iffield, ifvalue) {
 		model = skuid.$M(modelname),
-			arr = model.data;
+		arr = model.data;
 		var initialValue = 0;
 
 		function filterByField(item) {
