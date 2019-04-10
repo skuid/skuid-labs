@@ -7,8 +7,8 @@ skuid.formula.Formula(
 	'avg',
 	function (modelname, fieldname) {
 		var model = skuid.$M(modelname),
-			arr = model.data;
-		var initialValue = 0;
+			arr = model.data,
+			initialValue = 0;
 
 		var sum = arr.reduce(function (accumulator, currentValue) {
 			return accumulator + currentValue[fieldname];
