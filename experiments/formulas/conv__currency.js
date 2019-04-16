@@ -1,3 +1,5 @@
+// convert currency between iso codes and output string
+
 skuid.formula.Formula (
     'curr',
     
