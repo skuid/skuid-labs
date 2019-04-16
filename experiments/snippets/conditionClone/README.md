@@ -2,11 +2,11 @@
 
 The purpose of 'Condition Clone' is to synchronize condition states and values across multiple conditions and models. Conditions that need to synchronize will be named with a `CC_`, `CA_`, or `CV_` prefix, to clone the whole condition, condition 'active' property, or condition 'value' respectively.
 
-## Inline.js
+## inline.js
 
 This script runs on page load and builds an index of all conditions present on all models tagged with the above prefixes.
 
-## RunCC InlineSnippet.js
+## runCCInlineSnippet.js
 
 This snippet should be called from a "change condition" action for every model that may initiate a condition change that needs to be propagated.
 

@@ -1,14 +1,15 @@
-//sum conditionally
-//expects input of math__sumif('ModelName','FieldId', 'ConditionFieldId','ConditionValue') for the corresponding model and field you want to sum conditionally
-//example: I want to sum the Oppty Amount where the Stage is Commit -> math__sumif('Oppty','Amount','StageName','Commit')
-//Matt Davis
+// Conditional model column sum
+// sum conditionally
+// expects input of math__sumif('ModelName','FieldId', 'ConditionFieldId','ConditionValue') for the corresponding model and field you want to sum conditionally
+// example: I want to sum the Oppty Amount where the Stage is Commit -> math__sumif('Oppty','Amount','StageName','Commit')
+// Matt Davis
 
 skuid.formula.Formula(
 	'sumif',
 	function (modelname, fieldname, iffield, ifvalue) {
-		model = skuid.$M(modelname),
-			arr = model.data;
-		var initialValue = 0;
+		var model = skuid.$M(modelname),
+			arr = model.data,
+			initialValue = 0;
 
 		function filterByField(item) {
 			if (item[iffield] === ifvalue) {

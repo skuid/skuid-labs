@@ -1,3 +1,4 @@
+// To be used as an inline snippet
 var model = skuid.$M('MyModel'),
 	refreshInSeconds = 5;
 

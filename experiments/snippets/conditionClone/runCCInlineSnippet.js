@@ -1,3 +1,5 @@
+/* global CloneCondition */
+
 if (arguments[0].hasOwnProperty('model')) {
 	if (arguments[0].hasOwnProperty('conditionName')) {
 		var initiatingCondition = arguments[0].model.getConditionByName(arguments[0].conditionName, true);

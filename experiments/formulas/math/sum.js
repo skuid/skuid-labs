@@ -1,19 +1,20 @@
-//avg field
-//expects input of math__avg('ModelName','FieldId') for the corresponding model and field you want to average
-//Matt Davis
+// Sum model column
+// sum field
+// expects input of math__sum('ModelName','FieldId') for the corresponding model and field you want to sum
+// Matt Davis
 
 skuid.formula.Formula(
-	'avg',
+	'sum',
 	function (modelname, fieldname) {
 		var model = skuid.$M(modelname),
-			arr = model.data;
-		var initialValue = 0;
+			arr = model.data,
+			initialValue = 0;
 
 		var sum = arr.reduce(function (accumulator, currentValue) {
 			return accumulator + currentValue[fieldname];
 		}, initialValue);
 
-		return (sum / arr.length);
+		return sum;
 	}, {
 		namespace: 'math',
 		numArgs: 2,
