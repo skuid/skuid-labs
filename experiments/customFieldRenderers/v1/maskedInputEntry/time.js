@@ -1,14 +1,16 @@
+/**
+ * @typedef {Array} arguments
+ * @typedef {Object} skuid
+ */
 var field = arguments[0],
-	value = arguments[1],
-	$ = skuid.$;
+	value = arguments[1];
+
+//Draw the standard field
+skuid.ui.getFieldRenderer(field.displayType)[field.mode](field, value);
 
 switch (field.mode) {
 	case 'edit':
-		skuid.ui.fieldRenderers.TEXT.edit(field, value);
+		//If in "Edit" mode, attach the mask behavior to the field
 		field.element.find("input").mask('00:00:00', {reverse: true});
-		break;
-
-	default:
-		skuid.ui.fieldRenderers[field.displaytype][field.mode](field, value);
 		break;
 }
