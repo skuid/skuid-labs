@@ -12,10 +12,7 @@ skuid.formula.Formula(
 			initialValue = 0;
 
 		function filterByField(item) {
-			if (item[iffield] === ifvalue) {
-				return true;
-			}
-			return false;
+			return item[iffield] === ifvalue;
 		}
 
 		var filtarr = arr.filter(filterByField);

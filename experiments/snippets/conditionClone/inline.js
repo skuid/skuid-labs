@@ -19,7 +19,7 @@ window.ConditionProponents = {};
 function RecordCondition(condition) {
 	if (condition.hasOwnProperty('name')) {
 		var conditionPrefix = condition.name.substring(0, 3);
-		if (conditionPrefix == "CC_" || conditionPrefix == "CA_" || conditionPrefix == "CV_") {
+		if (conditionPrefix === "CC_" || conditionPrefix === "CA_" || conditionPrefix === "CV_") {
 			if (!window.ConditionProponents.hasOwnProperty(condition.name))
 				window.ConditionProponents[condition.name] = [];
 			window.ConditionProponents[condition.name].push(condition);
@@ -42,13 +42,13 @@ function CloneCondition(checkName, initiatingCondition) {
 				if (targetCondition !== initiatingCondition) {
 					switch (conditionPrefix) {
 						case "CC_":
-							targetCondition.inactive = (initiatingCondition.inactive) ? true : false;
+							targetCondition.inactive = !!(initiatingCondition.inactive);
 							targetCondition.value = initiatingCondition.value;
 							targetCondition.values = initiatingCondition.values;
 							break;
 
 						case "CA_":
-							targetCondition.inactive = (initiatingCondition.inactive) ? true : false;
+							targetCondition.inactive = !!(initiatingCondition.inactive);
 							break;
 
 						case "CV_":

@@ -12,19 +12,14 @@ skuid.formula.Formula(
 			initialValue = 0;
 
 		function filterByField(item) {
-			if (item[iffield] === ifvalue) {
-				return true;
-			}
-			return false;
+			return item[iffield] === ifvalue;
 		}
 
 		var filtarr = arr.filter(filterByField);
 
-		var sumif = filtarr.reduce(function (accumulator, currentValue) {
+		return filtarr.reduce(function (accumulator, currentValue) {
 			return accumulator + currentValue[fieldname];
 		}, initialValue);
-
-		return sumif;
 	}, {
 		namespace: 'math',
 		numArgs: 4,

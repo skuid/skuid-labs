@@ -10,11 +10,9 @@ skuid.formula.Formula(
 			arr = model.data,
 			initialValue = 0;
 
-		var sum = arr.reduce(function (accumulator, currentValue) {
+		return arr.reduce(function (accumulator, currentValue) {
 			return accumulator + currentValue[fieldname];
 		}, initialValue);
-
-		return sum;
 	}, {
 		namespace: 'math',
 		numArgs: 2,

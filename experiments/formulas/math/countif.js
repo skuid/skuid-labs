@@ -8,14 +8,10 @@ skuid.formula.Formula(
 	'countif',
 	function (modelname, fieldname, iffield, ifvalue) {
 		var model = skuid.$M(modelname),
-			arr = model.data,
-			initialValue = 0;
+			arr = model.data;
 
 		function filterByField(item) {
-			if (item[iffield] === ifvalue) {
-				return true;
-			}
-			return false;
+			return item[iffield] === ifvalue;
 		}
 
 		var filtarr = arr.filter(filterByField);

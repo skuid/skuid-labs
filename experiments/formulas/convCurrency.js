@@ -4,10 +4,11 @@ skuid.formula.Formula(
 	'curr',
 
 	function (amount, defaultiso, useriso, roundto) {
-		var convertedcurrency = skuid.utils.convertCurrency(amount, defaultiso, useriso);
-		var roundby = roundto || 1;
-		var roundedcurrency = Math.round(convertedcurrency / roundby) * roundby;
-		var currobj = {recordCurrency: useriso};
+		var convertedcurrency = skuid.utils.convertCurrency(amount, defaultiso, useriso),
+			roundby = roundto || 1,
+			roundedcurrency = Math.round(convertedcurrency / roundby) * roundby,
+			currobj = {recordCurrency: useriso};
+
 		return skuid.currency.getDisplayValue(roundedcurrency, currobj);
 	}, {
 		namespace: 'conv',
