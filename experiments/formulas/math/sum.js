@@ -1,6 +1,6 @@
 // Sum model column
 // sum field
-// expects input of math__sum('ModelName','FieldId') for the corresponding model and field you want to sum
+// expects input of math__sum('ModelName','SumFieldId') for the corresponding model and field you want to sum
 // Matt Davis
 
 skuid.formula.Formula(
@@ -14,6 +14,7 @@ skuid.formula.Formula(
 			return accumulator + currentValue[fieldname];
 		}, initialValue);
 	}, {
+		defaultState: 'math__sum("ModelName","SumFieldId")',
 		namespace: 'math',
 		numArgs: 2,
 		returnType: 'number'

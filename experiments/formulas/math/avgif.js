@@ -1,6 +1,6 @@
 // Conditional model column average
 // average conditionally
-// expects input of math__avgif('ModelName','FieldId', 'ConiditionFieldId','ConditionValue') for the corresponding model and field you want to sum conditionally
+// expects input of math__avgif('ModelName','AvgFieldId', 'IfFieldId','IfValue') for the corresponding model and field you want to average conditionally
 // example: I want to find the average Oppty Amount where the Stage is Commit -> math__avgif('Oppty','Amount','StageName','Commit')
 // Matt Davis
 
@@ -23,6 +23,7 @@ skuid.formula.Formula(
 
 		return (sumif / filtarr.length);
 	}, {
+		defaultState: 'math__avgif("ModelName","AvgFieldId", "IfFieldId", "IfValue")',
 		namespace: 'math',
 		numArgs: 4,
 		returnType: 'number'

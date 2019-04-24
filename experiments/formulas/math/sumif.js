@@ -21,6 +21,7 @@ skuid.formula.Formula(
 			return accumulator + currentValue[fieldname];
 		}, initialValue);
 	}, {
+		defaultState: 'math__sumif("ModelName","SumFieldId","IfFieldId","IfValue")',
 		namespace: 'math',
 		numArgs: 4,
 		returnType: 'number'
