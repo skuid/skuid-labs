@@ -7,7 +7,7 @@ skuid.formula.Formula(
 	'sum',
 	function (modelname, fieldname) {
 		var model = skuid.$M(modelname),
-			arr = model.data,
+			arr = model.getRows(),
 			initialValue = 0;
 
 		return arr.reduce(function (accumulator, currentValue) {

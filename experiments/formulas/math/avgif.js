@@ -8,18 +8,20 @@ skuid.formula.Formula(
 	'avgif',
 	function (modelname, fieldname, iffield, ifvalue) {
 		var model = skuid.$M(modelname),
-			arr = model.data,
+			arr = model.getRows(),
 			initialValue = 0;
+
+		if (arr.length === 0) return 0;
 
 		function filterByField(item) {
 			return item[iffield] === ifvalue;
 		}
 
-		var filtarr = arr.filter(filterByField);
-
-		var sumif = filtarr.reduce(function (accumulator, currentValue) {
-			return accumulator + currentValue[fieldname];
-		}, initialValue);
+		var sumif = arr
+			.filter(filterByField);
+			.reduce(function (accumulator, currentValue) {
+				return accumulator + currentValue[fieldname];
+			}, initialValue);
 
 		return (sumif / filtarr.length);
 	}, {
