@@ -1,0 +1,26 @@
+{
+  "id": "skuiddemos",
+  "components": [
+    {
+      "id": "pivottable",
+      "folderId": "skuiddemos"
+    }
+  ],
+  "folders": [
+    {
+      "id": "skuiddemos",
+      "name": "Skuid Demos",
+      "icon": "sk-icon-component-pack"
+    }
+  ],
+  "js": [
+    {
+      "path": "builders.js"
+    }
+  ],
+  "css": [
+    {
+      "path": "builders.css"
+    }
+  ]
+}
