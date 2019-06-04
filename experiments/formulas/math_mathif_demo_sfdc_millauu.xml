@@ -1,0 +1,702 @@
+<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" useviewportmeta="true" showheader="true">
+    <models>
+        <model id="uiData" limit="20" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true">
+            <fields>
+                <field id="Name" displaytype="TEXT" label="Opportunity Name"/>
+                <field id="Stage" displaytype="PICKLIST" label="Stage" ogdisplaytype="TEXT" picklistsource="manual" returntype="TEXT" defaultvaluetype="fieldvalue">
+                    <picklistentries>
+                        <entry value="Prospecting" label="Prospecting"/>
+                        <entry value="Qualification" label="Qualification"/>
+                        <entry value="Closed Won" label="Closed Won"/>
+                        <entry value="Closed Lost" label="Closed Lost"/>
+                    </picklistentries>
+                </field>
+                <field id="Amount" displaytype="CURRENCY" label="Amount" ogdisplaytype="TEXT" precision="9" scale="0"/>
+                <field id="DaysOpen" displaytype="DOUBLE" label="Days Open" ogdisplaytype="TEXT" precision="9" scale="0" defaultvaluetype="fieldvalue"/>
+            </fields>
+            <conditions/>
+            <actions/>
+        </model>
+        <model id="uiKPIs" limit="20" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true">
+            <fields>
+                <field id="totalValue" displaytype="FORMULA" label="Total Value" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="9" scale="0">
+                    <formula>MATH__SUM("uiData","Amount")</formula>
+                </field>
+                <field id="avgValue" displaytype="FORMULA" label="Avg Value" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
+                    <formula>MATH__AVG("uiData","Amount")</formula>
+                </field>
+                <field id="minValue" displaytype="FORMULA" label="Min Value" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
+                    <formula>MATH__MIN("uiData","Amount")</formula>
+                </field>
+                <field id="maxValue" displaytype="FORMULA" label="Max Value" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
+                    <formula>MATH__MAX("uiData","Amount")</formula>
+                </field>
+                <field id="countValue" displaytype="FORMULA" label="Count" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="17" scale="0">
+                    <formula>MATH__COUNT("uiData","Amount")</formula>
+                </field>
+                <field id="medValue" displaytype="FORMULA" label="Median Value" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
+                    <formula>MATH__MED("uiData","Amount")</formula>
+                </field>
+                <field id="totalClosedWon" displaytype="FORMULA" label="Total Closed Won" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
+                    <formula>MATH__SUMIF("uiData","Amount","Stage","Closed Won",false)</formula>
+                </field>
+                <field id="avgDaysToWin" displaytype="FORMULA" label="Avg Days To Close" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="17" scale="0">
+                    <formula>MATH__AVGIF("uiData","DaysOpen","Stage","Closed Won")</formula>
+                </field>
+                <field id="medDaysToWin" displaytype="FORMULA" label="Median Days To Win" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="0">
+                    <formula>MATH__MEDIF("uiData","DaysOpen","Stage","Closed Won")</formula>
+                </field>
+                <field id="minDaysToWin" displaytype="FORMULA" label="Min Days To Win" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="0">
+                    <formula>MATH__MINIF("uiData","DaysOpen","Stage","Closed Won")</formula>
+                </field>
+                <field id="maxAmountWon" displaytype="FORMULA" label="Max Amount Won" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
+                    <formula>MATH__MAXIF("uiData","Amount","Stage","Closed Won")</formula>
+                </field>
+                <field id="countWins" displaytype="FORMULA" label="countWins" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="17" scale="0">
+                    <formula>MATH__COUNTIF("uiData","DaysOpen","Stage","Closed Won")</formula>
+                </field>
+            </fields>
+            <conditions/>
+            <actions/>
+        </model>
+    </models>
+    <components>
+        <grid uniqueid="sk-3hNq-2195" columngutter="8px">
+            <divisions>
+                <division behavior="flex" minwidth="100px" ratio="1">
+                    <components>
+                        <wrapper uniqueid="sk-3hNu-2266">
+                            <components>
+                                <richtext multiple="false" uniqueid="sk-3hNw-2278" model="uiKPIs">
+                                    <contents>&lt;p style="text-align: center;"&gt;&lt;span style="color:#ffffff;"&gt;&lt;span style="font-size:24px;"&gt;&lt;strong&gt;Wins&lt;/strong&gt;&lt;/span&gt;&lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-size:24px;"&gt;&lt;span style="color:#ffffff;"&gt;{{countWins}}&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+                                </richtext>
+                            </components>
+                            <styles>
+                                <styleitem type="background" bgtype="color">
+                                    <styles>
+                                        <styleitem property="background-color" value="#4bacc6"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="border" padding="bottom,top,">
+                                    <styles>
+                                        <styleitem property="padding-top" value="4px"/>
+                                        <styleitem property="padding-bottom" value="4px"/>
+                                        <styleitem property="box-sizing" value="border-box"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="size"/>
+                            </styles>
+                        </wrapper>
+                    </components>
+                </division>
+                <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+                    <components>
+                        <wrapper uniqueid="sk-3hOb-2528">
+                            <components>
+                                <richtext multiple="false" uniqueid="sk-3hOb-2529" model="uiKPIs">
+                                    <contents>&lt;p style="text-align: center;"&gt;&lt;span style="color:#ffffff;"&gt;&lt;span style="font-size:24px;"&gt;&lt;strong&gt;$Won&lt;/strong&gt;&lt;/span&gt;&lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-size:24px;"&gt;&lt;span style="color:#ffffff;"&gt;{{totalClosedWon}}&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+                                </richtext>
+                            </components>
+                            <styles>
+                                <styleitem type="background" bgtype="color">
+                                    <styles>
+                                        <styleitem property="background-color" value="#4bacc6"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="border" padding="bottom,top,">
+                                    <styles>
+                                        <styleitem property="padding-top" value="4px"/>
+                                        <styleitem property="padding-bottom" value="4px"/>
+                                        <styleitem property="box-sizing" value="border-box"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="size"/>
+                            </styles>
+                        </wrapper>
+                    </components>
+                </division>
+                <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+                    <components>
+                        <wrapper uniqueid="sk-3hOc-2551">
+                            <components>
+                                <richtext multiple="false" uniqueid="sk-3hOc-2552" model="uiKPIs">
+                                    <contents>&lt;p style="text-align: center;"&gt;&lt;span style="color:#ffffff;"&gt;&lt;span style="font-size:24px;"&gt;&lt;strong&gt;Avg Days to Win&lt;/strong&gt;&lt;/span&gt;&lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-size:24px;"&gt;&lt;span style="color:#ffffff;"&gt;{{avgDaysToWin}}&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+                                </richtext>
+                            </components>
+                            <styles>
+                                <styleitem type="background" bgtype="color">
+                                    <styles>
+                                        <styleitem property="background-color" value="#4bacc6"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="border" padding="bottom,top,">
+                                    <styles>
+                                        <styleitem property="padding-top" value="4px"/>
+                                        <styleitem property="padding-bottom" value="4px"/>
+                                        <styleitem property="box-sizing" value="border-box"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="size"/>
+                            </styles>
+                        </wrapper>
+                    </components>
+                </division>
+                <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+                    <components>
+                        <wrapper uniqueid="sk-3hOc-2574">
+                            <components>
+                                <richtext multiple="false" uniqueid="sk-3hOc-2575" model="uiKPIs">
+                                    <contents>&lt;p style="text-align: center;"&gt;&lt;span style="color:#ffffff;"&gt;&lt;span style="font-size:24px;"&gt;&lt;strong&gt;Med Days to Win&lt;/strong&gt;&lt;/span&gt;&lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-size:24px;"&gt;&lt;span style="color:#ffffff;"&gt;{{medDaysToWin}}&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+                                </richtext>
+                            </components>
+                            <styles>
+                                <styleitem type="background" bgtype="color">
+                                    <styles>
+                                        <styleitem property="background-color" value="#4bacc6"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="border" padding="bottom,top,">
+                                    <styles>
+                                        <styleitem property="padding-top" value="4px"/>
+                                        <styleitem property="padding-bottom" value="4px"/>
+                                        <styleitem property="box-sizing" value="border-box"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="size"/>
+                            </styles>
+                        </wrapper>
+                    </components>
+                </division>
+                <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+                    <components>
+                        <wrapper uniqueid="sk-3hOd-2597">
+                            <components>
+                                <richtext multiple="false" uniqueid="sk-3hOd-2598" model="uiKPIs">
+                                    <contents>&lt;p style="text-align: center;"&gt;&lt;span style="font-size:24px;"&gt;&lt;span style="color:#ffffff;"&gt;&lt;b&gt;Fastest Win&lt;/b&gt;&lt;br /&gt;
+{{minDaysToWin}}&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+                                </richtext>
+                            </components>
+                            <styles>
+                                <styleitem type="background" bgtype="color">
+                                    <styles>
+                                        <styleitem property="background-color" value="#4bacc6"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="border" padding="bottom,top,">
+                                    <styles>
+                                        <styleitem property="padding-top" value="4px"/>
+                                        <styleitem property="padding-bottom" value="4px"/>
+                                        <styleitem property="box-sizing" value="border-box"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="size"/>
+                            </styles>
+                        </wrapper>
+                    </components>
+                </division>
+                <division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+                    <components>
+                        <wrapper uniqueid="sk-3hOd-2620">
+                            <components>
+                                <richtext multiple="false" uniqueid="sk-3hOd-2621" model="uiKPIs">
+                                    <contents>&lt;p style="text-align: center;"&gt;&lt;font color="#ffffff"&gt;&lt;span style="font-size: 24px;"&gt;&lt;b&gt;Largest Win&lt;/b&gt;&lt;/span&gt;&lt;/font&gt;&lt;br /&gt;
+&lt;span style="font-size:24px;"&gt;&lt;span style="color:#ffffff;"&gt;{{maxAmountWon}}&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+                                </richtext>
+                            </components>
+                            <styles>
+                                <styleitem type="background" bgtype="color">
+                                    <styles>
+                                        <styleitem property="background-color" value="#4bacc6"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="border" padding="bottom,top,">
+                                    <styles>
+                                        <styleitem property="padding-top" value="4px"/>
+                                        <styleitem property="padding-bottom" value="4px"/>
+                                        <styleitem property="box-sizing" value="border-box"/>
+                                    </styles>
+                                </styleitem>
+                                <styleitem type="size"/>
+                            </styles>
+                        </wrapper>
+                    </components>
+                </division>
+            </divisions>
+            <styles>
+                <styleitem type="background" bgtype="none"/>
+            </styles>
+        </grid>
+        <skootable showconditions="true" showsavecancel="false" showerrorsinline="true" searchmethod="client" searchbox="false" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="all" alwaysresetpagination="false" createrecords="false" model="uiData" buttonposition="" mode="readonly" allowcolumnreordering="true" responsive="true" uniqueid="sk-3h0k-1710" heading="Opportunity List">
+            <fields>
+                <field id="Name" uniqueid="fi-3h0k-1711"/>
+                <field id="Stage" uniqueid="fi-3h0k-1712"/>
+                <field id="Amount" uniqueid="fi-3h0k-1713">
+                    <summaries>
+                        <summary>sum</summary>
+                        <summary>avg</summary>
+                        <summary>min</summary>
+                        <summary>max</summary>
+                        <summary>med</summary>
+                    </summaries>
+                </field>
+                <field id="DaysOpen" uniqueid="fi-3h0k-1714">
+                    <summaries/>
+                </field>
+            </fields>
+            <rowactions/>
+            <massactions usefirstitemasdefault="true"/>
+            <views>
+                <view type="standard"/>
+            </views>
+            <actions defaultlabel="Global Actions" defaulticon="sk-icon-magic" usefirstitemasdefault="true">
+                <action type="multi" label="Sort by Stage" icon="fa-arrows-v">
+                    <actions>
+                        <action type="sortModel" client-side="true" model="uiData" method="toggle" field="Stage"/>
+                    </actions>
+                </action>
+                <action type="multi" label="Sort by Amount" icon="fa-arrows-v">
+                    <actions>
+                        <action type="sortModel" client-side="true" model="uiData" method="toggle" field="Amount"/>
+                    </actions>
+                </action>
+                <action type="multi" label="Sort by Name" icon="fa-arrows-v">
+                    <actions>
+                        <action type="sortModel" client-side="true" model="uiData" method="toggle" field="Name"/>
+                    </actions>
+                </action>
+            </actions>
+            <searchfields/>
+        </skootable>
+        <wrapper uniqueid="sk-3hRQ-3988">
+            <components>
+                <skootable showconditions="true" showsavecancel="false" showerrorsinline="true" searchmethod="client" searchbox="false" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="false" model="uiKPIs" buttonposition="" mode="readonly" allowcolumnreordering="true" responsive="true" uniqueid="sk-3hMC-721" heading="ui Amount Summary (should match Amount column summary)">
+                    <fields>
+                        <field id="countValue" hideable="true" uniqueid="fi-3hQ9-3697"/>
+                        <field id="totalValue" hideable="true" uniqueid="fi-3hQA-3709"/>
+                        <field id="avgValue" hideable="true" uniqueid="fi-3hQB-3718"/>
+                        <field id="minValue" hideable="true" uniqueid="fi-3hQC-3736"/>
+                        <field id="maxValue" hideable="true" uniqueid="fi-3hQD-3745"/>
+                        <field id="medValue" hideable="true" uniqueid="fi-3hQC-3727"/>
+                    </fields>
+                    <rowactions/>
+                    <massactions usefirstitemasdefault="true"/>
+                    <views>
+                        <view type="standard"/>
+                    </views>
+                    <searchfields/>
+                </skootable>
+            </components>
+            <styles>
+                <styleitem type="background"/>
+                <styleitem type="border" borders="top," padding="top," margin="top,">
+                    <styles>
+                        <styleitem property="border-top" value="2px solid black"/>
+                        <styleitem property="padding-top" value="16px"/>
+                        <styleitem property="margin-top" value="8px"/>
+                        <styleitem property="box-sizing" value="border-box"/>
+                    </styles>
+                </styleitem>
+                <styleitem type="size"/>
+            </styles>
+        </wrapper>
+    </components>
+    <resources>
+        <labels/>
+        <javascript>
+            <jsitem location="inline" name="customFormulas" cachelocation="false" url="">// This was written for Skuid 11.X, and has not been tested in other version
+// Only tested in Chrome on Win &amp; Mac
+// Uses 2 unsupported Skuid APIs (skuid.aggregations and skuid.utils.getObjectProperty)
+
+
+// general function that does the 'if' in mathif to filter model to records where iffield=ifvalue
+function mathAggIf(mathtype,modelname,fieldname,iffield,ifvalue,blanks){
+    var modelrows = skuid.$M(modelname).getRows();
+    function filterByField(item) {
+        return (skuid.utils.getObjectProperty(item, iffield)===ifvalue) ? true : false; 
+    }
+    return skuid.aggregations.aggregate(mathtype,skuid.$M(modelname),fieldname, {countBlanks: blanks,rows: modelrows.filter(filterByField)}); // skuid function that takes in these params, passes to filter function, and spits out the result
+}
+
+// SUM &amp; SUMIF
+skuid.formula.Formula (
+    'SUM',
+    // MATH__SUM(modelToAgg,fieldToAgg,countblanks)  &lt;- what to put in formula field, copy &amp; paste in since can't add as choice from Function dropdown.
+    function (modelname,fieldname,blanks) { 
+        return skuid.aggregations.aggregate('sum',skuid.$M(modelname),fieldname, {countBlanks: blanks});
+  },{
+    namespace: 'MATH',
+    numArgs : 3,
+    returnType : 'string'
+  }
+);
+
+skuid.formula.Formula (
+    'SUMIF',
+    // MATH__SUMIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function (modelname,fieldname,iffield,ifvalue,blanks) {
+        return mathAggIf('sum',modelname,fieldname,iffield,ifvalue,blanks);
+  },{
+    namespace: 'MATH',
+    numArgs : 5,
+    returnType : 'string'
+  }
+);
+
+// AVG &amp; AVGIF
+skuid.formula.Formula (
+    'AVG',
+    // MATH__AVG(modelToAgg,fieldToAgg,countblanks)
+    function (modelname,fieldname,blanks) { 
+        return skuid.aggregations.aggregate('avg',skuid.$M(modelname),fieldname, {countBlanks: blanks});
+  },{
+    namespace: 'MATH',
+    numArgs : 3,
+    returnType : 'string'
+  }
+);
+
+skuid.formula.Formula (
+    'AVGIF',
+    // MATH_AVGIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function (modelname,fieldname,iffield,ifvalue,blanks) {
+        return mathAggIf('avg',modelname,fieldname,iffield,ifvalue,blanks);
+  },{
+    namespace: 'MATH',
+    numArgs : 5,
+    returnType : 'string'
+  }
+);
+
+// MIN &amp; MINIF
+skuid.formula.Formula (
+    'MIN',
+    // MATH__MIN(modelToAgg,fieldToAgg,countblanks)
+    function (modelname,fieldname,blanks) { 
+        return skuid.aggregations.aggregate('min',skuid.$M(modelname),fieldname, {countBlanks: blanks});
+  },{
+    namespace: 'MATH',
+    numArgs : 3,
+    returnType : 'string'
+  }
+);
+
+skuid.formula.Formula (
+    'MINIF',
+    // MATH__MINIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function (modelname,fieldname,iffield,ifvalue,blanks) {
+        return mathAggIf('min',modelname,fieldname,iffield,ifvalue,blanks);
+  },{
+    namespace: 'MATH',
+    numArgs : 5,
+    returnType : 'string'
+  }
+);
+
+// MAX &amp; MAXIF
+skuid.formula.Formula (
+    'MAX',
+    // MATH__MAX(modelToAgg,fieldToAgg,countblanks)
+    function (modelname,fieldname,blanks) { 
+        return skuid.aggregations.aggregate('max',skuid.$M(modelname),fieldname, {countBlanks: blanks});
+  },{
+    namespace: 'MATH',
+    numArgs : 3,
+    returnType : 'string'
+  }
+);
+
+skuid.formula.Formula (
+    'MAXIF',
+    // MATH__MAXIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function (modelname,fieldname,iffield,ifvalue,blanks) {
+        return mathAggIf('max',modelname,fieldname,iffield,ifvalue,blanks);
+  },{
+    namespace: 'MATH',
+    numArgs : 5,
+    returnType : 'string'
+  }
+);
+
+// COUNT&amp;COUNTIF
+skuid.formula.Formula (
+    'COUNT',
+    // MATH__COUNT(modelToAgg,fieldToAgg,countblanks)
+    function (modelname,fieldname,blanks) { 
+        return skuid.aggregations.aggregate('count',skuid.$M(modelname),fieldname, {countBlanks: blanks});
+  },{
+    namespace: 'MATH',
+    numArgs : 3,
+    returnType : 'string'
+  }
+);
+
+skuid.formula.Formula (
+    'COUNTIF',
+    // MATH__COUNTIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function (modelname,fieldname,iffield,ifvalue,blanks) {
+        return mathAggIf('count',modelname,fieldname,iffield,ifvalue,blanks);
+  },{
+    namespace: 'MATH',
+    numArgs : 5,
+    returnType : 'string'
+  }
+);
+
+// MED &amp; MEDIF
+skuid.formula.Formula (
+    'MED',
+    // MATH__MED(modelToAgg,fieldToAgg,countblanks)
+    function (modelname,fieldname,blanks) { 
+        return skuid.aggregations.aggregate('med',skuid.$M(modelname),fieldname, {countBlanks: blanks});
+  },{
+    namespace: 'MATH',
+    numArgs : 3,
+    returnType : 'string'
+  }
+);
+
+skuid.formula.Formula (
+    'MEDIF',
+    // MATH__MEDIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function (modelname,fieldname,iffield,ifvalue,blanks) {
+        return mathAggIf('med',modelname,fieldname,iffield,ifvalue,blanks);
+  },{
+    namespace: 'MATH',
+    numArgs : 5,
+    returnType : 'string'
+  }
+);</jsitem>
+        </javascript>
+        <css/>
+        <actionsequences uniqueid="sk-3gxJ-237">
+            <actionsequence id="d8ed4218-6160-4f39-a372-3044fcdec1a3" label="PseudoData" type="reusable" uniqueid="sk-3h2H-2420">
+                <description/>
+                <actions>
+                    <action type="createRow" model="uiData" appendorprepend="prepend" defaultmodefornewitems="read" affectedrows="context">
+                        <defaults>
+                            <default type="fieldvalue" field="Name" enclosevalueinquotes="true" value="{{$Input.Name}}"/>
+                            <default type="fieldvalue" field="Stage" enclosevalueinquotes="true" value="{{$Input.Stage}}"/>
+                            <default type="fieldvalue" field="Amount" enclosevalueinquotes="false" value="{{$Input.Amount}}"/>
+                            <default type="fieldvalue" field="DaysOpen" enclosevalueinquotes="false" value="{{$Input.DaysOpen}}"/>
+                        </defaults>
+                    </action>
+                </actions>
+                <inputs>
+                    <input type="value" name="Name"/>
+                    <input type="value" name="Stage"/>
+                    <input type="value" name="Amount"/>
+                    <input type="value" name="DaysOpen"/>
+                </inputs>
+            </actionsequence>
+            <actionsequence id="f3bc6722-f9a1-4c99-97a3-88f8b0118694" label="Create Pseudo Data" type="reusable" uniqueid="sk-3h2H-2421">
+                <description/>
+                <actions>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Prospecting"/>
+                            <input name="Amount" value="50000"/>
+                            <input name="DaysOpen" value="5"/>
+                            <input name="Name" value="Dervish &amp; Banges"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Name" value="Hogwarts"/>
+                            <input name="Stage" value="Prospecting"/>
+                            <input name="Amount" value="25112"/>
+                            <input name="DaysOpen" value="15"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Name" value="Gringotts"/>
+                            <input name="Stage" value="Prospecting"/>
+                            <input name="Amount" value="175000"/>
+                            <input name="DaysOpen" value="22"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Name" value="Three Broomsticks"/>
+                            <input name="Stage" value="Prospecting"/>
+                            <input name="Amount" value="2900"/>
+                            <input name="DaysOpen" value="4"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Name" value="Weasleys' Wizard Wheezes"/>
+                            <input name="Stage" value="Qualification"/>
+                            <input name="Amount" value="1950"/>
+                            <input name="DaysOpen" value="6"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Name" value="Durmstrang"/>
+                            <input name="Stage" value="Qualification"/>
+                            <input name="Amount" value="53000"/>
+                            <input name="DaysOpen" value="22"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Name" value="The Leaky Cauldron"/>
+                            <input name="Stage" value="Qualification"/>
+                            <input name="Amount" value="19500"/>
+                            <input name="DaysOpen" value="15"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Name" value="Bulgarian Quidditch Team"/>
+                            <input name="Stage" value="Qualification"/>
+                            <input name="Amount" value="44500"/>
+                            <input name="DaysOpen" value="33"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Closed Won"/>
+                            <input name="DaysOpen" value="14"/>
+                            <input name="Name" value="Hogwarts Express"/>
+                            <input name="Amount" value="23600"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Closed Won"/>
+                            <input name="DaysOpen" value="22"/>
+                            <input name="Name" value="Ministry of Magic"/>
+                            <input name="Amount" value="52000"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Closed Won"/>
+                            <input name="DaysOpen" value="55"/>
+                            <input name="Name" value="Ollivanders"/>
+                            <input name="Amount" value="98200"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Closed Won"/>
+                            <input name="DaysOpen" value="108"/>
+                            <input name="Name" value="Honeydukes"/>
+                            <input name="Amount" value="79400"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Closed Lost"/>
+                            <input name="DaysOpen" value="125"/>
+                            <input name="Name" value="Madam Puddifoot's"/>
+                            <input name="Amount" value="10500"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Closed Lost"/>
+                            <input name="DaysOpen" value="8"/>
+                            <input name="Name" value="Potage's Cauldron Shop"/>
+                            <input name="Amount" value="36000"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Closed Lost"/>
+                            <input name="DaysOpen" value="33"/>
+                            <input name="Name" value="Beauxbatons"/>
+                            <input name="Amount" value="147000"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Closed Lost"/>
+                            <input name="DaysOpen" value="62"/>
+                            <input name="Name" value="Azkaban"/>
+                            <input name="Amount" value="105900"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Prospecting"/>
+                            <input name="DaysOpen" value="2"/>
+                            <input name="Amount" value="32800"/>
+                            <input name="Name" value="Department of Mysteries"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Qualification"/>
+                            <input name="DaysOpen" value="11"/>
+                            <input name="Amount" value="48000"/>
+                            <input name="Name" value="Hogsmeade"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Closed Won"/>
+                            <input name="DaysOpen" value="38"/>
+                            <input name="Amount" value="71400"/>
+                            <input name="Name" value="Department of Magical Law Enforcement"/>
+                        </inputs>
+                    </action>
+                    <action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+                        <inputs>
+                            <input name="Stage" value="Closed Lost"/>
+                            <input name="DaysOpen" value="12"/>
+                            <input name="Amount" value="550"/>
+                            <input name="Name" value="Hagrid"/>
+                        </inputs>
+                    </action>
+                    <action type="save">
+                        <models>
+                            <model>uiData</model>
+                        </models>
+                    </action>
+                    <action type="sortModel" client-side="true" model="uiData" method="asc" field="Name"/>
+                    <action type="action-sequence" action-sequence-id="dac4f116-6adf-433c-93e9-68b3bfc32b36"/>
+                </actions>
+            </actionsequence>
+            <actionsequence id="dac4f116-6adf-433c-93e9-68b3bfc32b36" label="Refresh KPIs" type="reusable" uniqueid="sk-3h6K-4016">
+                <description/>
+                <actions>
+                    <action type="emptyModelData">
+                        <models>
+                            <model>uiKPIs</model>
+                        </models>
+                    </action>
+                    <action type="createRow" model="uiKPIs" appendorprepend="prepend" defaultmodefornewitems="read" affectedrows="context"/>
+                    <action type="save">
+                        <models>
+                            <model>uiKPIs</model>
+                        </models>
+                    </action>
+                </actions>
+            </actionsequence>
+            <actionsequence id="9009e95e-823e-4915-bae0-af1401001289" label="Spin up data" type="event-triggered" event-scope="component" event-name="page.rendered" uniqueid="sk-3h2H-2422">
+                <description/>
+                <actions>
+                    <action type="blockUI" message="Creating fake data"/>
+                    <action type="action-sequence" action-sequence-id="f3bc6722-f9a1-4c99-97a3-88f8b0118694"/>
+                    <action type="unblockUI"/>
+                </actions>
+            </actionsequence>
+        </actionsequences>
+    </resources>
+    <styles>
+        <styleitem type="background" bgtype="none"/>
+    </styles>
+</skuidpage>
