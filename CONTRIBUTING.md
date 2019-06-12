@@ -15,19 +15,23 @@ If you've got something you'd like to submit, go ahead, clone this repository an
 - Leave enough code comments to explain your experiment (or leave a description in a README file written in Markdown).
 
    - If applicable, note the [API version](https://docs.skuid.com/latest/en/skuid/api-version/) the [managed package release version](https://skuid.com/releases/) in which your experiment is intended to be used.
-   - Use [ESLint](https://eslint.org/) to ensure that your code matches our styles.
 
-  The easiest way to do this is to install [Node.js](https://nodejs.org/en/download/) and run the following commands:
+- We use [ESLint](https://eslint.org/) to ensure that your code matches our styles. If your code editor has an ESLint plugin installed, your code should automatically be linted, but you can alternatively just run `npm run lint` locally.
+
+  The easiest way to do this is to install [Node.js](https://nodejs.org/en/download/). We recommend using `nvm` to install the version of Node associated with this repository (`brew install nvm`) and run the following commands:
 
   ```bash 
-  cd /path/to/skuid-labs 
-  npm install 
+  cd /path/to/skuid-labs
+  # Install the associated version of Node
+  nvm install
+  nvm use
+  # Install dev dependencies (ESLint, etc.)
+  npm ci
   ```
 
-  This will install ESLint and its dependencies into a local `node_modules` directory. You can then run the linter by using `npm run lint`.
-
   - If you’ll be using variables that are not defined in the file, you may [set your globals in a comment at the top of your file](https://eslint.org/docs/user-guide/configuring#specifying-globals), but only use this when appropriate.
-  - We recommend ES5 for maximum compatibility among browsers.
+  - If you have a 3rd-party library that you are using in a component pack, we prefer that you reference that library via an external reference in your component pack manifest files, rather than including the library's minified JS locally in your component pack, unless the library is fairly small.
+  - We recommend using ES5 for maximum compatibility among browsers.
 
 ## Who owns the code I contribute?
 
