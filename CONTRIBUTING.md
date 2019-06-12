@@ -8,7 +8,7 @@ Your contributions also help shape the future of the Skuid product. When we see 
 
 ## How do I contribute?
 
-If youv'e got something you'd like to submit, go ahead, clone this Git repository and submit a Pull Request! We just ask that you do the following:
+If you've got something you'd like to submit, go ahead, clone this repository and submit a pull request! We just ask that you do the following:
 
 - Ensure that your file names are **[camelCase](https://en.wikipedia.org/wiki/Camel_case)**.
 - Create a folder for your experiment in the proper directory.
@@ -31,4 +31,4 @@ If youv'e got something you'd like to submit, go ahead, clone this Git repositor
 
 ## Who owns the code I contribute?
 
-All content in Skuid Labs is [MIT licensed](LICENSE). Anything that you contribute to Skuid Labs may be freely used and modified by anyone else. Modified versions of the code you contribute may be incorporated into the Skuid product in the future without your consent, and without attribution.
+All content in Skuid Labs is [MIT licensed](LICENSE). Anything that you contribute to Skuid Labs may be freely used and modified by anyone else. **Modified versions of the code you contribute may be incorporated into the Skuid product in the future without your consent and without attribution.**
