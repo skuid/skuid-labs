@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A place to share Skuid components, formulas, snippets, and other extensions with the Skuid builder community",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint . --ext .json --ext .js"
+    "lint": "./node_modules/.bin/eslint . --ext .json --ext .js",
+    "test": "npm run lint"
   },
   "author": "Skuid, Inc.",
   "license": "MIT",
