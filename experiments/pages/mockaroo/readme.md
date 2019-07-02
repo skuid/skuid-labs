@@ -1,11 +1,15 @@
 Using Mockaroo random data generator in Skuid Pages: 
 
-Go to Mockaroo.com and create an account.  Capture your API KEY. 
+Go to www.Mockaroo.com and create an account.  Capture your API KEY. 
+A free account seems to be reasonably performant. 
 
-Access these Schemas.  Clone the schemas (Under More link)  and create APIs for each one. 
+Access these Schemas. 
 Contacts:  https://www.mockaroo.com/9b3032d0
 Measures:  https://www.mockaroo.com/da735e80
 Meetings:  https://www.mockaroo.com/2e11fac0
+
+Clone the schemas (Under More link)  
+Create APIs for each one. 
 
 
 Create a new "MockaRoo" datasource.
@@ -14,5 +18,5 @@ Create a new "MockaRoo" datasource.
 - Authentication:  none
 - Open "URL Paramater to include in every request" section:  Add  API KEY there. Should be "Key : <<YourKey>>" 
 
-Copy XML into a new page. 
+Create new page with XML from "Mockaroo" xml file in this folder. 
 API should be V1
