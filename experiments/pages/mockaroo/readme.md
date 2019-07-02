@@ -2,8 +2,9 @@
 
 Using Mockaroo random data generator in Skuid Pages: 
 
-Go to www.Mockaroo.com and create an account.  Capture your API KEY. 
-A free account seems to be reasonably performant. 
+Go to www.Mockaroo.com and create an account.  
+- Capture your API KEY. 
+- A free account seems to be reasonably performant. 
 
 Access these Schemas. 
 - Contacts:  https://www.mockaroo.com/9b3032d0
