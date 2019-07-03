@@ -1,6 +1,8 @@
 (function (skuid) {
+
 	var $ = skuid.$;
-	skuid.componentType.register('skuiddemos__pivottable', function (element, xmlDef) {
+
+	skuid.componentType.register('pivot__pivottable', function (element, xmlDef) {
 
 		var self = element;
 
@@ -17,26 +19,31 @@
 			tableId = xmlDef.attr('uniqueid'),
 			tableClass = xmlDef.attr('cssclass');
 
-		console.log(roundTo);
-
 		if (!modelName || !columnFieldName || !rowFieldName || !aggFunctionName) {
 			self.text(
-				'Error: Pivot table could not be drawn. '
-				+ 'A Model, Row Field, and Column Field must ALL be provided.'
+				'Error: Pivot table could not be drawn. ' +
+				'A Model, Row Field, and Column Field must ALL be provided.'
 			);
 			return;
 		}
 
 		if (aggFunctionName !== "count" && !valueFieldName) {
 			self.text(
-				'Error: Pivot table could not be drawn. '
-				+ 'A Value field must be provided for any Aggregate function other than Count'
+				'Error: Pivot table could not be drawn. ' +
+				'A Value field must be provided for any Aggregate function other than Count'
 			);
 			return;
 
 		}
 
 		self.model = skuid.$M(modelName);
+
+		if (!self.model) {
+			self.element.html(
+				"<h1 style=\"font-color: red\">Invalid Model for Pivot Table component.</h1>"
+			);
+			return;
+		}
 
 		self.addClass("pivottable-content");
 
@@ -48,29 +55,29 @@
 				rowCounter = {},
 				columnTotal = {},
 				columnCounter = {},
-				totalTotal = new pivotCell();
+				totalTotal = new PivotCell();
 			$.each(self.model.data, function (i, row) {
-				var rowID = self.model.getFieldValue(row, rowFieldName),
-					columnID = self.model.getFieldValue(row, columnFieldName);
+				var rowID = self.model.getFieldValue(row, rowFieldName, true),
+					columnID = self.model.getFieldValue(row, columnFieldName, true);
 
 				if (!matrix.hasOwnProperty(rowID)) {
 					matrix[rowID] = {};
 					rowHeader.push(rowID);
-					rowTotal[rowID] = new pivotCell();
-					rowCounter[rowID] = new pivotCell();
+					rowTotal[rowID] = new PivotCell();
+					rowCounter[rowID] = new PivotCell();
 				}
 				if (!matrix[rowID].hasOwnProperty(columnID)) {
-					matrix[rowID][columnID] = new pivotCell();
+					matrix[rowID][columnID] = new PivotCell();
 					if (columnHeader.indexOf(columnID) === -1) {
 						columnHeader.push(columnID);
-						columnTotal[columnID] = new pivotCell();
-						columnCounter[columnID] = new pivotCell();
+						columnTotal[columnID] = new PivotCell();
+						columnCounter[columnID] = new PivotCell();
 					}
 				}
 
-				var fieldValue = self.model.getFieldValue(row, valueFieldName),
+				var fieldValue = self.model.getFieldValue(row, valueFieldName, true),
 					fieldObj = matrix[rowID][columnID],
-					count = countFieldName ? self.model.getFieldValue(row, countFieldName) : 1;
+					count = countFieldName ? self.model.getFieldValue(row, countFieldName, true) : 1;
 				fieldObj.addValue(fieldValue, count);
 				rowTotal[rowID].addValue(fieldValue, count);
 				columnTotal[columnID].addValue(fieldValue, count);
@@ -161,7 +168,7 @@
 					footRow.append($("<td>" + (!roundTo ? value : value.toFixed(roundTo)) + "</td>"));
 				}
 				if (showRowTotals)
-					footRow.append($("<td>" + (!roundTo ? totalTotal[aggFunctionName] : totalTotal[aggFunctionName].toFixed(roundTo)) + "</td>").addClass("pivotRowTotal pivotTotalTotal"));
+					footRow.append($("<td>" + (!roundTo ? totalTotal[aggFunctionName]() : totalTotal[aggFunctionName]().toFixed(roundTo)) + "</td>").addClass("pivotRowTotal pivotTotalTotal"));
 			}
 
 			self.component.appendTo(self);
@@ -171,31 +178,31 @@
 	});
 
 	// Depends on ES6 being supported in the browser.
-	class pivotCell {
-		constructor() {
-			this.count = 0;
-			this.sum = 0;
-			this.min = false;
-			this.max = 0;
-		}
-
-		/**
-		 * @return {number}
-		 */
-		get average() {
-			return this.sum / this.count;
-		};
-
-		addValue(value, count) {
-			this.count += typeof count == 'undefined' ? 1 : count;
-			this.sum += value;
-			this.min = this.min === false || value < this.min ? value : this.min;
-			this.max = value > this.max ? value : this.max;
-		}
+	function PivotCell() {
+		this.count = 0;
+		this.sum = 0;
+		this.min = false;
+		this.max = 0;
 	}
 
-	//Check if the value evaluates to true and is also not the string value of "false". Useful for XML prop reading.
+	/**
+	 * Returns the average of the pivot cell
+	 * @return {number}
+	 */
+	PivotCell.prototype.average = function() {
+		return this.sum / this.count;
+	};
+
+	PivotCell.prototype.addValue = function(value, count) {
+		this.count += typeof count == 'undefined' ? 1 : count;
+		this.sum += value;
+		this.min = this.min === false || value < this.min ? value : this.min;
+		this.max = value > this.max ? value : this.max;
+	};
+
+	// Check if the value evaluates to true and is also not the string value of "false". Useful for XML prop reading.
 	function trueish(value) {
 		return !!(value && (typeof value.toLowerCase == "undefined" || value.toLowerCase() !== "false"));
 	}
+
 })(skuid);

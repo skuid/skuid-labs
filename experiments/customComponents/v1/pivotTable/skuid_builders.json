@@ -1,15 +1,15 @@
 {
-  "id": "skuiddemos",
+  "id": "pivot",
   "components": [
     {
       "id": "pivottable",
-      "folderId": "skuiddemos"
+      "folderId": "pivot"
     }
   ],
   "folders": [
     {
-      "id": "skuiddemos",
-      "name": "Skuid Demos",
+      "id": "pivot",
+      "name": "Pivot Table",
       "icon": "sk-icon-component-pack"
     }
   ],
