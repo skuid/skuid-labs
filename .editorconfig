@@ -1,0 +1,15 @@
+# EditorConfig - enforce coding style
+
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = false
+
+[*.js]
+indent_style = tab
+indent_size = tab
+
+[*.xml]
+indent_style = tab
+indent_size = tab

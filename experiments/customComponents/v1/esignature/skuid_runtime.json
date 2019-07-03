@@ -1,0 +1,17 @@
+{
+   "id": "esignature",
+   "components": [
+      {
+         "id": "signature"
+      }
+   ],
+   "js": [
+      {
+         "path": "jSignature.min.js"
+      },
+      {
+         "path": "runtime.js"
+      }
+   ],
+   "css": []
+}

@@ -1,0 +1,622 @@
+<skuidpage personalizationmode="server" showsidebar="true" showheader="true" theme="Investor">
+	<models>
+		<model id="Contacts" query="true" createrowifnonefound="false" datasource="MockaRoo" processonclient="true" verb="GET" endpoint="contact.json" payloadcontenttype="JSON">
+			<fields>
+				<field id="Company" label="Company" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="Email" label="Email" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="First_name" label="First Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="Gender" label="Gender" ispolymorphic="false" isnamepointing="false" displaytype="PICKLIST" accessible="true" filterable="true" ogdisplaytype="STRING" picklistsource="manual" defaultvaluetype="fieldvalue">
+					<picklistentries>
+						<entry value="MALE" label="Male"/>
+						<entry value="FEMALE" label="Female"/>
+					</picklistentries>
+				</field>
+				<field id="Id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="Last_name" label="Last Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="Phone" label="Phone" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="SSN" label="SSN" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="Title" label="Title" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="Avatar" label="Avatar" ispolymorphic="false" isnamepointing="false" displaytype="URL" accessible="true" filterable="true"/>
+				<field id="male" displaytype="FORMULA" ogdisplaytype="TEXT" picklistsource="manual" readonly="true" returntype="TEXT" precision="0" scale="0" uionly="true" label="Male?">
+					<formula>IF({{{Gender}}}="Male",1,"")</formula>
+				</field>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Meetings" query="false" createrowifnonefound="false" datasource="MockaRoo" processonclient="true" verb="GET" endpoint="meetings.json">
+			<fields>
+				<field id="City" label="City" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="Company" label="Company" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="EndDate" label="End Date" ispolymorphic="false" isnamepointing="false" displaytype="DATETIME" accessible="true" filterable="true" ogdisplaytype="DATE"/>
+				<field id="FirstName" label="First Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="LastName" label="Last Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="StartDate" label="Start Date" ispolymorphic="false" isnamepointing="false" displaytype="DATETIME" accessible="true" filterable="true" ogdisplaytype="DATE"/>
+				<field id="Description" label="Description" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="Color" label="Color" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Measures" query="true" createrowifnonefound="false" datasource="MockaRoo" processonclient="true" verb="GET" endpoint="measures.json" payloadcontenttype="JSON">
+			<fields>
+				<field id="Year" label="Year" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="4" scale="0" accessible="true" filterable="true"/>
+				<field id="report_date" label="Report Date" ispolymorphic="false" isnamepointing="false" displaytype="DATE" accessible="true" filterable="true" ogdisplaytype="STRING"/>
+				<field id="Month" label="Month" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="Goals" label="Goals" ispolymorphic="false" isnamepointing="false" displaytype="CURRENCY" precision="5" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="Actual" label="Actual" ispolymorphic="false" isnamepointing="false" displaytype="CURRENCY" precision="1" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="DisplayDate" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" defaultvaluetype="fieldvalue">
+					<formula>FORMAT_DATE("MM YYYY",{{report_date}})</formula>
+				</field>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="UIControl" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true">
+			<fields>
+				<field id="CalendarStart" displaytype="DATETIME" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="2018-04-02T00:00:00.000Z"/>
+				<field id="CalendarEnd" displaytype="DATETIME" defaultvaluetype="fieldvalue" ogdisplaytype="TEXT" defaultValue="2018-05-01"/>
+				<field id="NavCat" displaytype="PICKLIST" ogdisplaytype="TEXT" picklistsource="manual" defaultvaluetype="fieldvalue" defaultValue="Dashboard">
+					<picklistentries>
+						<entry value="Contacts" label="Contacts"/>
+						<entry value="Meetings" label="Meetings"/>
+						<entry value="Dashboard" label="Dashboard"/>
+					</picklistentries>
+				</field>
+				<field displaytype="FORMULA" id="YOY_Actual" ogdisplaytype="TEXT" readonly="true" returntype="PERCENT" defaultvaluetype="fieldvalue" precision="2" scale="1">
+					<formula>ABS(({{$Model.Measures.data.0.Actual}}-{{$Model.Measures.data.12.Actual}})/{{$Model.Measures.data.12.Actual}})</formula>
+				</field>
+				<field id="YOY_Actual_Symbol" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" precision="9" scale="2">
+					<formula>IF({{YOY_Actual}}&gt;0,"⬆︎","⬇︎")</formula>
+				</field>
+				<field displaytype="FORMULA" id="GuageRemaining" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="0">
+					<formula>({{$Model.Measures.data.0.Goals}}-{{$Model.Measures.data.0.Actual}})</formula>
+				</field>
+				<field id="GuageActual" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="2">
+					<formula>{{$Model.Measures.data.0.Actual}}</formula>
+				</field>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<grid uniqueid="sk-1YTg-277">
+			<divisions>
+				<division behavior="fit" verticalalign="top">
+					<components>
+						<wrapper uniqueid="sk-1YTo-324">
+							<components>
+								<navigation uniqueid="sk-1YTn-313" type="vertical">
+									<navigationitems>
+										<navigationitem uniqueid="sk-1YTy-374" icon="fa-bar-chart-o" label="Dashboard">
+											<actions>
+												<action type="toggleRenderComponent" behavior="show" componentid="sk-1YV1-718"/>
+												<action type="toggleRenderComponent" behavior="hide" componentid="sk-1YU--682"/>
+												<action type="toggleRenderComponent" behavior="hide" componentid="sk-1YV0-693"/>
+												<action type="toggleRenderComponent" behavior="show" componentid="sk-1YYF-1252"/>
+												<action type="toggleRenderComponent" behavior="show" componentid="sk-1diS-982"/>
+											</actions>
+										</navigationitem>
+										<navigationitem uniqueid="sk-1YTn-312" icon="sk-icon-members" label="Contacts">
+											<actions>
+												<action type="toggleRenderComponent" behavior="hide" componentid="sk-1YV1-718"/>
+												<action type="toggleRenderComponent" behavior="show" componentid="sk-1YU--682"/>
+												<action type="toggleRenderComponent" behavior="hide" componentid="sk-1YV0-693"/>
+											</actions>
+										</navigationitem>
+										<navigationitem uniqueid="sk-1YTt-357" icon="sk-icon-calendar" label="Meetings">
+											<actions>
+												<action type="toggleRenderComponent" behavior="hide" componentid="sk-1YV1-718"/>
+												<action type="toggleRenderComponent" behavior="hide" componentid="sk-1YU--682"/>
+												<action type="toggleRenderComponent" behavior="show" componentid="sk-1YV0-693"/>
+											</actions>
+										</navigationitem>
+									</navigationitems>
+									<styles/>
+									<renderconditions logictype="and"/>
+								</navigation>
+							</components>
+							<styles>
+								<styleitem type="background" bgtype="color">
+									<styles>
+										<styleitem property="background-color" value="white"/>
+									</styles>
+								</styleitem>
+								<styleitem type="border" padding="top,">
+									<styles>
+										<styleitem property="padding-top" value="30px"/>
+										<styleitem property="box-sizing" value="border-box"/>
+									</styles>
+								</styleitem>
+								<styleitem type="size" height="custom">
+									<styles>
+										<styleitem property="min-height" value="1500px"/>
+										<styleitem property="max-height" value="1500vh"/>
+										<styleitem property="overflow-y" value="auto"/>
+									</styles>
+								</styleitem>
+								<styleitem property="margin" value="-6px 0 0 -10px"/>
+							</styles>
+						</wrapper>
+					</components>
+				</division>
+				<division behavior="flex" verticalalign="top" ratio="1" minwidth="100px">
+					<components>
+						<wrapper uniqueid="sk-1YU--682">
+							<components>
+								<skootable showconditions="true" showsavecancel="false" showerrorsinline="true" searchmethod="client" searchbox="false" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="false" model="Contacts" buttonposition="" mode="readonly" allowcolumnreordering="true" responsive="true" uniqueid="sk-1VSA-247" sortonclient="true" heading="Contacts" emptysearchbehavior="query">
+									<fields>
+										<field type="COMBO" hideable="true" uniqueid="fi-1e-O-3322" columnwidth="5%">
+											<label>Image</label>
+											<template>&lt;img style="border-radius:40px;border:.9px solid grey" {{#male}}src="https://randomuser.me/api/portraits/med/men/{{index}}.jpg"{{/male}}{{^male}}src="https://randomuser.me/api/portraits/med/women/{{index}}.jpg"{{/male}}/&gt;</template>
+										</field>
+										<field type="COMBO" hideable="true" uniqueid="fi-Z5y-1086" columnwidth="20%">
+											<label>Name</label>
+											<template>{{First_name}} {{Last_name}}</template>
+										</field>
+										<field id="Title" uniqueid="sk-1VSA-279" allowordering="true" columnwidth="20%"/>
+										<field id="Company" uniqueid="sk-1VSA-255" allowordering="true" columnwidth="20%"/>
+										<field id="Email" uniqueid="sk-1VSA-258" columnwidth="20%"/>
+										<field id="Phone" uniqueid="sk-1VSA-273" columnwidth="10%"/>
+									</fields>
+									<rowactions/>
+									<massactions usefirstitemasdefault="true"/>
+									<views>
+										<view type="standard"/>
+									</views>
+									<filters>
+										<filter type="select" createfilteroffoption="true" affectcookies="true" autocompthreshold="25" conditionsource="auto" labelmode="auto" filtermethod="client"/>
+									</filters>
+									<searchfields/>
+									<renderconditions logictype="and"/>
+									<actions defaultlabel="Global Actions" defaulticon="sk-icon-magic" usefirstitemasdefault="true"/>
+								</skootable>
+							</components>
+							<styles>
+								<styleitem type="background"/>
+								<styleitem type="border" padding="all">
+									<styles>
+										<styleitem property="padding" value="30px"/>
+										<styleitem property="box-sizing" value="border-box"/>
+									</styles>
+								</styleitem>
+								<styleitem type="size"/>
+							</styles>
+							<renderconditions logictype="and"/>
+							<interactions/>
+						</wrapper>
+						<wrapper uniqueid="sk-1YV0-693">
+							<components>
+								<skoocal rememberdate="true" rememberview="true" uniqueid="sk-1Vd6-759" rangemodel="UIControl" rangestartfield="CalendarStart" rangeendfield="CalendarEnd">
+									<sources>
+										<eventsource name="New Event Source" createable="true" deleteable="true" updateable="true" eventclickhandler="custompopup" showdefaultbuttons="true" model="Meetings" namefield="Company" startfield="StartDate" endfield="EndDate" color="{{Color}}">
+											<onclickpopup title="Edit Event" width="90%" showdefaultbuttons="true">
+												<components>
+													<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="Meetings" uniqueid="sk-1VeH-289" mode="readonly" layout="above">
+														<columns>
+															<column width="40%">
+																<sections>
+																	<section title="Who" collapsible="no">
+																		<fields>
+																			<field uniqueid="sk-1VeS-322" id="City"/>
+																			<field uniqueid="sk-1VeS-321" id="Company"/>
+																			<field uniqueid="sk-1VeS-324" id="FirstName"/>
+																			<field uniqueid="sk-1VeS-325" id="LastName"/>
+																		</fields>
+																	</section>
+																	<section title="When" collapsible="no">
+																		<fields>
+																			<field uniqueid="sk-1VeS-326" id="StartDate"/>
+																			<field uniqueid="sk-1VeS-323" id="EndDate"/>
+																		</fields>
+																	</section>
+																</sections>
+															</column>
+															<column width="60%">
+																<sections>
+																	<section title="Subject" collapsible="no">
+																		<fields>
+																			<field uniqueid="sk-1VeS-327" id="Description"/>
+																		</fields>
+																	</section>
+																</sections>
+															</column>
+														</columns>
+														<conditions>
+															<condition type="contextrow" field="Id" mergefield="Id" autocreated="true" operator="="/>
+														</conditions>
+													</basicfieldeditor>
+												</components>
+											</onclickpopup>
+											<eventtemplate>&lt;b&gt;{{Company}}&lt;/b&gt;
+{{FirstName}} {{LastName}}</eventtemplate>
+										</eventsource>
+									</sources>
+									<views>
+										<eventview type="week"/>
+										<eventview type="month" searchbox="true" searchmethod="client" groupingmodel="Contacts"/>
+									</views>
+									<renderconditions logictype="and"/>
+								</skoocal>
+							</components>
+							<styles>
+								<styleitem type="background" bgtype="none"/>
+								<styleitem type="border" padding="all">
+									<styles>
+										<styleitem property="padding" value="30px"/>
+										<styleitem property="box-sizing" value="border-box"/>
+									</styles>
+								</styleitem>
+								<styleitem type="size"/>
+							</styles>
+							<renderconditions logictype="and"/>
+							<interactions/>
+						</wrapper>
+						<wrapper uniqueid="sk-1YV1-718">
+							<components>
+								<grid uniqueid="sk-1YY4-1171" columngutter="10px" rowgutter="10px">
+									<divisions>
+										<division behavior="flex" minwidth="250px" ratio="1" verticalalign="top">
+											<components>
+												<wrapper uniqueid="sk-1YYC-1208">
+													<components>
+														<richtext multiple="false" uniqueid="sk-1YYF-1252">
+															<contents>&lt;p&gt;&lt;span style="color:#15bfff;"&gt;&lt;span style="font-size:48px;"&gt;{{$Model.Measures.data.0.Actual}}&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style="font-size:18px;"&gt;{{$Model.UIControl.data.0.YOY_Actual_Symbol}}&amp;nbsp;{{$Model.UIControl.data.0.YOY_Actual}}&lt;/span&gt;&lt;/span&gt;&lt;br /&gt;
+&lt;span style="color:#a9a9a9;"&gt;&lt;span style="font-size:16px;"&gt;ACTUAL CURRENT MO&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+														</richtext>
+													</components>
+													<styles>
+														<styleitem type="background" bgtype="color">
+															<styles>
+																<styleitem property="background-color" value="white"/>
+															</styles>
+														</styleitem>
+														<styleitem type="border" padding="top,right,left," margin="none">
+															<styles>
+																<styleitem property="padding-left" value="20px"/>
+																<styleitem property="padding-top" value="2px"/>
+																<styleitem property="padding-right" value="20px"/>
+																<styleitem property="box-sizing" value="border-box"/>
+															</styles>
+														</styleitem>
+														<styleitem type="size" height="custom">
+															<styles>
+																<styleitem property="min-height" value="200px"/>
+															</styles>
+														</styleitem>
+													</styles>
+												</wrapper>
+											</components>
+										</division>
+										<division behavior="flex" verticalalign="top" minwidth="250px" ratio="1">
+											<components>
+												<wrapper uniqueid="sk-1YYC-1219">
+													<components>
+														<richtext multiple="false" uniqueid="sk-1YYF-1261">
+															<contents>&lt;p&gt;&lt;span style="color:#2ccb5c;"&gt;&lt;span style="font-size:48px;"&gt;{{$Model.Measures.data.0.Goals}}&lt;/span&gt;&lt;/span&gt;&lt;br /&gt;
+&lt;span style="color:#a9a9a9;"&gt;GOAL CURRENT MO&lt;/span&gt;&lt;/p&gt;
+</contents>
+														</richtext>
+													</components>
+													<styles>
+														<styleitem type="background" bgtype="color">
+															<styles>
+																<styleitem property="background-color" value="white"/>
+															</styles>
+														</styleitem>
+														<styleitem type="border" padding="top,right,left,">
+															<styles>
+																<styleitem property="padding-left" value="20px"/>
+																<styleitem property="padding-top" value="2px"/>
+																<styleitem property="padding-right" value="20px"/>
+																<styleitem property="box-sizing" value="border-box"/>
+															</styles>
+														</styleitem>
+														<styleitem type="size" height="custom">
+															<styles>
+																<styleitem property="min-height" value="200px"/>
+															</styles>
+														</styleitem>
+													</styles>
+												</wrapper>
+											</components>
+										</division>
+										<division behavior="flex" verticalalign="top" minwidth="250px" ratio="1">
+											<components>
+												<wrapper uniqueid="sk-1YYD-1230">
+													<components>
+														<richtext multiple="false" uniqueid="sk-1YYG-1270">
+															<contents>&lt;p&gt;&lt;span style="color:#fe1246;"&gt;&lt;span style="font-size:48px;"&gt;{{$Model.Contacts.data.length}}&lt;/span&gt;&lt;/span&gt;&lt;br /&gt;
+&lt;span style="color:#a9a9a9;"&gt;CONTACTS&lt;/span&gt;&lt;/p&gt;
+</contents>
+														</richtext>
+													</components>
+													<styles>
+														<styleitem type="background" bgtype="color">
+															<styles>
+																<styleitem property="background-color" value="white"/>
+															</styles>
+														</styleitem>
+														<styleitem type="border" padding="right,top,left,">
+															<styles>
+																<styleitem property="padding-left" value="20px"/>
+																<styleitem property="padding-top" value="2px"/>
+																<styleitem property="padding-right" value="20px"/>
+																<styleitem property="box-sizing" value="border-box"/>
+															</styles>
+														</styleitem>
+														<styleitem type="size" height="custom">
+															<styles>
+																<styleitem property="min-height" value="200px"/>
+															</styles>
+														</styleitem>
+													</styles>
+												</wrapper>
+											</components>
+										</division>
+										<division behavior="flex" verticalalign="top" minwidth="250px" ratio="1">
+											<components>
+												<wrapper uniqueid="sk-1YYD-1241">
+													<components>
+														<skuidvis__chart model="UIControl" type="donut" uniqueid="sk-1diS-982" backgroundcolor="transparent" export="off" height="200px">
+															<dataaxes>
+																<axis id="axis1"/>
+															</dataaxes>
+															<categoryaxes>
+																<axis id="categories" categorytype="field"/>
+															</categoryaxes>
+															<serieslist>
+																<series valuefield="GuageActual" splittype="template" splittemplate="Actual"/>
+																<series valuefield="GuageRemaining" splittype="template" splittemplate="Remaining to Goal"/>
+															</serieslist>
+															<colors>
+																<value>#0277bd</value>
+																<value>#0277bd6b</value>
+																<value>#29b6f6</value>
+																<value>#03a9f4</value>
+																<value>#039be5</value>
+																<value>#0288d1</value>
+																<value>#0277bd</value>
+															</colors>
+															<legend layout="off" halign="right" valign="middle" showlabels="false"/>
+														</skuidvis__chart>
+													</components>
+													<styles>
+														<styleitem type="background" bgtype="color">
+															<styles>
+																<styleitem property="background-color" value="white"/>
+															</styles>
+														</styleitem>
+														<styleitem type="border" padding="top,">
+															<styles>
+																<styleitem property="padding-top" value="2px"/>
+																<styleitem property="box-sizing" value="border-box"/>
+															</styles>
+														</styleitem>
+														<styleitem type="size" height="custom">
+															<styles>
+																<styleitem property="min-height" value="200px"/>
+																<styleitem property="max-height" value="200px"/>
+																<styleitem property="overflow-y" value="auto"/>
+															</styles>
+														</styleitem>
+													</styles>
+												</wrapper>
+											</components>
+										</division>
+									</divisions>
+									<styles>
+										<styleitem type="background" bgtype="none"/>
+									</styles>
+								</grid>
+								<wrapper uniqueid="sk-1W1N-1064">
+									<components>
+										<wrapper uniqueid="sk-1jnm-914">
+											<components>
+												<richtext multiple="false" uniqueid="sk-1jnX-848">
+													<contents>&lt;p&gt;&lt;span style="color:#a9a9a9;"&gt;ACTUALS COMPARED TO GOALS&lt;/span&gt;&lt;/p&gt;
+</contents>
+												</richtext>
+											</components>
+											<styles>
+												<styleitem type="background"/>
+												<styleitem type="border" padding="right,top,left,">
+													<styles>
+														<styleitem property="padding-left" value="20px"/>
+														<styleitem property="padding-top" value="2px"/>
+														<styleitem property="padding-right" value="20px"/>
+														<styleitem property="box-sizing" value="border-box"/>
+													</styles>
+												</styleitem>
+												<styleitem type="size"/>
+											</styles>
+										</wrapper>
+										<skuidvis__chart model="Measures" type="spline" uniqueid="sk-1V-H-576" backgroundcolor="transparent" export="off">
+											<dataaxes>
+												<axis id="axis1"/>
+											</dataaxes>
+											<categoryaxes>
+												<axis id="categories" categorytype="template" field="report_date" fillvals="true" dategranularity="none" template="{{Year}} Mo {{Month}}"/>
+											</categoryaxes>
+											<serieslist>
+												<series valuefield="Actual" splittype="none" type="areaspline"/>
+												<series valuefield="Goals" splittype="none" type="spline"/>
+											</serieslist>
+											<colors>
+												<value>#81d4fa</value>
+												<value>#039be5</value>
+												<value>#0288d1</value>
+												<value>#0277bd</value>
+												<value>#81d4fa</value>
+												<value>#4fc3f7</value>
+												<value>#29b6f6</value>
+												<value>#03a9f4</value>
+												<value>#039be5</value>
+												<value>#0288d1</value>
+												<value>#0277bd</value>
+											</colors>
+											<legend layout="vertical" halign="right" valign="top" showlabels="false"/>
+										</skuidvis__chart>
+									</components>
+									<styles>
+										<styleitem type="background" bgtype="image" datasource="SkuidLocal" bg-source="url" model="Contacts" bg-url="https://images.unsplash.com/photo-1515327866270-5801e8c8357f?ixlib=rb-0.3.5&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;s=041821293c63f918f46ebbfd1dd4a5fb&amp;auto=format&amp;fit=crop&amp;w=1334&amp;q=80">
+											<styles>
+												<styleitem property="background-size" value="cover"/>
+												<styleitem property="background-attachment" value="scroll"/>
+												<styleitem property="background-position" value="bottom center"/>
+												<styleitem property="background-repeat" value="no-repeat"/>
+												<styleitem property="background-color" value="transparent"/>
+											</styles>
+										</styleitem>
+										<styleitem type="border"/>
+										<styleitem type="size"/>
+									</styles>
+									<renderconditions logictype="and"/>
+								</wrapper>
+							</components>
+							<styles>
+								<styleitem type="background"/>
+								<styleitem type="border" padding="all">
+									<styles>
+										<styleitem property="padding" value="30px"/>
+										<styleitem property="box-sizing" value="border-box"/>
+									</styles>
+								</styleitem>
+								<styleitem type="size"/>
+							</styles>
+							<renderconditions logictype="and"/>
+						</wrapper>
+					</components>
+				</division>
+			</divisions>
+			<styles>
+				<styleitem type="background" bgtype="none"/>
+			</styles>
+		</grid>
+	</components>
+	<resources>
+		<labels/>
+		<javascript/>
+		<css>
+			<cssitem location="inline" name="CustomCSS" cachelocation="false">.sk-navigation-horizontal .sk-navigation-item {
+    display: inline-block;
+    padding: 6px 10px 7px 10px;
+    margin: 0 -5px;}</cssitem>
+		</css>
+		<actionsequences uniqueid="sk-1VS8-199">
+			<actionsequence id="d483428d-2347-4daf-a920-66cddc250c78" label="HideItAll" type="event-triggered" event-scope="component" event-name="page.rendered">
+				<description/>
+				<actions>
+					<action type="toggleRenderComponent" behavior="hide" componentid="sk-1YU--682"/>
+					<action type="toggleRenderComponent" behavior="hide" componentid="sk-1YV0-693"/>
+					<action type="createRow" model="UIControl" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context"/>
+				</actions>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="color">
+			<styles>
+				<styleitem property="background-color" value="#f6f7fb"/>
+			</styles>
+		</styleitem>
+	</styles>
+	<pageregioncontents>
+		<pageregioncontent uniqueid="__header">
+			<components>
+				<skuidheader sticky="true">
+					<components>
+						<wrapper uniqueid="sk-1ZGy-521">
+							<components>
+								<grid uniqueid="sk-1ZK_-589">
+									<divisions>
+										<division behavior="specified" verticalalign="top" width="60px">
+											<components>
+												<image source="url" uniqueid="sk-1ZL0-622" datasource="SkuidLocal" behavior="none" model="Contacts" url="https://mockaroo.com/assets/kangaroo-white-3a977872f8f57d25e13c772e9ae8756b0d1aa9a19fc49b1e4eb25ac8dc14c39a.svg">
+													<styles>
+														<styleitem type="itemsize"/>
+														<styleitem type="border" padding="left,top,">
+															<styles>
+																<styleitem property="padding-left" value="10px"/>
+																<styleitem property="padding-top" value="20px"/>
+																<styleitem property="box-sizing" value="border-box"/>
+															</styles>
+														</styleitem>
+													</styles>
+													<renderconditions logictype="and"/>
+												</image>
+											</components>
+										</division>
+										<division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+											<components>
+												<richtext multiple="false" uniqueid="sk-1ZKp-543">
+													<contents>&lt;p&gt;&lt;span style="font-size:20px;"&gt;&lt;span style="color:#ffffff;"&gt;Mockaroo API Display&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+												</richtext>
+											</components>
+										</division>
+										<division behavior="fit" verticalalign="top">
+											<components>
+												<navigation uniqueid="sk-1evP-1108" overflowtomenu="false">
+													<navigationitems>
+														<navigationitem uniqueid="sk-1evP-1107" icon="sk-icon-search">
+															<actions>
+																<action type="redirect" window="self"/>
+															</actions>
+														</navigationitem>
+														<navigationitem uniqueid="sk-1evQ-1119" icon="sk-icon-send-email">
+															<actions>
+																<action type="redirect" window="self"/>
+															</actions>
+														</navigationitem>
+														<navigationitem uniqueid="sk-1evQ-1124" icon="fa-bell">
+															<actions>
+																<action type="redirect" window="self"/>
+															</actions>
+														</navigationitem>
+														<navigationitem uniqueid="sk-1evQ-1129" icon="fa-sign-out">
+															<actions>
+																<action type="redirect" window="self"/>
+															</actions>
+														</navigationitem>
+													</navigationitems>
+												</navigation>
+											</components>
+										</division>
+									</divisions>
+									<styles>
+										<styleitem type="background" bgtype="none"/>
+									</styles>
+								</grid>
+							</components>
+							<styles>
+								<styleitem type="background"/>
+								<styleitem type="border" padding="none">
+									<styles>
+										<styleitem property="box-sizing" value="border-box"/>
+									</styles>
+								</styleitem>
+								<styleitem type="size" height="custom">
+									<styles>
+										<styleitem property="max-height" value="60px"/>
+										<styleitem property="overflow-y" value="auto"/>
+									</styles>
+								</styleitem>
+							</styles>
+						</wrapper>
+					</components>
+					<styles>
+						<styleitem type="background" bgtype="color">
+							<styles>
+								<styleitem property="background-color" value="#0083e6"/>
+							</styles>
+						</styleitem>
+						<styleitem type="border"/>
+					</styles>
+				</skuidheader>
+			</components>
+		</pageregioncontent>
+	</pageregioncontents>
+</skuidpage>
