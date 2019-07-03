@@ -20,40 +20,40 @@
         <model id="uiKPIs" limit="20" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true">
             <fields>
                 <field id="totalValue" displaytype="FORMULA" label="Total Value" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="9" scale="0">
-                    <formula>MATH__SUM("uiData","Amount")</formula>
+                    <formula>AGG__SUM("uiData","Amount")</formula>
                 </field>
                 <field id="avgValue" displaytype="FORMULA" label="Avg Value" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
-                    <formula>MATH__AVG("uiData","Amount")</formula>
+                    <formula>AGG__AVG("uiData","Amount")</formula>
                 </field>
                 <field id="minValue" displaytype="FORMULA" label="Min Value" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
-                    <formula>MATH__MIN("uiData","Amount")</formula>
+                    <formula>AGG__MIN("uiData","Amount")</formula>
                 </field>
                 <field id="maxValue" displaytype="FORMULA" label="Max Value" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
-                    <formula>MATH__MAX("uiData","Amount")</formula>
+                    <formula>AGG__MAX("uiData","Amount")</formula>
                 </field>
                 <field id="countValue" displaytype="FORMULA" label="Count" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="17" scale="0">
-                    <formula>MATH__COUNT("uiData","Amount")</formula>
+                    <formula>AGG__COUNT("uiData","Amount")</formula>
                 </field>
                 <field id="medValue" displaytype="FORMULA" label="Median Value" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
-                    <formula>MATH__MED("uiData","Amount")</formula>
+                    <formula>AGG__MED("uiData","Amount")</formula>
                 </field>
                 <field id="totalClosedWon" displaytype="FORMULA" label="Total Closed Won" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
-                    <formula>MATH__SUMIF("uiData","Amount","Stage","Closed Won",false)</formula>
+                    <formula>AGG__SUMIF("uiData","Amount","Stage","Closed Won",false)</formula>
                 </field>
                 <field id="avgDaysToWin" displaytype="FORMULA" label="Avg Days To Close" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="17" scale="0">
-                    <formula>MATH__AVGIF("uiData","DaysOpen","Stage","Closed Won")</formula>
+                    <formula>AGG__AVGIF("uiData","DaysOpen","Stage","Closed Won")</formula>
                 </field>
                 <field id="medDaysToWin" displaytype="FORMULA" label="Median Days To Win" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="0">
-                    <formula>MATH__MEDIF("uiData","DaysOpen","Stage","Closed Won")</formula>
+                    <formula>AGG__MEDIF("uiData","DaysOpen","Stage","Closed Won")</formula>
                 </field>
                 <field id="minDaysToWin" displaytype="FORMULA" label="Min Days To Win" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="0">
-                    <formula>MATH__MINIF("uiData","DaysOpen","Stage","Closed Won")</formula>
+                    <formula>AGG__MINIF("uiData","DaysOpen","Stage","Closed Won")</formula>
                 </field>
                 <field id="maxAmountWon" displaytype="FORMULA" label="Max Amount Won" ogdisplaytype="TEXT" readonly="true" returntype="CURRENCY" precision="17" scale="0">
-                    <formula>MATH__MAXIF("uiData","Amount","Stage","Closed Won")</formula>
+                    <formula>AGG__MAXIF("uiData","Amount","Stage","Closed Won")</formula>
                 </field>
                 <field id="countWins" displaytype="FORMULA" label="countWins" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="17" scale="0">
-                    <formula>MATH__COUNTIF("uiData","DaysOpen","Stage","Closed Won")</formula>
+                    <formula>AGG__COUNTIF("uiData","DaysOpen","Stage","Closed Won")</formula>
                 </field>
             </fields>
             <conditions/>
@@ -313,168 +313,204 @@
     <resources>
         <labels/>
         <javascript>
-            <jsitem location="inline" name="customFormulas" cachelocation="false" url="">// This was written for Skuid 11.X, and has not been tested in other version
+            <jsitem location="inline" name="customFormulas" cachelocation="false" url="">
+// This was written for Skuid 11.X, and has not been tested in other versions
 // Only tested in Chrome on Win &amp; Mac
 // Uses 2 unsupported Skuid APIs (skuid.aggregations and skuid.utils.getObjectProperty)
 
+// general function that does the "if" in mathif to filter model to records where iffield=ifvalue
+function mathAggIf(mathtype, modelname, fieldname, iffield, ifvalue, blanks) {
 
-// general function that does the 'if' in mathif to filter model to records where iffield=ifvalue
-function mathAggIf(mathtype,modelname,fieldname,iffield,ifvalue,blanks){
-    var modelrows = skuid.$M(modelname).getRows();
+    var model = skuid.$M(modelname);
+
+    if (!model) throw "Invalid Model provided in formula function";
+
+    var modelRows = model.getRows();
+
     function filterByField(item) {
-        return (skuid.utils.getObjectProperty(item, iffield)===ifvalue) ? true : false; 
+        return skuid.utils.getObjectProperty(item, iffield) === ifvalue;
     }
-    return skuid.aggregations.aggregate(mathtype,skuid.$M(modelname),fieldname, {countBlanks: blanks,rows: modelrows.filter(filterByField)}); // skuid function that takes in these params, passes to filter function, and spits out the result
+
+    // skuid function that takes in these params, passes to filter function, and spits out the result
+    return skuid.aggregations.aggregate(
+        mathtype,
+        model,
+        fieldname,
+        {
+            countBlanks: blanks,
+            rows: modelRows.filter(filterByField)
+        }
+    );
 }
 
 // SUM &amp; SUMIF
-skuid.formula.Formula (
-    'SUM',
-    // MATH__SUM(modelToAgg,fieldToAgg,countblanks)  &lt;- what to put in formula field, copy &amp; paste in since can't add as choice from Function dropdown.
-    function (modelname,fieldname,blanks) { 
-        return skuid.aggregations.aggregate('sum',skuid.$M(modelname),fieldname, {countBlanks: blanks});
-  },{
-    namespace: 'MATH',
-    numArgs : 3,
-    returnType : 'string'
-  }
+skuid.formula.Formula(
+    "SUM",
+    // AGG__SUM(modelToAgg,fieldToAgg,countblanks) -- what to put in formula field, copy &amp; paste in since can"t add as choice from Function dropdown.
+    function(modelname, fieldname, blanks) { 
+        return skuid.aggregations.aggregate("sum", skuid.$M(modelname), fieldname, {
+            countBlanks: blanks
+        });
+    },
+    {
+        namespace: "MATH",
+        numArgs: 3,
+        returnType: "number"
+    }
 );
 
-skuid.formula.Formula (
-    'SUMIF',
-    // MATH__SUMIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
-    function (modelname,fieldname,iffield,ifvalue,blanks) {
-        return mathAggIf('sum',modelname,fieldname,iffield,ifvalue,blanks);
-  },{
-    namespace: 'MATH',
-    numArgs : 5,
-    returnType : 'string'
-  }
+skuid.formula.Formula(
+    "SUMIF",
+    // AGG__SUMIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function(modelname, fieldname, iffield, ifvalue, blanks) {
+        return mathAggIf("sum", modelname, fieldname, iffield, ifvalue, blanks);
+    },
+    {
+        namespace: "MATH",
+        numArgs: 5,
+        returnType: "number"
+    }
 );
 
 // AVG &amp; AVGIF
-skuid.formula.Formula (
-    'AVG',
-    // MATH__AVG(modelToAgg,fieldToAgg,countblanks)
-    function (modelname,fieldname,blanks) { 
-        return skuid.aggregations.aggregate('avg',skuid.$M(modelname),fieldname, {countBlanks: blanks});
-  },{
-    namespace: 'MATH',
-    numArgs : 3,
-    returnType : 'string'
-  }
+skuid.formula.Formula(
+    "AVG",
+    // AGG__AVG(modelToAgg,fieldToAgg,countblanks)
+    function(modelname, fieldname, blanks) { 
+        return skuid.aggregations.aggregate("avg", skuid.$M(modelname), fieldname,  { countBlanks: blanks });
+    },
+    {
+        namespace: "MATH",
+        numArgs: 3,
+        returnType: "number"
+    }
 );
 
-skuid.formula.Formula (
-    'AVGIF',
-    // MATH_AVGIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
-    function (modelname,fieldname,iffield,ifvalue,blanks) {
-        return mathAggIf('avg',modelname,fieldname,iffield,ifvalue,blanks);
-  },{
-    namespace: 'MATH',
-    numArgs : 5,
-    returnType : 'string'
-  }
+skuid.formula.Formula(
+    "AVGIF",
+    // AGG__AVGIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function(modelname, fieldname, iffield, ifvalue, blanks) {
+        return mathAggIf("avg", modelname, fieldname, iffield, ifvalue, blanks);
+    },
+    {
+        namespace: "MATH",
+        numArgs: 5,
+        returnType: "number"
+    }
 );
 
 // MIN &amp; MINIF
-skuid.formula.Formula (
-    'MIN',
-    // MATH__MIN(modelToAgg,fieldToAgg,countblanks)
-    function (modelname,fieldname,blanks) { 
-        return skuid.aggregations.aggregate('min',skuid.$M(modelname),fieldname, {countBlanks: blanks});
-  },{
-    namespace: 'MATH',
-    numArgs : 3,
-    returnType : 'string'
-  }
+skuid.formula.Formula(
+    "MIN",
+    // AGG__MIN(modelToAgg,fieldToAgg,countblanks)
+    function(modelname, fieldname, blanks) { 
+        return skuid.aggregations.aggregate("min", skuid.$M(modelname), fieldname, {countBlanks: blanks});
+    },
+    {
+        namespace: "MATH",
+        numArgs: 3,
+        returnType: "number"
+    }
 );
 
-skuid.formula.Formula (
-    'MINIF',
-    // MATH__MINIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
-    function (modelname,fieldname,iffield,ifvalue,blanks) {
-        return mathAggIf('min',modelname,fieldname,iffield,ifvalue,blanks);
-  },{
-    namespace: 'MATH',
-    numArgs : 5,
-    returnType : 'string'
-  }
+skuid.formula.Formula(
+    "MINIF",
+    // AGG__MINIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function(modelname, fieldname, iffield, ifvalue, blanks) {
+        return mathAggIf("min", modelname, fieldname, iffield, ifvalue, blanks);
+    },
+    {
+        namespace: "MATH",
+        numArgs: 5,
+        returnType: "number"
+    }
 );
 
 // MAX &amp; MAXIF
-skuid.formula.Formula (
-    'MAX',
-    // MATH__MAX(modelToAgg,fieldToAgg,countblanks)
-    function (modelname,fieldname,blanks) { 
-        return skuid.aggregations.aggregate('max',skuid.$M(modelname),fieldname, {countBlanks: blanks});
-  },{
-    namespace: 'MATH',
-    numArgs : 3,
-    returnType : 'string'
-  }
+skuid.formula.Formula(
+    "MAX",
+    // AGG__MAX(modelToAgg,fieldToAgg,countblanks)
+    function(modelname, fieldname, blanks) { 
+        return skuid.aggregations.aggregate("max",skuid.$M(modelname), fieldname, {
+            countBlanks: blanks
+        });
+    },
+    {
+        namespace: "MATH",
+        numArgs: 3,
+        returnType: "number"
+    }
 );
 
-skuid.formula.Formula (
-    'MAXIF',
-    // MATH__MAXIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
-    function (modelname,fieldname,iffield,ifvalue,blanks) {
-        return mathAggIf('max',modelname,fieldname,iffield,ifvalue,blanks);
-  },{
-    namespace: 'MATH',
-    numArgs : 5,
-    returnType : 'string'
-  }
+skuid.formula.Formula(
+    "MAXIF",
+    // AGG__MAXIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function(modelname, fieldname, iffield, ifvalue, blanks) {
+        return mathAggIf("max", modelname, fieldname, iffield, ifvalue, blanks);
+    },
+    {
+        namespace: "MATH",
+        numArgs: 5,
+        returnType: "number"
+    }
 );
 
-// COUNT&amp;COUNTIF
-skuid.formula.Formula (
-    'COUNT',
-    // MATH__COUNT(modelToAgg,fieldToAgg,countblanks)
-    function (modelname,fieldname,blanks) { 
-        return skuid.aggregations.aggregate('count',skuid.$M(modelname),fieldname, {countBlanks: blanks});
-  },{
-    namespace: 'MATH',
-    numArgs : 3,
-    returnType : 'string'
-  }
+// COUNT &amp; COUNTIF
+skuid.formula.Formula(
+    "COUNT",
+    // AGG__COUNT(modelToAgg,fieldToAgg,countblanks)
+    function(modelname, fieldname, blanks) { 
+        return skuid.aggregations.aggregate("count", skuid.$M(modelname), fieldname, {
+            countBlanks: blanks
+        });
+    },
+    {
+        namespace: "MATH",
+        numArgs: 3,
+        returnType: "number"
+    }
 );
 
-skuid.formula.Formula (
-    'COUNTIF',
-    // MATH__COUNTIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
-    function (modelname,fieldname,iffield,ifvalue,blanks) {
-        return mathAggIf('count',modelname,fieldname,iffield,ifvalue,blanks);
-  },{
-    namespace: 'MATH',
-    numArgs : 5,
-    returnType : 'string'
-  }
+skuid.formula.Formula(
+    "COUNTIF",
+    // AGG__COUNTIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function(modelname, fieldname, iffield, ifvalue, blanks) {
+        return mathAggIf("count", modelname, fieldname, iffield, ifvalue, blanks);
+    },
+    {
+        namespace: "MATH",
+        numArgs: 5,
+        returnType: "number"
+    }
 );
 
 // MED &amp; MEDIF
-skuid.formula.Formula (
-    'MED',
-    // MATH__MED(modelToAgg,fieldToAgg,countblanks)
-    function (modelname,fieldname,blanks) { 
-        return skuid.aggregations.aggregate('med',skuid.$M(modelname),fieldname, {countBlanks: blanks});
-  },{
-    namespace: 'MATH',
-    numArgs : 3,
-    returnType : 'string'
-  }
+skuid.formula.Formula(
+    "MED",
+    // AGG__MED(modelToAgg,fieldToAgg,countblanks)
+    function(modelname, fieldname, blanks) { 
+        return skuid.aggregations.aggregate("med", skuid.$M(modelname), fieldname, {
+            countBlanks: blanks
+        });
+    },
+    {
+        namespace: "MATH",
+        numArgs: 3,
+        returnType: "number"
+    }
 );
 
-skuid.formula.Formula (
-    'MEDIF',
-    // MATH__MEDIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
-    function (modelname,fieldname,iffield,ifvalue,blanks) {
-        return mathAggIf('med',modelname,fieldname,iffield,ifvalue,blanks);
-  },{
-    namespace: 'MATH',
-    numArgs : 5,
-    returnType : 'string'
-  }
+skuid.formula.Formula(
+    "MEDIF",
+    // AGG__MEDIF(modelToAgg,fieldToAgg,conditionField,conditionValue,countblanks)
+    function(modelname, fieldname, iffield, ifvalue, blanks) {
+        return mathAggIf("med", modelname, fieldname, iffield, ifvalue, blanks);
+    },
+    {
+        namespace: "MATH",
+        numArgs: 5,
+        returnType: "number"
+    }
 );</jsitem>
         </javascript>
         <css/>
