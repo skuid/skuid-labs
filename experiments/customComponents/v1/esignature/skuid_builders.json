@@ -1,0 +1,25 @@
+{
+   "id": "esignature",
+   "components": [
+      {
+         "id": "signature",
+         "folderId": "signature"
+      }
+   ],
+   "folders": [
+      {
+         "id": "signature",
+         "name": "E-Signature",
+         "icon": "sk-icon-component-pack"
+      }
+   ],
+   "js": [
+      {
+         "path": "jSignature.min.js"
+      },
+      {
+         "path": "builders.js"
+      }
+   ],
+   "css": []
+}

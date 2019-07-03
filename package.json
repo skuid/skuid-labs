@@ -1,13 +1,13 @@
 {
   "name": "skuid-labs",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A place to share Skuid components, formulas, snippets, and other extensions with the Skuid builder community",
   "scripts": {
-    "lint": " ./node_modules/.bin/eslint . --ext .json --ext .js"
+    "lint": "./node_modules/.bin/eslint . --ext .json --ext .js",
+    "test": "npm run lint"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Skuid, Inc.",
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
