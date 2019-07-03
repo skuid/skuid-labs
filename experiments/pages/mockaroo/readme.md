@@ -19,7 +19,7 @@ Create a new "MockaRoo" datasource.
 - Name "MockaRoo"
 - URL/Endpoint: https://my.api.mockaroo.com
 - Authentication:  none
-- Open "URL Paramater to include in every request" section:  Add  API KEY there. Should be "Key : <<YourKey>>" 
+- Open "URL Paramater to include in every request" section:  Add  API KEY there. Should be "key : <<YourKey>>" 
 
 Create new page with XML from "Mockaroo" xml file in this folder. 
 API should be V1
