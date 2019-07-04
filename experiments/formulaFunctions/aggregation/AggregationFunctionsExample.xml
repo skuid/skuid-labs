@@ -353,7 +353,7 @@ skuid.formula.Formula(
         });
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 3,
         returnType: "number"
     }
@@ -366,7 +366,7 @@ skuid.formula.Formula(
         return mathAggIf("sum", modelname, fieldname, iffield, ifvalue, blanks);
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 5,
         returnType: "number"
     }
@@ -380,7 +380,7 @@ skuid.formula.Formula(
         return skuid.aggregations.aggregate("avg", skuid.$M(modelname), fieldname,  { countBlanks: blanks });
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 3,
         returnType: "number"
     }
@@ -393,7 +393,7 @@ skuid.formula.Formula(
         return mathAggIf("avg", modelname, fieldname, iffield, ifvalue, blanks);
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 5,
         returnType: "number"
     }
@@ -407,7 +407,7 @@ skuid.formula.Formula(
         return skuid.aggregations.aggregate("min", skuid.$M(modelname), fieldname, {countBlanks: blanks});
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 3,
         returnType: "number"
     }
@@ -420,7 +420,7 @@ skuid.formula.Formula(
         return mathAggIf("min", modelname, fieldname, iffield, ifvalue, blanks);
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 5,
         returnType: "number"
     }
@@ -436,7 +436,7 @@ skuid.formula.Formula(
         });
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 3,
         returnType: "number"
     }
@@ -449,7 +449,7 @@ skuid.formula.Formula(
         return mathAggIf("max", modelname, fieldname, iffield, ifvalue, blanks);
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 5,
         returnType: "number"
     }
@@ -465,7 +465,7 @@ skuid.formula.Formula(
         });
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 3,
         returnType: "number"
     }
@@ -478,7 +478,7 @@ skuid.formula.Formula(
         return mathAggIf("count", modelname, fieldname, iffield, ifvalue, blanks);
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 5,
         returnType: "number"
     }
@@ -494,7 +494,7 @@ skuid.formula.Formula(
         });
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 3,
         returnType: "number"
     }
@@ -507,7 +507,7 @@ skuid.formula.Formula(
         return mathAggIf("med", modelname, fieldname, iffield, ifvalue, blanks);
     },
     {
-        namespace: "MATH",
+        namespace: "AGG",
         numArgs: 5,
         returnType: "number"
     }
