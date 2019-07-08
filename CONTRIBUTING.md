@@ -2,20 +2,24 @@
 
 ## Why contribute?
 
-We created Skuid Labs to provide a central place for Skuid builders to share extensions that they've created which could benefit other builders. If you've got a Skuid extension you've created that you want to share with the world, but weren't sure where to go, this is the place.
+We created Skuid Labs to provide a central place for Skuid builders to share extensions, components, and other projects that they've created which could benefit other builders. In Skuid Labs like to call these **experiments** to go along with the laboratory theme. If you've got an Skuid project you've created that you want to share with the world, but weren't sure where to go, this is the place.
 
 Your contributions also help shape the future of the Skuid product. When we see the kinds of components, formulas, and other extensions that Skuid builders are creating, that helps give us ideas about where to focus our efforts.
 
 ## How do I contribute?
 
-If you've got something you'd like to submit, go ahead, clone this repository and submit a pull request! We just ask that you do the following:
+If you've got an experiment you'd like to submit, go ahead, clone this repository and submit a pull request! We just ask that you do the following:
 
 - Ensure that your file names are **[camelCase](https://en.wikipedia.org/wiki/Camel_case)**.
 - Create a folder for your experiment in the proper directory.
-- Leave enough code comments to explain your experiment (or leave a description in a README file written in Markdown).
-
-   - If applicable, note the [API version](https://docs.skuid.com/latest/en/skuid/api-version/) the [managed package release version](https://skuid.com/releases/) in which your experiment is intended to be used.
-
+- Describe your experiment in a `README` file, written in Markdown, at the root of your experiment's directory.
+  - In addition to a `README`, add as many code comments as you see fit to properly explain your experiment.
+  - If applicable, note the [API version](https://docs.skuid.com/latest/en/skuid/api-version/) the [managed package release version](https://skuid.com/releases/) in which your experiment is intended to be used.
+- Consider including a sample page to demonstrate your experiment. 
+  - The `XML` and `JSON` files for these pages should reside in the root directory of your experiment.
+  - Unless necessary for the concept of the experiment, **avoid using data sources within sample pages**. Instead, use [UI-only models](https://docs.skuid.com/latest/en/skuid/models/ui-only-models-fields.html) with dummy data. 
+- We highly encourage screenshots, especially for to illustrate how experiments should look when finished. Include these in a `screenshots` directory, nested within your experiments directory.
+  - For an example, see the [E-Signature Component experiment](https://github.com/skuid/skuid-labs/tree/master/experiments/customComponents/v1/esignature).
 - We use [ESLint](https://eslint.org/) to ensure that your code matches our styles. If your code editor has an ESLint plugin installed, your code should automatically be linted, but you can alternatively just run `npm run lint` locally.
 
   The easiest way to do this is to install [Node.js](https://nodejs.org/en/download/). We recommend using `nvm` to install the version of Node associated with this repository (`brew install nvm`) and run the following commands:
