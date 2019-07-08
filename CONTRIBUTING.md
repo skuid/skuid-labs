@@ -17,7 +17,7 @@ If you've got an experiment you'd like to submit, go ahead, clone this repositor
   - If applicable, note the [API version](https://docs.skuid.com/latest/en/skuid/api-version/) the [managed package release version](https://skuid.com/releases/) in which your experiment is intended to be used.
 - Consider including a sample page to demonstrate your experiment. 
   - The `XML` and `JSON` files for these pages should reside in the root directory of your experiment.
-  - Unless necessary for the concept of the experiment, **avoid using data sources within sample pages**. Instead, use [UI-only models](https://docs.skuid.com/latest/en/skuid/models/ui-only-models-fields.html) with dummy data. 
+  - Unless necessary for the concept of the experiment, **avoid using data sources within sample pages**. Instead, use [UI-only models](https://docs.skuid.com/latest/en/skuid/models/ui-only-models-fields.html) with dummy data. Feel free to base your sample pages off of our own [sample page.](https://github.com/skuid/skuid-labs/tree/master/experiments/pages/samplePage)
 - We highly encourage screenshots, especially for to illustrate how experiments should look when finished. Include these in a `screenshots` directory, nested within your experiments directory.
   - For an example, see the [E-Signature Component experiment](https://github.com/skuid/skuid-labs/tree/master/experiments/customComponents/v1/esignature).
 - We use [ESLint](https://eslint.org/) to ensure that your code matches our styles. If your code editor has an ESLint plugin installed, your code should automatically be linted, but you can alternatively just run `npm run lint` locally.
