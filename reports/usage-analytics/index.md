@@ -42,7 +42,7 @@ First create a custom object. To follow along with this example name it _Skuid_U
 
 - **Note**
   - If you created a custom object in Salesforce, most of the usage tracking functionality can leverage default fields on a custom object, like _Last Activity Date_ and _Owner_. 
-  - If you want to avoid creating extra fields, you can use the standard _Name _field on the custom object and rename it.
+  - If you want to avoid creating extra fields, you can use the standard _Name_ field on the custom object and rename it.
 
 **With the object created, let's adjust the object's fields.** This example uses the following standard fields to gather basic information:
 
@@ -50,17 +50,17 @@ First create a custom object. To follow along with this example name it _Skuid_U
 2. **CreatedById**: A **lookup relationship** field that will reference the User object, tying the Skuid Usage record to the user that performed the tracked action.
 3. **Created Date**: A **date/time** field that will capture a timestamp of when the Skuid Usage record was created.
 
-With those fields set, [create the following field](https://help.salesforce.com/articleView?id=adding_fields.htm&type=5) to track additional information:
+With those fields set, [create the following fields](https://help.salesforce.com/articleView?id=adding_fields.htm&type=5) to track additional information:
 
-1. **Tracked Action Category: **A **text **field to capture the _categories_ of actions you'll be tracking. You can alternatively make this a **picklist** field if you wish to only use a specific set of values. Some example values for this field include:
+1. **Tracked Action Category**: A **text** field to capture the _categories_ of actions you'll be tracking. You can alternatively make this a **picklist** field if you wish to only use a specific set of values. Some example values for this field include:
     - Page View
     - Button Action
     - Filter Activated
-2. **Tracked Action Name: **A **text **field to capture the value of the particular action being tracked. This field will track more specific information like _Which button was the user clicking?_ or _Which type of filter were they activating?_
+2. **Tracked Action Name**: A **text** field to capture the value of the particular action being tracked. This field will track more specific information like _Which button was the user clicking?_ or _Which type of filter were they activating?_
 
 ### Step 3: Create a 'Skuid_Usage' model on your page or master page
 
-Navigate to your existing page that you wish to add analytics to, or [create a new master page](https://docs.skuid.com/latest/en/skuid/pages/master-child-pages.html#create-a-master-page) to be reused across multiple child pages.
+Navigate to the page that you wish to add analytics to, or [create a new master page](https://docs.skuid.com/latest/en/skuid/pages/master-child-pages.html#create-a-master-page) to be reused across multiple child pages.
 
 - **Note**: It's recommended to create the 'Skuid_Usage' model on a master page, because it will always be available on any connected child pages, and you won't have to create the same model on every page in which you are tracking actions.
 
@@ -68,11 +68,11 @@ Navigate to your existing page that you wish to add analytics to, or [create a n
 
 Configure the following model properties (any other properties can use their default values)**:**
 
-- **Model Id: **Skuid_Usage
-- **Data Source Type: **Salesforce
-- **Data Source: **Salesforce
-- **Salesforce Object Name: **Skuid_Usage__c
-- **Query on Page Load: **False
+- **Model Id**: Skuid_Usage
+- **Data Source Type**: Salesforce
+- **Data Source**: Salesforce
+- **Salesforce Object Name**: Skuid_Usage__c
+- **Query on Page Load**: False
 - **Max ## of records**: 1 
 
 ![alt_text](images/image3.png "image_tooltip")
@@ -103,40 +103,40 @@ You can also add a _description_ if needed.
 Next, click **the Inputs tab** and add the following inputs: 
 
 1. An input to record the tracked action category
-   - **Name: **trackedActionCategory
-   - **Type: **Value
+   - **Name**: trackedActionCategory
+   - **Type**: Value
 2. An input to record the tracked action name
-   - **Name: **trackedActionName
-   - **Type: **Value
+   - **Name**: trackedActionName
+   - **Type**: Value
 
 Now return to the Actions tab to create the sequence by adding the following actions (any action properties not listed below can use their default values):
 
 - **Action 1**: Remove all rows from Model
   - **Models to Empty**: Skuid_Usage
 - **Action 2:** Create new row(s)
-  - **Model: **Skuid_Usage
+  - **Model**: Skuid_Usage
     - **Update Field 1**: Record the category of action
       - **Field**: Tracked_Action_Category__c
       - **Field Value Source**: Single Specified Value
-      - **Value:** {{$Input.trackedActionCategory}}
-    - **Update** **Field 2: **Record the specific action
-      - **Field: **Tracked_Action_Name__c
+      - **Value**: {{$Input.trackedActionCategory}}
+    - **Update Field 2**: Record the specific action
+      - **Field**: Tracked_Action_Name__c
       - **Field Value Source**: Single Specified Value
       - **Value**: {{$Input.trackedActionName}}
-    - **Update** **Field 3: **Records the page name where the action happened.
-      - **Field: **Name _or_ Page Name
-      - **Field Value Source: **Page/URL parameter value
-      - **Parameter: **page
-    - **Update** **Field 4_: _**Record the date that the user performed the action.
-      - **Field: **CreatedDate
-      - **Field Value Source: **Single specified value
+    - **Update Field 3**: Records the page name where the action happened.
+      - **Field**: Name _or_ Page Name
+      - **Field Value Source**: Page/URL parameter value
+      - **Parameter**: page
+    - **Update Field 4**: Record the date that the user performed the action.
+      - **Field**: CreatedDate
+      - **Field Value Source**: Single specified value
       - **Value:** Today
-    - **Update** **Field 4: **Records the user's ID.
-      - **Field: **CreatedById
-      - **Field Value Source: **If using Skuid on Salesforce, select _Salesforce user attribute_. If using Skuid Platform, select _Skuid user attribute._
-      - **Salesforce User attribute/ Skuid User attribute: **User Id
+    - **Update Field 4**: Records the user's ID.
+      - **Field**: CreatedById
+      - **Field Value Source**: If using Skuid on Salesforce, select _Salesforce user attribute_. If using Skuid Platform, select _Skuid user attribute._
+      - **Salesforce User attribute/ Skuid User attribute**: User Id
 - **Action 3: Save Model changes**
-  - **Models to save: **Skuid_Usage
+  - **Models to save**: Skuid_Usage
 
 ### Step 5: Using the Usage Snapshot
 
@@ -163,7 +163,7 @@ Add one action to the sequence:
 
 #### Example 2: Tracking a button click action
 
-You can also use the usage snapshot within a button's set of actions to track how often that button is used. To do so, at the end of the button's standard list of actions, run the Usage Snapshot sequence. 
+You can also use the usage snapshot within a button's set of actions to track how often that button is used. Run the _Usage Snapshot_ sequence at the end of the button's standard list of actions to do so. 
 
 For example, if you had a click-to-dial button on an accounts page, that action may have the following properties:
 
