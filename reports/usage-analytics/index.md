@@ -7,10 +7,7 @@
   - [Step 1: Create a new object/entity to contain the collected usage data](#step-1-create-a-new-objectentity-to-contain-the-collected-usage-data)
   - [Step 2: Configure the fields on the new object to capture the desired data](#step-2-configure-the-fields-on-the-new-object-to-capture-the-desired-data)
   - [Step 3: Create a 'Skuid_Usage' model on your page or master page](#step-3-create-a-skuid_usage-model-on-your-page-or-master-page)
-    - [**Create a model on your page to reference the 'Skuid_Usage__c' object**](#create-a-model-on-your-page-to-reference-the-skuidusage_c-object)
-    - [Add the following model fields](#add-the-following-model-fields)
   - [Step 4: Create a 'Usage Snapshot' action sequence](#step-4-create-a-usage-snapshot-action-sequence)
-      - [**Action Sequence Configuration:**](#action-sequence-configuration)
   - [Step 5: Using the Usage Snapshot](#step-5-using-the-usage-snapshot)
     - [Example 1: Tracking page views actions](#example-1-tracking-page-views-actions)
     - [Example 2: Tracking a button click action](#example-2-tracking-a-button-click-action)
@@ -83,8 +80,6 @@ Navigate to the page that you wish to add analytics to, or [create a new master 
 
 - **Note**: It's recommended to create the 'Skuid_Usage' model on a master page, because it will always be available on any connected child pages, and you won't have to create the same model on every page in which you are tracking actions.
 
-#### **Create a model on your page to reference the 'Skuid_Usage__c' object**
-
 Configure the following model properties (any other properties can use their default values):
 
 - **Model Id**: Skuid_Usage
@@ -96,7 +91,7 @@ Configure the following model properties (any other properties can use their def
 
 ![alt_text](images/image3.png "image_tooltip")
 
-#### Add the following model fields
+Then add the following model fields:
 
 - CreatedById
 - CreatedDate
@@ -109,8 +104,6 @@ Configure the following model properties (any other properties can use their def
 Next, [create a reusable action sequence](https://docs.skuid.com/latest/en/skuid/action-framework/action-sequences/#reusable-action-sequences) on your page and name it something like 'Usage Snapshot'. **This action sequence is what will be used to create the analytics records.** By setting up inputs, you can reuse this sequence anywhere you wish to record a tracked action.
 
 - **Note**: Similar to what we did with the Skuid_Usage model, it's best to add this action sequence to your master page. That way this action sequence will be available to use on every child page. 
-
-##### **Action Sequence Configuration:**
 
 First, configure the basic information for the action sequence:
 
