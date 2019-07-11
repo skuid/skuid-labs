@@ -1,5 +1,20 @@
 # Lab Report: Building a simple analytics tracker with an action sequence
 
+- [Assumptions](#assumptions)
+- [Sample XML](#sample-xml)
+- [The Usage Snapshot Action Sequence: An Overview](#the-usage-snapshot-action-sequence-an-overview)
+- [Build Steps](#build-steps)
+  - [Step 1: Create a new object/entity to contain the collected usage data](#step-1-create-a-new-objectentity-to-contain-the-collected-usage-data)
+  - [Step 2: Configure the fields on the new object to capture the desired data](#step-2-configure-the-fields-on-the-new-object-to-capture-the-desired-data)
+  - [Step 3: Create a 'Skuid_Usage' model on your page or master page](#step-3-create-a-skuid_usage-model-on-your-page-or-master-page)
+    - [**Create a model on your page to reference the 'Skuid_Usage__c' object**](#create-a-model-on-your-page-to-reference-the-skuidusage_c-object)
+    - [Add the following model fields](#add-the-following-model-fields)
+  - [Step 4: Create a 'Usage Snapshot' action sequence](#step-4-create-a-usage-snapshot-action-sequence)
+      - [**Action Sequence Configuration:**](#action-sequence-configuration)
+  - [Step 5: Using the Usage Snapshot](#step-5-using-the-usage-snapshot)
+    - [Example 1: Tracking page views actions](#example-1-tracking-page-views-actions)
+    - [Example 2: Tracking a button click action](#example-2-tracking-a-button-click-action)
+
 ## Assumptions
 
 - **Note**: This Lab Report is for Skuid users that know how to:
@@ -8,6 +23,10 @@
   - Create action sequences using Skuid's Action Framework.
 
 The following experiment is written using Skuid with Salesforce as a data source. However, the underlying concepts are transferable to Skuid applications using different external data systems.
+
+## Sample XML
+
+See the sample XML used for the Usage Snapshot action sequence here: [Skuid_Usage.xml](Skuid_Usage.xml)
 
 ## The Usage Snapshot Action Sequence: An Overview
 
