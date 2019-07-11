@@ -16,7 +16,7 @@ The following experiment is written using Skuid with Salesforce as a data source
 
 Action sequences are incredibly powerful tools that allow builders to create and reuse a particular set of actions from page to page. And because of this functionality, we can create a relatively simple action sequence that will allow us to create usage metric records for use with analytics. 
 
-The action sequence we're about to build is best for capturing valuable insights from these few key data points: 
+The action sequence we're about to build is best for capturing valuable insights from questions like these:
 
 - _Who did what?_
 - _When did they do it?_
@@ -66,7 +66,7 @@ Navigate to the page that you wish to add analytics to, or [create a new master 
 
 #### **Create a model on your page to reference the 'Skuid_Usage__c' object**
 
-Configure the following model properties (any other properties can use their default values)**:**
+Configure the following model properties (any other properties can use their default values):
 
 - **Model Id**: Skuid_Usage
 - **Data Source Type**: Salesforce
@@ -113,7 +113,7 @@ Now return to the Actions tab to create the sequence by adding the following act
 
 - **Action 1**: Remove all rows from Model
   - **Models to Empty**: Skuid_Usage
-- **Action 2:** Create new row(s)
+- **Action 2**: Create new row(s)
   - **Model**: Skuid_Usage
     - **Update Field 1**: Record the category of action
       - **Field**: Tracked_Action_Category__c
@@ -130,12 +130,12 @@ Now return to the Actions tab to create the sequence by adding the following act
     - **Update Field 4**: Record the date that the user performed the action.
       - **Field**: CreatedDate
       - **Field Value Source**: Single specified value
-      - **Value:** Today
+      - **Value**: Today
     - **Update Field 4**: Records the user's ID.
       - **Field**: CreatedById
       - **Field Value Source**: If using Skuid on Salesforce, select _Salesforce user attribute_. If using Skuid Platform, select _Skuid user attribute._
       - **Salesforce User attribute/ Skuid User attribute**: User Id
-- **Action 3: Save Model changes**
+- **Action 3**: Save Model changes
   - **Models to save**: Skuid_Usage
 
 ### Step 5: Using the Usage Snapshot
