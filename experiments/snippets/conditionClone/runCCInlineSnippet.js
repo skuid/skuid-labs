@@ -1,8 +1,10 @@
 /* global CloneCondition */
 
-if (arguments[0].hasOwnProperty('model')) {
-	if (arguments[0].hasOwnProperty('conditionName')) {
-		var initiatingCondition = arguments[0].model.getConditionByName(arguments[0].conditionName, true);
+var params = arguments[0];
+
+if (params.hasOwnProperty('model')) {
+	if (params.hasOwnProperty('conditionName')) {
+		var initiatingCondition = params.model.getConditionByName(params.conditionName, true);
 		if (initiatingCondition.hasOwnProperty('name')) {
 			var conditionPrefix = initiatingCondition.name.substring(0, 3);
 			if (conditionPrefix === 'CC_' || conditionPrefix === 'CA_' || conditionPrefix === 'CV_')
