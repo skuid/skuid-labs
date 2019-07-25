@@ -35,7 +35,9 @@
               <model>Skuid_Usage</model>
             </models>
             <defaults>
-              <default valuesource="param" field="Name" enclosevalueinquotes="true" value="page"/>
+              <default valuesource="formula" field="Name" enclosevalueinquotes="true" value="page">
+                <formula>{{$Page.Name}}</formula>
+              </default>
               <default valuesource="fieldvalue" field="Tracked_Action_Category__c" enclosevalueinquotes="true" value="{{$Input.trackedActionCategory}}"/>
               <default valuesource="fieldvalue" field="Tracked_Action_Name__c" enclosevalueinquotes="true" value="{{$Input.trackedActionName}}"/>
             </defaults>

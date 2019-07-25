@@ -138,8 +138,8 @@ Now return to the Actions tab to create the sequence by adding the following act
       - **Value**: {{$Input.trackedActionName}}
     - **Update Field 3**: Records the page name where the action happened.
       - **Field**: Name _or_ Page Name
-      - **Field Value Source**: Page/URL parameter value
-      - **Parameter**: page
+      - **Field Value Source**: Result of a Formula
+      - **Formula**: ``{{$Page.Name}}``
 - **Action 3**: Save Model changes
   - **Models to save**: Skuid_Usage
 
