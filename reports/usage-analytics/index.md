@@ -131,11 +131,11 @@ Now return to the Actions tab to create the sequence by adding the following act
     - **Update Field 1**: Record the category of action
       - **Field**: Tracked_Action_Category__c
       - **Field Value Source**: Single Specified Value
-      - **Value**: {{$Input.trackedActionCategory}}
+      - **Value**: ``{{$Input.trackedActionCategory}}``
     - **Update Field 2**: Record the specific action
       - **Field**: Tracked_Action_Name__c
       - **Field Value Source**: Single Specified Value
-      - **Value**: {{$Input.trackedActionName}}
+      - **Value**: ``{{$Input.trackedActionName}}``
     - **Update Field 3**: Records the page name where the action happened.
       - **Field**: Name _or_ Page Name
       - **Field Value Source**: Result of a Formula
