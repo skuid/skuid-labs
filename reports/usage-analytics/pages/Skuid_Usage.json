@@ -1,0 +1,10 @@
+{
+    "apiVersion": "v1",
+    "name": "Skuid_Usage",
+    "uniqueId": "_Skuid_Usage",
+    "type": "Desktop",
+    "module": "",
+    "maxAutoSaves": 25,
+    "isMasterPage": true,
+    "composerSettings": null
+}

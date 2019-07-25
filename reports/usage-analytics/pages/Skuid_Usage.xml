@@ -1,0 +1,72 @@
+<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true">
+  <models>
+    <model id="Skuid_Usage" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Skuid_Usage__c">
+      <fields>
+        <field id="Name"/>
+        <field id="Tracked_Action_Name__c"/>
+        <field id="Tracked_Action_Category__c"/>
+      </fields>
+      <conditions/>
+      <actions/>
+    </model>
+  </models>
+  <components>
+    <pageregion uniqueid="sk-2VbD-728" label="MainPageRegion">
+      <styles>
+        <styleitem type="background" bgtype="none"/>
+      </styles>
+    </pageregion>
+  </components>
+  <resources>
+    <labels/>
+    <javascript/>
+    <css/>
+    <actionsequences uniqueid="sk-2Ucx-113">
+      <actionsequence id="e59f3d98-eea8-4f56-aaad-ba0aa184f30e" label="Usage Snapshot" type="reusable" uniqueid="sk-2VEO-142">
+        <description>{{$Input.trackedActionCategory}}</description>
+        <actions>
+          <action type="emptyModelData">
+            <models>
+              <model>Skuid_Usage</model>
+            </models>
+          </action>
+          <action type="createRow" model="Skuid_Usage" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+            <models>
+              <model>Skuid_Usage</model>
+            </models>
+            <defaults>
+              <default valuesource="param" field="Name" enclosevalueinquotes="true" value="page"/>
+              <default valuesource="fieldvalue" field="Tracked_Action_Category__c" enclosevalueinquotes="true" value="{{$Input.trackedActionCategory}}"/>
+              <default valuesource="fieldvalue" field="Tracked_Action_Name__c" enclosevalueinquotes="true" value="{{$Input.trackedActionName}}"/>
+            </defaults>
+          </action>
+          <action type="save">
+            <models>
+              <model>Skuid_Usage</model>
+            </models>
+          </action>
+        </actions>
+        <inputs>
+          <input type="value" name="trackedActionCategory"/>
+          <input type="value" name="trackedActionName"/>
+        </inputs>
+      </actionsequence>
+      <actionsequence id="053c0223-e422-42aa-a64d-7fca3c4b9d8e" label="Record page view" type="event-triggered" event-scope="component" event-name="page.rendered" uniqueid="sk-2VEO-143">
+        <description/>
+        <actions>
+          <action type="action-sequence" action-sequence-id="e59f3d98-eea8-4f56-aaad-ba0aa184f30e">
+            <inputs>
+              <input name="trackedActionName" value="Page View"/>
+              <input name="recordType" value="Page View"/>
+              <input name="trackedActionCategory" value="Page View"/>
+            </inputs>
+          </action>
+        </actions>
+        <inputs/>
+      </actionsequence>
+    </actionsequences>
+  </resources>
+  <styles>
+    <styleitem type="background" bgtype="none"/>
+  </styles>
+</skuidpage>
