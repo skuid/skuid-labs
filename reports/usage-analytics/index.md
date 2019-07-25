@@ -60,13 +60,16 @@ First create a custom object. To follow along with this example name it _Skuid_U
   - If you created a custom object in Salesforce, most of the usage tracking functionality can leverage default fields on a custom object, like _Last Activity Date_ and _Owner_. 
   - If you want to avoid creating extra fields, you can use the standard _Name_ field on the custom object and rename it.
 
-**With the object created, let's adjust the object's fields.** This example uses the following standard fields to gather basic information:
+With the object created, let's adjust the object's **Name field,** which we'll use as a **text** field to capture the name of the Skuid page where the tracked action is taking place. For readability, update this field to be named **Page Name.**
 
-1. **Name**: A **text** field to capture the name of the Skuid page where the tracked action is taking place. For readability, update this field to be named **Page Name.**
-2. **CreatedById**: A **lookup relationship** field that will reference the User object, tying the Skuid Usage record to the user that performed the tracked action.
-3. **Created Date**: A **date/time** field that will capture a timestamp of when the Skuid Usage record was created.
+The following two fields, which are automatically populated by Salesforce, will also be useful for analytics tracking:
 
-With those fields set, [create the following fields](https://help.salesforce.com/articleView?id=adding_fields.htm&type=5) to track additional information:
+1. **CreatedById**: A **lookup relationship** field that will reference the User object, tying the Skuid Usage record to the user that performed the tracked action.
+1. **Created Date**: A **date/time** field that will capture a timestamp of when the Skuid Usage record was created.
+
+**Note**: If you'll be recreating this functionality on your own data source, you'll need to recreate these fields and update them in the action sequence below.
+
+Next, [create the following fields](https://help.salesforce.com/articleView?id=adding_fields.htm&type=5) to track additional information:
 
 1. **Tracked Action Category**: A **text** field to capture the _categories_ of actions you'll be tracking. You can alternatively make this a **picklist** field if you wish to only use a specific set of values. Some example values for this field include:
     - Page View
@@ -93,8 +96,6 @@ Configure the following model properties (any other properties can use their def
 
 Then add the following model fields:
 
-- CreatedById
-- CreatedDate
 - Name (or _Page Name_ if you renamed the field)
 - Tracked_Action_Category__c
 - Tracked_Action_Name__c
@@ -139,14 +140,6 @@ Now return to the Actions tab to create the sequence by adding the following act
       - **Field**: Name _or_ Page Name
       - **Field Value Source**: Page/URL parameter value
       - **Parameter**: page
-    - **Update Field 4**: Record the date that the user performed the action.
-      - **Field**: CreatedDate
-      - **Field Value Source**: Single specified value
-      - **Value**: Today
-    - **Update Field 4**: Records the user's ID.
-      - **Field**: CreatedById
-      - **Field Value Source**: If using Skuid on Salesforce, select _Salesforce user attribute_. If using Skuid Platform, select _Skuid user attribute._
-      - **Salesforce User attribute/ Skuid User attribute**: User Id
 - **Action 3**: Save Model changes
   - **Models to save**: Skuid_Usage
 
