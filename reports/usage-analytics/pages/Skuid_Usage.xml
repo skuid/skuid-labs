@@ -59,7 +59,6 @@
           <action type="action-sequence" action-sequence-id="e59f3d98-eea8-4f56-aaad-ba0aa184f30e">
             <inputs>
               <input name="trackedActionName" value="Page View"/>
-              <input name="recordType" value="Page View"/>
               <input name="trackedActionCategory" value="Page View"/>
             </inputs>
           </action>
