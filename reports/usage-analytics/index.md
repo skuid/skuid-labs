@@ -65,7 +65,7 @@ With the object created, let's adjust the object's **Name field,** which we'll u
 The following two fields, which are automatically populated by Salesforce, will also be useful for analytics tracking:
 
 1. **CreatedById**: A **lookup relationship** field that will reference the User object, tying the Skuid Usage record to the user that performed the tracked action.
-1. **Created Date**: A **date/time** field that will capture a timestamp of when the Skuid Usage record was created.
+2. **Created Date**: A **date/time** field that will capture a timestamp of when the Skuid Usage record was created.
 
 **Note**: If you'll be recreating this functionality on your own data source, you'll need to recreate these fields and update them in the action sequence below.
 
