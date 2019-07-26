@@ -23,7 +23,7 @@ The following experiment is written using Skuid with Salesforce as a data source
 
 ## Sample XML
 
-See the sample XML used for the Usage Snapshot action sequence here: [Skuid_Usage.xml](Skuid_Usage.xml)
+See the sample XML used for the Usage Snapshot action sequence here: [pages/Skuid_Usage.xml](pages/Skuid_Usage.xml)
 
 ## The Usage Snapshot Action Sequence: An Overview
 
