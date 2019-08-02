@@ -1,0 +1,74 @@
+[
+ {
+   "sumTotalPrice": 3427365,
+   "text": "Financial Services $3.43M",
+   "DisplayNumber": 3.43,
+   "Industry": "Financial Services"
+ },
+ {
+   "sumTotalPrice": 3009133.5,
+   "text": "Consumer Goods $3.01M",
+   "DisplayNumber": 3.01,
+   "Industry": "Consumer Goods"
+ },
+ {
+   "sumTotalPrice": 1495879.76,
+   "text": "Engineering $1.5M",
+   "DisplayNumber": 1.5,
+   "Industry": "Engineering"
+ },
+ {
+   "sumTotalPrice": 1478701,
+   "text": "Consulting $1.48M",
+   "DisplayNumber": 1.48,
+   "Industry": "Consulting"
+ },
+ {
+   "sumTotalPrice": 1303747.48,
+   "text": "Non Profit $1.3M",
+   "DisplayNumber": 1.3,
+   "Industry": "Non Profit"
+ },
+ {
+   "sumTotalPrice": 662614.1,
+   "text": "Other $0.66M",
+   "DisplayNumber": 0.66,
+   "Industry": "Other"
+ },
+ {
+   "sumTotalPrice": 527295,
+   "text": "Technology $0.53M",
+   "DisplayNumber": 0.53,
+   "Industry": "Technology"
+ },
+ {
+   "sumTotalPrice": 344290,
+   "text": "Risk Management $0.34M",
+   "DisplayNumber": 0.34,
+   "Industry": "Risk Management"
+ },
+ {
+   "sumTotalPrice": 256282.38,
+   "text": "Construction & Real Estate $0.26M",
+   "DisplayNumber": 0.26,
+   "Industry": "Construction & Real Estate"
+ },
+ {
+   "sumTotalPrice": 142880,
+   "text": "Utilities and Natural Resources $0.14M",
+   "DisplayNumber": 0.14,
+   "Industry": "Utilities and Natural Resources"
+ },
+ {
+   "sumTotalPrice": 130600,
+   "text": "Manufacturing $0.13M",
+   "DisplayNumber": 0.13,
+   "Industry": "Manufacturing"
+ },
+ {
+   "sumTotalPrice": 124547.38,
+   "text": "Media & Communications $0.12M",
+   "DisplayNumber": 0.12,
+   "Industry": "Media & Communications"
+ }
+]
