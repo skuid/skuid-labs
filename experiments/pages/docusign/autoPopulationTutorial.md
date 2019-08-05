@@ -29,7 +29,7 @@ a.	Define a custom data label (no spaces) for each tab.
 a.	 Authorize: https://account-d.docusign.com/oauth/auth
 b.	Token: https://account-d.docusign.com/oauth/token
 4.	Set the Client Id to the Integrator Key Id defined in DocuSign
-5.	Set the client secret to the Secret Key you saved from DocuSign earlier. Save! 
+5.	Set the Client Secret to the Secret Key you saved from DocuSign earlier. Save!
 6.	Now go to Data Sources > Data Sources
 7.	Create a New Data Source with a unique name and with the REST Data Source Type
 8.	Set the URL to  https://demo.docusign.net/restapi and the Authentication Provider to DocuSign. Save. 
