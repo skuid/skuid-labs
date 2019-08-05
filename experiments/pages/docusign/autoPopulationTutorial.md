@@ -74,24 +74,6 @@ i.	Supported Fonts: Arial, Arial, ArialNarrow, Calibri, CourierNew, Garamond, Ge
 4.	Look for an email from DocuSign (if you are the first recipient) 
 5.	You did it!
 
-##### Promote your key to a production account: 
-In order to send real DocuSign documents, you must promote your API key to a production account. Once it has been promoted, you will need to change some of the data source settings to match the new URL etc. 
-To do this:
-1.	Promote your key (tutorial:https://support.docusign.com/guides/ndse-admin-guide-api-and-keys) 
-2.	With the new key in the production account, follow steps 2-5 under the DocuSign section above. 
-3.	You will also need to transfer your template, which is made simple by selecting the download option on the template you want to transfer and then selecting new > upload template in the production account. 
-4.	In Skuid configure, you will need to modify the authentication provider and data source
-a.	New Data source URL: https://na2.docusign.net/restapi/v2 (may change based on your instance)
-b.	New Authentication Provider endpoint and token endpoint URLs : https://account.docusign.com/oauth/auth
-c.	Also make sure to update the client Id and Client secret if they have changed. 
-5.	In your Skuid page, modify the JS snippet to change the url in the request body to: https://na2.docusign.net/restapi/v2/accounts/<accountId>/envelopes/ 
-6.	Test it out! 
-
-##### Troubleshooting:
-1.	To see the status of your request in your Skuid page, go to inspect > network and look for the request. 
-2.	If template fields do not seem to be populating, make sure the first signer is the owner of the tabs in your DocuSign template. Once they sign, the values in the tabs should be visible to other signers. 
-
-
 ##### Example Request Body:  
  
 
@@ -131,5 +113,22 @@ c.	Also make sure to update the client Id and Client secret if they have changed
             "routingOrder": "2"
         }]
     }
+
+##### Promote your key to a production account: 
+In order to send real DocuSign documents, you must promote your API key to a production account. Once it has been promoted, you will need to change some of the data source settings to match the new URL etc. 
+To do this:
+1.	Promote your key (tutorial:https://support.docusign.com/guides/ndse-admin-guide-api-and-keys) 
+2.	With the new key in the production account, follow steps 2-5 under the DocuSign section above. 
+3.	You will also need to transfer your template, which is made simple by selecting the download option on the template you want to transfer and then selecting new > upload template in the production account. 
+4.	In Skuid configure, you will need to modify the authentication provider and data source
+a.	New Data source URL: https://na2.docusign.net/restapi/v2 (may change based on your instance)
+b.	New Authentication Provider endpoint and token endpoint URLs : https://account.docusign.com/oauth/auth
+c.	Also make sure to update the client Id and Client secret if they have changed. 
+5.	In your Skuid page, modify the JS snippet to change the url in the request body to: https://na2.docusign.net/restapi/v2/accounts/<accountId>/envelopes/ 
+6.	Test it out! 
+
+##### Troubleshooting:
+1.	To see the status of your request in your Skuid page, go to inspect > network and look for the request. 
+2.	If template fields do not seem to be populating, make sure the first signer is the owner of the tabs in your DocuSign template. Once they sign, the values in the tabs should be visible to other signers. 
 
 
