@@ -107,7 +107,7 @@ You can basically follow the format given in the [DocuSign API Explorer](https:/
         }]
     }
 
-### See it in action!: 
+### See it in action!
 In your Skuid page:
 2.	Remove any existing rows in the REST model and create a new row. 
 3.	Create an action that saves the new row. 
