@@ -107,7 +107,7 @@ You can basically follow the format given in the [DocuSign API Explorer](https:/
 
 ### See it in action!: 
 1.	In your Skuid page:
-2.	Make sure there is a new row on the “POST” model. 
+2.	Remove any existing rows in the REST model and create a new row. 
 3.	Create an action that saves the new row. 
 4.	Look for an email from DocuSign (if you are the first recipient) 
 5.	You did it!
