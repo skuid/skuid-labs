@@ -45,11 +45,11 @@ c.	HTTP verb =POST
 d.	Send new field values = “As templated request body” 
 4.	On this model, create a field for every piece of data that you want to insert into the DocuSign template. Also include fields for undefined recipients (name and email). 
 5.	For each field you create, set the default value to point to the data you want to merge (Field from another model is the easiest way to do this).
-6.	Get ready to create your custom request body!
+6.	Get ready to create your request body!
 
 
-##### Creating Your Custom Request Body:
-Because DocuSign’s REST API is fairly complex, creating a custom request body with merge variables is the way to go. (View an example below!)
+##### Creating Your Templated Request Body:
+Because DocuSign’s REST API is fairly complex, creating a templated request body with merge variables is the way to go. (View an example below!)
 You can basically follow the format given in the DocuSign API Explorer:  https://apiexplorer.docusign.com/#/esign/restapi?categories=Envelopes&tags=Envelopes&operations=create but you will only need the following fields: 
 1.	Envelope
 a.	Status  - either sent or created (for a draft)
@@ -92,7 +92,7 @@ c.	Also make sure to update the client Id and Client secret if they have changed
 2.	If template fields do not seem to be populating, make sure the first signer is the owner of the tabs in your DocuSign template. Once they sign, the values in the tabs should be visible to other signers. 
 
 
-##### Example payload snippet:  
+##### Example Request Body:  
  
 
 
