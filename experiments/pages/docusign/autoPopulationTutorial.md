@@ -127,7 +127,7 @@ c.	Also make sure to update the client Id and Client secret if they have changed
 6.	Test it out! 
 
 ##### Troubleshooting:
-1.	To see the status of your request in your Skuid page, go to inspect > network and look for the request. 
+1.	To see the status of your request in your Skuid page, use your browser's network inspector to look for the request and response from DocuSign. 
 2.	If template fields do not seem to be populating, make sure the first signer is the owner of the tabs in your DocuSign template. Once they sign, the values in the tabs should be visible to other signers. 
 
 
