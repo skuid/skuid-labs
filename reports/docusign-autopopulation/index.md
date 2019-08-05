@@ -53,14 +53,14 @@
 Because DocuSign’s REST API is fairly complex, creating a templated request body with merge variables is the way to go. (View an example below!)
 You can basically follow the format given in the [DocuSign API Explorer](https://apiexplorer.docusign.com/#/esign/restapi?categories=Envelopes&tags=Envelopes&operations=create) but you will only need the following fields: 
 1.	Envelope
-	- Status  - either sent or created (for a draft)
-	- Template Id  - referenced above. 
-	- Email Subject - define the subject of the email to be sent with the docusign doc. 
+	- status - either sent or created (for a draft)
+	- templateId - referenced above. 
+	- emailSubject - define the subject of the email to be sent with the DocuSign document. 
 2.	Recipient
 	- name
 	- email
 	- roleName - same as defined in the DocuSign template
-	- recipientId - the best way to get this is to do a [get request for recipients](https://apiexplorer.docusign.com/#/esign/restapi?categories=Envelopes&tags=EnvelopeRecipients&operations=list) on the api explorer   
+	- recipientId - the best way to get this is to do a [get request for recipients](https://apiexplorer.docusign.com/#/esign/restapi?categories=Envelopes&tags=EnvelopeRecipients&operations=list) on the api explorer 
 	- routingOrder (optional) - can also be defined in DocuSign, but it can be helpful to conditionally choose the routing order in Skuid. 
 3.	Recipient tab
 	- tabLabel - Data Label defined in DocuSign
