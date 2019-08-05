@@ -1,6 +1,8 @@
 
 
 # DocuSign Auto-Populate Integration Set-up
+
+Skuid's [DocuSign connector] (https://docs.skuid.com/latest/en/data/docusign/#docusign) allows you to view and edit documents you've sent with DocuSign, but what if you want to send a DocuSign document from Skuid, filled with the data you've already pulled into your Skuid page? Luckily, Skuid can easily send requests via DocuSign's REST API to do exactly that. Follow these instructions to set up a document template in DocuSign and then connect to Skuid to send the document automatically populated with data from your Skuid page.
  
 ## What you’ll need: 
 1.	A DocuSign sandbox account ([create one here](https://go.docusign.com/trial/)).
