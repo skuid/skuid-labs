@@ -125,7 +125,7 @@ To do this:
 	- New Authorize endpoint: `https://account.docusign.com/oauth/auth`
 	- New Token endpoint: `https://account.docusign.com/oauth/token`
 	- Also make sure to update the Client Id and Client secret if they have changed.
-6.	Test it out! 
+5.	Test it out! 
 
 ### Troubleshooting:
 1.	To see the status of your request in your Skuid page, use your browser's network inspector to look for the request and response from DocuSign. 
