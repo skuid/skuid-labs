@@ -1,0 +1,609 @@
+<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" useviewportmeta="true" showheader="true">
+	<models>
+		<model id="top50Companies" limit="20" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true">
+			<fields>
+				<field id="Name" displaytype="TEXT" label="Name" length="255"/>
+				<field id="Industry" displaytype="MULTIPICKLIST" label="Industry" ogdisplaytype="TEXT" picklistsource="manual" returntype="TEXT" defaultvaluetype="fieldvalue">
+					<picklistentries>
+						<entry value="Retail" label="Retail"/>
+						<entry value="Electricity" label="Electricity"/>
+						<entry value="Oil and gas" label="Oil and gas"/>
+						<entry value="Automotive" label="Automotive"/>
+						<entry value="Conglomerate" label="Conglomerate"/>
+						<entry value="Electronics" label="Electronics"/>
+						<entry value="Healthcare" label="Healthcare"/>
+						<entry value="Financials" label="Financials"/>
+						<entry value="Construction" label="Construction"/>
+						<entry value="Pharmaceuticals" label="Pharmaceuticals"/>
+					</picklistentries>
+				</field>
+				<field id="Revenue" displaytype="CURRENCY" label="Revenue (USD Millions)" ogdisplaytype="TEXT" precision="10" scale="2" defaultvaluetype="fieldvalue"/>
+				<field id="Revenue Growth" displaytype="PERCENT" label="Revenue Growth" ogdisplaytype="TEXT" precision="9" scale="0" defaultvaluetype="fieldvalue"/>
+				<field id="Employees" displaytype="DOUBLE" length="255" label="Employees" ogdisplaytype="TEXT" precision="10" scale="0"/>
+				<field id="Country" displaytype="TEXT" length="255" label="Country"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<pagetitle uniqueid="sk-3O6K-1198" model="top50Companies">
+			<maintitle>Top 50 Companies by Revenue</maintitle>
+			<actions/>
+		</pagetitle>
+		<skootable showconditions="true" showsavecancel="true" showerrorsinline="true" searchmethod="client" searchbox="true" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="true" model="top50Companies" buttonposition="" mode="read" allowcolumnreordering="true" responsive="true" uniqueid="sk-3NyM-4900">
+			<fields>
+				<field id="Name" uniqueid="fi-3NyM-4901"/>
+				<field id="Industry" uniqueid="fi-3NyM-4902"/>
+				<field id="Revenue" uniqueid="fi-3NyM-4903"/>
+				<field id="Revenue Growth" uniqueid="fi-3NyM-4904"/>
+				<field id="Employees" uniqueid="fi-3NyM-4905"/>
+				<field id="Country" uniqueid="fi-3NyM-4906"/>
+			</fields>
+			<rowactions>
+				<action type="edit"/>
+				<action type="delete"/>
+			</rowactions>
+			<massactions usefirstitemasdefault="true">
+				<action type="massupdate"/>
+				<action type="massdelete"/>
+			</massactions>
+			<views>
+				<view type="standard"/>
+			</views>
+		</skootable>
+	</components>
+	<resources>
+		<labels/>
+		<javascript/>
+		<css/>
+		<actionsequences uniqueid="sk-3gxJ-237">
+			<actionsequence id="d8ed4218-6160-4f39-a372-3044fcdec1a3" label="Dummy Data Row Template" type="reusable" uniqueid="sk-3h2H-2420">
+				<description/>
+				<actions>
+					<action type="createRow" model="top50Companies" appendorprepend="prepend" defaultmodefornewitems="read" affectedrows="context">
+						<defaults>
+							<default valuesource="fieldvalue" field="Name" enclosevalueinquotes="true" value="{{$Input.Name}}"/>
+							<default valuesource="fieldvalue" field="Industry" enclosevalueinquotes="true" value="{{$Input.Industry}}"/>
+							<default valuesource="fieldvalue" enclosevalueinquotes="true" field="Revenue" value="{{$Input.Revenue}}"/>
+							<default valuesource="fieldvalue" enclosevalueinquotes="true" field="Revenue Growth" value="{{$Input.RevenueGrowth}}"/>
+							<default valuesource="fieldvalue" enclosevalueinquotes="true" field="Employees" value="{{$Input.Employees}}"/>
+							<default valuesource="fieldvalue" enclosevalueinquotes="true" field="Country" value="{{$Input.Country}}"/>
+						</defaults>
+					</action>
+				</actions>
+				<inputs>
+					<input type="value" name="Name"/>
+					<input type="value" name="Industry"/>
+					<input type="value" name="Revenue"/>
+					<input type="value" name="RevenueGrowth"/>
+					<input type="value" name="Employees"/>
+					<input type="value" name="Country"/>
+				</inputs>
+			</actionsequence>
+			<actionsequence id="f3bc6722-f9a1-4c99-97a3-88f8b0118694" label="Create Dummy Model Data" type="reusable" uniqueid="sk-3h2H-2421">
+				<description/>
+				<actions>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Stage" value="Qualification"/>
+							<input name="Name" value="Walmart"/>
+							<input name="Industry" value="Retail"/>
+							<input name="Revenue" value="500343"/>
+							<input name="RevenueGrowth" value="3"/>
+							<input name="Employees" value="2300000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="State Grid"/>
+							<input name="Industry" value="Electricity"/>
+							<input name="Revenue" value="348903"/>
+							<input name="RevenueGrowth" value="10.7"/>
+							<input name="Employees" value="913546"/>
+							<input name="Country" value="China"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Sinopec"/>
+							<input name="Industry" value="Oil and gas"/>
+							<input name="Revenue" value="326953"/>
+							<input name="RevenueGrowth" value="22.2"/>
+							<input name="Employees" value="667793"/>
+							<input name="Country" value="China"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="China National Petroleum"/>
+							<input name="Industry" value="Oil and gas"/>
+							<input name="Revenue" value="326008"/>
+							<input name="RevenueGrowth" value="24.2"/>
+							<input name="Employees" value="1636532"/>
+							<input name="Country" value="China"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Royal Dutch Shell"/>
+							<input name="Industry" value="Oil and gas"/>
+							<input name="Revenue" value="311870"/>
+							<input name="RevenueGrowth" value="29.9"/>
+							<input name="Employees" value="84000"/>
+							<input name="Country" value="Netherlands"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Toyota"/>
+							<input name="Industry" value="Automotive"/>
+							<input name="Revenue" value="265172"/>
+							<input name="RevenueGrowth" value="4.1"/>
+							<input name="Employees" value="369124"/>
+							<input name="Country" value="Japan"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Volkswagen"/>
+							<input name="Industry" value="Automotive"/>
+							<input name="Revenue" value="260028"/>
+							<input name="RevenueGrowth" value="8.2"/>
+							<input name="Employees" value="642292"/>
+							<input name="Country" value="Germany"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="BP"/>
+							<input name="Industry" value="Oil and gas"/>
+							<input name="Revenue" value="244582"/>
+							<input name="RevenueGrowth" value="31.1"/>
+							<input name="Employees" value="74000"/>
+							<input name="Country" value="United Kingdom"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="ExxonMobil"/>
+							<input name="Industry" value="Oil and gas"/>
+							<input name="Revenue" value="244363"/>
+							<input name="RevenueGrowth" value="17.4"/>
+							<input name="Employees" value="71200"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Berkshire Hathaway"/>
+							<input name="Industry" value="Conglomerate"/>
+							<input name="Revenue" value="242137"/>
+							<input name="RevenueGrowth" value="8.3"/>
+							<input name="Employees" value="377000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Apple"/>
+							<input name="Industry" value="Electronics"/>
+							<input name="Revenue" value="229234"/>
+							<input name="RevenueGrowth" value="6.3"/>
+							<input name="Employees" value="123000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Samsung"/>
+							<input name="Industry" value="Electronics"/>
+							<input name="Revenue" value="211940"/>
+							<input name="RevenueGrowth" value="21.8"/>
+							<input name="Employees" value="320671"/>
+							<input name="Country" value="South Korea"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="McKesson"/>
+							<input name="Industry" value="Healthcare"/>
+							<input name="Revenue" value="208357"/>
+							<input name="RevenueGrowth" value="4.9"/>
+							<input name="Employees" value="68000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Glencore"/>
+							<input name="Industry" value="Mining Commodities"/>
+							<input name="Revenue" value="205476"/>
+							<input name="RevenueGrowth" value="18.2"/>
+							<input name="Employees" value="82681"/>
+							<input name="Country" value="Switzerland"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="UnitedHealth"/>
+							<input name="Industry" value="Healthcare"/>
+							<input name="Revenue" value="201159"/>
+							<input name="RevenueGrowth" value="9.3"/>
+							<input name="Employees" value="260000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Daimler"/>
+							<input name="Industry" value="Automotive"/>
+							<input name="Revenue" value="185235"/>
+							<input name="RevenueGrowth" value="9.3"/>
+							<input name="Employees" value="289321"/>
+							<input name="Country" value="Germany"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="CVS Health"/>
+							<input name="Industry" value="Healthcare"/>
+							<input name="Revenue" value="184765"/>
+							<input name="RevenueGrowth" value="4.1"/>
+							<input name="Employees" value="203000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Amazon"/>
+							<input name="Industry" value="Retail"/>
+							<input name="Revenue" value="177866"/>
+							<input name="RevenueGrowth" value="30.8"/>
+							<input name="Employees" value="566000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Exor"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="161677"/>
+							<input name="RevenueGrowth" value="4.4"/>
+							<input name="Employees" value="307637"/>
+							<input name="Country" value="Italy"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="ATT"/>
+							<input name="Industry" value="Telecommunications"/>
+							<input name="Revenue" value="160546"/>
+							<input name="RevenueGrowth" value="2"/>
+							<input name="Employees" value="254000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="General Motors"/>
+							<input name="Industry" value="Automotive"/>
+							<input name="Revenue" value="157311"/>
+							<input name="RevenueGrowth" value="5.5"/>
+							<input name="Employees" value="180000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Ford"/>
+							<input name="Industry" value="Automotive"/>
+							<input name="Revenue" value="156776"/>
+							<input name="RevenueGrowth" value="3.3"/>
+							<input name="Employees" value="202000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="China State Construction"/>
+							<input name="Industry" value="Construction"/>
+							<input name="Revenue" value="156071"/>
+							<input name="RevenueGrowth" value="8"/>
+							<input name="Employees" value="270467"/>
+							<input name="Country" value="China"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Foxconn"/>
+							<input name="Industry" value="Electronics"/>
+							<input name="Revenue" value="154699"/>
+							<input name="RevenueGrowth" value="14.5"/>
+							<input name="Employees" value="803126"/>
+							<input name="Country" value="Taiwan"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="AmerisourceBergen"/>
+							<input name="Industry" value="Pharmaceuticals"/>
+							<input name="Revenue" value="153144"/>
+							<input name="RevenueGrowth" value="4.3"/>
+							<input name="Employees" value="19500"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Industrial &amp; Commercial Bank of China"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="153021"/>
+							<input name="RevenueGrowth" value="3.6"/>
+							<input name="Employees" value="453048"/>
+							<input name="Country" value="China"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="AXA"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="149461"/>
+							<input name="RevenueGrowth" value="4"/>
+							<input name="Employees" value="95728"/>
+							<input name="Country" value="France"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Total"/>
+							<input name="Industry" value="Oil and gas"/>
+							<input name="Revenue" value="149099"/>
+							<input name="RevenueGrowth" value="16.6"/>
+							<input name="Employees" value="98277"/>
+							<input name="Country" value="France"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Ping An Insurance"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="144197"/>
+							<input name="RevenueGrowth" value="23.7"/>
+							<input name="Employees" value="342550"/>
+							<input name="Country" value="China"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Honda"/>
+							<input name="Industry" value="Automotive"/>
+							<input name="Revenue" value="138646"/>
+							<input name="RevenueGrowth" value="7.3"/>
+							<input name="Employees" value="215638"/>
+							<input name="Country" value="Japan"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="China Construction Bank"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="138594"/>
+							<input name="RevenueGrowth" value="2.6"/>
+							<input name="Employees" value="370415"/>
+							<input name="Country" value="China"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Trafigura"/>
+							<input name="Industry" value="Commodities"/>
+							<input name="Revenue" value="136421"/>
+							<input name="RevenueGrowth" value="39.1"/>
+							<input name="Employees" value="3935"/>
+							<input name="Country" value="Singapore"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Chevron"/>
+							<input name="Industry" value="Oil and gas"/>
+							<input name="Revenue" value="134533"/>
+							<input name="RevenueGrowth" value="25.1"/>
+							<input name="Employees" value="51900"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Cardinal Health"/>
+							<input name="Industry" value="Pharmaceuticals"/>
+							<input name="Revenue" value="129976"/>
+							<input name="RevenueGrowth" value="6.9"/>
+							<input name="Employees" value="40400"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Costco"/>
+							<input name="Industry" value="Retail"/>
+							<input name="Revenue" value="129025"/>
+							<input name="RevenueGrowth" value="8.7"/>
+							<input name="Employees" value="182000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="SAIC Motor"/>
+							<input name="Industry" value="Automotive"/>
+							<input name="Revenue" value="128819"/>
+							<input name="RevenueGrowth" value="13.1"/>
+							<input name="Employees" value="148767"/>
+							<input name="Country" value="China"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Verizon"/>
+							<input name="Industry" value="Telecommunications"/>
+							<input name="Revenue" value="126034"/>
+							<input name="RevenueGrowth" value="0"/>
+							<input name="Employees" value="155400"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Allianz"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="123532"/>
+							<input name="RevenueGrowth" value="1.1"/>
+							<input name="Employees" value="140553"/>
+							<input name="Country" value="Germany"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Kroger"/>
+							<input name="Industry" value="Retail"/>
+							<input name="Revenue" value="122662"/>
+							<input name="RevenueGrowth" value="6.4"/>
+							<input name="Employees" value="449000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Agricultural Bank of China"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="122366"/>
+							<input name="RevenueGrowth" value="4.3"/>
+							<input name="Employees" value="491578"/>
+							<input name="Country" value="China"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="General Electric"/>
+							<input name="Industry" value="Conglomerate"/>
+							<input name="Revenue" value="122274"/>
+							<input name="RevenueGrowth" value="3.5"/>
+							<input name="Employees" value="313000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="China Life Insurance"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="120224"/>
+							<input name="RevenueGrowth" value="14.7"/>
+							<input name="Employees" value="170517"/>
+							<input name="Country" value="China"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Walgreens Boots Alliance"/>
+							<input name="Industry" value="Retail Pharmaceuticals"/>
+							<input name="Revenue" value="118214"/>
+							<input name="RevenueGrowth" value="0.7"/>
+							<input name="Employees" value="290000"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="BNP Paribas"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="117375"/>
+							<input name="RevenueGrowth" value="7.7"/>
+							<input name="Employees" value="189509"/>
+							<input name="Country" value="France"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Japan Post Holdings"/>
+							<input name="Industry" value="Conglomerate"/>
+							<input name="Revenue" value="116616"/>
+							<input name="RevenueGrowth" value="5.2"/>
+							<input name="Employees" value="245863"/>
+							<input name="Country" value="Japan"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Bank of China"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="115423"/>
+							<input name="RevenueGrowth" value="1.5"/>
+							<input name="Employees" value="311133"/>
+							<input name="Country" value="China"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="JPMorgan Chase"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="113899"/>
+							<input name="RevenueGrowth" value="8"/>
+							<input name="Employees" value="252539"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Fannie Mae"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="112394"/>
+							<input name="RevenueGrowth" value="4.9"/>
+							<input name="Employees" value="7200"/>
+							<input name="Country" value="United States"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Gazprom"/>
+							<input name="Industry" value="Oil and gas"/>
+							<input name="Revenue" value="111983"/>
+							<input name="RevenueGrowth" value="22.5"/>
+							<input name="Employees" value="469600"/>
+							<input name="Country" value="Russia"/>
+						</inputs>
+					</action>
+					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
+						<inputs>
+							<input name="Name" value="Prudential"/>
+							<input name="Industry" value="Financials"/>
+							<input name="Revenue" value="111458"/>
+							<input name="RevenueGrowth" value="14.9"/>
+							<input name="Employees" value="24711"/>
+							<input name="Country" value="United Kingdom"/>
+						</inputs>
+					</action>
+					<action type="save">
+						<models>
+							<model>top50Companies</model>
+						</models>
+					</action>
+					<action type="sortModel" client-side="true" model="top50Companies" method="desc" field="Revenue"/>
+				</actions>
+			</actionsequence>
+			<actionsequence id="9009e95e-823e-4915-bae0-af1401001289" label="Create Data at Page Load" type="event-triggered" event-scope="component" event-name="page.rendered" uniqueid="sk-3h2H-2422">
+				<description/>
+				<actions>
+					<action type="blockUI" message="Creating fake data"/>
+					<action type="action-sequence" action-sequence-id="f3bc6722-f9a1-4c99-97a3-88f8b0118694"/>
+					<action type="unblockUI"/>
+				</actions>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+</skuidpage>
