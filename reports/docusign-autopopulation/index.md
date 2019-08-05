@@ -106,7 +106,6 @@ You can basically follow the format given in the [DocuSign API Explorer](https:/
             "routingOrder": "2"
         }]
     }
-
 ### See it in action!
 In your Skuid page:
 2.	Remove any existing rows in the REST model and create a new row. 
