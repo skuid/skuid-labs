@@ -17,7 +17,7 @@
 7.	Create a template and upload the document that is to be populated and sent 
 8.	Define recipients roles and signing order. (If the recipient is going to be variable, only fill in the role name)
 9.	Create signature tabs and define a role for each tab. 
-10.	Create plain text tabs (fields) for each data item that you want to populate.(Make sure to specify the recipient). 
+10.	Create plain text tabs (fields) for each data item that you want to populate. (Make sure to specify the recipient). 
 a.	Define a custom data label (no spaces) for each tab. 
 11.	Take note of the Template Id (the Id can be found in the URL when viewing the document)
  
