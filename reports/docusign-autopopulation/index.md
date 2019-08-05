@@ -70,7 +70,7 @@ You can basically follow the format given in the [DocuSign API Explorer](https:/
 	- font (optional) - choose a font to stylize your text. (Supported Fonts: Arial, Arial, ArialNarrow, Calibri, CourierNew, Garamond, Georgia, Helvetica,   LucidaConsole, Tahoma, TimesNewRoman, Trebuchet, Verdana, MSGothic, MSMincho, Default)
 
 #### Example Request Body:  
- 
+```json
     {
         "status": "sent",
         "emailSubject": "Please DocuSign this Form",
