@@ -123,8 +123,7 @@ To do this:
 4.	In Skuid configure, you will need to modify the authentication provider and data source
 a.	New Data source URL: https://na2.docusign.net/restapi/v2 (may change based on your instance)
 b.	New Authentication Provider endpoint and token endpoint URLs : https://account.docusign.com/oauth/auth
-c.	Also make sure to update the client Id and Client secret if they have changed. 
-5.	In your Skuid page, modify the JS snippet to change the url in the request body to: https://na2.docusign.net/restapi/v2/accounts/<accountId>/envelopes/ 
+c.	Also make sure to update the client Id and Client secret if they have changed.
 6.	Test it out! 
 
 ##### Troubleshooting:
