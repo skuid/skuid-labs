@@ -36,7 +36,7 @@ b.	Token: https://account-d.docusign.com/oauth/token
 
 
 ##### Skuid Page:
-1.	Create a REST api model on the DocuSign data source with Read/Write Model Behavior.
+1.	Create a Model with REST as the data source type, and select the DocuSign data source that you created. Select Read/Write as the Model Behavior.
 2.	On this new model, select Methods>insert
 3.	Set values as follows: 
 a.	type =Insert
