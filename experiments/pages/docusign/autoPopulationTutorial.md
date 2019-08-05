@@ -32,7 +32,7 @@ b.	Token: https://account-d.docusign.com/oauth/token
 5.	Set the Client Secret to the Secret Key you saved from DocuSign earlier. Save!
 6.	Now go to Data Sources > Data Sources
 7.	Create a New Data Source with a unique name and with the REST Data Source Type
-8.	Set the URL to  https://demo.docusign.net/restapi and the Authentication Provider to DocuSign. Save. 
+8.	Set the URL to  https://demo.docusign.net/restapi and select the Authentication Provider that you created in Steps 1-5.
 
 
 ##### Skuid Page:
