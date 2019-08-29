@@ -1,0 +1,15 @@
+{
+	"name": "childNormalPageConverter",
+	"apiVersion": "v1",
+	"composerSettings": {
+		"skuid.model(getMasterPageXML)": {
+			"id": "81587109-2a8a-4e99-b3f7-b02d62fd09b4"
+		}
+	},
+	"isMasterPage": false,
+	"isPublic": false,
+	"maxAutoSaves": 25,
+	"module": "",
+	"type": "Desktop",
+	"uniqueId": "childNormalPageConverter"
+}
