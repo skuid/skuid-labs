@@ -6,8 +6,8 @@ As of Skuid release 12.2.0, page support files are no longer needed by Skuid to 
 
 1. Create a Skuid page in your Salesforce org with the page XML stored in this folder. 
 
-   **Note**: The Page Support File Remover is a v2 page, if you select v1 as your API version during the page creation process, you will get multiple errors when you go to the page. 
-  
+   **Note**: The Page Support File Remover must be created as a v2 page. Creating it as a v1 page will result in errors.
+   
 1. Once created, click **Preview**.
 1. Click **Load all Page Support Files**. 
 1. Select the files you wish to be deleted.
