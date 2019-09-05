@@ -1,6 +1,6 @@
 # Page Support File Remover
 
-As of Skuid release 12.2.0, page support files are no longer needed by Skuid to render in-line Javascript and CSS. This is not a breaking change and orgs with page support files will continue to work as expected. However, if users want to keep their static resources clean, this tool will attempt to find any page support files and then allow users to remove them.
+As of Skuid release 12.2.0, page support files are no longer needed by Skuid to include inline Javascript and CSS. This is not a breaking change; orgs with page support files will continue to work as expected. However, if users want to keep their static resources clean, this tool will attempt to find any page support files and then allow users to remove them.
 
 ## Usage
 
