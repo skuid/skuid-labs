@@ -413,7 +413,7 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
                 <template multiple="false" uniqueid="sk-3Uno-3087">
                   <contents>What would you like to name the name page?</contents>
                 </template>
-                <basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="variableStore" uniqueid="sk-3Unk-3049" mode="read">
+                <basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="variableStore" uniqueid="sk-3Unk-3049" mode="edit">
                   <columns>
                     <column width="100%" uniqueid="sk-3Unk-3045">
                       <sections>
