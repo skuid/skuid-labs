@@ -1,0 +1,10 @@
+{
+	"name": "childNormalPageConverter_SkuidPlatform",
+	"apiVersion": "v1",
+	"isMasterPage": false,
+	"isPublic": false,
+	"maxAutoSaves": 25,
+	"module": "",
+	"type": "Desktop",
+	"uniqueId": "childNormalPageConverter_SkuidPlatform"
+}
