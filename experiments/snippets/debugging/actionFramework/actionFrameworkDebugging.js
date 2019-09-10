@@ -20,10 +20,10 @@ if(skuid.page.params.actionloglevel) {
 			default:
 				switch(loglevel) {
 					case 1:
-						console.log(perfTime, $.extend(true, {}, c[0]));
+						console.log(perfTime, c[0]);
 						break;
 					case 2:
-						console.log(perfTime, $.extend(true, {}, c[0]), arguments);
+						console.log(perfTime, c[0], $.extend(true, {}, arguments));
 						break;
 				}
 				break;
@@ -32,4 +32,3 @@ if(skuid.page.params.actionloglevel) {
 		return result;
 	};
 }
-
