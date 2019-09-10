@@ -1,5 +1,5 @@
 {
-	"name": "childNormalPageConverter",
+	"name": "childNormalPageConverter_SkuidPlatform",
 	"apiVersion": "v1",
 	"composerSettings": {
 		"skuid.model(getMasterPageXML)": {
@@ -11,5 +11,5 @@
 	"maxAutoSaves": 25,
 	"module": "",
 	"type": "Desktop",
-	"uniqueId": "childNormalPageConverter"
+	"uniqueId": "childNormalPageConverter_SkuidPlatform"
 }

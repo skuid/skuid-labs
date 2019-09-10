@@ -119,150 +119,15 @@
 						</skootable>
 					</components>
 				</tab>
-				<tab loadlazypanels="true" name="Manual XML Conversion">
-					<components>
-						<template multiple="false" uniqueid="sk-3V2M-636">
-							<contents>Working in Skuid on Salesforce? You'll need to convert your XML using the forms below.
-
-1. Select the type of conversion you would like.
-2. Paste your page XML
-3. Click the Convert.
-4. Paste the new XML into a new page.
-
-Note if that if you're converting a normal page into a child page, you'll need to select Use a Master Page, select the appropriate page, and THEN paste your XML after the page has been created.</contents>
-						</template>
-						<tabset rememberlastusertab="true" defertabrendering="true" uniqueid="sk-3V3K-1508">
-							<tabs>
-								<tab name="Normal page - &gt; Child page" loadlazypanels="true">
-									<components>
-										<buttonset model="variableStore" uniqueid="sk-3V51-2704" position="center">
-											<buttons>
-												<button type="multi" label="Convert" uniqueid="sk-3V52-2709">
-													<actions>
-														<action type="custom" snippet="normalPageToChildPage"/>
-													</actions>
-													<renderconditions logictype="and"/>
-													<enableconditions logictype="and">
-														<condition type="blank" operator="!=" fieldmodel="variableStore" sourcetype="fieldvalue" field="masterPageContent" value="null" enclosevalueinquotes="false"/>
-														<condition type="blank" operator="!=" fieldmodel="variableStore" sourcetype="fieldvalue" field="oldContent" value="null" enclosevalueinquotes="false"/>
-													</enableconditions>
-												</button>
-											</buttons>
-										</buttonset>
-										<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="variableStore" uniqueid="sk-3V4V-2413" mode="read">
-											<columns>
-												<column width="50%" uniqueid="sk-3V4V-2414">
-													<sections>
-														<section title="New Section" collapsible="no" uniqueid="sk-3V4V-2415" showheader="false">
-															<fields>
-																<field uniqueid="sk-3V4V-2416" id="oldContent" showhelp="true"/>
-																<field uniqueid="sk-3V4V-2419" id="masterPageContent"/>
-															</fields>
-														</section>
-													</sections>
-												</column>
-												<column width="50%" uniqueid="sk-3V4i-2630">
-													<sections>
-														<section title="New Section" collapsible="no" uniqueid="sk-3V4i-2631" showheader="false">
-															<fields>
-																<field uniqueid="sk-3V4k-2641" id="newContent" showhelp="true" readonly="true"/>
-															</fields>
-														</section>
-													</sections>
-												</column>
-											</columns>
-										</basicfieldeditor>
-									</components>
-									<oninitialshowactions/>
-									<onshowactions>
-										<action type="action-sequence" action-sequence-id="25e9872b-0c61-4447-81f4-4325508f5578"/>
-										<action type="createRow" model="variableStore" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context"/>
-									</onshowactions>
-									<renderconditions logictype="and"/>
-								</tab>
-								<tab name="Child page -&gt; Normal page">
-									<components>
-										<buttonset model="variableStore" uniqueid="sk-3V5O-2810" position="center">
-											<buttons>
-												<button type="multi" label="Convert" uniqueid="sk-3V5P-2817">
-													<actions>
-														<action type="custom" platform-action="user-signup" snippet="childPageToNormalPage"/>
-													</actions>
-													<renderconditions logictype="and"/>
-													<enableconditions logictype="and">
-														<condition type="blank" operator="!=" fieldmodel="variableStore" sourcetype="fieldvalue" field="oldContent" value="null" enclosevalueinquotes="false"/>
-													</enableconditions>
-												</button>
-											</buttons>
-										</buttonset>
-										<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="variableStore" uniqueid="sk-3V2t-1044" mode="read">
-											<columns>
-												<column width="50%" uniqueid="sk-3V2t-1040">
-													<sections>
-														<section title="New Section" collapsible="no" uniqueid="sk-3V3e-1959" showheader="false">
-															<fields>
-																<field uniqueid="sk-3V3m-1974" id="oldContent" showhelp="true"/>
-															</fields>
-														</section>
-													</sections>
-												</column>
-												<column width="50%" uniqueid="sk-3V4g-2609">
-													<sections>
-														<section title="New Section" collapsible="no" uniqueid="sk-3V4g-2610" showheader="false">
-															<fields>
-																<field uniqueid="sk-3V4h-2620" id="newContent" showhelp="true" readonly="true"/>
-															</fields>
-														</section>
-													</sections>
-												</column>
-											</columns>
-										</basicfieldeditor>
-									</components>
-									<oninitialshowactions/>
-									<onshowactions>
-										<action type="action-sequence" action-sequence-id="25e9872b-0c61-4447-81f4-4325508f5578"/>
-										<action type="createRow" model="variableStore" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context"/>
-									</onshowactions>
-								</tab>
-							</tabs>
-						</tabset>
-					</components>
-					<oninitialshowactions/>
-					<onshowactions/>
-				</tab>
-				<tab name="Debug" loadlazypanels="true">
-					<components>
-						<skootable showconditions="true" showsavecancel="true" showerrorsinline="true" searchmethod="client" searchbox="true" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="true" model="variableStore" buttonposition="" mode="edit" allowcolumnreordering="true" responsive="true" uniqueid="sk-3Q10-1440">
-							<fields>
-								<field id="newName" hideable="true" uniqueid="fi-3Uom-4765"/>
-								<field id="oldContent" uniqueid="fi-3Q10-1441"/>
-								<field id="newContent" uniqueid="fi-3Q10-1442"/>
-								<field id="masterPageId" hideable="true" uniqueid="fi-3TrU-5089"/>
-								<field id="masterPageContent" hideable="true" uniqueid="fi-3TrU-5090"/>
-								<field id="masterPageName" hideable="true" uniqueid="fi-3Uh2-6023"/>
-							</fields>
-							<rowactions>
-								<action type="edit"/>
-								<action type="delete"/>
-							</rowactions>
-							<massactions usefirstitemasdefault="true">
-								<action type="massupdate"/>
-								<action type="massdelete"/>
-							</massactions>
-							<views>
-								<view type="standard"/>
-							</views>
-						</skootable>
-					</components>
-				</tab>
 			</tabs>
 		</tabset>
 	</components>
 	<resources>
 		<labels/>
 		<javascript>
-			<jsitem location="inlinesnippet" cachelocation="false" name="childPageToNormalPage">// Skuid variables
-var pagesModel = skuid.$M('pages')
+			<jsitem location="inlinesnippet" cachelocation="false" name="childPageToNormalPage">// childPageToNormalPage
+console.log('Starting conversion')
+// Skuid variables
 var variableStore = skuid.$M('variableStore')
 var r = variableStore.getFirstRow()
 var oldContent = r.oldContent
@@ -272,13 +137,16 @@ var parser = new DOMParser();
 var xmlDoc = parser.parseFromString(oldContent, "text/xml");
 
 // Now get all the old components into an array
+pageRegions = Array.prototype.slice.call(xmlDoc.getElementsByTagName('pageregioncontent'))
 components = []
-var arrayOfComponentNodes = Array.prototype.slice.call(xmlDoc.getElementsByTagName('components'))
-arrayOfComponentNodes.forEach(function(cn){
-  arrayOfComponents = Array.prototype.slice.call(cn.children)
-  arrayOfComponents.forEach(function(c){
-    components.push(c)
-  })
+pageRegions.forEach(function(region){
+    if (region.children[0]) {
+        for (let component of region.children[0].children) {
+            components.push(component)}
+    } else
+    {
+        console.log('Page region has no components, moving on.')
+    }
 })
 
 // Collate all the components into a new node on the new page
@@ -298,8 +166,9 @@ xmlDoc.getElementsByTagName('models')[0].after(newComponentsNode)
 var oSerializer = new XMLSerializer();
 var sXML = oSerializer.serializeToString(xmlDoc);
 variableStore.updateRow(r,{newContent: sXML})</jsitem>
-			<jsitem location="inlinesnippet" name="normalPageToChildPage" cachelocation="false">// Skuid variables
-console.log('Starting conversion')
+			<jsitem location="inlinesnippet" name="normalPageToChildPage" cachelocation="false">// normalPageToChildPage
+console.log('Starting conversion')  
+// Skuid variables  
 var pagesModel = skuid.$M('pages')
 var variableStore = skuid.$M('variableStore')
 var r = variableStore.getFirstRow()
@@ -310,53 +179,60 @@ var masterPage = r.masterPageContent
 var parser = new DOMParser();
 var masterPageXml = parser.parseFromString(masterPage, "text/xml");
 var xmlDoc = parser.parseFromString(oldContent, "text/xml");
+var skuidPage = xmlDoc.getElementsByTagName('skuidpage')[0]
 
 // Get all page region areas in master page
 var pageRegionAreas = Array.prototype.slice.call(masterPageXml.getElementsByTagName('pageregion'))
-// Convert to new contet
 
-// Create pageregionscontents node to nest all pageregioncontent nodes
-var pageregioncontents = xmlDoc.createElement("pageregioncontents");
-xmlDoc.getElementsByTagName('models')[0].after(pageregioncontents)  
+if (pageRegionAreas.length === 0) {
+  throw ("The chosen master page has no page regions. Please update the page and try again.")
+} else {
+  // Create pageregionscontents node to nest all pageregioncontent nodes
+  var pageregioncontents = xmlDoc.createElement("pageregioncontents");
+  xmlDoc.getElementsByTagName('models')[0].after(pageregioncontents)
 
-// Parse existing page regions, and create nodes for child page
-pageRegionAreas.forEach(function(pra) {
-  var regionid = pra.getAttribute('uniqueid')
-  newPageRegion = xmlDoc.createElement("pageregioncontent");
-  newPageRegion.setAttribute("regionid",regionid)
-  newPageRegion.setAttribute('uniqueid',skuid.utils.generateUniqueId())
-  pageregioncontents.append(newPageRegion)
-})
-
-// Now get all the old components into an array
-components = []
-var arrayOfComponentNodes = Array.prototype.slice.call(xmlDoc.getElementsByTagName('components'))
-arrayOfComponentNodes.forEach(function(cn){
-  arrayOfComponents = Array.prototype.slice.call(cn.children)
-  arrayOfComponents.forEach(function(c){
-    components.push(c)
+  // Parse existing page regions, and create nodes for child page
+  pageRegionAreas.forEach(function (pra) {
+    var regionid = pra.getAttribute('uniqueid')
+    newPageRegion = xmlDoc.createElement("pageregioncontent");
+    newPageRegion.setAttribute("regionid", regionid)
+    newPageRegion.setAttribute('uniqueid', skuid.utils.generateUniqueId())
+    pageregioncontents.append(newPageRegion)
   })
-})
 
-// Collate all the components into a new node on the new page
-var newComponentsNode = xmlDoc.createElement("components");
-components.forEach(function(c){
-  newComponentsNode.append(c)
-})
+  // Now get all the old components into an array
+  components = []
+  var arrayOfComponentNodes = Array.prototype.slice.call(xmlDoc.getElementsByTagName('components'))
+  arrayOfComponentNodes.forEach(function (cn) {
+    if (cn.parentElement == skuidPage){
+      arrayOfComponents = Array.prototype.slice.call(cn.children)
+      arrayOfComponents.forEach(function (c) {
+        components.push(c)
+      })
+    }
+  })
 
-// Clean up the nodes
-var skuidPage = xmlDoc.getElementsByTagName('skuidpage')[0]
-arrayOfComponentNodes.forEach(function(ocn) { 
-  skuidPage.removeChild(ocn)
-})
+  // Collate all the components into a new node on the new page
+  var newComponentsNode = xmlDoc.createElement("components");
+  components.forEach(function (c) {
+    newComponentsNode.append(c)
+  })
 
-// Move the components node beneath models node
-xmlDoc.getElementsByTagName('pageregioncontent')[0].append(newComponentsNode)
+  // Clean up the nodes
+  arrayOfComponentNodes.forEach(function (ocn) {
+    if (ocn.parentElement == skuidPage) {
+      skuidPage.removeChild(ocn)
+    }
+  })
 
-// Stringify the XML and update the model row
-var oSerializer = new XMLSerializer();
-var sXML = oSerializer.serializeToString(xmlDoc);
-variableStore.updateRow(r,{newContent: sXML})</jsitem>
+  // Move the components node beneath models node
+  xmlDoc.getElementsByTagName('pageregioncontent')[0].append(newComponentsNode)
+
+  // Stringify the XML and update the model row
+  var oSerializer = new XMLSerializer();
+  var sXML = oSerializer.serializeToString(xmlDoc);
+  variableStore.updateRow(r, { newContent: sXML })
+}</jsitem>
 		</javascript>
 		<css/>
 		<actionsequences uniqueid="sk-3P_R-725">

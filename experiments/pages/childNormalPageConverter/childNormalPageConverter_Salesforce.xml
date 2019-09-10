@@ -1,0 +1,521 @@
+<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="true">
+  <models>
+    <model id="pages" query="true" processonclient="true" type="readwrite" datasource="salesforce" label="Page" labelplural="Pages" namefield="name" uniqueId="sk-3dKp-1466" sobject="skuid__Page__c" orderby="LastModifiedDate DESC">
+      <fields uniqueId="sk-3dKp-1472">
+        <field id="skuid__API_Version__c"/>
+        <field id="skuid__MasterPage__c"/>
+        <field id="skuid__MasterPage__r.Name"/>
+        <field id="Id"/>
+        <field id="skuid__IsMaster__c"/>
+        <field id="Name"/>
+        <field id="LastModifiedDate"/>
+      </fields>
+      <idfields>
+        <field>id</field>
+      </idfields>
+      <conditions logic="" uniqueId="sk-3dKp-1484">
+        <condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="is_master_page" state="filterableoff" inactive="true" name="is_master_page"/>
+        <condition type="blank" value="null" field="skuid__MasterPage__c" fieldtargetobjects="skuid__Page__c" operator="=" enclosevalueinquotes="false" state="filterableoff" inactive="true" name="skuid__MasterPage__c"/>
+        <condition type="fieldvalue" value="v1" enclosevalueinquotes="true" field="skuid__API_Version__c"/>
+      </conditions>
+      <actions uniqueId="sk-3dKp-1485"/>
+    </model>
+    <model id="variableStore" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true">
+      <fields>
+        <field id="oldContent" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="old" label="oldContent"/>
+        <field id="newContent" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="new" label="newContent"/>
+        <field id="masterPageId" displaytype="TEXT" length="255" label="masterPageId"/>
+        <field id="masterPageContent" displaytype="TEXT" length="255" label="masterPageContent"/>
+        <field id="masterPageName" displaytype="TEXT" length="255" label="masterPageName"/>
+        <field id="newName" displaytype="TEXT" length="255" label="Name"/>
+      </fields>
+      <conditions/>
+      <actions/>
+    </model>
+    <model id="masterPages" query="true" processonclient="true" type="readwrite" datasource="salesforce" label="Page" labelplural="Pages" namefield="name" uniqueId="sk-3dKp-1466" sobject="skuid__Page__c" orderby="LastModifiedDate DESC">
+      <fields uniqueId="sk-3dKp-1472">
+        <field id="skuid__IsMaster__c"/>
+        <field id="Name"/>
+        <field id="Id"/>
+        <field id="LastModifiedDate"/>
+      </fields>
+      <idfields>
+        <field>id</field>
+      </idfields>
+      <conditions logic="" uniqueId="sk-3dKp-1484">
+        <condition type="fieldvalue" value="v1" enclosevalueinquotes="true" field="skuid__API_Version__c"/>
+        <condition type="fieldvalue" value="true" enclosevalueinquotes="false" field="skuid__IsMaster__c"/>
+      </conditions>
+      <actions uniqueId="sk-3dKp-1485"/>
+    </model>
+    <model id="pages_retrieveXML" query="false" processonclient="true" type="readwrite" datasource="salesforce" label="Page" labelplural="Pages" namefield="name" uniqueId="sk-3dKp-1466" sobject="skuid__Page__c" limit="1">
+      <fields uniqueId="sk-3dKp-1472">
+        <field id="skuid__Layout__c"/>
+        <field id="skuid__Layout2__c"/>
+        <field id="skuid__Layout3__c"/>
+        <field id="skuid__Layout4__c"/>
+        <field id="skuid__Layout5__c"/>
+        <field id="Id"/>
+        <field id="skuid__API_Version__c"/>
+        <field id="skuid__MasterPage__c"/>
+        <field id="skuid__MasterPage__r.Name"/>
+        <field id="Name"/>
+      </fields>
+      <idfields>
+        <field>id</field>
+      </idfields>
+      <conditions logic="" uniqueId="sk-3dKp-1484">
+        <condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Id" state="filterableon" inactive="false" name="Id"/>
+        <condition type="fieldvalue" value="v1" enclosevalueinquotes="true" field="skuid__API_Version__c"/>
+      </conditions>
+      <actions uniqueId="sk-3dKp-1485"/>
+    </model>
+    <model id="masterPages_retrieveXML" query="false" processonclient="true" type="readwrite" datasource="salesforce" label="Page" labelplural="Pages" namefield="name" uniqueId="sk-3dKp-1466" sobject="skuid__Page__c" limit="1">
+      <fields uniqueId="sk-3dKp-1472">
+        <field id="skuid__Layout__c"/>
+        <field id="skuid__Layout2__c"/>
+        <field id="skuid__Layout3__c"/>
+        <field id="skuid__Layout4__c"/>
+        <field id="skuid__Layout5__c"/>
+        <field id="Id"/>
+        <field uionly="true" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" id="fullXML" label="Full XML">
+          <formula>{{skuid__Layout__c}} +
+{{skuid__Layout2__c}} +
+{{skuid__Layout3__c}} +
+{{skuid__Layout4__c}} +
+{{skuid__Layout5__c}}</formula>
+        </field>
+      </fields>
+      <idfields>
+        <field>id</field>
+      </idfields>
+      <conditions logic="" uniqueId="sk-3dKp-1484">
+        <condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Id" state="filterableon" inactive="false" name="Id"/>
+        <condition type="fieldvalue" value="v1" enclosevalueinquotes="true" field="skuid__API_Version__c"/>
+      </conditions>
+      <actions uniqueId="sk-3dKp-1485"/>
+    </model>
+  </models>
+  <components>
+    <tabset rememberlastusertab="true" defertabrendering="true" uniqueid="sk-3Px3-490">
+      <tabs>
+        <tab name="Pages List">
+          <components>
+            <skootable showconditions="true" showsavecancel="true" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="true" model="pages" buttonposition="" mode="read" allowcolumnreordering="true" responsive="true" uniqueid="sk-NbK-453">
+              <fields>
+                <field id="skuid__API_Version__c" uniqueid="fi-NbK-454"/>
+                <field id="Name" hideable="true" uniqueid="fi-Neo-1934"/>
+                <field id="skuid__MasterPage__c" uniqueid="fi-NbK-455"/>
+                <field id="skuid__MasterPage__r.Name" uniqueid="fi-NbK-456"/>
+                <field id="Id" uniqueid="fi-NbK-462"/>
+              </fields>
+              <rowactions>
+                <action type="delete"/>
+                <action type="multi" label="Convert to normal page" icon="sk-icon-escalate">
+                  <renderconditions logictype="and">
+                    <rendercondition type="fieldvalue" operator="!=" enclosevalueinquotes="false" fieldmodel="pages" sourcetype="fieldvalue" field="skuid__IsMaster__c" fieldtargetobjects="skuid__Page__c" value="true"/>
+                    <rendercondition type="blank" operator="!=" fieldmodel="pages" sourcetype="fieldvalue" field="skuid__MasterPage__c" fieldtargetobjects="skuid__Page__c" value="null" enclosevalueinquotes="false"/>
+                  </renderconditions>
+                  <actions>
+                    <action type="action-sequence" action-sequence-id="7985ede6-a4b4-4f6e-8c56-8674c3e389f7">
+                      <inputs>
+                        <input name="pageId" value="{{Id}}"/>
+                        <input name="PageId" value="{{Id}}"/>
+                        <input name="Id" value="{{Id}}"/>
+                      </inputs>
+                    </action>
+                  </actions>
+                </action>
+                <action type="multi" label="Convert to child page" icon="sk-icon-remove-reference">
+                  <renderconditions logictype="and">
+                    <rendercondition type="blank" operator="=" fieldmodel="pages" sourcetype="fieldvalue" field="skuid__MasterPage__c" fieldtargetobjects="skuid__Page__c" value="null" enclosevalueinquotes="false"/>
+                  </renderconditions>
+                  <actions>
+                    <action type="action-sequence" action-sequence-id="5471bffe-9f90-4148-a366-6236fd20f4f2">
+                      <inputs>
+                        <input name="pageId" value="{{Id}}"/>
+                        <input name="PageId" value="{{Id}}"/>
+                        <input name="Id" value="{{Id}}"/>
+                      </inputs>
+                    </action>
+                  </actions>
+                </action>
+              </rowactions>
+              <massactions usefirstitemasdefault="true">
+                <action type="massupdate"/>
+                <action type="massdelete"/>
+              </massactions>
+              <views>
+                <view type="standard"/>
+              </views>
+              <filters/>
+            </skootable>
+          </components>
+        </tab>
+      </tabs>
+    </tabset>
+  </components>
+  <resources>
+    <labels/>
+    <javascript>
+      <jsitem location="inlinesnippet" cachelocation="false" name="childPageToNormalPage">// childPageToNormalPage
+console.log(&apos;Starting conversion&apos;)
+// Skuid variables
+var variableStore = skuid.$M(&apos;variableStore&apos;)
+var r = variableStore.getFirstRow()
+var oldContent = r.oldContent
+
+// Handle the XML
+var parser = new DOMParser();
+var xmlDoc = parser.parseFromString(oldContent, &quot;text/xml&quot;);
+
+// Now get all the old components into an array
+pageRegions = Array.prototype.slice.call(xmlDoc.getElementsByTagName(&apos;pageregioncontent&apos;))
+components = []
+pageRegions.forEach(function(region){
+    if (region.children[0]) {
+        for (let component of region.children[0].children) {
+            components.push(component)}
+    } else
+    {
+        console.log(&apos;Page region has no components, moving on.&apos;)
+    }
+})
+
+// Collate all the components into a new node on the new page
+var newComponentsNode = xmlDoc.createElement(&quot;components&quot;);
+components.forEach(function(c){
+  newComponentsNode.append(c)
+})
+
+// Remove the page regions node
+var skuidPage = xmlDoc.getElementsByTagName(&apos;skuidpage&apos;)[0]
+var pageRegionContents = xmlDoc.getElementsByTagName(&apos;pageregioncontents&apos;)[0]
+skuidPage.removeChild(pageRegionContents)
+
+// Move the components node beneath models node
+xmlDoc.getElementsByTagName(&apos;models&apos;)[0].after(newComponentsNode)
+// Stringify the XML and update the model row
+var oSerializer = new XMLSerializer();
+var sXML = oSerializer.serializeToString(xmlDoc);
+variableStore.updateRow(r,{newContent: sXML})</jsitem>
+      <jsitem location="inlinesnippet" name="normalPageToChildPage" cachelocation="false">// normalPageToChildPage
+console.log(&apos;Starting conversion&apos;)  
+// Skuid variables  
+var pagesModel = skuid.$M(&apos;pages&apos;)
+var variableStore = skuid.$M(&apos;variableStore&apos;)
+var r = variableStore.getFirstRow()
+var oldContent = r.oldContent
+var masterPage = r.masterPageContent
+
+// Handle the XML
+var parser = new DOMParser();
+var masterPageXml = parser.parseFromString(masterPage, &quot;text/xml&quot;);
+var xmlDoc = parser.parseFromString(oldContent, &quot;text/xml&quot;);
+var skuidPage = xmlDoc.getElementsByTagName(&apos;skuidpage&apos;)[0]
+
+// Get all page region areas in master page
+var pageRegionAreas = Array.prototype.slice.call(masterPageXml.getElementsByTagName(&apos;pageregion&apos;))
+
+if (pageRegionAreas.length === 0) {
+  throw (&quot;The chosen master page has no page regions. Please update the page and try again.&quot;)
+} else {
+  // Create pageregionscontents node to nest all pageregioncontent nodes
+  var pageregioncontents = xmlDoc.createElement(&quot;pageregioncontents&quot;);
+  xmlDoc.getElementsByTagName(&apos;models&apos;)[0].after(pageregioncontents)
+
+  // Parse existing page regions, and create nodes for child page
+  pageRegionAreas.forEach(function (pra) {
+    var regionid = pra.getAttribute(&apos;uniqueid&apos;)
+    newPageRegion = xmlDoc.createElement(&quot;pageregioncontent&quot;);
+    newPageRegion.setAttribute(&quot;regionid&quot;, regionid)
+    newPageRegion.setAttribute(&apos;uniqueid&apos;, skuid.utils.generateUniqueId())
+    pageregioncontents.append(newPageRegion)
+  })
+
+  // Now get all the old components into an array
+  components = []
+  var arrayOfComponentNodes = Array.prototype.slice.call(xmlDoc.getElementsByTagName(&apos;components&apos;))
+  arrayOfComponentNodes.forEach(function (cn) {
+    if (cn.parentElement == skuidPage){
+      arrayOfComponents = Array.prototype.slice.call(cn.children)
+      arrayOfComponents.forEach(function (c) {
+        components.push(c)
+      })
+    }
+  })
+
+  // Collate all the components into a new node on the new page
+  var newComponentsNode = xmlDoc.createElement(&quot;components&quot;);
+  components.forEach(function (c) {
+    newComponentsNode.append(c)
+  })
+
+  // Clean up the nodes
+  arrayOfComponentNodes.forEach(function (ocn) {
+    if (ocn.parentElement == skuidPage) {
+      skuidPage.removeChild(ocn)
+    }
+  })
+
+  // Move the components node beneath models node
+  xmlDoc.getElementsByTagName(&apos;pageregioncontent&apos;)[0].append(newComponentsNode)
+
+  // Stringify the XML and update the model row
+  var oSerializer = new XMLSerializer();
+  var sXML = oSerializer.serializeToString(xmlDoc);
+  variableStore.updateRow(r, { newContent: sXML })
+}</jsitem>
+      <jsitem location="inlinesnippet" name="getLayoutFieldsAndUpdateVariableStore" cachelocation="false">var params = arguments[0]
+var variableStore = skuid.$M(&apos;variableStore&apos;)
+var r = variableStore.getFirstRow()
+console.log(params)
+if (params.component._GUID == &quot;select-master-page&quot;) {
+  var pagesModel = skuid.$M(&apos;masterPages_retrieveXML&apos;);
+  variableStore.updateRow(r,{masterPageContent: pagesModel.getFieldValues(pagesModel.getFirstRow(),skuid.utils.getLayoutFields(),true).join(&quot;&quot;)});
+} else {
+    var pagesModel = skuid.$M(&apos;pages_retrieveXML&apos;);
+    variableStore.updateRow(r,{oldContent: pagesModel.getFieldValues(pagesModel.getFirstRow(),skuid.utils.getLayoutFields(),true).join(&quot;&quot;)});
+}
+
+
+
+</jsitem>
+      <jsitem location="inlinesnippet" name="groupLayoutFieldsAndUpdatePagesModel" cachelocation="false">var pagesModel = skuid.$M(&apos;pages_retrieveXML&apos;)
+var variableStore = skuid.$M(&apos;variableStore&apos;)
+var r = variableStore.getFirstRow()
+// Save the page
+skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getFirstRow());</jsitem>
+    </javascript>
+    <css/>
+    <actionsequences uniqueid="sk-3P_R-725">
+      <actionsequence id="8dabbb26-bf41-4f73-97b0-ef87a3d05ca9" label="createNewPageFromConvertedContent" type="reusable" uniqueid="sk-3P_R-726">
+        <description>Uses the currently stored name and content variables to create a new row on the pages model and save it. If the variable store has a master page ID, we&apos;re trying to save a new child page, so there&apos;s a branch to account for that.</description>
+        <actions>
+          <action type="emptyModelData">
+            <models>
+              <model>pages_retrieveXML</model>
+            </models>
+          </action>
+          <action type="createRow" model="pages_retrieveXML" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+            <defaults>
+              <default valuesource="fieldvalue" field="Name" enclosevalueinquotes="true" value="{{$Model.variableStore.data.0.newName}}"/>
+            </defaults>
+          </action>
+          <action type="branch" whenfinished="continue" model="variableStore">
+            <formula>{{masterPageId}}</formula>
+            <iftrueactions>
+              <action type="updateRow" fieldmodel="pages_retrieveXML" affectedrows="context">
+                <updates>
+                  <update valuesource="fieldvalue" value="{{$Model.variableStore.data.0.masterPageId}}" field="skuid__MasterPage__c" fieldtargetobjects="skuid__Page__c" enclosevalueinquotes="true"/>
+                </updates>
+              </action>
+            </iftrueactions>
+          </action>
+          <action type="custom" snippet="groupLayoutFieldsAndUpdatePagesModel"/>
+          <action type="blockUI" message="Saving new page..."/>
+          <action type="save" rollbackonanyerror="true">
+            <models>
+              <model>pages_retrieveXML</model>
+            </models>
+            <onerroractions>
+              <action type="cancel" message="There was an error" timeout="3000">
+                <models>
+                  <model>pages_retrieveXML</model>
+                </models>
+              </action>
+              <action type="blockUI" message="There was an error. Ensure your new page name is unique." timeout="3000"/>
+            </onerroractions>
+          </action>
+          <action type="action-sequence" action-sequence-id="25e9872b-0c61-4447-81f4-4325508f5578"/>
+          <action type="unblockUI"/>
+          <action type="requeryModel" model="pages" behavior="standard"/>
+        </actions>
+        <inputs/>
+      </actionsequence>
+      <actionsequence id="3fd5a006-aecc-4f5a-88bc-0f21be565b1e" label="showMasterPageList" type="reusable" uniqueid="sk-3Tqu-4752">
+        <description>This popup allows users to pick a master page for normal-page-to-child-page conversion. The selected page is sent to the variable store.</description>
+        <actions>
+          <action type="showPopup">
+            <popup title="Master page" width="90%">
+              <components>
+                <template multiple="false" uniqueid="sk-3Us7-5276">
+                  <contents>Which master page would you like to use?</contents>
+                </template>
+                <skootable showconditions="true" showsavecancel="false" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="true" model="masterPages" mode="read" allowcolumnreordering="true" responsive="true" uniqueid="select-master-page">
+                  <fields>
+                    <field id="Name" hideable="true" uniqueid="fi-Nwy-1196"/>
+                  </fields>
+                  <rowactions>
+                    <action type="multi" label="Use as master page" icon="sk-icon-magic">
+                      <actions>
+                        <action type="setCondition" model="masterPages_retrieveXML" condition="Id" value="{{Id}}"/>
+                        <action type="requeryModels" behavior="standard">
+                          <models>
+                            <model>masterPages_retrieveXML</model>
+                          </models>
+                        </action>
+                        <action type="custom" snippet="getLayoutFieldsAndUpdateVariableStore"/>
+                        <action type="updateRow" model="variableStore" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context" fieldmodel="variableStore">
+                          <defaults>
+                            <default valuesource="fieldvalue" field="masterPageId" enclosevalueinquotes="true" value="{{id}}"/>
+                            <default valuesource="fieldvalue" field="masterPageContent" enclosevalueinquotes="true" value="{{content}}"/>
+                          </defaults>
+                          <updates>
+                            <update valuesource="fieldvalue" field="masterPageId" enclosevalueinquotes="true" value="{{Id}}"/>
+                            <update valuesource="fieldvalue" field="masterPageName" enclosevalueinquotes="true" value="{{Name}}"/>
+                            <update valuesource="fieldvalue" value="{{Name}}_{{$Model.variableStore.data.0.newName}}" field="newName" enclosevalueinquotes="true"/>
+                          </updates>
+                        </action>
+                        <action type="closeAllPopups"/>
+                        <action type="custom" snippet="normalPageToChildPage">
+                          <onerroractions>
+                            <action type="blockUI" message="There was an error. Ensure that your chosen master page has page regions." timeout="2000"/>
+                          </onerroractions>
+                        </action>
+                        <action type="action-sequence" action-sequence-id="08bc0954-07ab-4042-93dd-f4b3266dbdf3">
+                          <inputs>
+                            <input name="newPageName" value="{{$Model.variableStore.data.0.masterPageName}}-{{name}}"/>
+                          </inputs>
+                        </action>
+                      </actions>
+                    </action>
+                  </rowactions>
+                  <massactions usefirstitemasdefault="true"/>
+                  <views>
+                    <view type="standard"/>
+                  </views>
+                  <searchfields/>
+                  <renderconditions logictype="and"/>
+                  <conditions/>
+                </skootable>
+              </components>
+            </popup>
+          </action>
+        </actions>
+      </actionsequence>
+      <actionsequence id="25e9872b-0c61-4447-81f4-4325508f5578" label="clearVariableStore" type="reusable" uniqueid="sk-3Tqu-4753">
+        <description>An easy to remember action to clearing the variable store to ensure we always only have one row.</description>
+        <actions>
+          <action type="emptyModelData">
+            <models>
+              <model>variableStore</model>
+            </models>
+          </action>
+        </actions>
+      </actionsequence>
+      <actionsequence id="08bc0954-07ab-4042-93dd-f4b3266dbdf3" label="promptForName" type="reusable" uniqueid="sk-Nb7-403">
+        <description>Prompts the user for the name of their converted page. Uses the variable store and calls the createNewPageFromConvertedContent action sequence. Name defaults are set in the row actions.</description>
+        <actions>
+          <action type="showPopup">
+            <popup title="Page" width="90%">
+              <components>
+                <template multiple="false" uniqueid="sk-3Uno-3087">
+                  <contents>What would you like to name the name page?</contents>
+                </template>
+                <basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="variableStore" uniqueid="sk-3Unk-3049" mode="read">
+                  <columns>
+                    <column width="100%" uniqueid="sk-3Unk-3045">
+                      <sections>
+                        <section title="Section A" uniqueid="sk-3Unk-3046" collapsible="no" showheader="false">
+                          <fields>
+                            <field uniqueid="sk-3Unn-3082" id="newName"/>
+                          </fields>
+                        </section>
+                      </sections>
+                    </column>
+                  </columns>
+                </basicfieldeditor>
+                <buttonset model="variableStore" uniqueid="sk-3UoV-4666">
+                  <buttons>
+                    <button type="multi" label="Save" uniqueid="sk-3UoV-4671">
+                      <actions>
+                        <action type="action-sequence" action-sequence-id="8dabbb26-bf41-4f73-97b0-ef87a3d05ca9"/>
+                        <action type="closeAllPopups"/>
+                      </actions>
+                    </button>
+                    <button type="multi" label="Cancel" uniqueid="sk-3UoV-4675">
+                      <actions>
+                        <action type="action-sequence" action-sequence-id="25e9872b-0c61-4447-81f4-4325508f5578"/>
+                        <action type="closeAllPopups"/>
+                      </actions>
+                    </button>
+                  </buttons>
+                </buttonset>
+              </components>
+            </popup>
+          </action>
+        </actions>
+      </actionsequence>
+      <actionsequence id="7985ede6-a4b4-4f6e-8c56-8674c3e389f7" label="Convert to normal page" type="reusable" uniqueid="sk-NdC-1616">
+        <actions>
+          <action type="action-sequence" action-sequence-id="25e9872b-0c61-4447-81f4-4325508f5578"/>
+          <action type="createRow" model="variableStore" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+            <defaults>
+              <default valuesource="fieldvalue" field="newName" enclosevalueinquotes="true" value="{{Name}}-Emancipated"/>
+            </defaults>
+          </action>
+          <action type="action-sequence" action-sequence-id="0df7a4d6-1aea-4bba-a5f6-07e62f5b5f7b">
+            <inputs>
+              <input name="pageId" value="{{$Input.Id}}"/>
+              <input name="Id" value="{{$Input.Id}}"/>
+            </inputs>
+          </action>
+          <action type="custom" snippet="childPageToNormalPage">
+            <onerroractions>
+              <action type="blockUI" message="There was an error" timeout="3000"/>
+            </onerroractions>
+          </action>
+          <action type="action-sequence" action-sequence-id="08bc0954-07ab-4042-93dd-f4b3266dbdf3"/>
+        </actions>
+        <description>The row action to a convert a child page to a normal page</description>
+        <inputs>
+          <input type="value" name="Id"/>
+        </inputs>
+      </actionsequence>
+      <actionsequence id="5471bffe-9f90-4148-a366-6236fd20f4f2" label="Convert to child page" uniqueid="sk-NdC-1617" type="reusable">
+        <actions>
+          <action type="action-sequence" action-sequence-id="25e9872b-0c61-4447-81f4-4325508f5578"/>
+          <action type="createRow" model="variableStore" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+            <defaults>
+              <default valuesource="fieldvalue" field="newName" enclosevalueinquotes="true" value="{{Name}}"/>
+            </defaults>
+          </action>
+          <action type="action-sequence" action-sequence-id="0df7a4d6-1aea-4bba-a5f6-07e62f5b5f7b">
+            <inputs>
+              <input name="pageId" value="{{$Input.Id}}"/>
+            </inputs>
+          </action>
+          <action type="action-sequence" action-sequence-id="3fd5a006-aecc-4f5a-88bc-0f21be565b1e"/>
+        </actions>
+        <description>The row action to convert a normal page to a child page.</description>
+        <inputs>
+          <input type="value" name="Id"/>
+        </inputs>
+      </actionsequence>
+      <actionsequence id="0df7a4d6-1aea-4bba-a5f6-07e62f5b5f7b" label="Query SF XML and update variable store" type="reusable" uniqueid="sk-NkU-427">
+        <description>This action sequence allows for the conversion sequences to remain universal between Platform and Skuid on SF.</description>
+        <actions>
+          <action type="emptyModelData">
+            <models>
+              <model>pages_retrieveXML</model>
+            </models>
+          </action>
+          <action type="setCondition" model="pages_retrieveXML" value="{{$Input.Id}}" condition="Id"/>
+          <action type="requeryModels" behavior="standard">
+            <models>
+              <model>pages_retrieveXML</model>
+            </models>
+          </action>
+          <action type="custom" snippet="getLayoutFieldsAndUpdateVariableStore"/>
+        </actions>
+        <inputs>
+          <input type="value" name="Id"/>
+        </inputs>
+      </actionsequence>
+    </actionsequences>
+  </resources>
+  <styles>
+    <styleitem type="background" bgtype="none"/>
+  </styles>
+</skuidpage>
