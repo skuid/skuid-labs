@@ -104,7 +104,7 @@
             <skootable showconditions="true" showsavecancel="true" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="true" model="pages" buttonposition="" mode="read" allowcolumnreordering="true" responsive="true" uniqueid="sk-NbK-453">
               <fields>
                 <field id="skuid__API_Version__c" uniqueid="fi-NbK-454"/>
-                <field id="Name" hideable="true" uniqueid="fi-Neo-1934"/>
+                <field id="Name" hideable="true" uniqueid="fi-Neo-1934" redirecttype="customurl" window="self" rooturl="/apex/skuid__PageBuilder?id={{Id}}"/>
                 <field id="skuid__MasterPage__c" uniqueid="fi-NbK-455"/>
                 <field id="skuid__MasterPage__r.Name" uniqueid="fi-NbK-456"/>
                 <field id="Id" uniqueid="fi-NbK-462"/>
