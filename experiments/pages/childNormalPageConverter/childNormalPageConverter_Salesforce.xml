@@ -14,9 +14,9 @@
         <field>id</field>
       </idfields>
       <conditions logic="" uniqueId="sk-3dKp-1484">
-        <condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="is_master_page" state="filterableoff" inactive="true" name="is_master_page"/>
         <condition type="blank" value="null" field="skuid__MasterPage__c" fieldtargetobjects="skuid__Page__c" operator="=" enclosevalueinquotes="false" state="filterableoff" inactive="true" name="skuid__MasterPage__c"/>
         <condition type="fieldvalue" value="v1" enclosevalueinquotes="true" field="skuid__API_Version__c"/>
+        <condition type="fieldvalue" value="false" enclosevalueinquotes="false" field="skuid__IsMaster__c"/>
       </conditions>
       <actions uniqueId="sk-3dKp-1485"/>
     </model>
