@@ -13,19 +13,20 @@ This experiment aims to automate that hackery. It's a list of pages with two con
 
 The actions are pretty self explanatory. And I tried to uplevel most of the actions to action sequences with descriptions. The actual XML conversion is handled by two snippets. Those snippets are commented throughout to illustrate what they're doing. 
 
-The current page has a **Pages list** tab (where the magic happens) a **Debug** tab, which is used to check the `variableStore` to ensure things are working as expected.
+The Salesforce version of this page has a few additional scripts to handle the way we have to save pages on Salesforce due to field length limitations.
+
+To install, either copy and paste the XML for your platform of choice into your Skuid site, or use the XML + JSON file with the `skuid CLI`. 
 
 ## Caveats
 
 - This only works for **API v1 pages**.
 - When converting from a _child page_ to a _normal page_, all components are placed into the page based on the order they appear. If you use page regions as grids, you'll need to recreate those.
 - When converting from a  _normal page_ to a _child page_, all components are placed into the **the first page region available**.
-- The page list currently only works for Skuid Platform. If you're working in Skuid on Salesforce you'll need to use the **Manual XML Conversion** tab and fill out all the fields. 
-  - If converting a normal page into a child page, you'll need to copy and paste the **XML from the master page** as well as the page you're converting. Also as the form says, you'll need to create a new page using the **Use a Master Page** option and _then_ paste the converted XML.
+- If you reference a master page's resources in a child page and convert that child page to a normal page, it'll mess up.
 
 ## Future improvement ideas
 
-- Add a model for querying pages in Skuid on Salesforce and re-integrate the page creation there. Only query the Platform pages model if on Platform. I didn't do this in this round because of the way we have to save page XML in Salesforce due to field length limits.
+- Allow some form of import for reference master pages
 - _Child page_ to a _normal page_: Instead of dumping all components vertically into the XML, convert the each `pageregion` component into a Responsive Grid in order to maintain some visual similarity to the original page.
 - _Normal page_ to a _child page_: Allow users to select which page region they would like to place their components in. 
 
