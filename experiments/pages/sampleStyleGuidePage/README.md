@@ -1,6 +1,8 @@
 # Sample Style Guide Page
 
-Use a component-filled Skuid page to preview components and re-usable patterns to build a style guide for your Skuid project As you're making changes to your Design System, you may need to see how well that change might sit with the rest of the design. So having a page that show all design patterns in your app can be useful. Also, you and other collaborators can adhere to this guide as they build more pages, ensuring a cohesive UI in the end.
+Use a component-filled Skuid page to preview components and re-usable patterns to build a style guide for your Skuid project.
+
+As you're making changes to your Design System, you may need to see how well that change might sit with the rest of the design. So having a page that show all design patterns in your app can be useful. Also, you and other collaborators can adhere to this guide as they build more pages, ensuring a cohesive UI in the end.
 
 This page is built as a style guide for a sales application so you may see components or re-usable patterns that are relevant to this type of UI. However, for your project, you may have a different sets of patterns and components that work together to make up your Style Guide.
 
