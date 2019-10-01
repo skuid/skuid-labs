@@ -72,7 +72,6 @@
 				<field id="ReminderDateTime"/>
 				<field id="Status"/>
 				<field id="Subject"/>
-				<field id="Type"/>
 				<field id="OwnerId"/>
 				<field id="Owner.Name"/>
 				<field id="due_date_ui" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
@@ -1639,11 +1638,6 @@
 																											<skuid__field id="Subject"/>
 																										</fields>
 																									</row>
-																									<row>
-																										<fields>
-																											<skuid__field id="Type"/>
-																										</fields>
-																									</row>
 																								</rows>
 																							</section>
 																						</sections>
@@ -1775,11 +1769,6 @@
 																									<row>
 																										<fields>
 																											<skuid__field id="Subject"/>
-																										</fields>
-																									</row>
-																									<row>
-																										<fields>
-																											<skuid__field id="Type"/>
 																										</fields>
 																									</row>
 																								</rows>
@@ -1915,11 +1904,6 @@
 																											<skuid__field id="Subject"/>
 																										</fields>
 																									</row>
-																									<row>
-																										<fields>
-																											<skuid__field id="Type"/>
-																										</fields>
-																									</row>
 																								</rows>
 																							</section>
 																						</sections>
@@ -2051,11 +2035,6 @@
 																									<row>
 																										<fields>
 																											<skuid__field id="Subject"/>
-																										</fields>
-																									</row>
-																									<row>
-																										<fields>
-																											<skuid__field id="Type"/>
 																										</fields>
 																									</row>
 																								</rows>
