@@ -2,7 +2,6 @@
 	<models>
 		<model id="Accounts" limit="20" query="true" createrowifnonefound="true" datasource="salesforce" sobject="Account">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="Name"/>
 				<field id="OwnerId"/>
 				<field id="Owner.Name"/>
@@ -24,7 +23,6 @@
 		</model>
 		<model id="Opportunities" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Opportunity">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="AccountId"/>
 				<field id="Account.Name"/>
 				<field id="Amount"/>
@@ -62,7 +60,6 @@
 		</model>
 		<model id="Tasks" limit="4" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Task">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="Id"/>
 				<field id="AccountId"/>
 				<field id="Account.Name"/>
@@ -90,7 +87,6 @@
 		</model>
 		<model id="Events" limit="4" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Event">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="Id"/>
 				<field id="Description"/>
 				<field id="EndDateTime"/>
@@ -98,7 +94,6 @@
 				<field id="What.Name"/>
 				<field id="Subject"/>
 				<field id="StartDateTime"/>
-				<field id="Type"/>
 				<field id="date" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
 					<formula>DAY_NAME_SHORT({{StartDateTime}})</formula>
 				</field>
@@ -130,7 +125,6 @@
 		</model>
 		<model id="Products" limit="4" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Product2">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="Family"/>
 				<field id="Description"/>
 				<field id="ProductCode"/>
@@ -694,7 +688,7 @@
 																</axis>
 															</categoryaxes>
 															<serieslist>
-																<series valuefield="Amount" splittype="none" modelId="Opportunities" aggfunction="sum" splitfield="RecordTypeId"/>
+																<series valuefield="Amount" splittype="none" modelId="Opportunities" aggfunction="sum" />
 															</serieslist>
 															<colors/>
 															<legend layout="off" halign="center" valign="bottom"/>
@@ -840,11 +834,6 @@
 																							<row>
 																								<fields>
 																									<skuid__field id="OwnerId"/>
-																								</fields>
-																							</row>
-																							<row>
-																								<fields>
-																									<skuid__field id="RecordTypeId"/>
 																								</fields>
 																							</row>
 																							<row>
