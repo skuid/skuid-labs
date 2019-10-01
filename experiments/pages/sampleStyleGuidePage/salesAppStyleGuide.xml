@@ -1,4 +1,4 @@
-<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true" theme="SalesApp_NautilusNotes">
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="SalesApp_NautilusNotes">
 	<models>
 		<model id="Accounts" limit="20" query="true" createrowifnonefound="true" datasource="salesforce" sobject="Account">
 			<fields>
