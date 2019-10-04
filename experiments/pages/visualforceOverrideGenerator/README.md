@@ -1,5 +1,7 @@
 # Visualforce Override Generator
 
+Instead of handwriting Visualforce pages while overriding Salesforce pages with Skuid, this page parses out what you need through a set of options and generates the Visualforce markup and page record using Salesforce's Tooling API. From there, you can select the generated page as your Visualforce override as needed.
+
 ## Before you begin
 
   1. Salesforce connected app
