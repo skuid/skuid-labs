@@ -1,6 +1,6 @@
 <skuidpage unsavedchangeswarning="" personalizationmode="server" showsidebar="false" showheader="false">
     <models>
-        <model id="RunningUser" limit="0" query="true" createrowifnonefound="true" adapter="salesforce" type="" sobject="User" service="salesforce">
+        <model id="RunningUser" limit="0" query="true" createrowifnonefound="true" sobject="User" datasource="salesforce">
             <fields>
                 <field id="Type" uionly="true" displaytype="PICKLIST" label="Type?" defaultValue="redirect" readonly="false">
                     <picklistentries>
@@ -37,7 +37,7 @@
             <conditions/>
             <actions/>
         </model>
-        <model id="ApexPage" query="false" createrowifnonefound="false" adapter="REST" service="ToolingAPI" processonclient="true" type="readwrite">
+        <model id="ApexPage" query="false" createrowifnonefound="false" datasource="ToolingAPI" processonclient="true" type="readwrite">
             <fields>
                 <field id="name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" accessible="true" filterable="true"/>
                 <field id="ApiVersion" label="ApiVersion" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="2" scale="0" accessible="true" filterable="true"/>
@@ -69,7 +69,7 @@
                 <method type="update" verb="PUT" successif="requestsucceeds" sendchanges="asjsoninbody" endpoint="/services/data/v37.0/tooling/sobjects/ApexPage/{{Id}}"/>
             </methods>
         </model>
-        <model id="MetadataContainer" query="false" createrowifnonefound="false" adapter="REST" service="ToolingAPI" processonclient="true" type="readwrite">
+        <model id="MetadataContainer" query="false" createrowifnonefound="false" datasource="ToolingAPI" processonclient="true" type="readwrite">
             <fields>
                 <field id="name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" accessible="true" filterable="true"/>
                 <field id="id" displaytype="TEXT" label="id"/>
@@ -84,7 +84,7 @@
                 <method type="delete" verb="DELETE" successif="requestsucceeds" endpoint="/services/data/v37.0/tooling/sobjects/MetadataContainer/{{IdReal}}"/>
             </methods>
         </model>
-        <model id="ApexPageMember" query="false" createrowifnonefound="false" adapter="REST" service="ToolingAPI" processonclient="true" type="readwrite">
+        <model id="ApexPageMember" query="false" createrowifnonefound="false" datasource="ToolingAPI" processonclient="true" type="readwrite">
             <fields>
                 <field id="MetadataContainerId" displaytype="TEXT"/>
                 <field id="ContentEntityId" displaytype="TEXT"/>
@@ -96,7 +96,7 @@
                 <method type="insert" verb="POST" successif="requestsucceeds" sendchanges="asjsoninbody" insertresponse="recordinbody" endpoint="/services/data/v37.0/tooling/sobjects/ApexPageMember"/>
             </methods>
         </model>
-        <model id="ContainerAsyncRequest" query="false" createrowifnonefound="false" adapter="REST" service="ToolingAPI" processonclient="true" type="readwrite">
+        <model id="ContainerAsyncRequest" query="false" createrowifnonefound="false" datasource="ToolingAPI" processonclient="true" type="readwrite">
             <fields>
                 <field id="MetadataContainerId" displaytype="TEXT"/>
                 <field id="isCheckOnly" displaytype="TEXT"/>
@@ -107,7 +107,7 @@
                 <method type="insert" verb="POST" endpoint="/services/data/v37.0/tooling/sobjects/ContainerAsyncRequest" successif="requestsucceeds" sendchanges="asjsoninbody" insertresponse="recordinbody"/>
             </methods>
         </model>
-        <model id="CONTAINER" query="true" createrowifnonefound="false" adapter="REST" service="ToolingAPI" processonclient="true" type="readwrite">
+        <model id="CONTAINER" query="true" createrowifnonefound="false" datasource="ToolingAPI" processonclient="true" type="readwrite">
             <fields>
                 <field id="Name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
                 <field id="Id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
