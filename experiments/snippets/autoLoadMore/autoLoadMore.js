@@ -1,4 +1,4 @@
-//inline javascript snippet
+//inline javascript
 (function(skuid){
 var $ = skuid.$;
 
