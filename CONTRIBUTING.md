@@ -8,7 +8,11 @@ Your contributions also help shape the future of the Skuid product. When we see 
 
 ## How do I contribute?
 
-If you've got an experiment you'd like to submit, go ahead, clone this repository and submit a pull request! We just ask that you do the following:
+If you've got an experiment you'd like to submit, fork this repository and submit a pull request (PR)! 
+
+If you're unfamiliar with how to do this, read [GitHub's Forking Projects guide](https://guides.github.com/activities/forking/).
+
+We do ask that your submission follow our general code and structure guidelines:
 
 - Ensure that your file names are **[camelCase](https://en.wikipedia.org/wiki/Camel_case)**.
 - Create a folder for your experiment in the proper directory.
