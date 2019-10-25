@@ -1,0 +1,2011 @@
+<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="IcyDays">
+	<models>
+		<model id="ModeController" query="true" createrowifnonefound="true" datasource="Ui-Only" processonclient="true" unloadwarningifunsavedchanges="false">
+			<fields>
+				<field id="mode" displaytype="PICKLIST" ogdisplaytype="TEXT" picklistsource="manual">
+					<picklistentries>
+						<entry value="detail-view" label="detail-view"/>
+						<entry value="list-view" label="list-view"/>
+						<entry value="new-case-view" label="new-case-view"/>
+					</picklistentries>
+				</field>
+				<field id="list-title" displaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="All Cases"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Cases" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" processonclient="true" sobject="Case">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Id"/>
+				<field id="CaseNumber"/>
+				<field id="Origin"/>
+				<field id="Reason"/>
+				<field id="Type"/>
+				<field id="IsClosed"/>
+				<field id="ClosedDate"/>
+				<field id="SuppliedCompany"/>
+				<field id="ContactId"/>
+				<field id="Contact.Name"/>
+				<field id="Contact.FirstName"/>
+				<field id="Contact.LastName"/>
+				<field id="Status"/>
+				<field id="Subject"/>
+				<field id="Priority"/>
+				<field id="IsEscalated"/>
+				<field id="SuppliedEmail"/>
+				<field id="Description"/>
+				<field id="type-icon" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>CASE({{{Origin}}}, 
+"Phone", "phone", 
+"Email", "envelope", 
+"Web", "globe",
+"")</formula>
+				</field>
+				<field id="customer" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>IF(ISBLANK({{Contact.Name}}),{{Account.Name}},{{Contact.Name}})</formula>
+				</field>
+				<field id="CreatedDate"/>
+				<field id="CreatedDateOnly" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>FORMAT_DATE("M d",{{CreatedDate}})</formula>
+				</field>
+			</fields>
+			<actions/>
+			<conditions>
+				<condition type="fieldvalue" value="New" enclosevalueinquotes="true" field="Status" operator="=" state="filterableoff" inactive="true" name="OpenCases"/>
+				<condition type="fieldvalue" field="Type" operator="=" inactive="true" enclosevalueinquotes="true" name="__autofilter__Type" state="filterableoff" value=""/>
+				<condition type="fieldvalue" field="Status" operator="=" inactive="true" enclosevalueinquotes="true" name="__autofilter__Status" state="filterableoff" value=""/>
+				<condition type="fieldvalue" field="Origin" operator="=" inactive="true" enclosevalueinquotes="true" name="__autofilter__Origin" state="filterableoff" value=""/>
+				<condition type="fieldvalue" field="AccountId" operator="=" inactive="true" enclosevalueinquotes="true" name="__autofilter__AccountId" state="filterableoff" value=""/>
+				<condition type="fieldvalue" value="Closed" enclosevalueinquotes="true" field="Status" state="filterableoff" inactive="true" name="ClosedCases"/>
+				<condition type="fieldvalue" value="High" enclosevalueinquotes="true" field="Priority" state="filterableoff" inactive="true" name="highpriority"/>
+				<condition type="blank" value="null" field="Type" operator="!=" enclosevalueinquotes="false"/>
+				<condition type="blank" value="null" field="Priority" operator="!=" enclosevalueinquotes="false"/>
+			</conditions>
+		</model>
+		<model id="CaseDetail" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" processonclient="true" sobject="Case">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Id"/>
+				<field id="CaseNumber"/>
+				<field id="Origin"/>
+				<field id="Reason"/>
+				<field id="Type"/>
+				<field id="IsClosed"/>
+				<field id="ClosedDate"/>
+				<field id="SuppliedCompany"/>
+				<field id="ContactId"/>
+				<field id="Contact.Name"/>
+				<field id="Contact.FirstName"/>
+				<field id="Contact.LastName"/>
+				<field id="Status"/>
+				<field id="Subject"/>
+				<field id="Priority"/>
+				<field id="IsEscalated"/>
+				<field id="SuppliedEmail"/>
+				<field id="Description"/>
+				<field id="customer-full" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>IF(ISBLANK({{Contact.Name}}),{{Account.Name}},{{Contact.Name}})</formula>
+				</field>
+				<field id="OwnerId"/>
+				<field id="Owner.Name"/>
+				<field id="CreatedDate"/>
+			</fields>
+			<actions/>
+			<conditions>
+				<condition type="modelmerge" value="" field="Id" operator="=" model="Cases" enclosevalueinquotes="true" mergefield="Id" novaluebehavior="deactivate" state="filterableon" inactive="false" name="incidentid"/>
+			</conditions>
+		</model>
+		<model id="NewCase" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" processonclient="true" sobject="Case">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Id"/>
+				<field id="CaseNumber"/>
+				<field id="Origin"/>
+				<field id="Reason"/>
+				<field id="Type"/>
+				<field id="IsClosed"/>
+				<field id="ClosedDate"/>
+				<field id="SuppliedCompany"/>
+				<field id="ContactId"/>
+				<field id="Contact.Name"/>
+				<field id="Contact.FirstName"/>
+				<field id="Contact.LastName"/>
+				<field id="Status"/>
+				<field id="Subject"/>
+				<field id="Priority"/>
+				<field id="IsEscalated"/>
+				<field id="SuppliedEmail"/>
+				<field id="Description"/>
+			</fields>
+			<actions/>
+			<conditions/>
+		</model>
+		<model id="QueuedCases" limit="5" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Case">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="ContactId"/>
+				<field id="Contact.Name"/>
+				<field id="isActive" uionly="true" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue"/>
+				<field id="customer-full" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>IF(ISBLANK({{Contact.Name}}),{{Account.Name}},{{Contact.Name}})</formula>
+				</field>
+				<field id="customer-shortened" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>IF( LEN({{customer-full}}) &gt;= 13,
+JOIN_TEXT(" ", LEFT( {{customer-full}}, 12 ) , "..")
+, {{customer-full}} )</formula>
+				</field>
+				<field id="Id"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="CaseContact" limit="20" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Contact">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Id"/>
+				<field id="FirstName"/>
+				<field id="Name"/>
+				<field id="LastName"/>
+				<field id="MailingCity"/>
+				<field id="MailingCountry"/>
+				<field id="MailingState"/>
+				<field id="MailingStreet"/>
+				<field id="MailingPostalCode"/>
+				<field id="Email"/>
+				<field id="MobilePhone"/>
+				<field id="Phone"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Id" operator="=" state="filterableoff" inactive="true" name="contactid"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="ContactResult" limit="20" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Contact">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Id"/>
+				<field id="FirstName"/>
+				<field id="Name"/>
+				<field id="LastName"/>
+				<field id="MailingCity"/>
+				<field id="MailingCountry"/>
+				<field id="MailingState"/>
+				<field id="MailingStreet"/>
+				<field id="MailingPostalCode"/>
+				<field id="Email"/>
+				<field id="MobilePhone"/>
+				<field id="Phone"/>
+				<field id="MailingAddress"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Id" operator="=" state="filterableoff" inactive="true" name="contactid"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="ExistingCases" limit="20" query="false" createrowifnonefound="false" datasource="salesforce" processonclient="true" sobject="Case">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Id"/>
+				<field id="CaseNumber"/>
+				<field id="Origin"/>
+				<field id="Reason"/>
+				<field id="Type"/>
+				<field id="IsClosed"/>
+				<field id="ClosedDate"/>
+				<field id="SuppliedCompany"/>
+				<field id="ContactId"/>
+				<field id="Contact.Name"/>
+				<field id="Contact.FirstName"/>
+				<field id="Contact.LastName"/>
+				<field id="Status"/>
+				<field id="Subject"/>
+				<field id="Priority"/>
+				<field id="IsEscalated"/>
+				<field id="SuppliedEmail"/>
+				<field id="Description"/>
+				<field id="type-icon" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>CASE({{{Origin}}}, 
+"Phone", "phone", 
+"Email", "envelope", 
+"Web", "globe",
+"")</formula>
+				</field>
+				<field id="customer" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>IF(ISBLANK({{Contact.Name}}),{{Account.Name}},{{Contact.Name}})</formula>
+				</field>
+				<field id="CreatedDateOnly" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>FORMAT_DATE("M d",{{CreatedDate}})</formula>
+				</field>
+			</fields>
+			<actions/>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="ContactId" fieldtargetobjects="Contact" state="filterableoff" inactive="true" name="_customerid_value"/>
+			</conditions>
+		</model>
+		<model id="Case_Agg_Status" limit="" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Case" type="aggregate">
+			<fields>
+				<field id="Id" name="countId" function="COUNT"/>
+			</fields>
+			<conditions/>
+			<actions/>
+			<groupby method="simple">
+				<field id="Status" name="status"/>
+			</groupby>
+		</model>
+	</models>
+	<components>
+		<grid uniqueid="sk-3vVN-785" columngutter="0px">
+			<divisions>
+				<division behavior="fit" verticalalign="top">
+					<components>
+						<wrapper uniqueid="sk-3wfN-2727">
+							<components>
+								<navigation uniqueid="sk-3wfP-2739" type="vertical">
+									<navigationitems>
+										<navigationitem uniqueid="sk-3wfQ-2750" icon="sk-webicon-material-icons:menu">
+											<actions>
+												<action type="emptyModelData">
+													<models>
+														<model>CaseDetail</model>
+														<model>NewCase</model>
+													</models>
+												</action>
+												<action type="toggleRenderComponent" behavior="hide" componentid="start-case-container"/>
+												<action type="toggleRenderComponent" behavior="hide" componentid="open-and-detail-container"/>
+												<action type="toggleRenderComponent" window="self" behavior="show" componentid="case-nav"/>
+												<action type="toggleRenderComponent" behavior="show" componentid="case-list-container"/>
+												<action type="toggleRenderComponent" behavior="hide" componentid="charts-kpi-container"/>
+											</actions>
+										</navigationitem>
+										<navigationitem uniqueid="sk-3wfg-2794" icon="sk-webicon-material-icons:add">
+											<actions>
+												<action type="toggleRenderComponent" behavior="hide" componentid="case-list-container"/>
+												<action type="toggleRenderComponent" behavior="hide" componentid="case-nav"/>
+												<action type="toggleRenderComponent" behavior="hide" componentid="open-and-detail-container"/>
+												<action type="toggleRenderComponent" window="self" behavior="show" componentid="start-case-container"/>
+												<action type="emptyModelData">
+													<models>
+														<model>NewCase</model>
+													</models>
+												</action>
+											</actions>
+											<renderconditions logictype="and"/>
+										</navigationitem>
+										<navigationitem uniqueid="sk-3zZm-925" icon="sk-webicon-material-icons:info_outline">
+											<actions>
+												<action type="openSlidingPanel" window="self" behavior="toggle" openbehavior="open">
+													<panel title="Sliding Panel Contents" uniqueid="sk-3zZt-951" size="40%" origin="right" closeonpageclick="true" behavior="overlay">
+														<components>
+															<wrapper uniqueid="sk-3zZy-973">
+																<components>
+																	<richtext multiple="false" uniqueid="sk-3zZ--993">
+																		<contents>&lt;p&gt;&lt;strong&gt;&lt;span style="font-size:16px;"&gt;About this Demo&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This Skuid demo showcases yet another layout for Help Desk/ Case Management workflow that puts the case rep first.&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;Recognizing the Case Rep&amp;#39;s needs to multi-task and get to the right info quickly, we design this demo with the ability to keep a list of &amp;quot;Open cases&amp;quot;, or cases you&amp;#39;re currently working on, so you can go back and forth between cases without losing productivity.&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;We also allow for a better customer service experience, where we use Skuid&amp;#39;s powerful search component to start a customer interaction by asking for customer&amp;#39;s name, phone number, or email, find the existing contact and account, then create a case accordingly.&amp;nbsp;&lt;/p&gt;
+</contents>
+																	</richtext>
+																</components>
+																<styles>
+																	<styleitem type="background"/>
+																	<styleitem type="border" padding="all">
+																		<styles>
+																			<styleitem property="padding" value="24px"/>
+																			<styleitem property="box-sizing" value="border-box"/>
+																		</styles>
+																	</styleitem>
+																	<styleitem type="size"/>
+																</styles>
+															</wrapper>
+														</components>
+													</panel>
+												</action>
+											</actions>
+										</navigationitem>
+									</navigationitems>
+								</navigation>
+							</components>
+							<styles>
+								<styleitem type="background" bgtype="color">
+									<styles>
+										<styleitem property="background-color" value="#68b0c3"/>
+									</styles>
+								</styleitem>
+								<styleitem type="border" padding="all">
+									<styles>
+										<styleitem property="padding" value="8px"/>
+										<styleitem property="box-sizing" value="border-box"/>
+									</styles>
+								</styleitem>
+								<styleitem type="size"/>
+								<styleitem property="height" value="100vh"/>
+								<styleitem property="overflow" value="hidden"/>
+								<styleitem property="font-size" value="20px"/>
+							</styles>
+							<renderconditions logictype="and"/>
+						</wrapper>
+					</components>
+				</division>
+				<division behavior="fit" verticalalign="top" uniqueid="case-nav-div">
+					<components>
+						<wrapper uniqueid="case-nav">
+							<components>
+								<richtext multiple="false" uniqueid="sk-3xIl-1304">
+									<contents>&lt;p&gt;&lt;span style="font-size:18px;"&gt;&lt;span style="color:#d0dade;"&gt;Quick Filters&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+									<renderconditions logictype="and"/>
+								</richtext>
+								<navigation uniqueid="sk-3wjw-4765" type="vertical">
+									<navigationitems>
+										<navigationitem uniqueid="sk-3wjw-4766" label="Recently Added">
+											<actions>
+												<action type="blockUI" message="loading"/>
+												<action type="sortModel" client-side="true" model="Cases" method="desc" field="CreatedDate"/>
+												<action type="updateRow" fieldmodel="ModeController" affectedrows="context" enclosevalueinquotes="true">
+													<updates>
+														<update valuesource="fieldvalue" field="list-title" value="Recently Added"/>
+													</updates>
+												</action>
+												<action type="unblockUI"/>
+											</actions>
+										</navigationitem>
+										<navigationitem uniqueid="sk-3wjw-4767" label="Open Cases">
+											<actions>
+												<action type="blockUI" message="loading"/>
+												<action type="deactivateFilterableConditions">
+													<models>
+														<model>Cases</model>
+													</models>
+												</action>
+												<action type="activateCondition" model="Cases" condition="OpenCases"/>
+												<action type="requeryModel" model="Cases" behavior="standard">
+													<onerroractions>
+														<action type="blockUI" message="There was an error" timeout="3000"/>
+													</onerroractions>
+												</action>
+												<action type="updateRow" fieldmodel="ModeController" affectedrows="context" enclosevalueinquotes="true">
+													<updates>
+														<update valuesource="fieldvalue" field="list-title" value="Open Cases"/>
+													</updates>
+												</action>
+												<action type="unblockUI"/>
+											</actions>
+										</navigationitem>
+										<navigationitem uniqueid="sk-3wjw-4768" label="Closed Cases">
+											<actions>
+												<action type="blockUI" message="loading"/>
+												<action type="deactivateFilterableConditions">
+													<models>
+														<model>Cases</model>
+													</models>
+												</action>
+												<action type="activateCondition" model="Cases" condition="ClosedCases" value="Problem Solved">
+													<models>
+														<model>Cases</model>
+													</models>
+												</action>
+												<action type="requeryModel" model="Cases" behavior="standard">
+													<onerroractions>
+														<action type="blockUI" message="There was an error" timeout="3000"/>
+													</onerroractions>
+												</action>
+												<action type="updateRow" fieldmodel="ModeController" affectedrows="context" enclosevalueinquotes="true">
+													<updates>
+														<update valuesource="fieldvalue" field="list-title" value="Closed Cases"/>
+													</updates>
+												</action>
+												<action type="unblockUI"/>
+											</actions>
+											<renderconditions logictype="and"/>
+										</navigationitem>
+										<navigationitem label="High Priority" uniqueid="sk-3xJe-1565">
+											<actions>
+												<action type="blockUI" message="loading"/>
+												<action type="deactivateFilterableConditions" window="self">
+													<models>
+														<model>Cases</model>
+													</models>
+												</action>
+												<action type="activateCondition" model="Cases" condition="highpriority"/>
+												<action type="requeryModel" model="Cases" behavior="standard">
+													<onerroractions>
+														<action type="blockUI" message="There was an error" timeout="3000"/>
+													</onerroractions>
+												</action>
+												<action type="updateRow" fieldmodel="ModeController" affectedrows="context" enclosevalueinquotes="true">
+													<updates>
+														<update valuesource="fieldvalue" field="list-title" value="High Priority"/>
+													</updates>
+												</action>
+												<action type="unblockUI"/>
+											</actions>
+											<renderconditions logictype="and"/>
+										</navigationitem>
+									</navigationitems>
+									<styles/>
+									<renderconditions logictype="and"/>
+								</navigation>
+								<wrapper uniqueid="sk-3xJn-1626">
+									<components>
+										<richtext multiple="false" uniqueid="sk-3xJj-1609">
+											<contents>&lt;p&gt;&lt;span style="color:#d0dade;"&gt;&lt;span style="font-size:18px;"&gt;Advanced Filters&lt;/span&gt;&lt;/span&gt;&lt;br /&gt;
+&amp;nbsp;&lt;/p&gt;
+</contents>
+										</richtext>
+										<filterset model="Cases" searchmethod="server" searchbox="false" uniqueid="sk-3xHp-973" layout="vertical" emptysearchbehavior="query">
+											<filters>
+												<filter type="select" createfilteroffoption="true" affectcookies="true" autocompthreshold="25" conditionsource="auto" labelmode="no" filtermethod="server" conditionfield="Type" filteroffoptionlabel="Filter by Case Type"/>
+												<filter type="select" createfilteroffoption="true" affectcookies="true" autocompthreshold="25" conditionsource="auto" labelmode="no" filtermethod="server" conditionfield="Status" filteroffoptionlabel="Filter by Status"/>
+												<filter type="select" createfilteroffoption="true" affectcookies="true" autocompthreshold="25" conditionsource="auto" labelmode="no" filtermethod="server" conditionfield="Origin" filteroffoptionlabel="Filter by Origin"/>
+												<filter type="select" createfilteroffoption="true" affectcookies="true" autocompthreshold="25" conditionsource="auto" labelmode="no" filtermethod="server" conditionfield="AccountId" fieldtargetobjects="Account" filteroffoptionlabel="Filter by Account"/>
+											</filters>
+											<searchfields/>
+											<renderconditions logictype="and"/>
+										</filterset>
+									</components>
+									<styles>
+										<styleitem type="background"/>
+										<styleitem type="border" margin="top," padding="bottom,">
+											<styles>
+												<styleitem property="padding-bottom" value="16px"/>
+												<styleitem property="margin-top" value="24px"/>
+												<styleitem property="box-sizing" value="border-box"/>
+											</styles>
+										</styleitem>
+										<styleitem type="size"/>
+									</styles>
+								</wrapper>
+								<buttonset model="Cases" uniqueid="sk-ORy-5565" position="left">
+									<buttons>
+										<button type="multi" label="Reset Filters" uniqueid="sk-ORz-5570" secondary="true">
+											<actions>
+												<action type="blockUI" message="Resetting"/>
+												<action type="deactivateFilterableConditions">
+													<models>
+														<model>Cases</model>
+													</models>
+												</action>
+												<action type="requeryModel" model="Cases" behavior="standard">
+													<onerroractions>
+														<action type="blockUI" message="There was an error" timeout="3000"/>
+													</onerroractions>
+												</action>
+												<action type="updateRow" fieldmodel="ModeController" affectedrows="context" enclosevalueinquotes="true">
+													<updates>
+														<update valuesource="fieldvalue" field="list-title" value="All Cases"/>
+													</updates>
+												</action>
+												<action type="unblockUI"/>
+											</actions>
+											<renderconditions logictype="and"/>
+											<enableconditions/>
+										</button>
+									</buttons>
+									<renderconditions logictype="and"/>
+								</buttonset>
+							</components>
+							<styles>
+								<styleitem type="background" bgtype="color">
+									<styles>
+										<styleitem property="background-color" value="#638e9c"/>
+									</styles>
+								</styleitem>
+								<styleitem type="border" padding="bottom,right,top,left,">
+									<styles>
+										<styleitem property="padding-left" value="24px"/>
+										<styleitem property="padding-top" value="16px"/>
+										<styleitem property="padding-right" value="24px"/>
+										<styleitem property="padding-bottom" value="0px"/>
+										<styleitem property="box-sizing" value="border-box"/>
+									</styles>
+								</styleitem>
+								<styleitem type="size"/>
+								<styleitem property="height" value="100vh"/>
+								<styleitem property="min-width" value="210px"/>
+							</styles>
+							<renderconditions logictype="and"/>
+						</wrapper>
+					</components>
+				</division>
+				<division behavior="flex" verticalalign="top" uniqueid="case-list-div" ratio="1" minwidth="80px">
+					<components>
+						<wrapper uniqueid="case-list-container">
+							<components>
+								<wrapper uniqueid="sk-3xK9-1739">
+									<components>
+										<grid uniqueid="sk-OEW-1699" columngutter="24px">
+											<divisions>
+												<division behavior="flex" minwidth="100px" ratio="1" verticalalign="center">
+													<components>
+														<search uniqueid="case-search" soslfields="All Fields" placeholdertext="Search cases">
+															<resultactions/>
+															<focushotkeys>
+																<hotkey modifiers="ctrl" key="f" ignoretextinputs="true"/>
+															</focushotkeys>
+															<objects>
+																<object datasource="salesforce" id="Case" headername="Cases" displaytemplate="{{Subject}}" fields="Subject">
+																	<fields>
+																		<field id="CaseNumber"/>
+																		<field id="Subject"/>
+																	</fields>
+																</object>
+															</objects>
+															<selectactions>
+																<action type="toggleRenderComponent" fieldmodel="ModeController" affectedrows="context" field="searchIsActive" enclosevalueinquotes="false" behavior="show" componentid="search-reset-button"/>
+																<action type="deactivateFilterableConditions">
+																	<models>
+																		<model>Cases</model>
+																	</models>
+																</action>
+																<action type="setCondition" model="Cases" condition="incidentid" value="{{incidentid}}"/>
+																<action type="requeryModel" model="Cases" behavior="standard">
+																	<onerroractions>
+																		<action type="blockUI" message="There was an error" timeout="3000"/>
+																	</onerroractions>
+																</action>
+															</selectactions>
+														</search>
+													</components>
+												</division>
+												<division behavior="fit" verticalalign="center">
+													<components>
+														<buttonset model="Cases" uniqueid="sk-OQG-5089">
+															<buttons>
+																<button type="multi" label="charts" uniqueid="sk-OQH-5094" secondary="true" icon="sk-webicon-font-awesome:pie-chart">
+																	<actions>
+																		<action type="toggleRenderComponent" behavior="toggle" componentid="charts-kpi-container"/>
+																	</actions>
+																</button>
+															</buttons>
+															<renderconditions logictype="and">
+																<rendercondition fieldmodel="CaseDetail" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasNoRows"/>
+															</renderconditions>
+														</buttonset>
+													</components>
+												</division>
+											</divisions>
+											<styles>
+												<styleitem type="background" bgtype="none"/>
+											</styles>
+										</grid>
+										<buttonset model="Cases" uniqueid="search-reset-button" position="left">
+											<buttons>
+												<button type="multi" label="Reset" uniqueid="sk-S5Y-2673" secondary="true">
+													<actions>
+														<action type="deactivateFilterableConditions">
+															<models>
+																<model>Cases</model>
+															</models>
+														</action>
+														<action type="requeryModel" model="Cases" behavior="standard">
+															<onerroractions>
+																<action type="blockUI" message="There was an error" timeout="3000"/>
+															</onerroractions>
+														</action>
+														<action type="toggleRenderComponent" behavior="hide" componentid="search-reset-button"/>
+													</actions>
+												</button>
+											</buttons>
+											<renderconditions logictype="and">
+												<rendercondition type="fieldvalue" operator="=" enclosevalueinquotes="true"/>
+											</renderconditions>
+										</buttonset>
+									</components>
+									<styles>
+										<styleitem type="background"/>
+										<styleitem type="border" margin="top,bottom,">
+											<styles>
+												<styleitem property="margin-top" value="24px"/>
+												<styleitem property="margin-bottom" value="8px"/>
+												<styleitem property="box-sizing" value="border-box"/>
+											</styles>
+										</styleitem>
+										<styleitem type="size"/>
+									</styles>
+									<renderconditions logictype="and"/>
+								</wrapper>
+								<grid uniqueid="sk-OVY-7144">
+									<divisions>
+										<division behavior="flex" minwidth="100px" ratio="1">
+											<components>
+												<wrapper uniqueid="sk-3zyw-4394">
+													<components>
+														<richtext multiple="false" uniqueid="sk-3xKc-1790" model="ModeController">
+															<contents>&lt;p&gt;&lt;strong&gt;&lt;span style="font-size:16px;"&gt;{{{list-title}}}&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+</contents>
+														</richtext>
+													</components>
+													<styles>
+														<styleitem type="background"/>
+														<styleitem type="border" padding="bottom,">
+															<styles>
+																<styleitem property="padding-bottom" value="8px"/>
+																<styleitem property="box-sizing" value="border-box"/>
+															</styles>
+														</styleitem>
+														<styleitem type="size"/>
+													</styles>
+													<renderconditions logictype="and"/>
+													<interactions/>
+												</wrapper>
+												<deck searchmethod="server" searchbox="false" columngutter="0px" rowgutter="16px" model="Cases" filtersposition="top" filterswidth="150px" showsavecancel="false" behavior="flex" verticalalign="top" ratio="1" minwidth="100%" hideheader="true" hidefooter="true" uniqueid="sk-3wkr-5032" pagesize="all" emptysearchbehavior="query" setmaxwidth="manual" maxwidth="100%">
+													<components>
+														<grid uniqueid="sk-3zzC-4522">
+															<divisions>
+																<division behavior="flex" minwidth="80px" ratio="1" verticalalign="top">
+																	<components>
+																		<richtext multiple="false" uniqueid="sk-3wl8-5285" model="Cases">
+																			<contents>&lt;p&gt;{{customer}}&lt;/p&gt;
+
+&lt;p&gt;&lt;strong style="font-size: 14px; color: rgb(95, 199, 232); background-color: initial;"&gt;{{{Subject}}}&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style="color:#ce85b0;"&gt;&lt;span style="font-size:12px;"&gt;{{CreatedDateOnly}}&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#e2918f;"&gt;&lt;span style="font-size:12px;"&gt;&amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#b6bfcd;"&gt;&lt;span style="font-size:12px;"&gt;●&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#e2918f;"&gt;&lt;span style="font-size:12px;"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#ce85b0;"&gt;&lt;span style="font-size:12px;"&gt;{{Status}}&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#e2918f;"&gt;&lt;span style="font-size:12px;"&gt;&amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#b6bfcd;"&gt;&lt;span style="font-size:12px;"&gt;●&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#e2918f;"&gt;&lt;span style="font-size:12px;"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#ce85b0;"&gt;&lt;span style="font-size:12px;"&gt;{{Type}}&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+																		</richtext>
+																	</components>
+																</division>
+																<division behavior="fit" verticalalign="top">
+																	<components>
+																		<wrapper uniqueid="sk-3zzy-5036">
+																			<components>
+																				<template multiple="false" uniqueid="sk-3zz_-5057" model="Cases">
+																					<contents>&lt;i class="fa fa-{{{type-icon}}}" style="color:#b6bfcd; font-size: 16px"&gt;&lt;/i&gt;</contents>
+																					<conditions>
+																						<condition type="contextrow" field="Id" mergefield="Id"/>
+																					</conditions>
+																				</template>
+																			</components>
+																			<styles>
+																				<styleitem type="background" bgtype="none"/>
+																				<styleitem type="border" padding="top,">
+																					<styles>
+																						<styleitem property="padding-top" value="12px"/>
+																						<styleitem property="box-sizing" value="border-box"/>
+																					</styles>
+																				</styleitem>
+																				<styleitem type="size"/>
+																				<styleitem property="text-align" value="right"/>
+																			</styles>
+																		</wrapper>
+																	</components>
+																</division>
+															</divisions>
+															<styles>
+																<styleitem type="background" bgtype="none"/>
+															</styles>
+														</grid>
+													</components>
+													<massactions/>
+													<interactions>
+														<interaction type="tap" direction="either">
+															<action type="blockUI" message="Getting case"/>
+															<action type="toggleRenderComponent" behavior="hide" componentid="charts-kpi-container"/>
+															<action type="toggleRenderComponent" behavior="hide" componentid="start-case-container"/>
+															<action type="toggleRenderComponent" behavior="hide" componentid="case-nav"/>
+															<action type="toggleRenderComponent" behavior="show" componentid="open-and-detail-container"/>
+															<action type="toggleRenderComponent" behavior="show" componentid="case-detail-div"/>
+															<action type="updateRow" fieldmodel="QueuedCases" affectedrows="all" field="isActive" enclosevalueinquotes="false"/>
+															<action type="updateRow" fieldmodel="Cases" affectedrows="context" field="isActive" enclosevalueinquotes="false" value="true"/>
+															<action type="adoptRows" sourcemodel="Cases" targetmodel="QueuedCases" affectedrows="context"/>
+															<action type="setCondition" model="CaseDetail" condition="incidentid" value="{{Id}}">
+																<models/>
+																<popup title="{{Model.label}}: {{Name}}" width="80%">
+																	<components/>
+																</popup>
+															</action>
+															<action type="requeryModels" model="CaseDetail" behavior="standard">
+																<onerroractions>
+																	<action type="blockUI" message="There was an error" timeout="3000"/>
+																</onerroractions>
+																<models>
+																	<model>CaseDetail</model>
+																</models>
+															</action>
+															<action type="blockUI" message="Getting more details"/>
+															<action type="requeryModel" behavior="standard" model="CaseContact">
+																<models>
+																	<model>CaseContact</model>
+																	<model>Email</model>
+																	<model>PhoneCall</model>
+																	<model>Notes</model>
+																</models>
+																<onerroractions>
+																	<action type="blockUI" message="There was an error" timeout="3000"/>
+																</onerroractions>
+															</action>
+															<action type="unblockUI"/>
+														</interaction>
+													</interactions>
+													<actions/>
+													<styles>
+														<styleitem type="border" borders="all" padding="bottom,right,top,left,">
+															<styles>
+																<styleitem property="border" value="0px solid transparent"/>
+																<styleitem property="padding-left" value="16px"/>
+																<styleitem property="padding-top" value="8px"/>
+																<styleitem property="padding-right" value="16px"/>
+																<styleitem property="padding-bottom" value="8px"/>
+																<styleitem property="box-sizing" value="border-box"/>
+															</styles>
+														</styleitem>
+														<styleitem property="border-radius" value="0"/>
+														<styleitem property="background" value="#fff"/>
+														<styleitem property="cursor" value="pointer"/>
+														<styleitem property="box-shadow" value="0 0 3px 0px #00000008"/>
+													</styles>
+													<searchfields/>
+													<renderconditions logictype="and"/>
+													<filters/>
+												</deck>
+												<wrapper uniqueid="sk-3zy--4462">
+													<components>
+														<richtext multiple="false" uniqueid="sk-3zy--4463">
+															<contents>&lt;p&gt;&lt;span style="font-size:16px;"&gt;No cases found&lt;/span&gt;&lt;/p&gt;
+</contents>
+														</richtext>
+													</components>
+													<styles>
+														<styleitem type="background"/>
+														<styleitem type="border" padding="bottom,">
+															<styles>
+																<styleitem property="padding-bottom" value="8px"/>
+																<styleitem property="box-sizing" value="border-box"/>
+															</styles>
+														</styleitem>
+														<styleitem type="size"/>
+													</styles>
+													<renderconditions logictype="and">
+														<rendercondition fieldmodel="Cases" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasNoRows"/>
+														<rendercondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="Cases" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasChanged" value="false" operator="="/>
+													</renderconditions>
+												</wrapper>
+											</components>
+										</division>
+										<division behavior="fit" verticalalign="top" uniqueid="charts-div">
+											<components>
+												<wrapper uniqueid="charts-kpi-container">
+													<components>
+														<skuidvis__chart model="Cases" type="spline" uniqueid="sk-OKX-2586" height="320px" backgroundcolor="transparent" export="off">
+															<dataaxes>
+																<axis id="axis1" title="Number of Case Created"/>
+															</dataaxes>
+															<categoryaxes>
+																<axis id="categories" categorytype="field" field="CreatedDate" title="Time" template="{{createdon}}" fillvals="true" dategranularity="calmonth"/>
+															</categoryaxes>
+															<serieslist>
+																<series valuefield="Id" splittype="none" aggfunction="count" splittemplate="{{casetypecode}}"/>
+															</serieslist>
+															<colors>
+																<value>#81d4fa</value>
+																<value>#4dd0e1</value>
+																<value>#26a69a</value>
+																<value>#03a9f4</value>
+																<value>#00acc1</value>
+																<value>#00796b</value>
+																<value>#0277bd</value>
+																<value>#80deea</value>
+																<value>#4db6ac</value>
+																<value>#29b6f6</value>
+																<value>#00bcd4</value>
+																<value>#00897b</value>
+																<value>#0288d1</value>
+																<value>#00838f</value>
+															</colors>
+															<legend layout="off" halign="center" valign="bottom"/>
+															<renderconditions logictype="and"/>
+														</skuidvis__chart>
+														<wrapper uniqueid="sk-OWh-7630">
+															<components>
+																<skuidvis__chart model="Cases" type="donut" uniqueid="sk-OJG-2403" height="280px" backgroundcolor="transparent" export="off">
+																	<dataaxes>
+																		<axis id="axis1"/>
+																	</dataaxes>
+																	<categoryaxes>
+																		<axis id="categories" categorytype="field"/>
+																	</categoryaxes>
+																	<serieslist>
+																		<series valuefield="Id" splittype="template" aggfunction="count" splittemplate="{{Status}}">
+																			<actions>
+																				<action type="showPopup">
+																					<conditions>
+																						<condition type="contextrows" field="Id" mergefield="Id" operator="in" autocreated="true"/>
+																					</conditions>
+																					<popup width="75%">
+																						<components>
+																							<pagetitle uniqueid="sk-QS9-3996" model="Cases">
+																								<actions/>
+																								<maintitle>{{statuscode}} Cases</maintitle>
+																								<conditions>
+																									<condition type="contextrow" field="incidentid" mergefield="incidentid" operator="="/>
+																								</conditions>
+																							</pagetitle>
+																							<skootable showconditions="true" showsavecancel="false" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="false" model="Cases" buttonposition="" mode="readonly" allowcolumnreordering="true" responsive="true" uniqueid="sk-QSZ-4108">
+																								<fields>
+																									<field id="title" uniqueid="sk-QSZ-4125"/>
+																									<field id="casetypecode" uniqueid="sk-QSZ-4128"/>
+																									<field id="createdon" uniqueid="sk-QSZ-4137"/>
+																									<field id="statuscode" uniqueid="sk-QSZ-4140"/>
+																									<field id="caseorigincode" uniqueid="sk-QSZ-4146"/>
+																									<field id="customerid_account" uniqueid="sk-QSZ-4161">
+																										<label>Customer</label>
+																									</field>
+																									<field id="customerid_contact" uniqueid="sk-QSZ-4170" pagesize="5">
+																										<searchfields/>
+																										<label>Contact</label>
+																									</field>
+																								</fields>
+																								<rowactions>
+																									<action type="multi" label="Go to detail" icon="sk-webicon-font-awesome:reorder">
+																										<actions>
+																											<action type="blockUI"/>
+																											<action type="closeTopmostPopup"/>
+																											<action type="adoptRows" sourcemodel="Cases" targetmodel="QueuedCases" affectedrows="context"/>
+																											<action type="toggleRenderComponent" behavior="hide" componentid="charts-kpi-container"/>
+																											<action type="toggleRenderComponent" behavior="hide" componentid="start-case-container"/>
+																											<action type="toggleRenderComponent" behavior="hide" componentid="case-nav"/>
+																											<action type="toggleRenderComponent" behavior="show" componentid="open-and-detail-container"/>
+																											<action type="toggleRenderComponent" behavior="show" componentid="case-detail-div"/>
+																											<action type="setCondition" model="CaseDetail" condition="incidentid" value="{{incidentid}}"/>
+																											<action type="setCondition" model="Email" condition="regardingobjectid_incident" value="{{incidentid}}"/>
+																											<action type="setCondition" model="Notes" condition="objectid_incident.incidentid" value="{{incidentid}}"/>
+																											<action type="setCondition" model="Notes" condition="objectid_incident.incidentid" value="{{incidentid}}"/>
+																											<action type="requeryModels" behavior="standard">
+																												<models>
+																													<model>CaseDetail</model>
+																													<model>CaseContact</model>
+																													<model>Email</model>
+																													<model>PhoneCall</model>
+																												</models>
+																											</action>
+																											<action type="unblockUI"/>
+																										</actions>
+																									</action>
+																								</rowactions>
+																								<massactions usefirstitemasdefault="true"/>
+																								<views>
+																									<view type="standard"/>
+																								</views>
+																								<conditions>
+																									<condition type="contextrows" field="incidentid" mergefield="incidentid" operator="in"/>
+																								</conditions>
+																							</skootable>
+																						</components>
+																					</popup>
+																				</action>
+																			</actions>
+																		</series>
+																	</serieslist>
+																	<colors>
+																		<value>#81d4fa</value>
+																		<value>#4dd0e1</value>
+																		<value>#26a69a</value>
+																		<value>#03a9f4</value>
+																		<value>#00acc1</value>
+																		<value>#00796b</value>
+																		<value>#0277bd</value>
+																		<value>#80deea</value>
+																		<value>#4db6ac</value>
+																		<value>#29b6f6</value>
+																		<value>#00bcd4</value>
+																		<value>#00897b</value>
+																		<value>#0288d1</value>
+																		<value>#00838f</value>
+																	</colors>
+																	<legend layout="horizontal" halign="center" valign="bottom" showlabels="false"/>
+																	<renderconditions logictype="and"/>
+																	<conditions/>
+																</skuidvis__chart>
+															</components>
+															<styles>
+																<styleitem type="background"/>
+																<styleitem type="border" margin="bottom,top,">
+																	<styles>
+																		<styleitem property="margin-top" value="24px"/>
+																		<styleitem property="margin-bottom" value="24px"/>
+																		<styleitem property="box-sizing" value="border-box"/>
+																	</styles>
+																</styleitem>
+																<styleitem type="size"/>
+															</styles>
+														</wrapper>
+														<skuidvis__chart model="Cases" type="donut" uniqueid="sk-OWR-7573" height="280px" backgroundcolor="transparent" export="off">
+															<dataaxes>
+																<axis id="axis1"/>
+															</dataaxes>
+															<categoryaxes>
+																<axis id="categories" categorytype="field"/>
+															</categoryaxes>
+															<serieslist>
+																<series valuefield="title" splittype="template" aggfunction="count" splittemplate="{{casetypecode}}"/>
+															</serieslist>
+															<colors>
+																<value>#80deea</value>
+																<value>#00838f</value>
+																<value>#26c6da</value>
+																<value>#00bcd4</value>
+																<value>#00acc1</value>
+																<value>#0097a7</value>
+																<value>#00838f</value>
+																<value>#80deea</value>
+																<value>#4dd0e1</value>
+																<value>#26c6da</value>
+																<value>#00bcd4</value>
+																<value>#00acc1</value>
+																<value>#0097a7</value>
+																<value>#00838f</value>
+															</colors>
+															<legend layout="horizontal" halign="center" valign="bottom" showlabels="false"/>
+															<renderconditions logictype="and"/>
+															<conditions/>
+														</skuidvis__chart>
+													</components>
+													<styles>
+														<styleitem type="background"/>
+														<styleitem type="border" padding="left,top,">
+															<styles>
+																<styleitem property="padding-left" value="24px"/>
+																<styleitem property="padding-top" value="40px"/>
+																<styleitem property="box-sizing" value="border-box"/>
+															</styles>
+														</styleitem>
+														<styleitem type="size"/>
+														<styleitem property="min-width" value="400px"/>
+													</styles>
+													<renderconditions logictype="and"/>
+												</wrapper>
+											</components>
+										</division>
+									</divisions>
+									<styles>
+										<styleitem type="background" bgtype="none"/>
+									</styles>
+								</grid>
+							</components>
+							<styles>
+								<styleitem type="background" bgtype="color">
+									<styles>
+										<styleitem property="background-color" value="#fafbfc"/>
+									</styles>
+								</styleitem>
+								<styleitem type="border" borders="none" padding="bottom,right,left,">
+									<styles>
+										<styleitem property="padding-left" value="24px"/>
+										<styleitem property="padding-right" value="16px"/>
+										<styleitem property="padding-bottom" value="16px"/>
+										<styleitem property="box-sizing" value="border-box"/>
+									</styles>
+								</styleitem>
+								<styleitem type="size"/>
+								<styleitem property="height" value="100vh"/>
+								<styleitem property="overflow" value="scroll"/>
+							</styles>
+							<renderconditions logictype="and"/>
+						</wrapper>
+						<wrapper uniqueid="start-case-container">
+							<components>
+								<wrapper uniqueid="sk-3zGR-916">
+									<components>
+										<wrapper uniqueid="sk-3zKb-1541">
+											<components>
+												<richtext multiple="false" uniqueid="sk-96q-8896">
+													<contents>&lt;p&gt;&lt;span style="color:#b6bfcd;"&gt;&lt;strong&gt;Example searches:&amp;nbsp;&amp;nbsp;&lt;/strong&gt;Contact names: &amp;quot;Edna&amp;quot;, &amp;quot;Joel&amp;quot;, &amp;quot;Paul&amp;quot;, &amp;quot;John&amp;quot;, Email: &amp;quot;gmail&amp;quot;, Phone numbers:&amp;nbsp; &amp;quot;555-&amp;quot;, &amp;quot;123&amp;quot;&lt;/span&gt;&lt;/p&gt;
+</contents>
+												</richtext>
+												<search uniqueid="sk-3va5-1845" soslfields="All Fields" placeholdertext="Search Contact Name, Phone, or Email address" boxwidth="400px" preventchange="true">
+													<resultactions/>
+													<focushotkeys/>
+													<objects>
+														<object datasource="salesforce" id="Contact" icon="sk-icon-contact" fields="Name" displaytemplate="{{{Name}}} - {{{Account.Name}}}" headername="Results found">
+															<fields>
+																<field id="Account.Name"/>
+																<field id="Name"/>
+															</fields>
+															<resultactions/>
+														</object>
+													</objects>
+													<selectactions>
+														<action type="setCondition" model="ContactResult" condition="contactid" value="{{Id}}"/>
+														<action type="setCondition" model="ExistingCases" condition="_customerid_value" value="{{Id}}"/>
+														<action type="requeryModels" model="ContactResult" behavior="standard">
+															<onerroractions>
+																<action type="blockUI" message="There was an error" timeout="3000"/>
+															</onerroractions>
+															<models>
+																<model>ContactResult</model>
+																<model>ExistingCases</model>
+															</models>
+														</action>
+													</selectactions>
+												</search>
+											</components>
+											<styles>
+												<styleitem type="background"/>
+												<styleitem type="border" padding="bottom,">
+													<styles>
+														<styleitem property="padding-bottom" value="24px"/>
+														<styleitem property="box-sizing" value="border-box"/>
+													</styles>
+												</styleitem>
+												<styleitem type="size"/>
+											</styles>
+											<renderconditions logictype="and"/>
+										</wrapper>
+										<grid uniqueid="sk-8oW-1616" columngutter="24px">
+											<divisions>
+												<division behavior="fit" verticalalign="top">
+													<components>
+														<richtext multiple="false" uniqueid="sk-3zGJ-891" model="ContactResult">
+															<contents>&lt;p&gt;&lt;span style="font-size:20px;"&gt;&lt;strong&gt;{{Name}}&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+														</richtext>
+													</components>
+												</division>
+												<division behavior="fit" verticalalign="bottom">
+													<components>
+														<buttonset model="ContactResult" uniqueid="sk-3xLv-2171" position="left">
+															<buttons>
+																<button type="multi" label="Create New Case" uniqueid="sk-3xLw-2176">
+																	<actions>
+																		<action type="emptyModelData">
+																			<models>
+																				<model>NewCase</model>
+																				<model>ExistingCases</model>
+																			</models>
+																		</action>
+																		<action type="createRow" model="NewCase" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+																			<defaults>
+																				<default field="ContactId" fieldtargetobjects="Contact" value="{{Id}}" valuesource="fieldvalue" enclosevalueinquotes="true"/>
+																			</defaults>
+																		</action>
+																	</actions>
+																</button>
+															</buttons>
+															<renderconditions logictype="and">
+																<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="ContactResult" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+																<rendercondition fieldmodel="NewCase" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasNoRows"/>
+															</renderconditions>
+														</buttonset>
+													</components>
+												</division>
+											</divisions>
+											<styles>
+												<styleitem type="background" bgtype="none"/>
+												<styleitem property="margin-bottom" value="24px"/>
+											</styles>
+										</grid>
+										<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="ContactResult" uniqueid="sk-3-Nd-1579" mode="read" layout="above">
+											<columns>
+												<column width="25%">
+													<sections>
+														<section title="Section A" collapsible="no" showheader="false">
+															<fields>
+																<field uniqueid="sk-3-Nh-1621" id="Account.Name"/>
+															</fields>
+														</section>
+													</sections>
+												</column>
+												<column width="25%">
+													<sections>
+														<section title="New Section" collapsible="no" showheader="false">
+															<fields>
+																<field uniqueid="sk-3-Nj-1641" id="MailingAddress"/>
+															</fields>
+														</section>
+													</sections>
+												</column>
+												<column width="25%">
+													<sections>
+														<section title="New Section" collapsible="no" uniqueid="sk-3-Nj-1647" showheader="false">
+															<fields>
+																<field uniqueid="sk-3-Nl-1663" id="Phone"/>
+																<field uniqueid="sk-3-Nl-1664" id="MobilePhone"/>
+															</fields>
+														</section>
+													</sections>
+												</column>
+												<column width="25%">
+													<sections>
+														<section title="New Section" collapsible="no" showheader="false">
+															<fields>
+																<field uniqueid="sk-3-No-1677" id="Email"/>
+															</fields>
+														</section>
+													</sections>
+												</column>
+											</columns>
+										</basicfieldeditor>
+									</components>
+									<styles>
+										<styleitem type="background" bgtype="color">
+											<styles>
+												<styleitem property="background-color" value="white"/>
+											</styles>
+										</styleitem>
+										<styleitem type="border" padding="bottom,right,left,top,">
+											<styles>
+												<styleitem property="padding-left" value="40px"/>
+												<styleitem property="padding-top" value="24px"/>
+												<styleitem property="padding-right" value="40px"/>
+												<styleitem property="padding-bottom" value="40px"/>
+												<styleitem property="box-sizing" value="border-box"/>
+											</styles>
+										</styleitem>
+										<styleitem type="size"/>
+									</styles>
+									<renderconditions logictype="or">
+										<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="ContactResult" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+										<rendercondition fieldmodel="NewCase" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasNoRows"/>
+									</renderconditions>
+								</wrapper>
+								<wrapper uniqueid="sk-8pk-2308">
+									<components>
+										<wrapper uniqueid="sk-8sE-3255">
+											<components>
+												<richtext multiple="false" uniqueid="sk-8pQ-2222" model="ContactResult">
+													<contents>&lt;p&gt;&lt;strong&gt;&lt;span style="font-size:16px;"&gt;Recent Cases for {{{Name}}}&lt;/span&gt;&lt;/strong&gt;&lt;br /&gt;
+&amp;nbsp;&lt;/p&gt;
+</contents>
+												</richtext>
+												<deck searchmethod="server" searchbox="false" columngutter="0px" rowgutter="16px" model="ExistingCases" filtersposition="top" filterswidth="150px" showsavecancel="false" behavior="flex" verticalalign="top" ratio="1" minwidth="100%" hideheader="true" hidefooter="true" uniqueid="sk-8pN-2175" pagesize="all" emptysearchbehavior="query" setmaxwidth="manual" maxwidth="100%">
+													<components>
+														<grid uniqueid="sk-8pN-2176">
+															<divisions>
+																<division behavior="flex" minwidth="80px" ratio="1" verticalalign="top">
+																	<components>
+																		<richtext multiple="false" uniqueid="sk-8pN-2177" model="ExistingCases">
+																			<contents>&lt;p&gt;{{Contact.Name}}&lt;/p&gt;
+
+&lt;p&gt;&lt;strong style="font-size: 14px; color: rgb(95, 199, 232); background-color: initial;"&gt;{{{Subject}}}&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style="color:#ce85b0;"&gt;&lt;span style="font-size:12px;"&gt;{{CreatedDateOnly}}&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#e2918f;"&gt;&lt;span style="font-size:12px;"&gt;&amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#b6bfcd;"&gt;&lt;span style="font-size:12px;"&gt;●&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#e2918f;"&gt;&lt;span style="font-size:12px;"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#ce85b0;"&gt;&lt;span style="font-size:12px;"&gt;{{Status}}&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#e2918f;"&gt;&lt;span style="font-size:12px;"&gt;&amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#b6bfcd;"&gt;&lt;span style="font-size:12px;"&gt;●&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#e2918f;"&gt;&lt;span style="font-size:12px;"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style="color:#ce85b0;"&gt;&lt;span style="font-size:12px;"&gt;{{Type}}&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+																		</richtext>
+																	</components>
+																</division>
+																<division behavior="fit" verticalalign="top">
+																	<components>
+																		<wrapper uniqueid="sk-8pN-2178">
+																			<components>
+																				<template multiple="false" uniqueid="sk-8pN-2179" model="ExistingCases">
+																					<contents>&lt;i class="fa fa-{{{type-icon}}}" style="color:#b6bfcd; font-size: 16px"&gt;&lt;/i&gt;</contents>
+																					<conditions>
+																						<condition type="contextrow" field="Id" mergefield="Id"/>
+																					</conditions>
+																				</template>
+																			</components>
+																			<styles>
+																				<styleitem type="background" bgtype="none"/>
+																				<styleitem type="border" padding="top,">
+																					<styles>
+																						<styleitem property="padding-top" value="12px"/>
+																						<styleitem property="box-sizing" value="border-box"/>
+																					</styles>
+																				</styleitem>
+																				<styleitem type="size"/>
+																				<styleitem property="text-align" value="right"/>
+																			</styles>
+																		</wrapper>
+																	</components>
+																</division>
+															</divisions>
+															<styles>
+																<styleitem type="background" bgtype="none"/>
+															</styles>
+														</grid>
+													</components>
+													<massactions/>
+													<interactions>
+														<interaction type="tap" direction="either">
+															<action type="blockUI" message="Getting case"/>
+															<action type="toggleRenderComponent" behavior="hide" componentid="start-case-container"/>
+															<action type="toggleRenderComponent" behavior="show" componentid="open-and-detail-container"/>
+															<action type="toggleRenderComponent" behavior="show" componentid="case-detail-div"/>
+															<action type="toggleRenderComponent" behavior="show" componentid="case-list-container"/>
+															<action type="adoptRows" sourcemodel="ExistingCases" targetmodel="QueuedCases" affectedrows="context"/>
+															<action type="setCondition" model="CaseDetail" condition="incidentid" value="{{incidentid}}">
+																<models/>
+																<popup title="{{Model.label}}: {{Name}}" width="80%">
+																	<components/>
+																</popup>
+															</action>
+															<action type="setCondition" model="Notes" condition="objectid_incident.incidentid" value="{{incidentid}}"/>
+															<action type="setCondition" model="Email" condition="regardingobjectid_incident" value="{{incidentid}}"/>
+															<action type="setCondition" model="PhoneCall" condition="regardingobjectid_incident" value="{{incidentid}}"/>
+															<action type="toggleRenderComponent" behavior="hide" componentid="charts-kpi-container"/>
+															<action type="requeryModels" model="CaseDetail" behavior="standard">
+																<onerroractions>
+																	<action type="blockUI" message="There was an error" timeout="3000"/>
+																</onerroractions>
+																<models>
+																	<model>CaseDetail</model>
+																</models>
+															</action>
+															<action type="requeryModels" behavior="standard">
+																<models>
+																	<model>CaseContact</model>
+																	<model>Email</model>
+																	<model>PhoneCall</model>
+																	<model>Notes</model>
+																</models>
+																<onerroractions>
+																	<action type="blockUI" message="There was an error" timeout="3000"/>
+																</onerroractions>
+															</action>
+															<action type="unblockUI"/>
+														</interaction>
+													</interactions>
+													<actions/>
+													<styles>
+														<styleitem type="border" borders="all" padding="bottom,right,top,left,">
+															<styles>
+																<styleitem property="border" value="0px solid transparent"/>
+																<styleitem property="padding-left" value="16px"/>
+																<styleitem property="padding-top" value="8px"/>
+																<styleitem property="padding-right" value="16px"/>
+																<styleitem property="padding-bottom" value="8px"/>
+																<styleitem property="box-sizing" value="border-box"/>
+															</styles>
+														</styleitem>
+														<styleitem property="border-radius" value="0"/>
+														<styleitem property="background" value="#fff"/>
+														<styleitem property="cursor" value="pointer"/>
+														<styleitem property="box-shadow" value="0 0 3px 0px #00000008"/>
+													</styles>
+													<searchfields/>
+													<renderconditions logictype="and"/>
+													<filters/>
+												</deck>
+											</components>
+											<styles>
+												<styleitem type="background"/>
+												<styleitem type="border"/>
+												<styleitem type="size"/>
+											</styles>
+											<renderconditions logictype="and">
+												<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="ExistingCases" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+												<rendercondition fieldmodel="NewCase" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasNoRows"/>
+											</renderconditions>
+										</wrapper>
+										<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="NewCase" uniqueid="sk-3zGA-798" mode="edit" layout="above">
+											<columns layoutmode="responsive" columngutter="16px" rowgutter="16px">
+												<column ratio="1" minwidth="300px" behavior="flex">
+													<sections>
+														<section title="Edit New Case" collapsible="no">
+															<fields>
+																<columns uniqueid="sk-8r_-3183" layoutmode="fixed">
+																	<column width="50%">
+																		<sections>
+																			<section title="New Section" collapsible="no" uniqueid="sk-3-PI-1743" showheader="false">
+																				<fields>
+																					<field uniqueid="sk-3-PP-1755" id="Reason"/>
+																					<field uniqueid="sk-3-PP-1756" id="Type"/>
+																					<field uniqueid="sk-3-PP-1758" id="Description"/>
+																					<field uniqueid="sk-3-PP-1761" id="Priority"/>
+																					<field uniqueid="sk-3-PP-1762" id="Status"/>
+																					<field uniqueid="sk-3-PP-1763" id="Subject"/>
+																				</fields>
+																			</section>
+																		</sections>
+																	</column>
+																	<column width="50%">
+																		<sections>
+																			<section title="New Section" collapsible="no" uniqueid="sk-3-PJ-1748" showheader="false">
+																				<fields>
+																					<field uniqueid="sk-3-PP-1754" id="Origin"/>
+																					<field uniqueid="sk-3-PP-1753" id="AccountId"/>
+																					<field uniqueid="sk-3-PP-1757" id="ContactId"/>
+																					<field uniqueid="sk-3-PP-1759" id="SuppliedEmail"/>
+																					<field uniqueid="sk-3-PP-1760" id="IsEscalated"/>
+																				</fields>
+																			</section>
+																		</sections>
+																	</column>
+																</columns>
+															</fields>
+														</section>
+													</sections>
+												</column>
+											</columns>
+											<renderconditions logictype="and">
+												<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="NewCase" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+											</renderconditions>
+										</basicfieldeditor>
+										<wrapper uniqueid="sk-8ry-3145">
+											<components>
+												<buttonset model="NewCase" uniqueid="sk-8gz-1334" position="center">
+													<buttons>
+														<button type="multi" label="Save Case" uniqueid="sk-8gz-1339">
+															<actions>
+																<action type="blockUI" message="Saving Case"/>
+																<action type="save">
+																	<models>
+																		<model>NewCase</model>
+																	</models>
+																	<onerroractions>
+																		<action type="blockUI" message="There was an error" timeout="3000"/>
+																	</onerroractions>
+																</action>
+																<action type="emptyModelData">
+																	<models>
+																		<model>NewCase</model>
+																	</models>
+																</action>
+																<action type="blockUI" message="Case saved successfully"/>
+																<action type="requeryModel" model="ExistingCases" behavior="standard">
+																	<onerroractions>
+																		<action type="blockUI" message="There was an error" timeout="3000"/>
+																	</onerroractions>
+																</action>
+																<action type="unblockUI"/>
+															</actions>
+															<renderconditions logictype="and"/>
+															<enableconditions/>
+														</button>
+														<button type="multi" label="Cancel Case" uniqueid="sk-8v_-4594">
+															<actions>
+																<action type="cancel">
+																	<models>
+																		<model>NewCase</model>
+																	</models>
+																</action>
+																<action type="emptyModelData">
+																	<models>
+																		<model>NewCase</model>
+																	</models>
+																</action>
+															</actions>
+															<renderconditions logictype="and"/>
+															<enableconditions/>
+														</button>
+													</buttons>
+													<renderconditions logictype="and">
+														<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="NewCase" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+													</renderconditions>
+												</buttonset>
+											</components>
+											<styles>
+												<styleitem type="background"/>
+												<styleitem type="border" padding="top,">
+													<styles>
+														<styleitem property="padding-top" value="24px"/>
+														<styleitem property="box-sizing" value="border-box"/>
+													</styles>
+												</styleitem>
+												<styleitem type="size"/>
+											</styles>
+											<renderconditions logictype="and">
+												<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="NewCase" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+											</renderconditions>
+										</wrapper>
+									</components>
+									<styles>
+										<styleitem type="background" bgtype="none"/>
+										<styleitem type="border" padding="bottom,right,top,left,">
+											<styles>
+												<styleitem property="padding-left" value="40px"/>
+												<styleitem property="padding-top" value="24px"/>
+												<styleitem property="padding-right" value="40px"/>
+												<styleitem property="padding-bottom" value="24px"/>
+												<styleitem property="box-sizing" value="border-box"/>
+											</styles>
+										</styleitem>
+										<styleitem type="size"/>
+									</styles>
+									<renderconditions logictype="or">
+										<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="ExistingCases" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+										<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="NewCase" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderconditions>
+								</wrapper>
+							</components>
+							<styles>
+								<styleitem type="background" bgtype="color">
+									<styles>
+										<styleitem property="background-color" value="#fafbfc"/>
+									</styles>
+								</styleitem>
+								<styleitem type="border"/>
+								<styleitem type="size"/>
+								<styleitem property="height" value="100vh"/>
+								<styleitem property="overflow" value="scroll"/>
+							</styles>
+							<renderconditions logictype="and"/>
+						</wrapper>
+					</components>
+				</division>
+				<division behavior="fit" verticalalign="top" uniqueid="case-detail-div">
+					<components>
+						<wrapper uniqueid="open-and-detail-container">
+							<components>
+								<wrapper uniqueid="sk-3x7B-9076">
+									<components>
+										<richtext multiple="false" uniqueid="sk-3x2N-7261">
+											<contents>&lt;p&gt;&lt;span style="color:#ffffff;"&gt;&lt;span style="font-size:16px;"&gt;In Queue&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+										</richtext>
+										<deck searchmethod="server" searchbox="true" columngutter="0px" rowgutter="0px" model="QueuedCases" filtersposition="top" filterswidth="150px" showsavecancel="false" behavior="flex" verticalalign="top" ratio="1" minwidth="140px" hideheader="true" hidefooter="true" uniqueid="sk-3wmX-5844" pagesize="all" maxwidth="140px" setmaxwidth="manual">
+											<components>
+												<template multiple="false" uniqueid="sk-2szy-3103" model="QueuedCases">
+													<conditions>
+														<condition type="contextrow" field="Id" mergefield="Id" operator="="/>
+													</conditions>
+													<renderconditions logictype="and"/>
+													<contents>&lt;div style="height: 6px; background:{{#isActive}}#ce85b0;{{/isActive}}{{^isActive}}#eee;{{/isActive}}"&gt;&lt;/div&gt;</contents>
+												</template>
+												<wrapper uniqueid="sk-2t3W-4261">
+													<components>
+														<grid uniqueid="sk-3wsS-2737" columngutter="8px">
+															<divisions>
+																<division behavior="fit" verticalalign="center">
+																	<components>
+																		<wrapper uniqueid="sk-3wsh-2818">
+																			<components>
+																				<template multiple="false" uniqueid="sk-3wmi-5908" model="QueuedCases" allowhtml="true">
+																					<conditions>
+																						<condition type="contextrow" field="Id" mergefield="Id"/>
+																					</conditions>
+																					<renderconditions logictype="and">
+																						<rendercondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="QueuedCases" sourcetype="rowproperty" nosourcerowbehavior="deactivate" sourceproperty="hasChanged" value="false" operator="="/>
+																					</renderconditions>
+																					<contents>{{customer-shortened}}</contents>
+																				</template>
+																			</components>
+																			<styles>
+																				<styleitem type="background"/>
+																				<styleitem type="border"/>
+																				<styleitem type="size"/>
+																				<styleitem property="cursor" value="pointer"/>
+																				<styleitem property="font-size" value="12px"/>
+																			</styles>
+																			<interactions>
+																				<interaction type="tap">
+																					<action type="blockUI" message="Getting case"/>
+																					<action type="toggleRenderComponent" behavior="hide" componentid="sk-2szy-3103"/>
+																					<action type="updateRow" fieldmodel="QueuedCases" affectedrows="all" field="isActive" enclosevalueinquotes="false"/>
+																					<action type="updateRow" model="CaseDetail" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context" fieldmodel="QueuedCases" field="isActive" enclosevalueinquotes="false" value="true"/>
+																					<action type="toggleRenderComponent" behavior="show" componentid="sk-2szy-3103"/>
+																					<action type="setCondition" model="CaseDetail" condition="incidentid" value="{{incidentid}}"/>
+																					<action type="requeryModel" model="CaseDetail" behavior="standard">
+																						<onerroractions>
+																							<action type="blockUI" message="There was an error" timeout="3000"/>
+																						</onerroractions>
+																					</action>
+																					<action type="unblockUI"/>
+																				</interaction>
+																			</interactions>
+																			<renderconditions logictype="and"/>
+																		</wrapper>
+																	</components>
+																</division>
+																<division behavior="flex" verticalalign="center" ratio="1" minwidth="8px">
+																	<components>
+																		<wrapper uniqueid="sk-3x0I-6695">
+																			<components>
+																				<template multiple="false" uniqueid="sk-3x08-6683" allowhtml="true">
+																					<contents>&lt;i class="sk-webicon  " aria-label="close" role="img"&gt;&lt;svg viewBox="0 0 24 24"&gt;&lt;use xlink:href="/assets/icons-svg/material-icons/material-icons.min.svg#close"&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/i&gt;</contents>
+																				</template>
+																			</components>
+																			<styles>
+																				<styleitem type="background"/>
+																				<styleitem type="border" padding="all">
+																					<styles>
+																						<styleitem property="padding" value="2px"/>
+																						<styleitem property="box-sizing" value="border-box"/>
+																					</styles>
+																				</styleitem>
+																				<styleitem type="size"/>
+																				<styleitem property="text-align" value="right"/>
+																				<styleitem property="cursor" value="pointer"/>
+																			</styles>
+																			<interactions>
+																				<interaction type="tap">
+																					<action type="abandonRows" model="QueuedCases" affectedrows="context"/>
+																				</interaction>
+																			</interactions>
+																		</wrapper>
+																	</components>
+																</division>
+															</divisions>
+															<styles>
+																<styleitem type="background" bgtype="none"/>
+															</styles>
+															<renderconditions logictype="and"/>
+														</grid>
+													</components>
+													<styles>
+														<styleitem type="background"/>
+														<styleitem type="border" padding="bottom,right,top,left,">
+															<styles>
+																<styleitem property="padding-left" value="16px"/>
+																<styleitem property="padding-top" value="4px"/>
+																<styleitem property="padding-right" value="8px"/>
+																<styleitem property="padding-bottom" value="4px"/>
+																<styleitem property="box-sizing" value="border-box"/>
+															</styles>
+														</styleitem>
+														<styleitem type="size"/>
+													</styles>
+												</wrapper>
+											</components>
+											<massactions/>
+											<interactions/>
+											<actions/>
+											<styles>
+												<styleitem property="background" value="#fff"/>
+												<styleitem type="border" borders="all" padding="all" margin="bottom,right,">
+													<styles>
+														<styleitem property="border" value="0px solid transparent"/>
+														<styleitem property="padding" value="0px"/>
+														<styleitem property="margin-right" value="4px"/>
+														<styleitem property="margin-bottom" value="4px"/>
+														<styleitem property="box-sizing" value="border-box"/>
+													</styles>
+												</styleitem>
+												<styleitem property="border-radius" value="0"/>
+											</styles>
+											<renderconditions logictype="and">
+												<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="QueuedCases" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+											</renderconditions>
+											<searchfields/>
+										</deck>
+									</components>
+									<styles>
+										<styleitem type="background" bgtype="none"/>
+										<styleitem type="border" padding="all">
+											<styles>
+												<styleitem property="padding" value="16px"/>
+												<styleitem property="box-sizing" value="border-box"/>
+											</styles>
+										</styleitem>
+										<styleitem type="size"/>
+										<styleitem property="background" value="linear-gradient(166deg, rgb(89, 198, 225), rgb(160, 232, 217))"/>
+									</styles>
+									<renderconditions logictype="and"/>
+									<interactions/>
+								</wrapper>
+								<wrapper uniqueid="case-detail-container">
+									<components>
+										<grid uniqueid="sk-3vVp-875" columngutter="40px">
+											<divisions>
+												<division behavior="fit" verticalalign="center">
+													<components>
+														<richtext multiple="false" uniqueid="sk-3x89-9701" model="CaseDetail">
+															<contents>&lt;p&gt;&lt;span style="color:#b6bfcd;"&gt;&lt;span style="font-size:14px;"&gt;{{{CaseNumber}}}&lt;/span&gt;&lt;/span&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;span style="font-size:24px;"&gt;&lt;span style="color:#5fc7e8;"&gt;{{customer-full}} - {{{Subject}}}&lt;/span&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+</contents>
+														</richtext>
+													</components>
+												</division>
+												<division behavior="flex" verticalalign="center" minwidth="100px" ratio="1">
+													<components>
+														<template multiple="false" uniqueid="sk-2omj-1354">
+															<contents>
+&lt;i class="fa fa-exclamation-triangle" style="color:#f16549;"&gt;&lt;/i&gt; Case is Escalated</contents>
+															<renderconditions logictype="and">
+																<rendercondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="CaseDetail" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="IsEscalated" fieldtargetobjects="Case" value="true"/>
+															</renderconditions>
+														</template>
+													</components>
+												</division>
+												<division behavior="flex" verticalalign="center" minwidth="100px" ratio="1">
+													<components>
+														<buttonset model="CaseDetail" uniqueid="sk-3vWH-1127">
+															<buttons>
+																<button type="multi" label="Save" uniqueid="sk-5Pl-791">
+																	<actions>
+																		<action type="blockUI" message="Saving"/>
+																		<action type="save">
+																			<models>
+																				<model>CaseDetail</model>
+																			</models>
+																			<onerroractions>
+																				<action type="blockUI" message="There was an error" timeout="3000"/>
+																			</onerroractions>
+																		</action>
+																		<action type="unblockUI"/>
+																	</actions>
+																	<renderconditions logictype="and">
+																		<rendercondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="CaseDetail" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+																	</renderconditions>
+																	<enableconditions/>
+																</button>
+																<button type="multi" label="Cancel" uniqueid="sk-5Py-858" secondary="true">
+																	<actions>
+																		<action type="cancel">
+																			<models>
+																				<model>CaseDetail</model>
+																			</models>
+																		</action>
+																	</actions>
+																	<renderconditions logictype="and">
+																		<rendercondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="CaseDetail" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+																	</renderconditions>
+																	<enableconditions/>
+																</button>
+															</buttons>
+															<renderconditions logictype="and"/>
+														</buttonset>
+													</components>
+												</division>
+											</divisions>
+											<styles>
+												<styleitem type="background" bgtype="none"/>
+											</styles>
+										</grid>
+										<wrapper uniqueid="sk-88B-4644">
+											<components>
+												<buttonset model="CaseDetail" uniqueid="sk-87n-4527" position="left">
+													<buttons>
+														<button type="multi" label="Resolve" uniqueid="sk-87n-4530">
+															<actions>
+																<action type="updateRow" fieldmodel="CaseDetail" affectedrows="context">
+																	<updates>
+																		<update valuesource="fieldvalue" field="IsClosed" enclosevalueinquotes="false" value="true"/>
+																		<update valuesource="fieldvalue" field="ClosedDate" enclosevalueinquotes="false" value="NOW"/>
+																	</updates>
+																</action>
+																<action type="save">
+																	<models>
+																		<model>CaseDetail</model>
+																	</models>
+																	<onerroractions>
+																		<action type="blockUI" message="There was an error" timeout="3000"/>
+																	</onerroractions>
+																</action>
+															</actions>
+															<renderconditions logictype="and"/>
+															<enableconditions/>
+															<hotkeys/>
+														</button>
+														<button type="multi" label="Reassign" uniqueid="sk-87n-4529" secondary="true">
+															<renderconditions logictype="and">
+																<rendercondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="CaseDetail" sourcetype="modelproperty" sourceproperty="hasChanged" value="false" operator="="/>
+															</renderconditions>
+															<enableconditions/>
+															<actions>
+																<action type="showPopup">
+																	<popup title="Reassign Owner" width="40%">
+																		<components>
+																			<buttonset uniqueid="sk-2oWf-1341">
+																				<buttons>
+																					<button type="multi" label="Save and close" uniqueid="sk-2oWf-1346">
+																						<actions>
+																							<action type="save">
+																								<models>
+																									<model>CaseDetail</model>
+																								</models>
+																							</action>
+																							<action type="closeAllPopups"/>
+																						</actions>
+																					</button>
+																					<button type="multi" label="Cancel" uniqueid="sk-2oWf-1350" secondary="true">
+																						<actions>
+																							<action type="cancel">
+																								<models>
+																									<model>CaseDetail</model>
+																								</models>
+																							</action>
+																							<action type="closeAllPopups"/>
+																						</actions>
+																					</button>
+																				</buttons>
+																			</buttonset>
+																			<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="CaseDetail" uniqueid="sk-2oW8-1193" mode="edit">
+																				<columns>
+																					<column width="100%">
+																						<sections>
+																							<section title="Section A" collapsible="no" showheader="false">
+																								<fields>
+																									<field uniqueid="sk-3-P_-1956" id="OwnerId"/>
+																								</fields>
+																							</section>
+																						</sections>
+																					</column>
+																				</columns>
+																			</basicfieldeditor>
+																		</components>
+																	</popup>
+																</action>
+															</actions>
+														</button>
+														<button type="multi" label="Customer Details" uniqueid="sk-87n-4531" secondary="true">
+															<actions/>
+															<renderconditions logictype="and"/>
+															<enableconditions/>
+														</button>
+														<button type="multi" label="Escalate" uniqueid="sk-87n-4528" secondary="true">
+															<renderconditions logictype="and">
+																<rendercondition fieldmodel="CaseDetail" sourcetype="modelproperty" sourceproperty="hasChanged" type="fieldvalue" value="false" enclosevalueinquotes="false" operator="="/>
+																<rendercondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="CaseDetail" sourcetype="fieldvalue" field="IsEscalated" fieldtargetobjects="Case" value="false"/>
+															</renderconditions>
+															<enableconditions/>
+															<actions>
+																<action type="blockUI" message="Escalating..."/>
+																<action type="updateRow" fieldmodel="CaseDetail" affectedrows="context" enclosevalueinquotes="false">
+																	<updates>
+																		<update valuesource="fieldvalue" field="IsEscalated" value="true" enclosevalueinquotes="false"/>
+																	</updates>
+																</action>
+																<action type="save">
+																	<models>
+																		<model>CaseDetail</model>
+																	</models>
+																	<onerroractions>
+																		<action type="blockUI" message="There was an error" timeout="3000"/>
+																	</onerroractions>
+																</action>
+																<action type="unblockUI"/>
+															</actions>
+														</button>
+														<button type="multi" label="De-escalate" uniqueid="sk-2ooU-2581" secondary="true">
+															<renderconditions logictype="and">
+																<rendercondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="CaseDetail" sourcetype="fieldvalue" field="IsEscalated" fieldtargetobjects="Case" value="true"/>
+															</renderconditions>
+															<enableconditions/>
+															<actions>
+																<action type="blockUI" message="De-escalating..."/>
+																<action type="updateRow" fieldmodel="CaseDetail" affectedrows="context" enclosevalueinquotes="true">
+																	<updates>
+																		<update valuesource="fieldvalue" field="IsEscalated" enclosevalueinquotes="false" value="false"/>
+																	</updates>
+																</action>
+																<action type="save">
+																	<models>
+																		<model>CaseDetail</model>
+																	</models>
+																	<onerroractions>
+																		<action type="blockUI" message="There was an error" timeout="3000"/>
+																	</onerroractions>
+																</action>
+																<action type="unblockUI"/>
+															</actions>
+														</button>
+													</buttons>
+													<renderconditions logictype="and"/>
+												</buttonset>
+											</components>
+											<styles>
+												<styleitem type="background"/>
+												<styleitem type="border" margin="left,">
+													<styles>
+														<styleitem property="margin-left" value="-8px"/>
+														<styleitem property="box-sizing" value="border-box"/>
+													</styles>
+												</styleitem>
+												<styleitem type="size"/>
+											</styles>
+											<interactions/>
+											<renderconditions logictype="and"/>
+										</wrapper>
+										<wrapper uniqueid="sk-3xFw-803">
+											<components>
+												<grid uniqueid="sk-6K4-2122" columngutter="10px">
+													<divisions>
+														<division behavior="flex" minwidth="100px" ratio="1">
+															<components>
+																<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="CaseDetail" uniqueid="sk-8Ck-4822" mode="read" layout="above">
+																	<columns>
+																		<column width="100%">
+																			<sections>
+																				<section title="Section A" collapsible="no" showheader="false">
+																					<fields>
+																						<field uniqueid="sk-3-Qc-2253" id="CaseNumber"/>
+																						<field uniqueid="sk-3-QY-2223" id="Subject"/>
+																						<field uniqueid="sk-3-QY-2224" id="OwnerId"/>
+																						<field uniqueid="sk-3-QY-2225" id="Description"/>
+																					</fields>
+																				</section>
+																			</sections>
+																		</column>
+																	</columns>
+																</basicfieldeditor>
+															</components>
+														</division>
+														<division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+															<components>
+																<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="CaseDetail" uniqueid="sk-6IO-1567" mode="read" layout="above">
+																	<columns>
+																		<column width="100%">
+																			<sections>
+																				<section title="Section A" collapsible="no" showheader="false">
+																					<fields>
+																						<field uniqueid="sk-3-Qi-2289" id="Origin"/>
+																						<field uniqueid="sk-3-Qi-2290" id="AccountId"/>
+																						<field uniqueid="sk-3-Qi-2291" id="ContactId"/>
+																						<field uniqueid="sk-3-Qv-2350" id="CreatedDate"/>
+																					</fields>
+																				</section>
+																			</sections>
+																		</column>
+																	</columns>
+																</basicfieldeditor>
+															</components>
+														</division>
+														<division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+															<components>
+																<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="CaseDetail" uniqueid="sk-3vVu-920" mode="read" layout="above">
+																	<columns>
+																		<column width="100%">
+																			<sections>
+																				<section title="Section A" collapsible="no" showheader="false">
+																					<fields>
+																						<field uniqueid="sk-3-Q--2385" id="Status"/>
+																						<field uniqueid="sk-3-Q--2386" id="Type"/>
+																						<field uniqueid="sk-3-Q--2387" id="Priority"/>
+																					</fields>
+																				</section>
+																			</sections>
+																		</column>
+																	</columns>
+																</basicfieldeditor>
+															</components>
+														</division>
+													</divisions>
+													<styles>
+														<styleitem type="background" bgtype="none"/>
+													</styles>
+												</grid>
+											</components>
+											<styles>
+												<styleitem type="background"/>
+												<styleitem type="border" padding="bottom,">
+													<styles>
+														<styleitem property="padding-bottom" value="24px"/>
+														<styleitem property="box-sizing" value="border-box"/>
+													</styles>
+												</styleitem>
+												<styleitem type="size"/>
+											</styles>
+										</wrapper>
+										<wrapper uniqueid="sk-8dQ-2916">
+											<components>
+												<tabset rememberlastusertab="true" defertabrendering="true" uniqueid="sk-3x1F-6994">
+													<tabs>
+														<tab name="Timeline" loadlazypanels="true">
+															<components>
+																<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="CaseDetail" uniqueid="sk-6aS-3498" mode="read">
+																	<columns>
+																		<column width="100%">
+																			<sections>
+																				<section title="Section A" collapsible="no" showheader="false">
+																					<fields>
+																						<field uniqueid="sk-3-R6-2402" id="CreatedDate"/>
+																						<field uniqueid="sk-3-R6-2403" id="ClosedDate"/>
+																						<field uniqueid="sk-3-R6-2404" id="Status"/>
+																					</fields>
+																				</section>
+																			</sections>
+																		</column>
+																	</columns>
+																</basicfieldeditor>
+															</components>
+														</tab>
+														<tab name="Activities" loadlazypanels="true">
+															<components/>
+														</tab>
+														<tab name="SLA" loadlazypanels="true">
+															<components/>
+														</tab>
+														<tab name="Knowledge Base" loadlazypanels="true">
+															<components/>
+														</tab>
+														<tab name="Notes" loadlazypanels="true">
+															<components/>
+														</tab>
+													</tabs>
+												</tabset>
+											</components>
+											<styles>
+												<styleitem type="background"/>
+												<styleitem type="border" margin="top,">
+													<styles>
+														<styleitem property="margin-top" value="16px"/>
+														<styleitem property="box-sizing" value="border-box"/>
+													</styles>
+												</styleitem>
+												<styleitem type="size" height="custom">
+													<styles>
+														<styleitem property="min-height" value="320px"/>
+													</styles>
+												</styleitem>
+											</styles>
+										</wrapper>
+									</components>
+									<styles>
+										<styleitem type="background" bgtype="color">
+											<styles>
+												<styleitem property="background-color" value="#fff"/>
+											</styles>
+										</styleitem>
+										<styleitem type="border" padding="all">
+											<styles>
+												<styleitem property="padding" value="40px"/>
+												<styleitem property="box-sizing" value="border-box"/>
+											</styles>
+										</styleitem>
+										<styleitem type="size"/>
+									</styles>
+									<renderconditions logictype="and">
+										<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="CaseDetail" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderconditions>
+								</wrapper>
+							</components>
+							<styles>
+								<styleitem type="background" bgtype="color">
+									<styles>
+										<styleitem property="background-color" value="#fafbfc"/>
+									</styles>
+								</styleitem>
+								<styleitem type="border"/>
+								<styleitem type="size" height="custom">
+									<styles>
+										<styleitem property="max-height" value="100vh"/>
+										<styleitem property="overflow-y" value="auto"/>
+									</styles>
+								</styleitem>
+								<styleitem property="width" value="70vw"/>
+							</styles>
+							<renderconditions logictype="and">
+								<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="CaseDetail" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+							</renderconditions>
+							<interactions/>
+						</wrapper>
+					</components>
+				</division>
+			</divisions>
+			<styles>
+				<styleitem type="background" bgtype="none"/>
+			</styles>
+			<renderconditions logictype="and"/>
+		</grid>
+	</components>
+	<resources>
+		<labels/>
+		<css>
+			<cssitem location="inline" name="newcss" cachelocation="false">*:focus {
+    outline: none;
+}
+
+.sk-grid-division-filler {
+    display: none;
+}
+
+.nx-editor-header {
+    margin-bottom: 24px;
+}
+
+.highcharts-container svg {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+#case-search input.ui-autocomplete-input {
+    padding: 8px 16px;
+}</cssitem>
+		</css>
+		<actionsequences uniqueid="sk-3vUS-266">
+			<actionsequence id="ae6d8d87-d9f7-40f5-833d-a28c00da1d02" label="hide charts" type="event-triggered" event-scope="component" event-name="page.rendered" uniqueid="sk-OQs-5203">
+				<description/>
+				<actions>
+					<action type="toggleRenderComponent" behavior="hide" componentid="charts-kpi-container"/>
+				</actions>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+		<styleitem property="padding" value="0"/>
+		<styleitem property="margin" value="0"/>
+		<styleitem property="height" value="100vh"/>
+		<styleitem property="overflow" value="hidden"/>
+	</styles>
+</skuidpage>
