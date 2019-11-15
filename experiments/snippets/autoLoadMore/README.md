@@ -4,3 +4,5 @@ This inline JavaScript (NOT snippet) used to load more rows into a model when th
 
 # autoLoadMore.xml
 This is a sample page which uses this inline JavaScript to load more records. In a standard developer org, there are likely not enough sample accounts to really leverage this, so the "Max # of records (Limit)" is set very low.  You'll need to zoom the page or decrease the size of your browser window so you have to scroll to see the last row.  
+
+The rich text component is simply a demonstration of related functionality you can use based on the status.  At some clients, we've used a loading image instead.  Text was simplier for this demonstration, but it is not required (but suggested some form of feedback is provided to allow the user know more records are loading).
