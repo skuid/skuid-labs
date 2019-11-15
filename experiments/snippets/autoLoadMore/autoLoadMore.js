@@ -17,7 +17,7 @@ $(window).scroll(function() {
     var flagModel = skuid.$M('Controller'); //optional: used if you'd like to display a message, like loading more rows. 
     var row = flagModel.getFirstRow();
     $('.nx-list-loadmore').each(function() {
-            if ($(this).isInViewport()) {
+		if ($(this).isInViewport()) {
                 noButton = true;
                 flagModel.updateRow(row, {showLoadingMore: true});  //updating custom field called 'showLoadingMore' which is used to conditionally display a message
                 model.loadNextOffsetPage();
