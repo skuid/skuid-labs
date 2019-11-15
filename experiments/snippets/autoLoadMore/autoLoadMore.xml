@@ -9,7 +9,6 @@
 		</model>
 		<model id="Accounts" query="true" createrowifnonefound="false" datasource="salesforce" limit="15" sobject="Account">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="Name"/>
 				<field id="Id"/>
 				<field id="Industry"/>
