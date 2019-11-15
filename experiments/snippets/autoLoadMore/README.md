@@ -3,4 +3,4 @@ This inline JavaScript (NOT snippet) used to load more rows into a model when th
 
 
 # autoLoadMore.xml
-This is a sample page wich uses this inline javascript to load more records.  In a standard developer org, there are likely not enough sample accounts to really leverage this, so the "Max # of records (Limit)" is set very low.  You'll need to zoom the page so you have to scroll to see the last row.  
+This is a sample page which uses this inline JavaScript to load more records. In a standard developer org, there are likely not enough sample accounts to really leverage this, so the "Max # of records (Limit)" is set very low.  You'll need to zoom the page or decrease the size of your browser window so you have to scroll to see the last row.  
