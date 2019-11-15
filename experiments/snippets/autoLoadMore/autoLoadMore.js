@@ -12,7 +12,7 @@ $.fn.isInViewport = function() {
 
 
 $(window).scroll(function() {  
-    var noButton = false;
+	var noButton = false;
     var model = skuid.$M('Accounts');  //name of model you'd like to load more rows into
     var flagModel = skuid.$M('Controller'); //optional: used if you'd like to display a message, like loading more rows. 
     var row = flagModel.getFirstRow();
