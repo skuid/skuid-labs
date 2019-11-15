@@ -18,11 +18,11 @@
 		var row = flagModel.getFirstRow();
 		$('.nx-list-loadmore').each(function(){
 			if ($(this).isInViewport()){
-			noButton = true;
-			flagModel.updateRow(row,{showLoadingMore: true});  //updating custom field called 'showLoadingMore' which is used to conditionally display a message
-			model.loadNextOffsetPage();
-		}
-	});
+				noButton = true;
+				flagModel.updateRow(row,{showLoadingMore: true});  //updating custom field called 'showLoadingMore' which is used to conditionally display a message
+				model.loadNextOffsetPage();
+			}
+		});
 
 		if(!noButton){
 			flagModel.updateRow(row,{showLoadingMore: false});
