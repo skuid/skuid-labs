@@ -1,0 +1,86 @@
+<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false">
+	<models>
+		<model id="Controller" limit="20" query="true" createrowifnonefound="true" datasource="Ui-Only" processonclient="true">
+			<fields>
+				<field id="showLoadingMore" displaytype="BOOLEAN" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Accounts" query="true" createrowifnonefound="false" datasource="salesforce" limit="15" sobject="Account">
+			<fields>
+				<field id="Name"/>
+				<field id="Id"/>
+				<field id="Industry"/>
+				<field id="Type"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skootable showconditions="true" showsavecancel="false" showerrorsinline="true" searchmethod="server" searchbox="false" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="all" alwaysresetpagination="false" createrecords="false" model="Accounts" mode="readonly" allowcolumnreordering="false" responsive="false" uniqueid="sk-3NIo-418" emptysearchbehavior="query">
+			<fields>
+				<field id="Id" uniqueid="fi-3NIo-421"/>
+				<field id="Name" uniqueid="fi-3NIo-420"/>
+				<field id="Industry" uniqueid="fi-3NIo-422"/>
+				<field id="Type" uniqueid="fi-3NIo-423"/>
+			</fields>
+			<rowactions/>
+			<massactions usefirstitemasdefault="true"/>
+			<views>
+				<view type="standard"/>
+			</views>
+			<searchfields/>
+		</skootable>
+		<richtext multiple="false" uniqueid="sk-Ohf-496" model="Controller">
+			<contents>&lt;p style="text-align: center;"&gt;&lt;em&gt;Loading more rows....&lt;/em&gt;&lt;/p&gt;
+</contents>
+			<renderconditions logictype="and">
+				<rendercondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="Controller" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="showLoadingMore" value="true"/>
+			</renderconditions>
+		</richtext>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="inline" name="autoLoadMore" cachelocation="false" url="">//inline javascript
+				(function(skuid){
+					var $ = skuid.$;
+				
+					$.fn.isInViewport = function(){
+						var elementTop = $(this).offset().top;
+						var elementBottom = elementTop + $(this).outerHeight();
+						var viewportTop = $(window).scrollTop();
+						var viewportBottom = viewportTop + $(window).height();
+						return elementBottom &gt; viewportTop &amp;&amp; elementTop &lt; viewportBottom;
+					};
+				
+				
+					$(window).scroll(function(){
+						var noButton = false;
+						var model = skuid.$M('Accounts');  //name of model you'd like to load more rows into
+						var flagModel = skuid.$M('Controller');  //optional: used if you'd like to display a message, like loading more rows.
+						var row = flagModel.getFirstRow();
+						$('.nx-list-loadmore').each(function(){
+							if ($(this).isInViewport()){
+							noButton = true;
+							flagModel.updateRow(row,{showLoadingMore: true});  //updating custom field called 'showLoadingMore' which is used to conditionally display a message
+							model.loadNextOffsetPage();
+						}
+					});
+				
+						if(!noButton){
+							flagModel.updateRow(row,{showLoadingMore: false});
+						}
+					});
+				
+				})(skuid);</jsitem>
+			</javascript>
+			<css/>
+			<actionsequences uniqueid="sk-3NIi-344"/>
+		</resources>
+		<styles>
+			<styleitem type="background" bgtype="none"/>
+		</styles>
+	</skuidpage>
