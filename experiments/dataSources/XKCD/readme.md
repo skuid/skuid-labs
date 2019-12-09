@@ -37,6 +37,6 @@ Create a new V2 Page and copy the XML from "Random_XKCD" file in this directory 
 This page uses a custom formula to generate the random number. 
 When you open the builder you wil be asked for a sample number for retrieval of model metadata.  You can use ``1``
 
-## Next Steps.
+## Next Steps
 
 Make a better website than XKCD.com! 
