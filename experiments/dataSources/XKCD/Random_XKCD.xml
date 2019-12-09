@@ -128,7 +128,7 @@
 												<row uniqueid="sk-2BGL-3149">
 													<fields>
 														<skuid__field uniqueid="sk-2BGL-3134" id="num"/>
-														<skuid__field uniqueid="sk-2LqJ-2445" label="Date" type="COMBO" template="{{month}} / {{day}} / {{year}}"/>
+														<skuid__field uniqueid="sk-2LqJ-2445" label="Date" type="COMBO" template="{{month}} / {{day}} / {{{year}}}"/>
 													</fields>
 												</row>
 												<row uniqueid="sk-2BGL-3152">
