@@ -1,0 +1,205 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true">
+	<models>
+		<model id="ComicMax" query="true" createrowifnonefound="false" datasource="XKCD" verb="GET" payloadcontenttype="JSON" endpoint="info.0.json">
+			<fields>
+				<field id="num" label="Num" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="3" scale="0" accessible="true" filterable="true"/>
+			</fields>
+			<conditions>
+				<condition type="modelmerge" value="" sourcetype="param" sourceparam="num" operator="=" model="UI" enclosevalueinquotes="true" mergefield="Counter" novaluebehavior="noquery"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="UI" limit="20" query="true" createrowifnonefound="true" datasource="Ui-Only">
+			<fields>
+				<field id="Counter" displaytype="DOUBLE" ogdisplaytype="TEXT" readonly="false" returntype="DOUBLE" precision="4" scale="0" defaultvaluetype="fieldvalue" defaultValue="300" label="Choose Number"/>
+				<field id="RandomNumber" displaytype="DOUBLE" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="3" label="Random Number" defaultvaluetype="fieldvalue" defaultValue="300"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="RandomComic" query="true" createrowifnonefound="false" datasource="XKCD" verb="GET" payloadcontenttype="JSON" endpoint="/{{num}}/info.0.json">
+			<fields>
+				<field id="alt" label="Alt" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="day" label="Day" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="img" label="Img" ispolymorphic="false" isnamepointing="false" displaytype="URL" accessible="true" filterable="true"/>
+				<field id="link" label="Link" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="0" scale="0" accessible="true" filterable="true"/>
+				<field id="month" label="Month" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="news" label="News" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="0" scale="0" accessible="true" filterable="true"/>
+				<field id="num" label="Num" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="3" scale="0" accessible="true" filterable="true"/>
+				<field id="title" label="Title" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="safe_title" label="Safe Title" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="transcript" label="Transcript" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="year" label="Year" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="4" scale="0" accessible="true" filterable="true"/>
+			</fields>
+			<conditions>
+				<condition type="modelmerge" value="" sourcetype="param" sourceparam="num" operator="=" model="UI" enclosevalueinquotes="true" mergefield="RandomNumber" novaluebehavior="noquery"/>
+			</conditions>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__wrapper uniqueid="sk-2BGx-3533">
+			<components>
+				<skuid__grid uniqueid="sk-2BJT-3834" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="4" rowGutter="0" fullWidth="true">
+					<divisions>
+						<division minWidth="100px" ratio="0" alignSelf="center">
+							<components>
+								<skuid__header model="UI" title="Random XKCD Comic" uniqueid="sk-2Lsn-3618"/>
+							</components>
+						</division>
+						<division alignSelf="center" minWidth="100px" ratio="1">
+							<components>
+								<skuid__buttonSet uniqueid="sk-2BJW-3883" position="left">
+									<groups>
+										<skuid__buttonGroup>
+											<buttons>
+												<skuid__button label="Reload" uniqueid="sk-2BJW-3887" styleSettingsVariant="primary">
+													<actions>
+														<action type="updateRow" model="UI" appendorprepend="prepend" defaultmodefornewitems="read" affectedrows="context" fieldmodel="UI">
+															<updates>
+																<update valuesource="formula" field="RandomNumber" enclosevalueinquotes="false">
+																	<formula>skuid__RANDOM(1,{{$Model.ComicMax.data.0.num}})</formula>
+																</update>
+															</updates>
+														</action>
+														<action type="requeryModel" model="RandomComic" behavior="standard"/>
+													</actions>
+												</skuid__button>
+											</buttons>
+										</skuid__buttonGroup>
+									</groups>
+								</skuid__buttonSet>
+							</components>
+							<renderConditions logictype="and"/>
+						</division>
+					</divisions>
+					<styles>
+						<spacing bottom="2"/>
+					</styles>
+				</skuid__grid>
+			</components>
+			<background/>
+			<styles>
+				<spacing bottom="4" left="4" right="4" top="4"/>
+			</styles>
+		</skuid__wrapper>
+		<skuid__wrapper uniqueid="sk-2BJ_-4160">
+			<components>
+				<skuid__text contents="{{title}}" uniqueid="sk-2BLN-4913" model="RandomComic" styleSettingsVariant="large">
+					<styles>
+						<spacing top="4" left="4" right="2"/>
+					</styles>
+				</skuid__text>
+				<skuid__grid uniqueid="sk-2BK3-4250" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="4" rowGutter="4">
+					<divisions>
+						<division alignSelf="auto" minWidth="100px" ratio="1">
+							<components>
+								<skuid__wrapper uniqueid="sk-2Lr2-3033">
+									<components>
+										<skuid__image source="url" uniqueid="sk-38U8-5159" datasource="SkuidLocal" model="RandomComic" url="{{img}}">
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+										</skuid__image>
+									</components>
+									<background type="color" color="white"/>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__wrapper>
+							</components>
+						</division>
+						<division minWidth="100px" ratio="1" alignSelf="auto">
+							<components>
+								<skuid__form showErrorsInline="true" model="RandomComic" uniqueid="sk-2BFk-2847" mode="readonly">
+									<sections>
+										<section showHeading="false">
+											<rows>
+												<row uniqueid="sk-2BGL-3146">
+													<fields>
+														<skuid__field uniqueid="sk-2BGL-3129" id="alt" label="Comments">
+															<renderConditions logictype="and" onhidedatabehavior="keep"/>
+															<enableConditions/>
+														</skuid__field>
+													</fields>
+												</row>
+												<row uniqueid="sk-2BGL-3149">
+													<fields>
+														<skuid__field uniqueid="sk-2BGL-3134" id="num"/>
+														<skuid__field uniqueid="sk-2LqJ-2445" label="Date" type="COMBO" template="{{month}} / {{day}} / {{{year}}}"/>
+													</fields>
+												</row>
+												<row uniqueid="sk-2BGL-3152">
+													<fields>
+														<skuid__field uniqueid="sk-2BGL-3131" id="link">
+															<renderConditions logictype="and" onhidedatabehavior="keep">
+																<renderCondition type="blank" operator="!=" fieldmodel="RandomComic" sourcetype="fieldvalue" field="link" fieldtargetobjects="XKCD: GET" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+															<enableConditions/>
+														</skuid__field>
+													</fields>
+												</row>
+												<row uniqueid="sk-2BGL-3158">
+													<fields>
+														<skuid__field uniqueid="sk-2BGL-3133" id="news">
+															<renderConditions logictype="and" onhidedatabehavior="keep">
+																<renderCondition type="blank" operator="!=" fieldmodel="RandomComic" sourcetype="fieldvalue" field="news" fieldtargetobjects="XKCD: GET" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+															<enableConditions/>
+														</skuid__field>
+													</fields>
+												</row>
+												<row uniqueid="sk-2BGL-3170">
+													<fields>
+														<skuid__field uniqueid="sk-2BGL-3137" id="transcript">
+															<renderConditions logictype="and" onhidedatabehavior="keep">
+																<renderCondition type="blank" operator="!=" fieldmodel="RandomComic" sourcetype="fieldvalue" field="transcript" fieldtargetobjects="XKCD: GET" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+															<enableConditions/>
+														</skuid__field>
+													</fields>
+												</row>
+											</rows>
+										</section>
+									</sections>
+								</skuid__form>
+							</components>
+						</division>
+					</divisions>
+					<styles>
+						<spacing top="4" bottom="4" left="4" right="4"/>
+					</styles>
+				</skuid__grid>
+			</components>
+			<background type="color" color="#bfbfbf"/>
+			<styles>
+				<spacing bottom="4" left="4" right="4" top="4"/>
+			</styles>
+		</skuid__wrapper>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="inline" name="RandomFunction" cachelocation="false" url="">skuid.formula.Formula (
+    'RANDOM',
+    function (low, high, asFloat) {
+        asFloat = asFloat === undefined ? false : Boolean(asFloat);
+        var result = Math.random() * (high - low) + low;
+        return asFloat ? result : Math.round(result);
+
+    },{
+        namespace: 'skuid',
+        numArgs : 3,
+        returnType : 'Number'
+    }
+);</jsitem>
+		</javascript>
+		<css/>
+		<actionsequences uniqueid="sk-2BER-1748"/>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+</skuid__page>
