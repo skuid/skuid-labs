@@ -1,0 +1,264 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false">
+	<models>
+		<model id="UIControl" query="true" createrowifnonefound="true" datasource="Ui-Only">
+			<fields>
+				<field id="Year" displaytype="PICKLIST" length="255" ogdisplaytype="TEXT" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="2016">
+					<picklistentries>
+						<entry value="2015" label="2015"/>
+						<entry value="2016" label="2016"/>
+						<entry value="2017" label="2017"/>
+					</picklistentries>
+				</field>
+			</fields>
+			<conditions/>
+			<actions>
+				<action>
+					<actions>
+						<action type="requeryModels" model="TotalOppValue" behavior="standard">
+							<models>
+								<model>OppValue_Industry_Family</model>
+								<model>TotalOppValue</model>
+								<model>OpenOppValue</model>
+								<model>WonOppValue</model>
+								<model>LostOppValue</model>
+							</models>
+						</action>
+					</actions>
+					<events>
+						<event>row.updated</event>
+					</events>
+					<fields>
+						<field>Year</field>
+					</fields>
+				</action>
+			</actions>
+		</model>
+		<model id="OppValue_Industry_Family" query="true" createrowifnonefound="false" datasource="SFDC_API" verb="POST" payloadcontenttype="JSON" sendchanges="usetemplaterequest" customrequesttemplate="{&quot;query&quot;:&quot;q = load \&quot;0Fb6g0000008aw2CAA/0Fc6g0000009ZKoCAM\&quot;;q = filter q by 'Close_Date_Year' == \&quot;{{$Model.UIControl.data.0.Year}}\&quot;;q = group q by ('Industry', 'Product_Family');q = foreach q generate 'Industry' as 'Industry', 'Product_Family' as 'Product_Family', sum('Amount') as 'sum_Amount';q = order q by 'sum_Amount' desc;q = limit q 2000;&quot;}" endpoint="/services/data/v42.0/wave/query" pathtocontent="results.records">
+			<fields>
+				<field id="Industry" displaytype="TEXT" label="Industry"/>
+				<field id="Product_Family" displaytype="TEXT" label="Family"/>
+				<field id="sum_Amount" displaytype="CURRENCY" ogdisplaytype="TEXT" precision="0" scale="0" label="Total Amount"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="TotalOppValue" query="true" createrowifnonefound="false" datasource="SFDC_API" verb="POST" payloadcontenttype="JSON" sendchanges="usetemplaterequest" customrequesttemplate="{&quot;query&quot;:&quot;q = load \&quot;0Fb6g0000008aw2CAA/0Fc6g0000009ZKoCAM\&quot;;q = group q by all;q = filter q by 'Close_Date_Year' == \&quot;{{$Model.UIControl.data.0.Year}}\&quot;;q = foreach q generate sum('Amount') as 'sum_Amount';q = limit q 2000;&quot;}" endpoint="/services/data/v42.0/wave/query" pathtocontent="results.records">
+			<fields>
+				<field id="sum_Amount" displaytype="CURRENCY" ogdisplaytype="TEXT" precision="0" scale="0" label="Total Amount"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="OpenOppValue" query="true" createrowifnonefound="false" datasource="SFDC_API" verb="POST" payloadcontenttype="JSON" sendchanges="usetemplaterequest" customrequesttemplate="{&quot;query&quot;:&quot;q = load \&quot;0Fb6g0000008aw2CAA/0Fc6g0000009ZKoCAM\&quot;;q = group q by all;q = filter q by 'Close_Date_Year' == \&quot;{{$Model.UIControl.data.0.Year}}\&quot;;q = filter q by 'Closed' == \&quot;false\&quot;;q = foreach q generate sum('Amount') as 'sum_Amount';q = limit q 2000;&quot;}" endpoint="/services/data/v42.0/wave/query" pathtocontent="results.records">
+			<fields>
+				<field id="sum_Amount" displaytype="CURRENCY" ogdisplaytype="TEXT" precision="0" scale="0" label="Total Amount"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="WonOppValue" query="true" createrowifnonefound="false" datasource="SFDC_API" verb="POST" payloadcontenttype="JSON" sendchanges="usetemplaterequest" customrequesttemplate="{&quot;query&quot;:&quot;q = load \&quot;0Fb6g0000008aw2CAA/0Fc6g0000009ZKoCAM\&quot;;q = group q by all;q = filter q by 'Close_Date_Year' == \&quot;{{$Model.UIControl.data.0.Year}}\&quot;;q = filter q by 'Won' == \&quot;true\&quot;;q = foreach q generate sum('Amount') as 'sum_Amount';q = limit q 2000;&quot;}" endpoint="/services/data/v42.0/wave/query" pathtocontent="results.records">
+			<fields>
+				<field id="sum_Amount" displaytype="CURRENCY" ogdisplaytype="TEXT" precision="0" scale="0" label="Total Amount"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="LostOppValue" query="true" createrowifnonefound="false" datasource="SFDC_API" verb="POST" payloadcontenttype="JSON" sendchanges="usetemplaterequest" customrequesttemplate="{&quot;query&quot;:&quot;q = load \&quot;0Fb6g0000008aw2CAA/0Fc6g0000009ZKoCAM\&quot;;q = group q by all;q = filter q by 'Close_Date_Year' == \&quot;{{$Model.UIControl.data.0.Year}}\&quot;;q = filter q by 'Won' == \&quot;false\&quot;;q = foreach q generate sum('Amount') as 'sum_Amount';q = limit q 2000;&quot;}" endpoint="/services/data/v42.0/wave/query" pathtocontent="results.records">
+			<fields>
+				<field id="sum_Amount" displaytype="CURRENCY" ogdisplaytype="TEXT" precision="0" scale="0" label="Total Amount"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__wrapper uniqueid="sk-2aeD-10849">
+			<components>
+				<skuid__grid uniqueid="sk-2eSN-11156" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="2" rowGutter="2">
+					<divisions>
+						<division minWidth="200px" ratio="0" alignSelf="flex-start" maxWidth="300px">
+							<components>
+								<skuid__form showErrorsInline="true" model="UIControl" uniqueid="sk-2eSP-12370" mode="edit">
+									<sections>
+										<section title="New Section" showHeading="false">
+											<rows>
+												<row>
+													<fields>
+														<skuid__field id="Year" showHelp="true" displayAs="BUTTON_GROUP" label="Filter by Year"/>
+													</fields>
+												</row>
+											</rows>
+										</section>
+									</sections>
+								</skuid__form>
+							</components>
+						</division>
+						<division alignSelf="auto" minWidth="200px" ratio="1" maxWidth="300px">
+							<components>
+								<skuid__wrapper uniqueid="sk-2eSb-13635" heightStrategy="fixed" height="custom" heightCustom="200px">
+									<components>
+										<skuid__wrapper uniqueid="sk-2eY5-20426">
+											<components>
+												<skuid__text contents="Total Opp Amount in {{Year}}" uniqueid="sk-2eSk-13939" model="UIControl"/>
+												<skuid__text contents="{{sum_Amount}}" uniqueid="sk-2eSl-14058" model="TotalOppValue" styleSettingsVariant="extraLarge">
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__text>
+											</components>
+											<background/>
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+										</skuid__wrapper>
+									</components>
+									<background type="color" color="#c3d69b"/>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__wrapper>
+							</components>
+						</division>
+						<division alignSelf="auto" minWidth="200px" ratio="1" maxWidth="300px">
+							<components>
+								<skuid__wrapper uniqueid="sk-2eXr-18660" heightStrategy="fixed" height="custom" heightCustom="200px">
+									<components>
+										<skuid__wrapper uniqueid="sk-2eYA-20978">
+											<components>
+												<skuid__text contents="Open Opp Amount in {{Year}}" uniqueid="sk-2eXr-18661" model="UIControl"/>
+												<skuid__text contents="{{sum_Amount}}" uniqueid="sk-2eXr-18662" model="OpenOppValue" styleSettingsVariant="extraLarge">
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__text>
+											</components>
+											<background/>
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+										</skuid__wrapper>
+									</components>
+									<background type="color" color="#fbd5b5"/>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__wrapper>
+							</components>
+						</division>
+						<division alignSelf="auto" minWidth="200px" ratio="1" maxWidth="300px">
+							<components>
+								<skuid__wrapper uniqueid="sk-2eZz-24858" heightStrategy="fixed" height="custom" heightCustom="200px">
+									<components>
+										<skuid__wrapper uniqueid="sk-2eZz-24859">
+											<components>
+												<skuid__text contents="Lost Opp Amount in {{Year}}" uniqueid="sk-2eZz-24860" model="UIControl"/>
+												<skuid__text contents="{{sum_Amount}}" uniqueid="sk-2eZz-24861" model="LostOppValue" styleSettingsVariant="extraLarge">
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__text>
+											</components>
+											<background/>
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+										</skuid__wrapper>
+									</components>
+									<background type="color" color="#dbeef3"/>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__wrapper>
+							</components>
+						</division>
+						<division alignSelf="auto" minWidth="200px" ratio="1" maxWidth="300px">
+							<components>
+								<skuid__wrapper uniqueid="sk-2eZz-25356" heightStrategy="fixed" height="custom" heightCustom="200px">
+									<components>
+										<skuid__wrapper uniqueid="sk-2eZz-25357">
+											<components>
+												<skuid__text contents="Won Opp Amount in {{Year}}" uniqueid="sk-2eZz-25358" model="UIControl"/>
+												<skuid__text contents="{{sum_Amount}}" uniqueid="sk-2eZz-25359" model="WonOppValue" styleSettingsVariant="extraLarge">
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__text>
+											</components>
+											<background/>
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+										</skuid__wrapper>
+									</components>
+									<background type="color" color="#ccc1d9"/>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__wrapper>
+							</components>
+						</division>
+					</divisions>
+					<styles>
+						<spacing top="4" bottom="4"/>
+					</styles>
+				</skuid__grid>
+				<skuid__chart model="OppValue_Industry_Family" maintitle="Opportunity value by Industry and Product Category" type="column" uniqueid="sk-2eJh-6452" stacking="true" export="off">
+					<dataaxes>
+						<axis id="axis1"/>
+					</dataaxes>
+					<categoryaxes>
+						<axis id="categories" categorytype="field" field="Industry"/>
+					</categoryaxes>
+					<serieslist>
+						<series valuefield="sum_Amount" splittype="field" splitfield="Product_Family"/>
+					</serieslist>
+					<colors/>
+					<legend layout="vertical" halign="right" valign="top"/>
+					<allowedtypes>
+						<type>spline</type>
+						<type>areaspline</type>
+						<type>bar</type>
+					</allowedtypes>
+				</skuid__chart>
+			</components>
+			<background/>
+			<styles>
+				<spacing left="4" right="4" top="4"/>
+			</styles>
+		</skuid__wrapper>
+	</components>
+	<resources>
+		<labels/>
+		<javascript/>
+		<css/>
+		<actionsequences/>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+	<pageregioncontents>
+		<pageregioncontent uniqueid="__header">
+			<components>
+				<skuid__layoutRegion sticky="true">
+					<components>
+						<skuid__wrapper uniqueid="sk-2aZt-1179">
+							<components>
+								<skuid__text contents="Einstein Analytics" uniqueid="sk-2aZu-1348" styleSettingsVariant="medium">
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__text>
+							</components>
+							<background/>
+							<styles>
+								<spacing top="2" bottom="2" left="2"/>
+							</styles>
+						</skuid__wrapper>
+					</components>
+					<background type="color" color="#a5a5a5"/>
+				</skuid__layoutRegion>
+			</components>
+		</pageregioncontent>
+	</pageregioncontents>
+</skuid__page>
+ß∑

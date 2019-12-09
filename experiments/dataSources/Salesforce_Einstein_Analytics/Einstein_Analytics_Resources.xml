@@ -1,0 +1,97 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false">
+	<models>
+		<model id="DataSets" query="true" createrowifnonefound="false" datasource="SFDC_API" verb="GET" payloadcontenttype="JSON" endpoint="/services/data/v42.0/wave/datasets" pathtocontent="datasets" fieldtargetobjects="datasets">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="label" label="Label" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="lastAccessedDate" label="Last Accessed Date" ispolymorphic="false" isnamepointing="false" displaytype="DATETIME" accessible="true" filterable="true"/>
+				<field id="name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="type" label="Type" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="url" label="Url" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="currentVersionId" label="Current Version Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Lenses" query="true" createrowifnonefound="false" datasource="SFDC_API" verb="GET" payloadcontenttype="JSON" endpoint="/services/data/v42.0/wave/lenses" pathtocontent="lenses" fieldtargetobjects="lenses">
+			<fields>
+				<field id="name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="filesUrl" label="Files Url" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="files.id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="files.url" label="Url" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__wrapper uniqueid="sk-2aeD-10849">
+			<components>
+				<skuid__table model="DataSets" uniqueid="sk-2ab2-5228" mode="readonly" title="Data Sets" showSaveCancel="false">
+					<fields>
+						<field id="id" uniqueid="fi-2ab2-5684"/>
+						<field id="currentVersionId" uniqueid="fi-2eCX-3745"/>
+						<field id="label" uniqueid="fi-2ab2-5685"/>
+						<field id="lastAccessedDate" uniqueid="fi-2ab2-5686"/>
+						<field id="name" uniqueid="fi-2ab2-5687"/>
+						<field id="type" uniqueid="fi-2ab2-5688"/>
+						<field id="url" uniqueid="fi-2ab2-5689"/>
+					</fields>
+					<filtering enableSearch="false" instantSearch="false"/>
+					<rowActions/>
+					<massActions/>
+				</skuid__table>
+				<skuid__table model="Lenses" uniqueid="sk-2ae5-9828" mode="readonly" title="Lenses" showSaveCancel="false">
+					<fields>
+						<field id="name" uniqueid="fi-2ae5-10258"/>
+						<field id="id" uniqueid="fi-2ae5-10259"/>
+						<field id="filesUrl" uniqueid="fi-2ae5-10260"/>
+						<field id="files.id" uniqueid="fi-2ae5-10261"/>
+						<field id="files.url" uniqueid="fi-2ae5-10262"/>
+					</fields>
+					<filtering enableSearch="false" instantSearch="false"/>
+					<rowActions/>
+					<massActions/>
+				</skuid__table>
+			</components>
+			<background/>
+			<styles>
+				<spacing left="2" right="2"/>
+			</styles>
+		</skuid__wrapper>
+	</components>
+	<resources>
+		<labels/>
+		<javascript/>
+		<css/>
+		<actionsequences/>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+	<pageregioncontents>
+		<pageregioncontent uniqueid="__header">
+			<components>
+				<skuid__layoutRegion sticky="true">
+					<components>
+						<skuid__wrapper uniqueid="sk-2aZt-1179">
+							<components>
+								<skuid__text contents="Einstein Analytics Resources" uniqueid="sk-2aZu-1348" styleSettingsVariant="medium">
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__text>
+							</components>
+							<background/>
+							<styles>
+								<spacing top="2" bottom="2" left="2"/>
+							</styles>
+						</skuid__wrapper>
+					</components>
+					<background type="color" color="#a5a5a5"/>
+				</skuid__layoutRegion>
+			</components>
+		</pageregioncontent>
+	</pageregioncontents>
+</skuid__page>
