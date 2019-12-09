@@ -31,7 +31,7 @@ Select "Fields" on the model properties to see the available fields.  Add the on
 - Add an Image to your page to show the {{img}} field. 
 - Use a Form to show the metadata about the comic. 
 
-## Sample Page. 
+## Sample Page
 
 Create a new V2 Page and copy the XML from "Random_XKCD" file in this directory to see a random comic generator. 
 This page uses a custom formula to generate the random number. 
