@@ -1,5 +1,5 @@
 ## Salesforce data access using REST
-Salesforce has a super rich array of APIs that provide access to far more data than can be gathered from Skuid's direct SFDC data source.  
+Salesforce has a super rich array of APIs that provide access to far more data than can be gathered from Skuid's direct SFDC data source type.  
 
 Some examples of this include: 
 
