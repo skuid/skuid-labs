@@ -28,7 +28,7 @@ First you'll need to create a new REST data source that connects to the target S
 #### Create a CORS entry
 
 * Allowing the browser to retrieve data directly is the fastest method for data sources (as opposed to using the Server Proxy),  but it does require that you whitelist the endpoint so you don't have a CORS violation.  
-* Go to **Security > CORS** 
+* Within Salesforce Setup, go to **Security > CORS**.
 * Create a new entry - generally it will be the same domain where you ultimately intend to host the page.  ``https://<<mydomain>>.visual.force.com``
 
 
