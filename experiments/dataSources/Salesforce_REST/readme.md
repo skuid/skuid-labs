@@ -16,7 +16,7 @@ Fortunately it is easy to build a REST data source that accesses Salesforce so y
 First you'll need to create a new REST data source that connects to the target Salesforce org.  Configure it as follows:
 * URL / Endpoint: ``https://<<MyDomain>>.my.salesforce.com``
 * Use Proxy:  False
-* Authentication Method:  **No authentication**
+* Authentication Method:  No Authentication
 * Add the following to "Common Request Headers" section. 
 ``Authorization: Bearer {{$Api.Session_Id}}``
 
