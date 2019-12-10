@@ -3,7 +3,7 @@ Einstein Analytics (EA) is a powerful data integration and analysis platform.  I
 
 Some resources:
 
-- [Get a Free Developer Org](https://developer.salesforce.com/promotions/orgs/analytics-de) - with EA enabled,  and sample datasets (that we will be using in these pages)
+- [Get a free Salesforce developer org](https://developer.salesforce.com/promotions/orgs/analytics-de) - with EA enabled and sample datasets (that we will be using in these pages)
 - [Ananlytics API doc](https://developer.salesforce.com/docs/atlas.en-us.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_rest_resources_overview.htm) (from Salesforce Developer resources):  
 - [Analytics query language (SAQL) reference](https://developer.salesforce.com/docs/atlas.en-us.bi_dev_guide_saql.meta/bi_dev_guide_saql/bi_saql_intro.htm)
 
