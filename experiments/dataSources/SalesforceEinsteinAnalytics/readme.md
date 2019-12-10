@@ -1,4 +1,4 @@
-## Salesforce Einstein Analytics data in Skuid
+# Show Salesforce Einstein Analytics data in Skuid
 Einstein Analytics (EA) is a powerful data integration and analysis platform.  It does a lot of things Skuid cannot do.  But there are going to be times when you would like to incorporate an EA report into your Skuid page and use Skuid components to show the data - rather than use an Einstein Dashboard or component.  Here is how. 
 
 Some resources:
@@ -22,13 +22,14 @@ First you'll need to create a new REST data source that connects to the target S
 
 #### Double check the remote site setting
 
-- Skuid will try to automatically set up a remote site setting _for your org_ in SFDC for this data source,  but you might need to edit it.  Check in Salesforce Setup at **Security > Remote site settings**  
+ - Skuid will try to automatically set up a remote site setting _for the target Salesforce org_ within your current SFDC org when you create this new data source,  but you might need to edit it if you have connection issues.  Check in Salesforce Setup at **Security > Remote site settings**  
+
 
 #### Create a CORS entry
 
 - Allowing the browser to retrieve data directly is the fastest method for Data Sources (as opposed to using the Server Proxy),  but it does require that you whitelist the endpoint so you don't have a CORS violation.  
 - Go to **Security > CORS** 
-- Create a new entry - generally it will be the same domain where you ultimately intend to host the page.  ``https://<<mydomain>>.visual.force.com``
+- Create a new entry - generally it will be the same domain where you ultimately intend to host the page.  ``https://<<mydomain>>.visual.force.com``   or   ``https://<<mydomain>>.lightning.force.com``
 
 ### Create a new page (V2 page API)  and copy the XML from the the "Einstein_Analytics_Resources"  
 

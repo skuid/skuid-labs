@@ -1,13 +1,13 @@
-## Salesforce data access using REST
-Salesforce has a super rich array of APIs that provide access to far more data than can be gathered from Skuid's direct SFDC data source type.  
+# Show MORE Salesforce data in Skuid using REST
+Salesforce has a super rich array of APIs that provide access to far more data than can be gathered from Skuid's direct SFDC data source type.   
 
 Some examples of this include: 
 
-* Access to Data.com objects
+* Access to [Data.com search](https://developer.salesforce.com/docs/atlas.en-us.datadotcom_api_dev_guide.meta/datadotcom_api_dev_guide/datadotcom_api_dev_guide_intro.htm)
 * Access to the [interface API](https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi/ui_api_get_started.htm)-  like creating a model of field picklist values. 
 * Access to many [setup objects](https://developer.salesforce.com/docs/atlas.en-us.220.0.object_reference.meta/object_reference/sforce_api_objects_concepts.htm) not exposed as objects to Skuid.  
 
-Fortunately it is easy to build a REST data source that accesses Salesforce so you can use these other APIs and access these objects. 
+Fortunately it is easy to build a REST data source that accesses Salesforce so you can use these other APIs to expose this data in Skuid. 
 
 ## How to use this data source
 
