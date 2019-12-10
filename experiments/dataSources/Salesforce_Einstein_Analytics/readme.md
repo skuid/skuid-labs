@@ -42,7 +42,7 @@ Showing Data from Einstein Analytics requires use of the [Query Endpoint](https:
 Here is how: 
 
 
-#### Find a resource in Einstein Analytics studio - prepare it for use in a Query       
+#### Find a resource in Einstein Analytics studio - prepare it for use in a query
 
 -   Open a lens or dashboard element.  Or create a new one! 
 -   Open the "Query mode" view of a lens,  or use the "more details" button on the details panel of a dashboard.  Look for the query code.  It looks like this: 
