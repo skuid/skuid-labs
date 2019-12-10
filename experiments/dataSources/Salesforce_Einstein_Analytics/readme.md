@@ -1,5 +1,5 @@
 ## Salesforce Einstein Analytics data in Skuid
-Einstein Analytics is a powerful data integration and analysis platform.  It does a lot of things Skuid cannot do.  But there are going to be times when you would like to incorporate a “EA” report into your Skuid page and use Skuid components to show the data - rather than use an Einstein Dashboard or component.  Here is how. 
+Einstein Analytics (EA) is a powerful data integration and analysis platform.  It does a lot of things Skuid cannot do.  But there are going to be times when you would like to incorporate an EA report into your Skuid page and use Skuid components to show the data - rather than use an Einstein Dashboard or component.  Here is how. 
 
 Some resources. 
 
