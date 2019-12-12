@@ -17,5 +17,5 @@ The fundamental approach is this:
 ## How to use this
 
 1. Download the [XML](clientSideAggregation.xml) for this page.
-1. From the Skuid Pages list, click "Create new page", and select "Upload XML". Select the file you downloaded. The API Version for the page should automatically be detected as V2.
+1. From the Skuid Pages list, click **Create new page**, select **Upload XML**, and then select the file you downloaded. Newer Skuid releases will detect the page's API version, but if your release does not, be sure to select **v2** as the Skuid Page API version.
 1. Save and Preview
