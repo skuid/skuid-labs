@@ -1,13 +1,14 @@
 # Show MORE Salesforce data in Skuid using REST
-Salesforce has a super rich array of APIs that provide access to far more data than can be gathered from Skuid's direct SFDC data source type.   
+The standard Salesforce datasource allows you to connect to most sObjects and build compelling UI's with that data.  However there are some types of data within your org not accessible through the standard Salesforce Datasource.  Boo....
 
-Some examples of this include: 
+Don't worry! Salesforce provides a rich array of APIs that provide access to this type of data. In Skuid, it's easy to create a REST datasource to retrieve data from these API's and create custom UI's.
+
+Examples of this data include: 
 
 * Access to [Data.com search](https://developer.salesforce.com/docs/atlas.en-us.datadotcom_api_dev_guide.meta/datadotcom_api_dev_guide/datadotcom_api_dev_guide_intro.htm)
 * Access to the [interface API](https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi/ui_api_get_started.htm)-  like creating a model of field picklist values. 
 * Access to many [setup objects](https://developer.salesforce.com/docs/atlas.en-us.220.0.object_reference.meta/object_reference/sforce_api_objects_concepts.htm) not exposed as objects to Skuid.  
 
-Fortunately it is easy to build a REST data source that accesses Salesforce so you can use these other APIs to expose this data in Skuid. 
 
 ## How to use this data source
 
@@ -23,7 +24,7 @@ First you'll need to create a new REST data source that connects to the target S
 
 #### Double check the remote site setting
 
-* Skuid will try to automatically set up a remote site setting _for your org_ in SFDC for this data source,  but you might need to edit it.  Check in Salesforce Setup at **Security > Remote site settings**  
+* Skuid may try to automatically set up a remote site setting _for your org_  for this data source. If your pages do not work, you might need to edit it.  Check in Salesforce Setup at **Security > Remote site settings**  
 
 #### Create a CORS entry
 
@@ -32,18 +33,21 @@ First you'll need to create a new REST data source that connects to the target S
 * Create a new entry - generally it will be the same domain where you ultimately intend to host the page.  ``https://<<mydomain>>.visual.force.com``
 
 
-### Create REST model methods to connect to specfic APIs
+### Create a page with this REST model to connect to specfic APIs
 
+#### Access to Einstein Analytics data
+
+ Look at the folder below for specific instructions and page examples using this datasource.   
 
 #### Retrieve all metadata related to contact object:      
 
-*   Query method with this URL:   ``/services/data/v46.0/sobjects/Contact/describe``
-*   Use "Path to contents" to access folders within this response. 
+* Query method with this URL:   ``/services/data/v46.0/sobjects/Contact/describe``
+* Use "Path to contents" to access folders within this response. 
     
 #### Add a contact
 
-*     Insert method with this URL:  ``/services/data/v46.0/sobjects/Contact``
-*     Insert the fields for contact as JSON in the request body
+* Insert method with this URL:   ``/services/data/v46.0/sobjects/Contact``
+* Insert the fields for contact as JSON in the request body.
 
 ####  Query contacts   
 * Query method with this URL:  ``/services/data/v46.0/query/?q=SELECT+id,FullName,Email+from+Contact``

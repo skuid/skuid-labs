@@ -12,36 +12,17 @@ Some resources:
 
 ### Create the data source
 
-First you'll need to create a new REST data source that connects to the target Salesforce org.  Configure it as follows:
-- URL / Endpoint: ``https://<<MyDomain>>.my.salesforce.com``
-- Use Proxy:  False
-- Authentication Method:  **No authentication**
-- Add the following to "Common Request Headers" section. 
-``Authorization: Bearer {{$Api.Session_Id}}``
+Follow the instructions in the "SalesforceREST" folder immediately above to create a generic "Salesforce REST" datasource. 
 
-
-#### Double check the remote site setting
-
- - Skuid will try to automatically set up a remote site setting _for the target Salesforce org_ within your current SFDC org when you create this new data source,  but you might need to edit it if you have connection issues.  Check in Salesforce Setup at **Security > Remote site settings**  
-
-
-#### Create a CORS entry
-
-- Allowing the browser to retrieve data directly is the fastest method for Data Sources (as opposed to using the Server Proxy),  but it does require that you whitelist the endpoint so you don't have a CORS violation.  
-- Go to **Security > CORS** 
-- Create a new entry - generally it will be the same domain where you ultimately intend to host the page.  ``https://<<mydomain>>.visual.force.com``   or   ``https://<<mydomain>>.lightning.force.com``
-
-### Create a new page (V2 page API)  and copy the XML from the the "Einstein_Analytics_Resources"  
+### Create a new page (V2 page API)  and copy the XML from the file:  "Einstein_Analytics_Resources"  
 
 This will show you all the datasets and lenses you have enabled in the org and give you direct links to them. 
-
 
 ## But I want some Data! 
 
 Showing Data from Einstein Analytics requires use of the [Query Endpoint](https://developer.salesforce.com/docs/atlas.en-us.bi_dev_guide_rest.meta/bi_dev_guide_rest/bi_resources_query.htm)
 
 Here is how: 
-
 
 #### Find a resource in Einstein Analytics studio - prepare it for use in a query
 
@@ -98,15 +79,15 @@ q = order q by 'sum_Amount' desc;
 q = limit q 2000;
 ```
 
-To make these interactive - you might think you could simply add merge syntax replacing the hard coded year.  And that the Merge Syntax would be found in the Condition definition process.   But no.  Because this merge is in the POST Request Body Template - it is not discovered as a “URL Merge” item and available to conditionsl  (There is a reported improvement story in the works for this). 
+To make these interactive - you might think you could firs add merge syntax to replace the hard coded year.  And then find that Merge in model Condition. __But no.__  Because this merge is in the POST Request Body Template - it is not discovered as a “URL Merge” item and available to conditions. (There is an improvement in the works for this). 
 
-Workaround: 
+But there is a workaround: 
 
-- Create a UI-Only model and field. 
-- Use Global merge syntax to push that field value into the POST Request Body Template.  (Like this: 
+- Create a UI-Only model and picklist field. 
+- Use Global merge syntax to push that field value into the POST Request Body Template. Like this: 
 ``q = filter q by 'Close_Date_Year' == \"{{$Model.UiOnly.data.0.year}}\";``
-- Add a field editor to your page with that year field.  (the button group display type for picklist fields is great here). 
-- Add a model action to that UI-Only model such that when the Year field is updated - your Analytics model is requeried. 
+- Add a field editor to your page with that UI-Only picklist field.  (the button group display type for picklist fields is great here). 
+- Add a model action to that UI-Only model such that when the Year field is updated - your Analytics model is requeried.  
 
 
 ## A sample dashboard. 
