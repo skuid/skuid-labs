@@ -1,7 +1,7 @@
 # Show MORE Salesforce data in Skuid using REST
-The standard Salesforce datasource allows you to connect to most sObjects and build compelling UI's with that data.  However there are some types of data within your org not accessible through the standard Salesforce Datasource.  Boo....
+The standard Salesforce data source type allows you to connect to most sObjects and build compelling UI's with that data.  However there are some types of data within your org not accessible through the standard Salesforce Datasource.  Boo....
 
-Don't worry! Salesforce provides a rich array of APIs that provide access to this type of data. In Skuid, it's easy to create a REST datasource to retrieve data from these API's and create custom UI's.
+Don't worry! Salesforce provides a rich array of APIs that provide access to this type of data. In Skuid, it's easy to create a REST data source to retrieve data from these API's and create custom UIs.
 
 Examples of this data include: 
 
@@ -14,7 +14,9 @@ Examples of this data include:
 
 ### Create the data source
 
-First you'll need to create a new REST data source that connects to the target Salesforce org.  Configure it as follows:
+First you'll need to create a new REST data source that connects to the  **the current Salesforce org**.  While you can use this to connect to data in an external org, the example below assumes you want to access data within the org where you are working with Skuid.  Configure it as follows:
+
+* Name:  SFDC_API
 * URL / Endpoint: ``https://<<MyDomain>>.my.salesforce.com``
 * Use Proxy:  False
 * Authentication Method:  No Authentication
@@ -37,7 +39,7 @@ First you'll need to create a new REST data source that connects to the target S
 
 #### Access to Einstein Analytics data
 
- Look at the folder below for specific instructions and page examples using this datasource.   
+ Look at the folder below for specific instructions and page examples using this data source.   
 
 #### Retrieve all metadata related to contact object:      
 
