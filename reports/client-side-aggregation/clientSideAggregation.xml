@@ -1,0 +1,121 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true" theme="Ink">
+	<models>
+        <model id="SourceModel" limit="20" query="true" createrowifnonefound="false" datasource="Ui-Only">
+            <fields>
+                <field id="GroupNumber" displaytype="TEXT" length="255" label="Group #"/>
+                <field id="Description" displaytype="TEXT" length="255" label="Description"/>
+                <field id="Price" displaytype="CURRENCY" length="255" label="Price" ogdisplaytype="TEXT" precision="9" scale="2"/>
+            </fields>
+            <conditions/>
+            <actions>
+                <action>
+                    <actions>
+                        <action type="custom" snippet="AggregateData"/>
+                    </actions>
+                    <events>
+                        <event>models.saved</event>
+                        <event>models.loaded</event>
+                        <event>models.cancelled</event>
+                        <event>row.created</event>
+                        <event>row.updated</event>
+                    </events>
+                </action>
+            </actions>
+        </model>
+        <model id="AggregateModel" limit="20" query="true" createrowifnonefound="false" datasource="Ui-Only">
+            <fields>
+                <field id="GroupNumber" displaytype="TEXT" length="255" label="Group #"/>
+                <field id="Descriptions" displaytype="TEXT" length="255" label="Descriptions"/>
+                <field id="PriceTotal" displaytype="CURRENCY" length="255" label="Price Total" ogdisplaytype="TEXT" precision="9" scale="2"/>
+                <field id="NumberOfItems" displaytype="DOUBLE" length="255" label="# of Items" ogdisplaytype="TEXT" precision="9" scale="0"/>
+            </fields>
+            <conditions/>
+            <actions/>
+        </model>
+    </models>
+	<components>
+        <skuid__wrapper uniqueid="sk-3n-v-15033">
+            <components>
+                <skuid__table showSaveCancel="false" uniqueid="sk-3n_G-5012" model="SourceModel" mode="read" title="Source Data" styleSettingsVariant="default" pageSize="10">
+                    <fields>
+                        <field id="GroupNumber" uniqueid="fi-3n_G-7067"/>
+                        <field id="Description" uniqueid="fi-3n_G-7068"/>
+                        <field id="Price" uniqueid="fi-3n_G-7069"/>
+                    </fields>
+                    <filtering enableSearch="false" instantSearch="false"/>
+                    <rowActions/>
+                    <massActions/>
+                </skuid__table>
+                <skuid__table showSaveCancel="false" uniqueid="sk-3n_I-8780" model="AggregateModel" mode="readonly" title="Aggregated Data" styleSettingsVariant="default" pageSize="10" sortOnClient="true">
+                    <fields>
+                        <field id="GroupNumber" uniqueid="fi-3n_I-10603"/>
+                        <field id="Descriptions" uniqueid="fi-3n_I-10604"/>
+                        <field id="PriceTotal" uniqueid="fi-3n_I-10605"/>
+                        <field id="NumberOfItems" uniqueid="fi-3n_I-10606"/>
+                    </fields>
+                    <filtering enableSearch="false" instantSearch="false"/>
+                    <rowActions/>
+                    <massActions/>
+                </skuid__table>
+            </components>
+            <styles>
+                <spacing top="6" bottom="6" left="6" right="6"/>
+            </styles>
+            <background/>
+        </skuid__wrapper>
+    </components>
+	<resources>
+		<labels/>
+		<javascript>
+            <jsitem location="inlinesnippet" name="AggregateData" cachelocation="false">var sourceModel = skuid.$M("SourceModel");
+var aggModel = skuid.$M("AggregateModel");
+
+var aggRowsByGroup = {};
+var aggRows = [];
+
+sourceModel.getRows().forEach(function(row) {
+   var groupNumber = row.GroupNumber;
+   var groupRow = aggRowsByGroup[groupNumber];
+   if (!groupRow) {
+       groupRow = aggRowsByGroup[groupNumber] = {
+           GroupNumber: groupNumber,
+           NumberOfItems: 1,
+           Descriptions: row.Description,
+           PriceTotal: row.Price,
+       };
+       aggRows.push(groupRow);
+   } else {
+        groupRow.NumberOfItems = groupRow.NumberOfItems + 1;
+        groupRow.Descriptions = groupRow.Descriptions + ", " + row.Description;
+        groupRow.PriceTotal = groupRow.PriceTotal + row.Price;
+   }
+});
+
+aggModel.emptyData();
+aggModel.adoptRows(aggRows);</jsitem>
+            <jsitem location="inlinesnippet" name="PopulateSampleData" cachelocation="false">skuid.$M("SourceModel").adoptRows([
+    { GroupNumber: 1, Description: "Apple", Price: 1 },
+    { GroupNumber: 1, Description: "Bananas", Price: 2 },
+    { GroupNumber: 1, Description: "Apples", Price: 1 },
+    { GroupNumber: 2, Description: "Apple", Price: 1 },
+    { GroupNumber: 2, Description: "Potato", Price: 3 },
+    { GroupNumber: 2, Description: "Tomato", Price: 1 },
+    { GroupNumber: 2, Description: "Potatoes", Price: 4 },
+    { GroupNumber: 3, Description: "Cereals", Price: 3 },
+    { GroupNumber: 3, Description: "Cereal", Price: 3 },
+]);</jsitem>
+        </javascript>
+		<css/>
+		<actionsequences>
+            <actionsequence id="5bbed1cb-6637-475a-b639-b9879f8447c8" label="Populate sample data" type="event-triggered" event-scope="component" event-name="page.rendered">
+                <description/>
+                <actions>
+                    <action type="custom" snippet="PopulateSampleData"/>
+                </actions>
+            </actionsequence>
+        </actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+</skuid__page>
