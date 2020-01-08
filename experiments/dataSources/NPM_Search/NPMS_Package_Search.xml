@@ -1,0 +1,829 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true">
+	<models>
+		<model id="Search" query="false" createrowifnonefound="false" datasource="NPM" verb="GET" payloadcontenttype="JSON" endpoint="/search?q={{name}}" pathtocontent="results" fieldtargetobjects="results">
+			<fields>
+				<field id="package.name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="name" state="filterableoff" inactive="true" name="name"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="PackageDetails" query="false" createrowifnonefound="false" datasource="NPM" verb="GET" payloadcontenttype="JSON" endpoint="/search?q={{name}}" pathtocontent="results" fieldtargetobjects="results">
+			<fields>
+				<field id="package.date" label="Date" ispolymorphic="false" isnamepointing="false" displaytype="DATE" accessible="true" filterable="true" ogdisplaytype="DATETIME"/>
+				<field id="package.description" label="Description" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.scope" label="Scope" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.version" label="Version" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.publisher.email" label="Email" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.publisher.username" label="Username" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.links.bugs" label="Bugs" ispolymorphic="false" isnamepointing="false" displaytype="URL" accessible="true" filterable="true"/>
+				<field id="package.links.homepage" label="Homepage" ispolymorphic="false" isnamepointing="false" displaytype="URL" accessible="true" filterable="true"/>
+				<field id="package.links.npm" label="Npm" ispolymorphic="false" isnamepointing="false" displaytype="URL" accessible="true" filterable="true"/>
+				<field id="package.links.repository" label="Repository" ispolymorphic="false" isnamepointing="false" displaytype="URL" accessible="true" filterable="true"/>
+				<field id="searchScore" label="Search Score" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="6" scale="0" accessible="true" filterable="true"/>
+				<field id="score.detail.maintenance" label="Maintenance" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="2" accessible="true" filterable="true"/>
+				<field id="score.detail.popularity" label="Popularity" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="2" accessible="true" filterable="true"/>
+				<field id="score.detail.quality" label="Quality" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="2" accessible="true" filterable="true"/>
+				<field id="score.final" label="Final" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="2" accessible="true" filterable="true"/>
+				<field id="maintenance_remainder" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" scale="2" precision="1" uionly="true" label="  ">
+					<formula>1-{{score.detail.maintenance}}</formula>
+				</field>
+				<field id="popularity_remainder" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" scale="2" precision="1" uionly="true" label="  ">
+					<formula>1-{{score.detail.popularity}}</formula>
+				</field>
+				<field id="quality_remainder" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" uionly="true" precision="9" scale="2" label="  ">
+					<formula>1-{{score.detail.quality}}</formula>
+				</field>
+				<field id="final_remainder" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="1" scale="2" uionly="true" label="  ">
+					<formula>1-{{score.final}}</formula>
+				</field>
+				<field id="package.author.name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords" label="Keywords" ispolymorphic="false" isnamepointing="false" displaytype="ARRAY" rel="keywords" ref="keywords" accessible="true" filterable="true"/>
+				<field id="package.keywords.0" label="0" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords.1" label="1" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords.2" label="2" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords.3" label="3" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords.4" label="4" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords.5" label="5" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords.6" label="6" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords.7" label="7" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords.8" label="8" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords.9" label="9" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords.10" label="10" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="package.keywords.11" label="11" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="name" state="filterableoff" inactive="true" name="name"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="PackageAnalysis" query="false" createrowifnonefound="false" datasource="NPM" verb="GET" payloadcontenttype="JSON" endpoint="/package/{{name}}">
+			<fields>
+				<field id="analyzedAt" label="Analyzed At" ispolymorphic="false" isnamepointing="false" displaytype="DATETIME" accessible="true" filterable="true"/>
+				<field id="evaluation.maintenance.commitsFrequency" label="Commits Frequency" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="4" scale="0" accessible="true" filterable="true"/>
+				<field id="evaluation.maintenance.issuesDistribution" label="Issues Distribution" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="2" accessible="true" filterable="true"/>
+				<field id="evaluation.maintenance.openIssues" label="Open Issues" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="6" scale="0" accessible="true" filterable="true"/>
+				<field id="evaluation.maintenance.releasesFrequency" label="Releases Frequency" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="6" scale="0" accessible="true" filterable="true"/>
+				<field id="score.final" label="Final" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="2" accessible="true" filterable="true"/>
+				<field id="collected.github.forksCount" label="Forks Count" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="5" scale="0" accessible="true" filterable="true"/>
+				<field id="collected.github.homepage" label="Homepage" ispolymorphic="false" isnamepointing="false" displaytype="URL" accessible="true" filterable="true"/>
+				<field id="collected.github.starsCount" label="Stars Count" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="6" scale="0" accessible="true" filterable="true"/>
+				<field id="collected.github.subscribersCount" label="Subscribers Count" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="6" scale="0" accessible="true" filterable="true"/>
+				<field id="collected.metadata.readme" label="Readme" ispolymorphic="false" isnamepointing="false" displaytype="URL" accessible="true" filterable="true"/>
+				<field id="collected.github.issues.count" label="Count" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="2" scale="0" accessible="true" filterable="true"/>
+				<field id="collected.github.issues.openCount" label="Open Count" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="2" scale="0" accessible="true" filterable="true"/>
+				<field id="collected.github" label="Github" ispolymorphic="false" isnamepointing="false" displaytype="OBJECT" rel="github" ref="github" accessible="true" filterable="true"/>
+				<field id="collected.npm.dependentsCount" label="Dependents Count" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="collected.npm.starsCount" label="Stars Count" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="name" state="filterableoff" inactive="true" name="name"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="PackageGitHubCommits" query="false" createrowifnonefound="false" datasource="NPM" verb="GET" payloadcontenttype="JSON" endpoint="/package/{{name}}" pathtocontent="collected.github.commits" fieldtargetobjects="commits">
+			<fields>
+				<field id="count" label="Count" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="from" label="From" ispolymorphic="false" isnamepointing="false" displaytype="DATE" accessible="true" filterable="true" ogdisplaytype="DATETIME"/>
+				<field id="to" label="To" ispolymorphic="false" isnamepointing="false" displaytype="DATE" accessible="true" filterable="true" ogdisplaytype="DATETIME"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="name" state="filterableoff" inactive="true" name="name"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="PackageGitHubContributors" query="false" createrowifnonefound="false" datasource="NPM" verb="GET" payloadcontenttype="JSON" endpoint="/package/{{name}}" pathtocontent="collected.github.contributors" fieldtargetobjects="contributors">
+			<fields>
+				<field id="username" label="Username" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="commitsCount" label="Commits Count" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="4" scale="0" accessible="true" filterable="true"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="name" state="filterableoff" inactive="true" name="name"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="PackageNPMDownloads" query="false" createrowifnonefound="false" datasource="NPM" verb="GET" payloadcontenttype="JSON" endpoint="/package/{{name}}" pathtocontent="collected.npm.downloads" fieldtargetobjects="downloads">
+			<fields>
+				<field id="count" label="Count" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="from" label="From" ispolymorphic="false" isnamepointing="false" displaytype="DATE" accessible="true" filterable="true" ogdisplaytype="DATETIME"/>
+				<field id="to" label="To" ispolymorphic="false" isnamepointing="false" displaytype="DATETIME" accessible="true" filterable="true"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="name" state="filterableoff" inactive="true" name="name"/>
+			</conditions>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__wrapper uniqueid="sk-7cN-1168">
+			<components>
+				<skuid__grid uniqueid="sk-7d4-3389" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="4">
+					<divisions>
+						<division minWidth="150px" ratio="0" alignSelf="auto">
+							<components>
+								<skuid__list model="Search" uniqueid="sk-Hss-11512" pageSize="Infinity" rowActionsOnLeft="false" showPageSizeSelect="false" resetPaginationOnQuery="false" showListFooter="false">
+									<columns>
+										<column fillRatio="1">
+											<items>
+												<item fieldId="package.name"/>
+											</items>
+										</column>
+									</columns>
+									<rowActions>
+										<action type="multi" icon="sk-webicon-ink:arrow-right">
+											<actions>
+												<action type="action-sequence" action-sequence-id="dea3c60c-1643-4181-ae72-2331519f364b"/>
+											</actions>
+										</action>
+									</rowActions>
+									<massActions/>
+									<filtering enableSearch="true" instantSearch="false" searchMethod="server" emptySearchBehavior="remove" searchConditionName="name" searchPlaceholder="Search for NPM Packages"/>
+									<interactions>
+										<interaction type="tap">
+											<action type="action-sequence" action-sequence-id="dea3c60c-1643-4181-ae72-2331519f364b"/>
+										</interaction>
+									</interactions>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__list>
+							</components>
+						</division>
+						<division alignSelf="auto" minWidth="100px" ratio="1">
+							<components>
+								<skuid__wrapper uniqueid="sk-HsZ-4345">
+									<components>
+										<skuid__wrapper uniqueid="sk-HwG-11461">
+											<components>
+												<skuid__form showErrorsInline="true" model="PackageDetails" uniqueid="sk-HsZ-4347" mode="read">
+													<sections>
+														<section title="Package Information">
+															<rows>
+																<row>
+																	<fields>
+																		<skuid__field id="package.name"/>
+																		<skuid__field id="package.date"/>
+																		<skuid__field id="package.version"/>
+																		<skuid__field id="package.author.name" label="Author"/>
+																	</fields>
+																</row>
+																<row>
+																	<fields>
+																		<skuid__field id="package.publisher.username" label="Publisher"/>
+																		<skuid__field id="package.publisher.email" label="Pub Email"/>
+																		<skuid__field id="package.scope"/>
+																		<skuid__field type="COMBO" label=" " template=" "/>
+																	</fields>
+																</row>
+																<row>
+																	<fields>
+																		<skuid__field id="package.description"/>
+																	</fields>
+																</row>
+															</rows>
+														</section>
+													</sections>
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__form>
+											</components>
+											<styles>
+												<spacing top="1.5" bottom="2" left="2" right="2"/>
+											</styles>
+											<background color="transparent"/>
+										</skuid__wrapper>
+									</components>
+									<styles>
+										<spacing top="2" bottom="2" left="2" right="2"/>
+									</styles>
+									<background type="color" color="white"/>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="PackageDetails" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__wrapper>
+								<skuid__wrapper uniqueid="sk-1jKV-70760">
+									<components>
+										<skuid__wrapper uniqueid="sk-1jKV-70761">
+											<components>
+												<skuid__text contents="&lt;p&gt;Links&lt;/p&gt;&#10;" uniqueid="sk-1jAl-25123" model="PackageDetails" styleSettingsVariant="large">
+													<styles>
+														<spacing bottom="2" styleSettingsVariant="large"/>
+													</styles>
+												</skuid__text>
+												<skuid__text contents="&lt;p&gt;&lt;strong&gt;Home Page:&amp;nbsp;&lt;/strong&gt;&amp;nbsp;{{package.links.homepage}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;NPM:&amp;nbsp;&lt;/strong&gt; {{package.links.npm}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Repo:&lt;/strong&gt; {{package.links.repository}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Bugs:&amp;nbsp;&lt;/strong&gt;{{package.links.bugs}}&lt;/p&gt;&#10;" uniqueid="sk-1jA8-18493" model="PackageDetails">
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__text>
+											</components>
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+											<background color="transparent"/>
+										</skuid__wrapper>
+									</components>
+									<styles>
+										<spacing top="2" bottom="2" left="2" right="2"/>
+									</styles>
+									<background type="color" color="white"/>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="PackageDetails" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__wrapper>
+								<skuid__wrapper uniqueid="sk-1y4U-16021">
+									<components>
+										<skuid__wrapper uniqueid="sk-1y4U-16022">
+											<components>
+												<skuid__text contents="&lt;p&gt;Scores&lt;/p&gt;&#10;" uniqueid="sk-1y4U-16023" model="PackageDetails" styleSettingsVariant="large">
+													<styles>
+														<spacing bottom="2" styleSettingsVariant="large"/>
+													</styles>
+												</skuid__text>
+												<skuid__chart model="PackageDetails" type="column" uniqueid="sk-1y4X-17874" export="off">
+													<dataaxes>
+														<axis id="axis1" integersonly="false" minvalue="0" maxvalue="1"/>
+													</dataaxes>
+													<categoryaxes>
+														<axis id="categories" categorytype="template" fillvals="true" field="package.name" dategranularity="none" template="  "/>
+													</categoryaxes>
+													<serieslist>
+														<series valuefield="score.detail.maintenance" splittype="template" splittemplate="Maintenance"/>
+														<series valuefield="score.detail.popularity" splittype="template" splittemplate="Popularity"/>
+														<series valuefield="score.detail.quality" splittype="template" splittemplate="Quality"/>
+														<series valuefield="score.final" splittype="template" splittemplate="Final"/>
+													</serieslist>
+													<colors/>
+													<legend layout="horizontal" halign="center" valign="bottom" showlabels="true"/>
+												</skuid__chart>
+											</components>
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+											<background color="transparent"/>
+										</skuid__wrapper>
+									</components>
+									<styles>
+										<spacing top="2" bottom="2" left="2" right="2"/>
+									</styles>
+									<background type="color" color="white"/>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="PackageDetails" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__wrapper>
+								<skuid__wrapper uniqueid="sk-1jKg-81189">
+									<components>
+										<skuid__wrapper uniqueid="sk-1jKg-81190">
+											<components>
+												<skuid__text contents="&lt;p&gt;Keywords&lt;/p&gt;&#10;" uniqueid="sk-1jBf-26121" model="PackageDetails" styleSettingsVariant="large">
+													<styles>
+														<spacing bottom="2" styleSettingsVariant="large"/>
+													</styles>
+												</skuid__text>
+												<skuid__grid uniqueid="sk-1jBk-26423" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1.5" rowGutter="1.5">
+													<divisions>
+														<division minWidth="0" ratio="0" alignSelf="auto">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jBo-27025">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.0}}&lt;/p&gt;&#10;" uniqueid="sk-1jBs-27264" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.0" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+														<division alignSelf="auto" ratio="0">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jCQ-32309">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.1}}&lt;/p&gt;&#10;" uniqueid="sk-1jCQ-32310" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.1" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+														<division alignSelf="auto" ratio="0">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jCU-32940">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.2}}&lt;/p&gt;&#10;" uniqueid="sk-1jCU-32941" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.2" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+														<division alignSelf="auto">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jCb-33904">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.3}}&lt;/p&gt;&#10;" uniqueid="sk-1jCb-33905" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																	<renderConditions logictype="and"/>
+																	<styleVariantConditions/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.3" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+														<division alignSelf="auto">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jCd-34434">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.4}}&lt;/p&gt;&#10;" uniqueid="sk-1jCd-34435" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.4" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+														<division alignSelf="auto">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jCd-34434">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.5}}&lt;/p&gt;&#10;" uniqueid="sk-1jCd-34435" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.5" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+														<division alignSelf="auto">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jCd-34434">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.6}}&lt;/p&gt;&#10;" uniqueid="sk-1jCd-34435" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.6" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+														<division alignSelf="auto">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jCd-34434">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.7}}&lt;/p&gt;&#10;" uniqueid="sk-1jCd-34435" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.7" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+														<division alignSelf="auto">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jCd-34434">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.8}}&lt;/p&gt;&#10;" uniqueid="sk-1jCd-34435" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.8" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+														<division alignSelf="auto">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jCd-34434">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.9}}&lt;/p&gt;&#10;" uniqueid="sk-1jCd-34435" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.9" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+														<division alignSelf="auto">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jCd-34434">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.10}}&lt;/p&gt;&#10;" uniqueid="sk-1jCd-34435" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.10" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+														<division alignSelf="auto">
+															<components>
+																<skuid__wrapper uniqueid="sk-1jCd-34434">
+																	<components>
+																		<skuid__text contents="&lt;p&gt;{{package.keywords.11}}&lt;/p&gt;&#10;" uniqueid="sk-1jCd-34435" model="PackageDetails">
+																			<styles>
+																				<spacing left="2" right="2"/>
+																			</styles>
+																		</skuid__text>
+																	</components>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background type="color" color="#dbeef3"/>
+																</skuid__wrapper>
+															</components>
+															<renderConditions logictype="and">
+																<renderCondition type="blank" operator="!=" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="package.keywords.11" value="null" enclosevalueinquotes="false"/>
+															</renderConditions>
+														</division>
+													</divisions>
+												</skuid__grid>
+											</components>
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+											<background color="transparent"/>
+										</skuid__wrapper>
+									</components>
+									<styles>
+										<spacing top="2" bottom="2" left="2" right="2"/>
+									</styles>
+									<background type="color" color="white"/>
+									<renderConditions logictype="and">
+										<renderCondition type="blank" fieldmodel="PackageDetails" sourcetype="fieldvalue" nosourcerowbehavior="skipandnorender" sourceproperty="hasRows" operator="!=" field="package.keywords.0" value="null" enclosevalueinquotes="false"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__wrapper>
+								<skuid__wrapper uniqueid="sk-1jKf-78793">
+									<components>
+										<skuid__wrapper uniqueid="sk-1jKf-78794">
+											<components>
+												<skuid__grid uniqueid="sk-1y6y-24214" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+													<divisions>
+														<division minWidth="100px" ratio="3" alignSelf="auto">
+															<components>
+																<skuid__form showErrorsInline="true" model="PackageAnalysis" uniqueid="sk-1jKf-78795" mode="read">
+																	<sections>
+																		<section title="Github Analysis">
+																			<rows>
+																				<row>
+																					<fields>
+																						<skuid__field id="collected.github.issues.count" label="Total Issues"/>
+																						<skuid__field id="collected.github.issues.openCount" label="Open Issues"/>
+																					</fields>
+																				</row>
+																				<row>
+																					<fields>
+																						<skuid__field id="collected.github.forksCount"/>
+																						<skuid__field id="evaluation.maintenance.releasesFrequency"/>
+																					</fields>
+																				</row>
+																				<row>
+																					<fields>
+																						<skuid__field id="collected.github.subscribersCount"/>
+																						<skuid__field id="collected.github.starsCount"/>
+																					</fields>
+																				</row>
+																			</rows>
+																		</section>
+																	</sections>
+																</skuid__form>
+															</components>
+														</division>
+														<division alignSelf="auto" minWidth="100px" ratio="1">
+															<components>
+																<skuid__wrapper uniqueid="sk-1y76-14741" heightStrategy="fixed" height="custom" heightCustom="45px" imageHeight="100 px">
+																	<components/>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background/>
+																</skuid__wrapper>
+																<skuid__text contents="&lt;p&gt;Commits by period before {{$Model.PackageGitHubCommits.data.0.from}}&lt;br /&gt;&#10;&lt;br /&gt;&#10;&lt;strong&gt;Prior Week:&lt;/strong&gt;&amp;nbsp; {{$Model.PackageGitHubCommits.data.0.count}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Prior Month:&lt;/strong&gt;&amp;nbsp; {{$Model.PackageGitHubCommits.data.1.count}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Prior Quarter:&lt;/strong&gt;&amp;nbsp; {{$Model.PackageGitHubCommits.data.2.count}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Prior Six Months:&lt;/strong&gt;&amp;nbsp; {{$Model.PackageGitHubCommits.data.3.count}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Prior Year:&lt;/strong&gt;&amp;nbsp; {{$Model.PackageGitHubCommits.data.4.count}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&#10;&#10;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&#10;" uniqueid="sk-1y77-15134"/>
+															</components>
+														</division>
+													</divisions>
+												</skuid__grid>
+											</components>
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+											<background color="transparent"/>
+											<renderConditions logictype="and">
+												<renderCondition type="blank" operator="!=" fieldmodel="PackageAnalysis" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="collected.github" fieldtargetobjects="github" value="null" enclosevalueinquotes="false"/>
+											</renderConditions>
+											<styleVariantConditions/>
+										</skuid__wrapper>
+									</components>
+									<styles>
+										<spacing top="2" bottom="2" left="2" right="2"/>
+									</styles>
+									<background type="color" color="white"/>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="PackageDetails" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__wrapper>
+								<skuid__wrapper uniqueid="sk-1yBO-26365">
+									<components>
+										<skuid__wrapper uniqueid="sk-1yBO-26366">
+											<components>
+												<skuid__grid uniqueid="sk-1yBO-26367" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+													<divisions>
+														<division minWidth="100px" ratio="3" alignSelf="auto">
+															<components>
+																<skuid__form showErrorsInline="true" model="PackageAnalysis" uniqueid="sk-1yBO-26368" mode="read">
+																	<sections>
+																		<section title="NPM Analysis">
+																			<rows>
+																				<row>
+																					<fields>
+																						<skuid__field id="collected.npm.dependentsCount"/>
+																						<skuid__field id="collected.npm.starsCount"/>
+																					</fields>
+																				</row>
+																			</rows>
+																		</section>
+																	</sections>
+																</skuid__form>
+															</components>
+														</division>
+														<division alignSelf="auto" minWidth="100px" ratio="1">
+															<components>
+																<skuid__wrapper uniqueid="sk-1yBO-26369" heightStrategy="fixed" height="custom" heightCustom="45px" imageHeight="100 px">
+																	<components/>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background/>
+																</skuid__wrapper>
+																<skuid__text contents="&lt;p&gt;Downloads by period before {{$Model.PackageNPMDownloads.data.0.from}}&lt;br /&gt;&#10;&amp;nbsp;&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Prior Day:&lt;/strong&gt;&amp;nbsp; {{$Model.PackageNPMDownloads.data.0.count}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Prior Week:&lt;/strong&gt;&amp;nbsp; {{$Model.PackageNPMDownloads.data.1.count}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Prior Month:&lt;/strong&gt;&amp;nbsp; {{$Model.PackageNPMDownloads.data.2.count}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Prior Quarter:&lt;/strong&gt;&amp;nbsp; {{$Model.PackageNPMDownloads.data.3.count}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Prior Six Months:&lt;/strong&gt;&amp;nbsp; {{$Model.PackageNPMDownloads.data.4.count}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&lt;strong&gt;Prior Year:&lt;/strong&gt;&amp;nbsp; {{$Model.PackageNPMDownloads.data.5.count}}&lt;/p&gt;&#10;&#10;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&#10;&#10;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&#10;" uniqueid="sk-1yBO-26370"/>
+															</components>
+														</division>
+													</divisions>
+												</skuid__grid>
+											</components>
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+											<background color="transparent"/>
+											<renderConditions logictype="and">
+												<renderCondition type="blank" operator="!=" fieldmodel="PackageAnalysis" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="collected.github" fieldtargetobjects="github" value="null" enclosevalueinquotes="false"/>
+											</renderConditions>
+											<styleVariantConditions/>
+										</skuid__wrapper>
+									</components>
+									<styles>
+										<spacing top="2" bottom="2" left="2" right="2"/>
+									</styles>
+									<background type="color" color="white"/>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="PackageDetails" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__wrapper>
+								<skuid__wrapper uniqueid="sk-1jOC-153096">
+									<components>
+										<skuid__wrapper uniqueid="sk-1jOC-153097">
+											<components>
+												<skuid__text contents="&lt;p&gt;Readme&lt;/p&gt;&#10;" uniqueid="sk-1jOE-155388" model="PackageDetails" styleSettingsVariant="large">
+													<styles>
+														<spacing bottom="2" styleSettingsVariant="large"/>
+													</styles>
+												</skuid__text>
+												<skuid__text contents="&lt;p&gt;{{collected.metadata.readme}}&lt;/p&gt;&#10;" uniqueid="sk-1jWk-18258" model="PackageAnalysis">
+													<styles>
+														<spacing bottom="2" styleSettingsVariant="small"/>
+													</styles>
+												</skuid__text>
+											</components>
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+											<background color="transparent"/>
+										</skuid__wrapper>
+									</components>
+									<styles>
+										<spacing top="2" bottom="2" left="2" right="2"/>
+									</styles>
+									<background type="color" color="white"/>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="PackageDetails" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__wrapper>
+								<skuid__wrapper uniqueid="sk-1jTc-169216">
+									<components>
+										<skuid__wrapper uniqueid="sk-1jTc-169217">
+											<components>
+												<skuid__text contents="&lt;p&gt;Github Contributors&lt;/p&gt;&#10;" uniqueid="sk-1jTc-169218" model="PackageDetails" styleSettingsVariant="large">
+													<styles>
+														<spacing bottom="2" styleSettingsVariant="large"/>
+													</styles>
+												</skuid__text>
+												<skuid__table showSaveCancel="false" uniqueid="sk-1jTc-169219" model="PackageGitHubContributors" mode="readonly" styleSettingsVariant="default" pageSize="Infinity" showListFooter="false">
+													<fields>
+														<field id="username"/>
+														<field id="commitsCount"/>
+													</fields>
+													<filtering enableSearch="false"/>
+													<rowActions/>
+													<massActions/>
+												</skuid__table>
+											</components>
+											<styles>
+												<spacing top="2" bottom="2" left="2" right="2"/>
+											</styles>
+											<background color="transparent"/>
+										</skuid__wrapper>
+									</components>
+									<styles>
+										<spacing top="2" bottom="2" left="2" right="2"/>
+									</styles>
+									<background type="color" color="white"/>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="PackageGitHubContributors" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__wrapper>
+							</components>
+						</division>
+					</divisions>
+				</skuid__grid>
+			</components>
+			<styles>
+				<spacing top="4" bottom="4" left="4" right="4"/>
+			</styles>
+			<background/>
+		</skuid__wrapper>
+	</components>
+	<resources>
+		<labels/>
+		<javascript/>
+		<css/>
+		<actionsequences>
+			<actionsequence id="dea3c60c-1643-4181-ae72-2331519f364b" label="Package Details" type="reusable">
+							<actions>
+			<action type="blockUI" styleSettingsVariant="default" message="Loading Details"/>
+			<action type="emptyModelData">
+				<models>
+					<model>PackageDetails</model>
+					<model>PackageAnalysis</model>
+					<model>PackageGitHubCommits</model>
+					<model>PackageGitHubContributors</model>
+					<model>PackageNPMDownloads</model>
+				</models>
+			</action>
+			<action type="setCondition" model="PackageAnalysis" condition="name" value="{{package.name}}"/>
+			<action type="setCondition" model="PackageDetails" condition="name" value="{{package.name}}"/>
+			<action type="setCondition" model="PackageGitHubCommits" condition="name" value="{{package.name}}"/>
+			<action type="setCondition" model="PackageGitHubContributors" condition="name" value="{{package.name}}"/>
+			<action type="setCondition" model="PackageNPMDownloads" condition="name" value="{{package.name}}"/>
+			<action type="requeryModels" behavior="standard">
+				<models>
+					<model>PackageDetails</model>
+					<model>PackageAnalysis</model>
+					<model>PackageGitHubCommits</model>
+					<model>PackageGitHubContributors</model>
+					<model>PackageNPMDownloads</model>
+				</models>
+			</action>
+			<action type="unblockUI"/>
+			</actions>
+							<description>Pass package name into condition on underlying detail models,  and re-query them. </description>
+						</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+	<pageregioncontents>
+		<pageregioncontent uniqueid="__header">
+			<components>
+				<skuid__layoutRegion sticky="true">
+					<components>
+						<skuid__grid uniqueid="sk-1jXj-22892" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+							<divisions>
+								<division ratio="0" alignSelf="center" maxWidth="100px">
+									<components>
+										<skuid__image source="url" uniqueid="sk-1jXp-23687" datasource="SkuidLocal" model="Search" url="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Npm-logo.svg/540px-Npm-logo.svg.png"/>
+									</components>
+								</division>
+								<division alignSelf="auto" minWidth="100px" ratio="1">
+									<components>
+										<skuid__header title="NPM Packages" uniqueid="sk-1j9B-17379">
+											<styles>
+												<spacing left="4" right="4" bottom="1.5" top="1.5"/>
+											</styles>
+										</skuid__header>
+									</components>
+								</division>
+							</divisions>
+							<styles>
+								<spacing top="1" bottom="1" left="1"/>
+							</styles>
+						</skuid__grid>
+					</components>
+					<styles>
+						<spacing/>
+					</styles>
+					<background type="color" color="#e5b9b7"/>
+				</skuid__layoutRegion>
+			</components>
+		</pageregioncontent>
+	</pageregioncontents>
+	<background type="color" color="#f2f2f2"/>
+</skuid__page>
