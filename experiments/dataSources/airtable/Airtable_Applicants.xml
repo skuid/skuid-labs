@@ -1,0 +1,90 @@
+<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true">
+	<models>
+<model id="Applicants" query="true" createrowifnonefound="false" datasource="Airtable" processonclient="true" verb="GET" payloadcontenttype="JSON" endpoint="&lt;Your_Base_Id&gt;/Applicants" pathtocontent="records" fieldtargetobjects="records">
+	<fields>
+		<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+		<field id="fields.Applying for" label="Applying For" ispolymorphic="false" isnamepointing="false" displaytype="ARRAY" rel="Applying for" ref="Applying for" accessible="true" filterable="true"/>
+		<field id="fields.Attachments" label="Attachments" ispolymorphic="false" isnamepointing="false" displaytype="ARRAY" rel="Attachments" ref="Attachments" accessible="true" filterable="true"/>
+		<field id="fields.Email Address" label="Email Address" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+		<field id="fields.Name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+		<field id="fields.Onsite Interview Date" label="Onsite Interview Date" ispolymorphic="false" isnamepointing="false" displaytype="DATE" accessible="true" filterable="true"/>
+		<field id="fields.Onsite Interview Notes" label="Onsite Interview Notes" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+		<field id="fields.Onsite Interview Score" label="Onsite Interview Score" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+		<field id="fields.Onsite Interviewer" label="Onsite Interviewer" ispolymorphic="false" isnamepointing="false" displaytype="ARRAY" rel="Onsite Interviewer" ref="Onsite Interviewer" accessible="true" filterable="true"/>
+		<field id="fields.Phone" label="Phone" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+		<field id="fields.Phone Screen Date" label="Phone Screen Date" ispolymorphic="false" isnamepointing="false" displaytype="DATE" accessible="true" filterable="true"/>
+		<field id="fields.Phone Screen Interviewer" label="Phone Screen Interviewer" ispolymorphic="false" isnamepointing="false" displaytype="ARRAY" rel="Phone Screen Interviewer" ref="Phone Screen Interviewer" accessible="true" filterable="true"/>
+		<field id="fields.Phone Screen Notes" label="Phone Screen Notes" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+		<field id="fields.Phone Screen Score" label="Phone Screen Score" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+		<field id="fields.Stage" label="Stage" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+	</fields>
+	<conditions/>
+	<actions/>
+</model>
+</models>
+	<components>
+<skootable showconditions="true" showsavecancel="true" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="true" model="Applicants" buttonposition="" mode="read" allowcolumnreordering="true" responsive="true" uniqueid="sk-2Bz6-514">
+	<fields>
+		<field id="id" uniqueid="fi-2Bz6-515"/>
+		<field id="fields.Applying for" uniqueid="fi-2Bz6-516"/>
+		<field id="fields.Attachments" uniqueid="fi-2Bz6-517"/>
+		<field id="fields.Email Address" uniqueid="fi-2Bz6-518"/>
+		<field id="fields.Name" uniqueid="fi-2Bz6-519"/>
+		<field id="fields.Onsite Interview Date" uniqueid="fi-2Bz6-520"/>
+		<field id="fields.Onsite Interview Notes" uniqueid="fi-2Bz6-521"/>
+		<field id="fields.Onsite Interview Score" uniqueid="fi-2Bz6-522"/>
+		<field id="fields.Onsite Interviewer" uniqueid="fi-2Bz6-523"/>
+		<field id="fields.Phone" uniqueid="fi-2Bz6-524"/>
+		<field id="fields.Phone Screen Date" uniqueid="fi-2Bz6-525"/>
+		<field id="fields.Phone Screen Interviewer" uniqueid="fi-2Bz6-526"/>
+		<field id="fields.Phone Screen Notes" uniqueid="fi-2Bz6-527"/>
+		<field id="fields.Phone Screen Score" uniqueid="fi-2Bz6-528"/>
+		<field id="fields.Stage" uniqueid="fi-2Bz6-529"/>
+	</fields>
+	<rowactions>
+		<action type="edit"/>
+		<action type="delete"/>
+	</rowactions>
+	<massactions usefirstitemasdefault="true">
+		<action type="massupdate"/>
+		<action type="massdelete"/>
+	</massactions>
+	<views>
+		<view type="standard"/>
+	</views>
+</skootable>
+</components>
+	<resources>
+		<labels/>
+		<javascript>
+<jsitem location="inlinesnippet" name="updatePayload" cachelocation="false">// Purpose: This JS snippet removes the "circular errors" caused by the strange nested JSON payload that is being sent to Airtable thus enabling the INSERT and UPDATE methods. 
+
+var params = arguments[0],
+	$ = skuid.$;
+
+console.log(params.changes.fields);
+var fields = params.changes.fields;
+
+// remove this, it causes circular errors
+delete fields.__skuid_record__;
+
+// these fields are generated, don't send them
+delete fields["Connected On"];
+delete fields["Connected Year"];
+
+return {fields:fields};</jsitem>
+</javascript>
+		<css/>
+		<actionsequences uniqueid="sk-QqX-450">
+<actionsequence id="0c8fd137-fb07-44c9-937b-cbf3bc8b70f8" label="My Sequence" type="reusable" uniqueid="sk-1dZU-504">
+	<description/>
+	<actions>
+		<action type="closeAllPopups"/>
+	</actions>
+</actionsequence>
+</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+</skuidpage>

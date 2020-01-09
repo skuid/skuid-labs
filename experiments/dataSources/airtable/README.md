@@ -9,12 +9,15 @@ With all of that said, let's get connecting.
 ## Airtable prerequisites
 
 Before we get started you'll need the following: 
+
 - An [Airtable account](https://airtable.com/signup): If you haven't signed up for an account yet, go ahead and do so!
 - An [API key for your account](https://airtable.com/account): The API key is what Skuid will send along with its authentication request to prove that you're you. We'll use this in the data source configuration step.
 - The **ID for your Airtable base**: Bases are where you store information in Airtable, which can then be displayed in a variety of views. Instead of connecting to your Airtable account and querying for your bases from there, you'll instead obtain the base ID for the base you wish to connect to, and then use that ID when configuring your Skuid models.  
   1. Navigate to your [account's base API list page](https://airtable.com/api). Whenever you create a new base, its API will be available from here.
   1. Click the name of the base you wish to access.
   1. Once you've done this, you'll see Airtable's API docs generated specifically for the base you've selected. This is awesome! But for now we'll just need the instance ID; look for the "The ID of this base is..." text:
+
+**Warning**: Ensure that the sheet you're accessing within your Airtable base **does not have any empty rows**. Skuid will parse the metadata of your sheet based on the least populated row. Have an empty row? You won't be able to retrieve any fields. Only filled out one column in a row? You'll only be able to retrieve that one column. Make sure that your data is well-populated.
 
 ## Create a Skuid data source
 
@@ -46,9 +49,9 @@ With the data source created, go into an existing Skuid page or create a new one
 
 We're not finished with this tab's properties, but let's explain what else is happening here. With the model behavior set as read-only, you can enter your data source URL on this tab. Your method will have a data source URL that follows this basic format:
 
-``<baseId>/<ObjectName>``
+``<baseId>/<sheetName>``
 
-With an actual base ID and object name, it'll look something like this:
+With an actual base ID and sheet name (when using Airtable as a data source, think of your sheets as *objects*), it'll look something like this:
 
 ``appnibfIletterstRN/Applicants``
 
@@ -66,13 +69,26 @@ Airtable nests its records in a ``records`` key within its response, hence why w
 
 ### Add fields
 
+**To repeat the warning from above**: Ensure that the sheet you're accessing within your Airtable base **does not have any empty rows**. Skuid will parse the metadata of your sheet based on the least populated row. Have an empty row? You won't be able to retrieve any fields. Only filled out one column in a row? You'll only be able to retrieve that one column. Make sure that your data is well-populated.
+
 If you've set the data source URL correctly, clicking on **Fields** will show you a list accessible fields. Your first set is likely to look like this:
 
 - Created Time
-- > Fields
+- Fields
 - Id
 
 You'll want to select Id, created time (if you prefer), and then you'll want to click into the Fields "field." You'll find your sheet's columns listed here. Select all relevant fields, and then build your page!
+
+## Sample page
+
+The included sample page is based off of Airtable's default Applicant Tracking base. It has one model for the Applicants sheet, aka object, and it lists all of the default columns. To see it in action, do the following:
+
+1. Create the data source as outlined above
+2. Upload the XML to your Skuid site as a **v1** page.
+3. **You will see an error!** This is because you need to update the base ID for the model. Replace the `<Your_Base_Id>` string within the model's data source URL with **your base ID.**
+4. Save and preview.
+
+And you're set! While this basic example doesn't do much, it does illustrate how you would configure your own Airtable model.
 
 ## Next steps
 
