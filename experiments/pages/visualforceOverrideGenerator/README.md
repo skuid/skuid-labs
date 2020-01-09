@@ -4,11 +4,19 @@ Instead of handwriting Visualforce pages while overriding Salesforce pages with 
 
 ## Before you begin
 
-  1. Salesforce connected app
-  2. A properly configured authentication provider for your Salesforce org  
-     See [Skuid docs](https://docs.skuid.com/latest/en/data/salesforce/#set-up-a-salesforce-connected-app) for more info.
-  3. A REST API Skuid data source called ToolingAPI which points to your Salesforce authentication provider
-  4. This Skuid page! Copy and paste the included XML into a Skuid page.
+Before using this experiment, you'll need to create a few things:
+
+1. [A Salesforce connected app](https://docs.skuid.com/latest/en/data/salesforce/#set-up-a-salesforce-connected-app), connected to your **current** org. You'll effectively connect the org to itself.
+2. A properly configured [authentication provider for the Salesforce org](https://docs.skuid.com/latest/en/data/salesforce/#create-the-authentication-provider), again **you're connecting the org to itself.** In my example I named the auth provider ``SalesforceMetadata``, as that is what this page will be accessing.
+3. A REST API Skuid data source called ToolingAPI which points to your Salesforce authentication provider. Its properties will look like this:
+  - **Name**: ToolingAPI
+  - **Data Source Type**: REST
+  - **Use Proxy**: Checked
+  - **Authentication Method**: 
+  - **Authentication Provider**:
+4. This Skuid page! Copy and paste the included XML into a **v1** Skuid page, or upload the XML as a **v1** Skuid page.
+
+When you create the page, you'll be asked to provide a sample value for the merge variables used in the page. 
 
 ## How to Use
 
