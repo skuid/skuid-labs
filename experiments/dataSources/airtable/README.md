@@ -1,6 +1,8 @@
 # Airtable
 
-Combining the ease of use of a spreadsheet with powerful features of a database, Airtable's product offers a great to organize, well, just about anything. We've used it for a projects here at Skuid, so of course we wanted to try and see if we could use Airtable's REST API in a Skuid page. Spoiler alert: you can. This is a read-only example, but we're trying ways to make this read/write using [templated request bodies](https://docs.skuid.com/latest/en/data/rest/#request-bodies). Stay tuned to this doc for that in the future.
+Note: **This is a read-only example**, but we're trying ways to make this read/write using [templated request bodies](https://docs.skuid.com/latest/en/data/rest/#request-bodies). Stay tuned to this experiment for that in the future.
+
+Combining the ease of use of a spreadsheet with powerful features of a database, Airtable's product offers a great to organize, well, just about anything. We've used it for a few projects here at Skuid, so of course we wanted to see if we could use Airtable's REST API in a Skuid page. Spoiler alert: you can! This experiment walks you through the basic setup and includes a sample page.
 
 One thing to note is that, while this example walks you through the basics for setting up the data source and an Airtable model **your data source URLs will vary for your specific Airtable base and the column you're acccessing.** For this example we're working from Airtable's Applicant Tracking template.
 
@@ -21,37 +23,39 @@ Before we get started you'll need the following:
 
 ## Create a Skuid data source
 
-In your Skuid site:
+In your Skuid site, configure a data source with these properties:
 
-1. Navigate to **Configure** > **Data Sources**.
-1. Click **New Data Source**.
-1. Select **REST** from the dropdown.
-1. Enter a name for the datasource, like *Airtable*.
-1. Click **Next Step**.
-1. Configure the rest of the data source properties:
-    - **URL**: ``https://api.airtable.com/v0/``
-    - **Authentication Method**: No Authentication
-1. Within *Headers to send with every request*, append the following values in the **Common Request Parameters**:
-    - Accept: ``application/json``
-    - Content-Type: ``application/json``
-    - Authorization: ``Bearer <paste your API key here>``
-7. Click **Save**.
+- **Name**: Airtable
+- **Data Source Type**: REST
+- **URL**: ``https://api.airtable.com/v0/``
+- **Authentication Method**: No Authentication
+- **Use (Apex) Proxy**: Checked
+
+And within *Headers to send with every request*, append the following values in the **Common Request Parameters**:
+
+- Accept: ``application/json``
+- Content-Type: ``application/json``
+- Authorization: ``Bearer <paste your API key here>``
+
+If prompted for a Remote Site Setting, accept it. Otherwise, you'll need to create one manually. 
 
 ## Configure a Skuid model
 
-With the data source created, go into an existing Skuid page or create a new one. Next, create a new model and configure its basic properties:
+When using Airtable as a data source, you can think of your sheets as *objects*. So for any sheets whose columns you wish to access, you'll need to create a model. Let's do that now.
 
-- **Name**: Enter a name related to the model's purpose, perhaps related to the Airtable tab's name.
+Go into an existing Skuid page or create a new one. Next, create a new model and configure its basic properties:
+
+- **Name**: Enter a name related to the model's purpose, perhaps related to the Airtable sheet's name.
 - **Data Source Type**: REST
 - **Data Source**: The Airtable data source you created above
 - **Id Field / Primary Key**: Id
 - **Model Behavior**: Read-Only
 
-We're not finished with this tab's properties, but let's explain what else is happening here. With the model behavior set as read-only, you can enter your data source URL on this tab. Your method will have a data source URL that follows this basic format:
+We're not finished with this model's properties, but let's explain what else is happening here. With the model behavior set as read-only, you can enter your data source URL on this tab. Your method will have a data source URL that follows this basic format:
 
 ``<baseId>/<sheetName>``
 
-With an actual base ID and sheet name (when using Airtable as a data source, think of your sheets as *objects*), it'll look something like this:
+With an actual base ID and sheet name (), it'll look something like this:
 
 ``appnibfIletterstRN/Applicants``
 
