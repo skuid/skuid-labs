@@ -75,7 +75,7 @@ Airtable nests its records in a ``records`` key within its response, hence why w
 
 **To repeat the warning from above**: Ensure that the sheet you're accessing within your Airtable base **does not have any empty rows**. Skuid will parse the metadata of your sheet based on the least populated row. Have an empty row? You won't be able to retrieve any fields. Only filled out one column in a row? You'll only be able to retrieve that one column. Make sure that your data is well-populated.
 
-If you've set the data source URL correctly, clicking on **Fields** will show you a list accessible fields. Your first set is likely to look like this:
+If you've set the data source URL correctly, clicking on **Fields** will show you a list of accessible fields. Your first set is likely to look like this:
 
 - Created Time
 - Fields
@@ -101,4 +101,3 @@ Using templated request bodies should allow us to read/write, but I'm having som
 ## Additional resources
 
 If you're having trouble with your data source URLs, Airtable has a codepen for generating properly encoded API calls: [https://codepen.io/airtable/full/rLKkYB](https://codepen.io/airtable/full/rLKkYB)
-
