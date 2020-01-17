@@ -81,7 +81,7 @@ If you've set the data source URL correctly, clicking on **Fields** will show yo
 - Fields
 - Id
 
-You'll want to select Id, created time (if you prefer), and then you'll want to click into the Fields "field." You'll find your sheet's columns listed here. Select all relevant fields, and then build your page!
+You'll want to select Id, Created Time (if you prefer), and then you'll want to click into the Fields "field." You'll find your sheet's columns listed here. Select all relevant fields, and then build your page!
 
 ## Sample page
 
