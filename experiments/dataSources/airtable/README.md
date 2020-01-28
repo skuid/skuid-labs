@@ -19,8 +19,6 @@ Before we get started you'll need the following:
   1. Click the name of the base you wish to access.
   1. Once you've done this, you'll see Airtable's API docs generated specifically for the base you've selected. This is awesome! But for now we'll just need the instance ID; look for the "The ID of this base is..." text:
 
-**Warning**: Ensure that the sheet you're accessing within your Airtable base **does not have any empty rows**. Skuid will parse the metadata of your sheet based on the least populated row. Have an empty row? You won't be able to retrieve any fields. Only filled out one column in a row? You'll only be able to retrieve that one column. Make sure that your data is well-populated.
-
 ## Create a Skuid data source
 
 In your Skuid site, configure a data source with these properties:
@@ -73,7 +71,7 @@ Airtable nests its records in a ``records`` key within its response, hence why w
 
 ### Add fields
 
-**Note**: If you're having issues with Skuid retrieving metadata, try to avoid having *empty rows*. It seems that rows with missing columns can sometimes cause issues with metadata retrieval. 
+**Note**: If you're having issues with Skuid retrieving metadata (for example, fields missing from the field selector), try to avoid having *empty rows* in your Airtable sheet. It seems that rows with missing columns can sometimes cause issues with metadata retrieval. 
 
 If you've set the data source URL correctly, clicking on **Fields** will show you a list of accessible fields. Your first set is likely to look like this:
 
