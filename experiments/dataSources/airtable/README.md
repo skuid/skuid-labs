@@ -73,7 +73,7 @@ Airtable nests its records in a ``records`` key within its response, hence why w
 
 ### Add fields
 
-**To repeat the warning from above**: Ensure that the sheet you're accessing within your Airtable base **does not have any empty rows**. Skuid will parse the metadata of your sheet based on the least populated row. Have an empty row? You won't be able to retrieve any fields. Only filled out one column in a row? You'll only be able to retrieve that one column. Make sure that your data is well-populated.
+**Note**: If you're having issues with Skuid retrieving metadata, try to avoid having *empty rows*. It seems that rows with missing columns can sometimes cause issues with metadata retrieval. 
 
 If you've set the data source URL correctly, clicking on **Fields** will show you a list of accessible fields. Your first set is likely to look like this:
 
