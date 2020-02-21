@@ -1,6 +1,6 @@
-# Sample Page
+# Sample Data Page
 
-We often need data to illustrate Skuid concepts, it's difficult to create a sample page that works for everyone or that doesn't require a lot of setup work. Instead of asking users to connect to data source X, Y, Z just to try something totally unrelated to the data source itself, this sample page generates a basic list of records using a few action sequences:
+We often need data to illustrate Skuid concepts, so it can be difficult to create a sample page that works for everyone and doesn't require a lot of setup. Instead of asking users to connect to data source X, Y, Z just to try something totally unrelated to the data source itself, this sample page generates a basic list of records using a few action sequences:
 
 1. **Dummy Data Row Template**: A reusable action sequence for generating a row of dummy data. This reduces the complexity for our en masse dummy data creation by allowing us to configure all of a row's data from _one place_.
 1. **Create Dummy Data**: A reusable action sequence that uses **Create Dummy Data Row**  to quickly generate data.
