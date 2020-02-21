@@ -10,6 +10,8 @@ This sample data was generated from Wikipedia's [List of largest companies by re
 
 ## Usage
 
+We have a v1 and v2 version of this page, so use whichever works best for your experiment. Just upload the XML file, or copy and paste it into a Skuid page.
+
 This is primarily intended for users to build their own experiments off of, so there no usage steps to speak of. Just create a new Skuid page from this XML and build from there.
 
 However, if you have another basic data set that you'd like to add, feel free! Just make sure adding the data would not violate any licenses or copyright laws.
