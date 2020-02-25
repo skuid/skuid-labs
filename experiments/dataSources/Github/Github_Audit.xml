@@ -1,0 +1,152 @@
+<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true" theme="Glacial">
+  <models>
+    <model id="Github_Teams" query="true" createrowifnonefound="false" datasource="Github" processonclient="true" verb="GET" endpoint="/orgs/&lt;orgName&gt;/teams" payloadcontenttype="JSON">
+      <fields>
+<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="7" scale="0" accessible="true" filterable="true"/>
+<field id="name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+<field id="permission" label="Permission" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+<field id="description" label="Description" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+</fields>
+      <conditions/>
+      <actions/>
+    </model>
+  <model id="Github_Team1_Repos" query="true" createrowifnonefound="false" datasource="Github" processonclient="true" verb="GET" endpoint="/teams/&lt;team1ID&gt;/repos?per_page=100" payloadcontenttype="JSON">
+      <fields>
+<field id="full_name" label="Full Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+<field id="permissions.admin" label="Admin" ispolymorphic="false" isnamepointing="false" displaytype="BOOLEAN" accessible="true" filterable="true"/>
+<field id="permissions.pull" label="Pull" ispolymorphic="false" isnamepointing="false" displaytype="BOOLEAN" accessible="true" filterable="true"/>
+<field id="permissions.push" label="Push" ispolymorphic="false" isnamepointing="false" displaytype="BOOLEAN" accessible="true" filterable="true"/>
+<field id="branches_url" label="Branches Url" ispolymorphic="false" isnamepointing="false" displaytype="URL" accessible="true" filterable="true"/>
+</fields>
+      <conditions/>
+      <actions/>
+    </model>
+<model id="Github_Team2_Repos" query="true" createrowifnonefound="false" datasource="Github" processonclient="true" verb="GET" endpoint="/teams/&lt;team2ID&gt;/repos?per_page=100" payloadcontenttype="JSON">
+      <fields>
+<field id="full_name" label="Full Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+<field id="permissions.admin" label="Admin" ispolymorphic="false" isnamepointing="false" displaytype="BOOLEAN" accessible="true" filterable="true"/>
+<field id="permissions.pull" label="Pull" ispolymorphic="false" isnamepointing="false" displaytype="BOOLEAN" accessible="true" filterable="true"/>
+<field id="permissions.push" label="Push" ispolymorphic="false" isnamepointing="false" displaytype="BOOLEAN" accessible="true" filterable="true"/>
+</fields>
+      <conditions/>
+      <actions/>
+    </model>
+<model id="Github_Team3_Repos" query="true" createrowifnonefound="false" datasource="Github" processonclient="true" verb="GET" endpoint="/teams/&lt;team3ID&gt;/repos?per_page=100" payloadcontenttype="JSON">
+      <fields>
+<field id="full_name" label="Full Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+<field id="permissions.admin" label="Admin" ispolymorphic="false" isnamepointing="false" displaytype="BOOLEAN" accessible="true" filterable="true"/>
+<field id="permissions.pull" label="Pull" ispolymorphic="false" isnamepointing="false" displaytype="BOOLEAN" accessible="true" filterable="true"/>
+<field id="permissions.push" label="Push" ispolymorphic="false" isnamepointing="false" displaytype="BOOLEAN" accessible="true" filterable="true"/>
+</fields>
+      <conditions/>
+      <actions/>
+    </model>
+</models>
+  <components>
+    <skootable showconditions="true" showsavecancel="true" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="false" pagesize="10" alwaysresetpagination="false" createrecords="true" model="Github_Teams" buttonposition="" mode="read" allowcolumnreordering="true" responsive="true" uniqueid="sk-229lpQ-242" cssclass="main-table" heading="List of all Github Teams">
+      <fields>
+<field id="name" hideable="true" uniqueid="fi-OGu-361"/>
+<field id="id" hideable="true" uniqueid="fi-OGv-370"/>
+<field id="description" hideable="true" uniqueid="fi-OGv-387"/>
+</fields>
+      <rowactions>
+        <action type="edit"/>
+        <action type="delete"/>
+      </rowactions>
+      <massactions usefirstitemasdefault="true">
+        <action type="massupdate"/>
+        <action type="massdelete"/>
+      </massactions>
+      <views>
+        <view type="standard"/>
+      </views>
+    </skootable>
+<wrapper uniqueid="sk-1Glk-345">
+	<components>
+		<template multiple="false" uniqueid="sk-1Glx-373" allowhtml="true">
+			<contents>&lt;h3&gt;Github Repo Permissions by Team:&lt;/h3&gt;</contents>
+		</template>
+		<tabset rememberlastusertab="true" defertabrendering="true" uniqueid="sk-OIi-387">
+			<tabs>
+				<tab name="Github Team1">
+					<components>
+						<skootable showconditions="true" showsavecancel="false" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="true" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="false" model="Github_Team1_Repos" buttonposition="" mode="readonly" allowcolumnreordering="true" responsive="true" uniqueid="sk-OHM-496" heading="Team1 Repos">
+							<fields>
+								<field id="full_name" hideable="true" uniqueid="fi-OHc-548"/>
+								<field id="permissions.admin" hideable="true" uniqueid="fi-OHc-557"/>
+								<field id="permissions.pull" hideable="true" uniqueid="fi-OHd-564"/>
+								<field id="permissions.push" hideable="true" uniqueid="fi-OHd-571"/>
+							</fields>
+							<rowactions/>
+							<massactions usefirstitemasdefault="true"/>
+							<views>
+								<view type="standard"/>
+							</views>
+							<exportproperties usetablecolumns="true"/>
+						</skootable>
+					</components>
+				</tab>
+				<tab name="Github Team2" loadlazypanels="true">
+					<components>
+						<skootable showconditions="true" showsavecancel="false" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="true" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="false" model="Github_Team2_Repos" buttonposition="" mode="readonly" allowcolumnreordering="true" responsive="true" uniqueid="sk-OIp-472" heading="Team2 Repos">
+							<fields>
+								<field id="full_name" hideable="true" uniqueid="fi-OIt-502"/>
+								<field id="permissions.admin" hideable="true" uniqueid="fi-OIt-503"/>
+								<field id="permissions.pull" hideable="true" uniqueid="fi-OIt-504"/>
+								<field id="permissions.push" hideable="true" uniqueid="fi-OIt-505"/>
+							</fields>
+							<rowactions/>
+							<massactions usefirstitemasdefault="true"/>
+							<views>
+								<view type="standard"/>
+							</views>
+							<exportproperties usetablecolumns="true"/>
+						</skootable>
+					</components>
+				</tab>
+				<tab name="Github Team3" loadlazypanels="true">
+					<components>
+						<skootable showconditions="true" showsavecancel="true" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="true" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="true" model="Github_Team3_Repos" buttonposition="" mode="read" allowcolumnreordering="true" responsive="true" uniqueid="sk-OMa-671" heading="Team3 Repos">
+							<fields>
+								<field id="full_name" hideable="true" uniqueid="fi-OMc-690"/>
+								<field id="permissions.admin" hideable="true" uniqueid="fi-OMc-691"/>
+								<field id="permissions.pull" hideable="true" uniqueid="fi-OMc-692"/>
+								<field id="permissions.push" hideable="true" uniqueid="fi-OMc-693"/>
+							</fields>
+							<rowactions>
+								<action type="edit"/>
+								<action type="delete"/>
+							</rowactions>
+							<massactions usefirstitemasdefault="true">
+								<action type="massupdate"/>
+								<action type="massdelete"/>
+							</massactions>
+							<views>
+								<view type="standard"/>
+							</views>
+							<exportproperties usetablecolumns="true"/>
+						</skootable>
+					</components>
+				</tab>
+			</tabs>
+		</tabset>
+	</components>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+		<styleitem type="border"/>
+		<styleitem type="size"/>
+	</styles>
+	<renderconditions logictype="and"/>
+	<interactions/>
+</wrapper>
+  </components>
+  <resources>
+    <labels/>
+    <javascript/>
+    <css/>
+    <actionsequences uniqueid="sk-OGr-353"/>
+  </resources>
+  <styles>
+    <styleitem type="background" bgtype="none"/>
+  </styles>
+</skuidpage>
