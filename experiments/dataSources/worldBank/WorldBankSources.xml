@@ -102,13 +102,7 @@
 									</styles>
 								</skuid__list>
 							</components>
-							<buttons>
-								<button label="Next" styleSettingsVariant="primary">
-									<actions>
-										<action type="runComponentAction" componentid="sk-2pOG-6704" action="navigateToStep" stepId="step2"/>
-									</actions>
-								</button>
-							</buttons>
+							<buttons/>
 						</step>
 						<step stepId="step2" stepLabel="Detailed Indicators">
 							<components>
@@ -178,11 +172,6 @@
 								<button label="Back">
 									<actions>
 										<action type="runComponentAction" componentid="sk-2pOG-6704" action="navigateToStep" stepId="step1"/>
-									</actions>
-								</button>
-								<button label="Next" styleSettingsVariant="primary">
-									<actions>
-										<action type="runComponentAction" componentid="sk-2pOG-6704" action="navigateToStep" stepId=""/>
 									</actions>
 								</button>
 							</buttons>
