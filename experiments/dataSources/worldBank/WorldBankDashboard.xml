@@ -53,6 +53,7 @@
 			</fields>
 			<conditions>
 				<condition type="fieldvalue" value="(IFC classification)" enclosevalueinquotes="true" sourcetype="fieldvalue" field="name" operator="does not end with" clientorserver="client"/>
+				<condition type="fieldvalue" value="AFR" enclosevalueinquotes="true" sourcetype="fieldvalue" field="code" operator="!="/>
 				<condition type="fieldvalue" value="ANR" enclosevalueinquotes="true" sourcetype="fieldvalue" field="code" operator="!="/>
 				<condition type="fieldvalue" value="MDE" enclosevalueinquotes="true" sourcetype="fieldvalue" field="code" operator="!="/>
 			</conditions>

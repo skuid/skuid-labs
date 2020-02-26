@@ -1,12 +1,12 @@
-# Analyse World Bank statictical data in Skuid
-The World Bank provides free and open access to global development data.  Information like GDP, Population, Economic growth and Development measures are available for your Skuid pages. This is one of the easiest API to interact with. 
+# Analyze World Bank statistical data in Skuid
+The World Bank provides free and open access to global development data.  Information like GDP, Population, Economic growth and Development measures are available for your Skuid pages. 
 
 Some introductory links with information about this API from the World Bank Website: 
 -  [Overview of the data available through this API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889386-developer-information-overview) 
 
-- [About the API:](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392)
+- [About the API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392)
 
-- [The Basic Call Structure:](https://datahelpdesk.worldbank.org/knowledgebase/articles/898581)
+- [The Basic Call Structure](https://datahelpdesk.worldbank.org/knowledgebase/articles/898581)
 
 
 This API is exposed without any authentication - which makes it super easy to use in Skuid. It is a great way to explore the following concepts in Skuid:
@@ -21,7 +21,7 @@ First you'll need to create a new REST data source.
 * Type: REST
 * Name: WorldBank
 * URL / Endpoint: ``http://api.worldbank.org/v2/``
-* Use Proxy: False
+* Use Proxy: True
 * Authentication Method: No Authentication
 
 
@@ -38,6 +38,7 @@ First you'll need to create a new REST data source.
 ### Create a page with this REST data source to review World Bank statistics
 
 - Create a new page
+    - Or jump to the `Sample Pages` section below and use some pages we've built
 
 - Create a model that returns GDP data for all countries.  
     - Data Source Type: REST
@@ -46,7 +47,7 @@ First you'll need to create a new REST data source.
     - Data Source URL: ``countries/ALL/indicators/SP.POP.TOTL?format=json``
     - All other properties can be default. 
 
-NOTE about Path to Contents:  Because WorldBank puts nests in JSON - the root is just metadata about the call.  In order to get tot he data iteslf, you have to go into the XML and indicate that the path to contents = ``1``.   See the example xml below:  (See final attribute of node) 
+NOTE about Path to Contents:  WorldBank nests data within JSON, so the root of the response payload is just metadata about the call.  In order to get to the data itself, you have to go into the XML and indicate that the path to contents = ``1``.   See the example XML below:  (See final attribute of node) 
 
 ``<model id="Sources" query="true" createrowifnonefound="false" datasource="WorldBank" verb="GET" payloadcontenttype="JSON" endpoint="/sources?format=json" pathtocontent="1">``
 
@@ -62,11 +63,11 @@ Once you have done this in XML you can go back to the composer. (Once you have o
 
 - Add a table to your page to quickly see the data being returned. 
 - Use a chart to see data changing over time
-- Replace the ``ALL`` value in the Data Source URL with ``{{Country}}`` - and use another model to populate that merge value with another ISO-3 Country value.  (BRA for Brasil). 
-- Create a "countries" model  (This API call will return countries:  ``http://api.worldbank.org/v2/country?format=json ``) and then use an action sequence to pass a particular row value into the merge syntax in the Data source above. 
+- Replace the ``ALL`` value in the Data Source URL with ``{{Country}}`` - and use another model to populate that merge value with another ISO-3 Country value.  (e.g. BRA for Brasil). 
+- Create a "countries" model  (This API call will return countries:  ``http://api.worldbank.org/v2/country?format=json ``) and then use an action sequence to pass a particular row value into the merge syntax in the data source URL above. 
 
 
-## Sample Page
+## Sample Pages
 
 Two sample pages are included in this experiment.  Create a new V2 Page and copy the XML from these pages for more fully constructed examples. 
 

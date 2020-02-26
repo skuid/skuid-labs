@@ -146,8 +146,8 @@
 											<items>
 												<item fieldId="sourceNote" displayType="field" displayStyle="secondary"/>
 												<item fieldId="sourceOrganization" displayType="field" displayStyle="tertiary"/>
-											<item displayType="template" template="&#10;Data source URL:  /countries/&lt;CountryCode or ALL&gt;/indicators/{{id}}?format=json" displayStyle="secondary"/>
-</items>
+												<item displayType="template" template="&#10;Data source URL:  /countries/&lt;CountryCode or ALL&gt;/indicators/{{id}}?format=json" displayStyle="secondary"/>
+											</items>
 										</column>
 									</columns>
 									<rowActions/>
@@ -186,6 +186,9 @@
 									</actions>
 								</button>
 							</buttons>
+						<enableConditions logictype="and">
+							<condition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="DetailedIndicators" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+						</enableConditions>
 						</step>
 						<step stepId="step3" stepLabel="Specific Indicator">
 							<components>
@@ -224,6 +227,9 @@
 									</actions>
 								</button>
 							</buttons>
+						<enableConditions logictype="and">
+							<condition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="SpecificIndicator" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+						</enableConditions>
 						</step>
 					</steps>
 					<styles>
