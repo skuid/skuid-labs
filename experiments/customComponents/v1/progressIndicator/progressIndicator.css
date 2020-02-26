@@ -1,0 +1,132 @@
+.progress-indicator {
+  margin: 8px 0px;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 20px;
+}
+.progress-indicator table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.progress-indicator .progress-chunk {
+  position: relative;
+  overflow: visible;
+  margin-right: 5px;
+  background: #eeeeee;
+  /* CURRENT */
+  /* DONE */
+}
+.progress-indicator .progress-chunk.hoverable:hover {
+  cursor: pointer;
+  background: #dcdcdc;
+}
+.progress-indicator .progress-chunk.hoverable:hover .progress-triangle {
+  border-left: 20px solid #dcdcdc;
+}
+.progress-indicator .progress-chunk .nx-pagebuilder-component {
+  position: absolute;
+  top: -16px;
+  right: -10px;
+}
+.progress-indicator .progress-chunk .nx-pagebuilder-component .nx-pagebuilder-component-body {
+  padding: 0px;
+}
+.progress-indicator .progress-chunk .progress-text {
+  font-size: 23px;
+  margin-right: 0px;
+  margin-left: 15px;
+  line-height: 50px;
+  padding: 0px 10px;
+  text-align: center;
+}
+.progress-indicator .progress-chunk .progress-text .text-content {
+  display: inline-block;
+}
+.progress-indicator .progress-chunk .progress-text .nx-step-icon {
+  margin-right: 4px;
+}
+.progress-indicator .progress-chunk .progress-triangle {
+  width: 0;
+  height: 0;
+  margin-right: 0px;
+  padding-right: 4px;
+  border-top: 26px solid transparent;
+  border-left: 20px solid #eeeeee;
+  border-bottom: 26px solid transparent;
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translate(95%, -50%);
+  z-index: 5;
+}
+.progress-indicator .progress-chunk .progress-triangle-outline {
+  width: 0;
+  height: 0;
+  margin-right: 0px;
+  padding-right: 4px;
+  border-top: 26px solid transparent;
+  border-left: 25px solid #888888;
+  border-bottom: 26px solid transparent;
+  position: absolute;
+  right: -5px;
+  top: 0px;
+  top: 50%;
+  transform: translate(80%, -50%);
+  z-index: 4;
+}
+.progress-indicator .progress-chunk:last-child .progress-triangle-outline {
+  background: transparent;
+}
+.progress-indicator .progress-chunk.current {
+  background: #555555;
+}
+.progress-indicator .progress-chunk.current .progress-text {
+  color: white;
+}
+.progress-indicator .progress-chunk.current .progress-triangle {
+  border-left: 20px solid #555555;
+}
+.progress-indicator .progress-chunk.current .progress-triangle-outline {
+  border-left: 25px solid #444444;
+}
+.progress-indicator .progress-chunk.current.hoverable:hover {
+  background: #555555;
+}
+.progress-indicator .progress-chunk.current.hoverable:hover .progress-triangle {
+  border-left: 20px solid #555555;
+}
+.progress-indicator .progress-chunk.done {
+  background: #888888;
+}
+.progress-indicator .progress-chunk.done .progress-text {
+  color: white;
+}
+.progress-indicator .progress-chunk.done .progress-triangle {
+  border-left: 20px solid #888888;
+}
+.progress-indicator .progress-chunk.done .progress-triangle-outline {
+  border-left: 25px solid white;
+}
+.progress-indicator .progress-chunk.done .progress-triangle-outline {
+  border-left: 25px solid white;
+}
+.progress-indicator .progress-chunk.done.hoverable:hover {
+  background: #767676;
+}
+.progress-indicator .progress-chunk.done.hoverable:hover .progress-triangle {
+  border-left: 20px solid #767676;
+}
+.nx-pagebuilder-component-body .progress-indicator {
+  width: initial;
+}
+.nx-pagebuilder-component-body .progress-chunk {
+  float: left;
+  margin-top: 5px;
+}
+.nx-pagebuilder-component-body .progress-chunk .text-content {
+  float: left;
+}
+.nx-pagebuilder-component-body .progress-chunk .nx-step-icon {
+  float: left;
+  margin: 15px 7px 0px 0px;
+}
