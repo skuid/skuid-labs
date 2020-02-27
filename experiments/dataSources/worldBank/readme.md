@@ -27,7 +27,11 @@ First you'll need to create a new REST data source.
 
 #### Double check the remote site setting
 
-* If you are using Skuid on Salesforce, you will be prompted to appove the creation of a remote site setting for this data source. If your pages do not work, you might need to edit it.  Check in Salesforce Setup at **Security > Remote site settings**.   
+* If you are using Skuid on Salesforce, you will be prompted to appove the creation of a remote site setting for this data source. If your pages do not work, you might need to edit it.  Check in Salesforce Setup at **Security > Remote site settings**.
+
+If the remote site setting is not present, create a new one and enter these values:
+- Remote Site Name: WorldBank
+- Remote Site URL: http://api.worldbank.org
 
 #### Create a CORS entry
 
@@ -38,7 +42,7 @@ First you'll need to create a new REST data source.
 ### Create a page with this REST data source to review World Bank statistics
 
 - Create a new page
-    - Or jump to the `Sample Pages` section below and use some pages we've built
+    - Or jump to the `Sample Pages` section below and use some pages we've built for you. 
 
 - Create a model that returns GDP data for all countries.  
     - Data Source Type: REST
@@ -63,7 +67,7 @@ Once you have done this in XML you can go back to the composer. (Once you have o
 
 - Add a table to your page to quickly see the data being returned. 
 - Use a chart to see data changing over time
-- Replace the ``ALL`` value in the Data Source URL with ``{{Country}}`` - and use another model to populate that merge value with another ISO-3 Country value.  (e.g. BRA for Brasil). 
+- Replace the ``ALL`` value in the Data Source URL with ``{{Country}}`` - and use another model to populate that merge value with another ISO-2 Country value.  (e.g. BR for Brasil). 
 - Create a "countries" model  (This API call will return countries:  ``http://api.worldbank.org/v2/country?format=json ``) and then use an action sequence to pass a particular row value into the merge syntax in the data source URL above. 
 
 
@@ -75,9 +79,13 @@ Two sample pages are included in this experiment.  Create a new V2 Page and copy
 
 - This page provides an index of all the statistical measures provided by the World Bank - along with the URL you'd need to use to create a model for this measure, and a sample dataset queried for this measure.
 
+  - You will get popups asking for Merge Variable values for datasources.  You can use BR  (for Brazil) in all the popups.  
+
 ### WorldBankDashboard
 
 - This page allows the user to select a single country (from a statstical region) and then shows several tabs of statical measures about the country. 
+
+    - You will get popups asking for Merge Variable values for datasources.  You can use BR  (for Brazil) in all the popups. 
 
     - The world bank API allows you to call up to 60 statistical measures from a single statistical source in a single call  by providing the source ID and indicator codes separated by ; (semicolon).
     
