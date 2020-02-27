@@ -1,0 +1,664 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true">
+	<models>
+		<model id="UIControl" query="true" createrowifnonefound="true" datasource="Ui-Only">
+			<fields>
+				<field id="Region" displaytype="PICKLIST" length="255" ogdisplaytype="TEXT" picklistsource="rowsinmodel" returntype="TEXT" picklistmodel="Regions" entrylabel="{{name}}" entryvalue="{{code}}" label="Region">
+					<picklistentries/>
+				</field>
+				<field id="Country" displaytype="PICKLIST" length="255" ogdisplaytype="TEXT" picklistsource="rowsinmodel" returntype="TEXT" picklistmodel="Countries" entryvalue="{{id}}" entrylabel="{{name}}" label="Country"/>
+			</fields>
+			<conditions/>
+			<actions>
+				<action>
+					<actions>
+						<action type="setCondition" model="Countries" condition="Region" value="{{Region}}"/>
+						<action type="requeryModel" model="Countries" behavior="standard"/>
+					</actions>
+					<events>
+						<event>row.updated</event>
+					</events>
+					<fields>
+						<field>Region</field>
+					</fields>
+				</action>
+				<action>
+					<actions>
+						<action type="setCondition" model="PopulationDynamics" condition="Country" value="{{Country}}"/>
+						<action type="setCondition" model="MarketIndicators" condition="Country" value="{{Country}}"/>
+						<action type="setCondition" model="Poverty_Equity" condition="Country" value="{{Country}}"/>
+						<action type="setCondition" model="Inequality" condition="Country" value="{{Country}}"/>
+						<action type="requeryModels" behavior="standard">
+							<models>
+								<model>PopulationDynamics</model>
+								<model>MarketIndicators</model>
+								<model>Poverty_Equity</model>
+								<model>Inequality</model>
+							</models>
+						</action>
+					</actions>
+					<events>
+						<event>row.updated</event>
+					</events>
+					<fields>
+						<field>Country</field>
+					</fields>
+				</action>
+			</actions>
+		</model>
+		<model id="Regions" query="true" createrowifnonefound="false" datasource="WorldBank" verb="GET" payloadcontenttype="JSON" endpoint="/regions?format=json" pathtocontent="1">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="code" label="Code" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="(IFC classification)" enclosevalueinquotes="true" sourcetype="fieldvalue" field="name" operator="does not end with" clientorserver="client"/>
+				<condition type="fieldvalue" value="AFR" enclosevalueinquotes="true" sourcetype="fieldvalue" field="code" operator="!="/>
+				<condition type="fieldvalue" value="ANR" enclosevalueinquotes="true" sourcetype="fieldvalue" field="code" operator="!="/>
+				<condition type="fieldvalue" value="MDE" enclosevalueinquotes="true" sourcetype="fieldvalue" field="code" operator="!="/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="Countries" query="true" createrowifnonefound="false" datasource="WorldBank" verb="GET" payloadcontenttype="JSON" endpoint="/country?region={{Region}}&amp;format=json" pathtocontent="1" limitmethod="simple" limit="100" simplerecordslimitparameter="per_page">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="ARG" enclosevalueinquotes="true" sourcetype="param" sourceparam="Region" state="filterableon" inactive="false" name="Region"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="PopulationDynamics" query="false" createrowifnonefound="false" datasource="WorldBank" verb="GET" payloadcontenttype="JSON" endpoint="/countries/{{Country}}/indicators/SP.POP.TOTL;SP.POP.GROW;SP.DYN.CBRT.IN;SP.DYN.CDRT.IN;SP.DYN.TFRT.IN;SP.DYN.LE00.MA.IN;SP.DYN.LE00.FE.IN;SP.POP.DPND.YG;SP.POP.DPND.OL?source=2&amp;format=json&amp;mrnev=10&amp;per_page=100" pathtocontent="1">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="1" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="countryiso3code" label="Countryiso3code" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="date" label="Date" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="4" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="decimal" label="Decimal" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="unit" label="Unit" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="0" scale="0" accessible="true" filterable="true"/>
+				<field id="value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" accessible="true" filterable="true" ogdisplaytype="STRING" scale="2"/>
+				<field id="country.value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="indicator.value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="indicator.id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="FakeIndicatorId" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" uionly="true" label="Indicator Identity">
+					<formula>{{indicator.id}}</formula>
+				</field>
+				<field id="DisplayValue" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" uionly="true">
+					<formula>IF(
+{{value}}&gt;1000000,JOIN_TEXT("",(ROUND({{value}}/10000)/100),"M"),
+IF({{value}}&gt;1000,JOIN_TEXT("",(ROUND({{value}}/10)/100),"K"),
+(ROUND({{value}}*100)/100)
+))</formula>
+				</field>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" enclosevalueinquotes="true" sourcetype="param" sourceparam="Country" state="filterableoff" inactive="true" name="Country"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="PopulationDynamicTopicIndex" query="true" createrowifnonefound="false" datasource="WorldBank" verb="GET" payloadcontenttype="JSON" endpoint="/countries/all/indicators/SP.POP.TOTL;SP.POP.GROW;SP.DYN.CBRT.IN;SP.DYN.CDRT.IN;SP.DYN.TFRT.IN;SP.DYN.LE00.MA.IN;SP.DYN.LE00.FE.IN;SP.POP.DPND.YG;SP.POP.DPND.OL?source=2&amp;format=json&amp;mrnev=1&amp;per_page=9" pathtocontent="1">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="1" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="indicator.value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="indicator.id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="Fake_Indicator_Id" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" uionly="true" label="Indicator Identity">
+					<formula>{{indicator.id}}</formula>
+				</field>
+				<field id="country" label="Country" ispolymorphic="false" isnamepointing="false" displaytype="OBJECT" rel="country" ref="country" accessible="true" filterable="true"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="MarketIndicators" query="false" createrowifnonefound="false" datasource="WorldBank" verb="GET" payloadcontenttype="JSON" endpoint="/countries/{{Country}}/indicators/IC.REG.DURS;IC.ELC.TIME;FB.CBK.BRCH.P5;MS.MIL.XPND.GD.ZS;MS.MIL.TOTL.P1;IS.AIR.PSGR;IT.CEL.SETS.P2;IT.NET.USER.ZS;IS.SHP.GOOD.TU;GC.TAX.GSRV.CN?source=2&amp;format=json&amp;mrnev=10&amp;per_page=100" pathtocontent="1">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="1" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="countryiso3code" label="Countryiso3code" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="date" label="Date" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="4" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="decimal" label="Decimal" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="unit" label="Unit" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="0" scale="0" accessible="true" filterable="true"/>
+				<field id="value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" accessible="true" filterable="true" ogdisplaytype="STRING" scale="2"/>
+				<field id="country.value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="indicator.value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="indicator.id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="FakeIndicatorId" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" uionly="true" label="Indicator Identity">
+					<formula>{{indicator.id}}</formula>
+				</field>
+				<field id="DisplayValue" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" uionly="true">
+					<formula>IF(
+{{value}}&gt;1000000,JOIN_TEXT("",(ROUND({{value}}/10000)/100),"M"),
+IF({{value}}&gt;1000,JOIN_TEXT("",(ROUND({{value}}/10)/100),"K"),
+(ROUND({{value}}*100)/100)
+))</formula>
+				</field>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="Country" state="filterableoff" inactive="true" name="Country"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="MarketIndicatorsIndex" query="true" createrowifnonefound="false" datasource="WorldBank" verb="GET" payloadcontenttype="JSON" endpoint="/countries/all/indicators/IC.REG.DURS;IC.ELC.TIME;FB.CBK.BRCH.P5;MS.MIL.XPND.GD.ZS;MS.MIL.TOTL.P1;IS.AIR.PSGR;IT.CEL.SETS.P2;IT.NET.USER.ZS;IS.SHP.GOOD.TU;GC.TAX.GSRV.CN?source=2&amp;format=json&amp;mrnev=1&amp;per_page=9" pathtocontent="1">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="1" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="indicator.value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="indicator.id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="Fake_Indicator_Id" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" uionly="true" label="Indicator Identity">
+					<formula>{{indicator.id}}</formula>
+				</field>
+				<field id="country" label="Country" ispolymorphic="false" isnamepointing="false" displaytype="OBJECT" rel="country" ref="country" accessible="true" filterable="true"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Poverty_Equity" query="false" createrowifnonefound="false" datasource="WorldBank" verb="GET" payloadcontenttype="JSON" endpoint="/countries/{{Country}}/indicators/SI.POV.NAHC;SI.POV.DDAY;SI.POV.LMIC;SI.POV.UMIC;SI.POV.GINI;SI.POV.XPND.MD;SI.POV.WATR.MI;SI.POV.HCRT.MI;SI.POV.NAGP;SI.POV.SANI.MI?source=24&amp;format=json&amp;mrnev=10&amp;per_page=100" pathtocontent="1">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="1" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="countryiso3code" label="Countryiso3code" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="date" label="Date" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="4" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="decimal" label="Decimal" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="unit" label="Unit" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="0" scale="0" accessible="true" filterable="true"/>
+				<field id="value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" accessible="true" filterable="true" ogdisplaytype="STRING" scale="2"/>
+				<field id="country.value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="indicator.value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="indicator.id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="FakeIndicatorId" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" uionly="true" label="Indicator Identity">
+					<formula>{{indicator.id}}</formula>
+				</field>
+				<field id="DisplayValue" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" uionly="true">
+					<formula>IF(
+{{value}}&gt;1000000,JOIN_TEXT("",(ROUND({{value}}/10000)/100),"M"),
+IF({{value}}&gt;1000,JOIN_TEXT("",(ROUND({{value}}/10)/100),"K"),
+(ROUND({{value}}*100)/100)
+))</formula>
+				</field>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" enclosevalueinquotes="true" sourcetype="param" sourceparam="Country" state="filterableoff" inactive="true" name="Country"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="PovertyIndicatorsIndex" query="true" createrowifnonefound="false" datasource="WorldBank" verb="GET" payloadcontenttype="JSON" endpoint="/countries/BR/indicators/SI.POV.NAHC;SI.POV.DDAY;SI.POV.LMIC;SI.POV.UMIC;SI.POV.GINI;SI.POV.XPND.MD;SI.POV.WATR.MI;SI.POV.HCRT.MI;SI.POV.NAGP;SI.POV.SANI.MI?source=24&amp;format=json&amp;mrnev=1&amp;per_page=9" pathtocontent="1">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="1" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="indicator.value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="indicator.id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="Fake_Indicator_Id" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" uionly="true" label="Indicator Identity">
+					<formula>{{indicator.id}}</formula>
+				</field>
+				<field id="country" label="Country" ispolymorphic="false" isnamepointing="false" displaytype="OBJECT" rel="country" ref="country" accessible="true" filterable="true"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Inequality" query="false" createrowifnonefound="false" datasource="WorldBank" verb="GET" payloadcontenttype="JSON" endpoint="/countries/{{Country}}/indicators/SI.DST.FRST.20;SI.DST.02ND.20;SI.DST.03RD.20;SI.DST.04TH.20;SI.DST.05TH.20?source=2&amp;format=json&amp;mrnev=10&amp;per_page=50" pathtocontent="1">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="1" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="countryiso3code" label="Countryiso3code" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="date" label="Date" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="4" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="decimal" label="Decimal" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="unit" label="Unit" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="0" scale="0" accessible="true" filterable="true"/>
+				<field id="value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" accessible="true" filterable="true" ogdisplaytype="STRING" scale="2"/>
+				<field id="country.value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="indicator.value" label="Value" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="indicator.id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="FakeIndicatorId" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" uionly="true" label="Indicator Identity" picklistsource="manual">
+					<formula>CASE({{indicator.id}},
+    "SI.DST.FRST.20","Bottom 20%", 
+    "SI.DST.02ND.20","Second 20%", 
+    "SI.DST.03RD.20","Third 20%", 
+    "SI.DST.04TH.20","Fourth 20%", 
+    "SI.DST.05TH.20","Top 20%" 
+)</formula>
+					<picklistentries>
+						<entry value="SI.DST.FRST.20" label="Bottom 20%"/>
+						<entry value="SI.DST.02ND.20" label="Second 20%"/>
+						<entry value="SI.DST.03RD.20" label="Third 20%"/>
+						<entry value="SI.DST.04TH.20" label="Fourth 20%"/>
+						<entry value="SI.DST.05TH.20" label="Top 20%"/>
+					</picklistentries>
+				</field>
+				<field id="DisplayValue" displaytype="FORMULA" ogdisplaytype="TEXT" readonly="true" returntype="TEXT" uionly="true">
+					<formula>IF(
+{{value}}&gt;1000000,JOIN_TEXT("",(ROUND({{value}}/10000)/100),"M"),
+IF({{value}}&gt;1000,JOIN_TEXT("",(ROUND({{value}}/10)/100),"K"),
+(ROUND({{value}}*100)/100)
+))</formula>
+				</field>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" enclosevalueinquotes="true" sourcetype="param" sourceparam="Country" state="filterableoff" inactive="true" name="Country"/>
+			</conditions>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__wrapper uniqueid="sk-2p5--1954">
+			<components>
+				<skuid__grid uniqueid="sk-3CCg-12640" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="2">
+					<divisions>
+						<division alignSelf="auto" minWidth="0" ratio="1">
+							<components>
+								<skuid__text contents="Dashboard of Key Indicators for&amp;nbsp;{{Country}}" uniqueid="sk-3CCs-14179" model="UIControl" styleSettingsVariant="large">
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
+								</skuid__text>
+							</components>
+							<renderConditions logictype="and">
+								<renderCondition type="blank" fieldmodel="PopulationDynamics" sourcetype="modelproperty" nosourcerowbehavior="deactivate" fieldtargetobjects="country" enclosevalueinquotes="false" sourceproperty="hasRows"/>
+							</renderConditions>
+						</division>
+						<division alignSelf="auto" minWidth="100px" ratio="0">
+							<components>
+								<skuid__text contents="Select Country" uniqueid="sk-3CFg-17821" styleSettingsVariant="medium">
+									<renderConditions logictype="and">
+										<renderCondition fieldmodel="PopulationDynamics" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasNoRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+									<styles>
+										<spacing bottom="2"/>
+									</styles>
+								</skuid__text>
+								<skuid__text contents="Select Another Country" uniqueid="sk-1cvY-39021" styleSettingsVariant="medium">
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="PopulationDynamics" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+									<styles>
+										<spacing bottom="2"/>
+									</styles>
+								</skuid__text>
+							</components>
+						</division>
+						<division minWidth="300px" ratio="0" alignSelf="auto">
+							<components>
+								<skuid__form showErrorsInline="true" model="UIControl" uniqueid="sk-39O5-23286" mode="edit">
+									<sections>
+										<section showHeading="false">
+											<rows>
+												<row>
+													<fields>
+														<skuid__field id="Region" required="false" addNoneOption="true" noneLabel="Choose One"/>
+													</fields>
+												</row>
+												<row>
+													<fields>
+														<skuid__field id="Country">
+															<renderConditions logictype="and" onhidedatabehavior="keep"/>
+															<enableConditions logictype="and">
+																<condition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Countries" sourcetype="modelproperty" sourceproperty="hasRows"/>
+															</enableConditions>
+														</skuid__field>
+													</fields>
+												</row>
+											</rows>
+										</section>
+									</sections>
+									<styles>
+										<spacing/>
+									</styles>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
+								</skuid__form>
+							</components>
+						</division>
+					</divisions>
+					<styles>
+						<spacing/>
+					</styles>
+					<interactions/>
+				</skuid__grid>
+				<skuid__tabSet uniqueid="sk-3AyP-20009">
+					<tabs>
+						<skuid__tabPanel name="Poverty and Equity">
+							<components>
+								<skuid__text contents="Poverty and Inequality" uniqueid="sk-3CG5-18267" model="UIControl" styleSettingsVariant="large">
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
+									<styles>
+										<spacing top="4" bottom="4"/>
+									</styles>
+								</skuid__text>
+								<skuid__deck columnGutter="1.5em" rowGutter="1.5em" model="PovertyIndicatorsIndex" showSaveCancel="false" verticalAlign="top" minWidth="500px" uniqueid="sk-3C91-8980" setMaxWidth="auto" pageSize="Infinity" showPageSizeSelect="false" showLoadMore="false" showListFooter="false">
+									<components>
+										<skuid__text contents="{{indicator.value}}" uniqueid="sk-3C99-9392" model="PovertyIndicatorsIndex" styleSettingsVariant="medium">
+											<renderConditions logictype="and"/>
+											<styleVariantConditions/>
+											<conditions/>
+											<styles>
+												<spacing bottom="4" styleSettingsVariant="medium"/>
+											</styles>
+										</skuid__text>
+										<skuid__text contents="{{indicator.id}}" uniqueid="sk-1cpK-19619" model="PovertyIndicatorsIndex" styleSettingsVariant="small">
+											<renderConditions logictype="and">
+												<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="UIControl" sourcetype="param" nosourcerowbehavior="deactivate" sourceparam="debug" value="true"/>
+											</renderConditions>
+											<styleVariantConditions/>
+											<styles>
+												<spacing/>
+											</styles>
+										</skuid__text>
+										<skuid__grid uniqueid="sk-3CBS-10016" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="4">
+											<divisions>
+												<division alignSelf="auto" ratio="0" minWidth="75px" maxWidth="115px">
+													<components>
+														<skuid__text contents="{{DisplayValue}}" uniqueid="sk-1cmF-14275" model="Poverty_Equity" styleSettingsVariant="extraLarge">
+															<conditions>
+																<condition type="contextrow" field="indicator.id" mergefield="indicator.id" operator="="/>
+															</conditions>
+															<renderConditions logictype="and"/>
+															<styleVariantConditions/>
+														</skuid__text>
+														<skuid__text contents="( {{date}} )" uniqueid="sk-1cmc-15490" model="Poverty_Equity" styleSettingsVariant="small">
+															<conditions>
+																<condition type="contextrow" field="indicator.id" mergefield="indicator.id" operator="="/>
+															</conditions>
+															<renderConditions logictype="and"/>
+															<styleVariantConditions/>
+															<styles>
+																<spacing/>
+															</styles>
+														</skuid__text>
+													</components>
+												</division>
+												<division alignSelf="auto" minWidth="300px" ratio="1">
+													<components>
+														<skuid__chart model="Poverty_Equity" type="line" uniqueid="sk-1cjG-9496" export="off" height="150px">
+															<dataaxes>
+																<axis id="axis1" title="  "/>
+															</dataaxes>
+															<categoryaxes>
+																<axis id="categories" categorytype="field" field="date"/>
+															</categoryaxes>
+															<serieslist>
+																<series valuefield="value" splittype="none"/>
+															</serieslist>
+															<colors/>
+															<legend layout="off" halign="center" valign="bottom"/>
+															<styles>
+																<spacing/>
+															</styles>
+															<renderconditions logictype="and"/>
+															<styleVariantConditions/>
+															<conditions>
+																<condition type="contextrow" field="indicator.id" mergefield="indicator.id" operator="="/>
+															</conditions>
+														</skuid__chart>
+													</components>
+												</division>
+											</divisions>
+											<renderConditions logictype="and"/>
+											<styleVariantConditions/>
+										</skuid__grid>
+									</components>
+									<filtering enableSearch="false" instantSearch="false"/>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Poverty_Equity" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__deck>
+							</components>
+							<onInitialShowActions/>
+							<onShowActions/>
+						</skuid__tabPanel>
+						<skuid__tabPanel name="Population">
+							<components>
+								<skuid__text contents="Population Indicators" uniqueid="sk-cMp-64312" model="UIControl" styleSettingsVariant="large">
+									<renderConditions logictype="and">
+										<renderCondition type="blank" operator="!=" fieldmodel="UIControl" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Country" value="null" enclosevalueinquotes="false"/>
+									</renderConditions>
+									<styleVariantConditions/>
+									<styles>
+										<spacing top="4" bottom="4"/>
+									</styles>
+								</skuid__text>
+								<skuid__deck columnGutter="1.5em" rowGutter="1.5em" model="PopulationDynamicTopicIndex" showSaveCancel="false" verticalAlign="top" minWidth="500px" uniqueid="sk-cMt-64798" setMaxWidth="auto" pageSize="Infinity" showPageSizeSelect="false" showLoadMore="false" showListFooter="false">
+									<components>
+										<skuid__text contents="{{indicator.value}}" uniqueid="sk-cMt-64799" model="PopulationDynamicTopicIndex" styleSettingsVariant="medium">
+											<renderConditions logictype="and"/>
+											<styleVariantConditions/>
+											<conditions/>
+											<styles>
+												<spacing bottom="4" styleSettingsVariant="medium"/>
+											</styles>
+										</skuid__text>
+										<skuid__text contents="{{indicator.id}}" uniqueid="sk-cMt-64800" model="PopulationDynamicTopicIndex" styleSettingsVariant="small">
+											<renderConditions logictype="and">
+												<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="UIControl" sourcetype="param" nosourcerowbehavior="deactivate" sourceparam="debug" value="true"/>
+											</renderConditions>
+											<styleVariantConditions/>
+											<styles>
+												<spacing/>
+											</styles>
+										</skuid__text>
+										<skuid__grid uniqueid="sk-cMt-64801" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="4">
+											<divisions>
+												<division alignSelf="auto" ratio="0" minWidth="75px" maxWidth="115px">
+													<components>
+														<skuid__text contents="{{DisplayValue}}" uniqueid="sk-cMt-64802" model="PopulationDynamics" styleSettingsVariant="extraLarge">
+															<conditions>
+																<condition type="contextrow" field="indicator.id" mergefield="indicator.id" operator="="/>
+															</conditions>
+															<renderConditions logictype="and"/>
+															<styleVariantConditions/>
+														</skuid__text>
+														<skuid__text contents="( {{date}} )" uniqueid="sk-cMt-64803" model="PopulationDynamics" styleSettingsVariant="small">
+															<conditions>
+																<condition type="contextrow" field="indicator.id" mergefield="indicator.id" operator="="/>
+															</conditions>
+															<renderConditions logictype="and"/>
+															<styleVariantConditions/>
+															<styles>
+																<spacing/>
+															</styles>
+														</skuid__text>
+													</components>
+												</division>
+												<division alignSelf="auto" minWidth="300px" ratio="1">
+													<components>
+														<skuid__chart model="PopulationDynamics" type="line" uniqueid="sk-cMt-64804" export="off" height="150px">
+															<dataaxes>
+																<axis id="axis1" title="  "/>
+															</dataaxes>
+															<categoryaxes>
+																<axis id="categories" categorytype="field" field="date"/>
+															</categoryaxes>
+															<serieslist>
+																<series valuefield="value" splittype="none"/>
+															</serieslist>
+															<colors/>
+															<legend layout="off" halign="center" valign="bottom"/>
+															<styles>
+																<spacing/>
+															</styles>
+															<renderconditions logictype="and"/>
+															<styleVariantConditions/>
+															<conditions>
+																<condition type="contextrow" field="indicator.id" mergefield="indicator.id" operator="="/>
+															</conditions>
+														</skuid__chart>
+													</components>
+												</division>
+											</divisions>
+											<renderConditions logictype="and"/>
+											<styleVariantConditions/>
+										</skuid__grid>
+									</components>
+									<filtering enableSearch="false" instantSearch="false"/>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="PopulationDynamics" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__deck>
+							</components>
+						</skuid__tabPanel>
+						<skuid__tabPanel name="State and Markets">
+							<components>
+								<skuid__text contents="States and Markets" uniqueid="sk-3Ayl-33714" model="UIControl" styleSettingsVariant="large">
+									<renderConditions logictype="and">
+										<renderCondition type="blank" operator="!=" fieldmodel="UIControl" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Country" value="null" enclosevalueinquotes="false"/>
+									</renderConditions>
+									<styleVariantConditions/>
+									<styles>
+										<spacing top="4" bottom="4"/>
+									</styles>
+								</skuid__text>
+								<skuid__deck columnGutter="1.5em" rowGutter="1.5em" model="MarketIndicatorsIndex" showSaveCancel="false" verticalAlign="top" minWidth="500px" uniqueid="sk-3Ayg-27287" setMaxWidth="auto" pageSize="Infinity" showPageSizeSelect="false" showLoadMore="false" showListFooter="false">
+									<components>
+										<skuid__text contents="{{indicator.value}}" uniqueid="sk-3Ayg-27288" model="MarketIndicatorsIndex" styleSettingsVariant="medium">
+											<renderConditions logictype="and"/>
+											<styleVariantConditions/>
+											<conditions/>
+											<styles>
+												<spacing bottom="4"/>
+											</styles>
+										</skuid__text>
+										<skuid__text contents="{{indicator.id}}" uniqueid="sk-3Ayg-27289" model="MarketIndicatorsIndex" styleSettingsVariant="small">
+											<renderConditions logictype="and">
+												<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="UIControl" sourcetype="param" nosourcerowbehavior="deactivate" sourceparam="debug" value="true"/>
+											</renderConditions>
+											<styleVariantConditions/>
+											<styles>
+												<spacing/>
+											</styles>
+										</skuid__text>
+										<skuid__grid uniqueid="sk-3Ayg-27290" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="4">
+											<divisions>
+												<division alignSelf="auto" minWidth="75px" maxWidth="115px" ratio="0">
+													<components>
+														<skuid__text contents="{{DisplayValue}}" uniqueid="sk-3Ayg-27291" model="MarketIndicators" styleSettingsVariant="extraLarge">
+															<conditions>
+																<condition type="contextrow" field="indicator.id" mergefield="indicator.id" operator="="/>
+															</conditions>
+															<renderConditions logictype="and"/>
+															<styleVariantConditions/>
+														</skuid__text>
+														<skuid__text contents="( {{date}} )" uniqueid="sk-3Ayg-27292" model="MarketIndicators" styleSettingsVariant="small">
+															<conditions>
+																<condition type="contextrow" field="indicator.id" mergefield="indicator.id" operator="="/>
+															</conditions>
+															<renderConditions logictype="and"/>
+															<styleVariantConditions/>
+															<styles>
+																<spacing/>
+															</styles>
+														</skuid__text>
+													</components>
+												</division>
+												<division alignSelf="auto" minWidth="300px" ratio="1">
+													<components>
+														<skuid__chart model="MarketIndicators" type="line" uniqueid="sk-3Ayg-27293" export="off" height="150px">
+															<dataaxes>
+																<axis id="axis1" title="  "/>
+															</dataaxes>
+															<categoryaxes>
+																<axis id="categories" categorytype="field" field="date"/>
+															</categoryaxes>
+															<serieslist>
+																<series valuefield="value" splittype="none"/>
+															</serieslist>
+															<colors/>
+															<legend layout="off" halign="center" valign="bottom"/>
+															<styles>
+																<spacing/>
+															</styles>
+															<renderconditions logictype="and"/>
+															<styleVariantConditions/>
+															<conditions>
+																<condition type="contextrow" field="indicator.id" mergefield="indicator.id" operator="="/>
+															</conditions>
+														</skuid__chart>
+													</components>
+												</division>
+											</divisions>
+											<renderConditions logictype="and"/>
+											<styleVariantConditions/>
+										</skuid__grid>
+									</components>
+									<filtering enableSearch="false" instantSearch="false"/>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="PopulationDynamics" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__deck>
+							</components>
+						</skuid__tabPanel>
+						<skuid__tabPanel name="Inequality">
+							<components>
+								<skuid__chart model="Inequality" type="column" uniqueid="sk-gX6-55307" stacking="true" export="off" maintitle="Income Share by Quintile of Population">
+									<dataaxes>
+										<axis id="axis1" minvalue="0" maxvalue="100"/>
+									</dataaxes>
+									<categoryaxes>
+										<axis id="categories" categorytype="field" field="date"/>
+									</categoryaxes>
+									<serieslist>
+										<series valuefield="value" splittype="field" splitfield="FakeIndicatorId"/>
+									</serieslist>
+									<colors/>
+									<legend layout="horizontal" halign="center" valign="bottom"/>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__chart>
+							</components>
+						</skuid__tabPanel>
+					</tabs>
+					<renderConditions logictype="and">
+						<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="PopulationDynamics" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+					</renderConditions>
+					<styleVariantConditions/>
+				</skuid__tabSet>
+				<skuid__table model="PopulationDynamics" uniqueid="sk-39gc-7366" mode="read">
+					<fields>
+						<field id="countryiso3code" uniqueid="fi-3COT-7442"/>
+						<field id="indicator.value" uniqueid="fi-39gc-7933" label="Indicator">
+							<renderConditions logictype="and" onhidedatabehavior="keep"/>
+							<enableConditions/>
+						</field>
+						<field id="indicator.id" uniqueid="fi-1cho-6761"/>
+						<field id="date" uniqueid="fi-39gc-7928" horizontalAlignment="right"/>
+						<field id="value" uniqueid="fi-39gc-7931" horizontalAlignment="right"/>
+					</fields>
+					<filtering enableSearch="false" instantSearch="false"/>
+					<rowActions/>
+					<massActions/>
+					<renderConditions logictype="and">
+						<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="UIControl" sourcetype="param" nosourcerowbehavior="deactivate" sourceparam="debug" value="true"/>
+					</renderConditions>
+					<styleVariantConditions/>
+				</skuid__table>
+			</components>
+			<styles>
+				<spacing top="4" bottom="4" left="4" right="4"/>
+			</styles>
+			<background/>
+		</skuid__wrapper>
+	</components>
+	<resources>
+		<labels/>
+		<javascript/>
+		<css/>
+		<actionsequences/>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+	<pageregioncontents>
+		<pageregioncontent uniqueid="__header">
+			<components>
+				<skuid__layoutRegion sticky="true">
+					<components>
+						<skuid__text contents="World Bank Dashboard" uniqueid="sk-2p5s-1514" styleSettingsVariant="large">
+							<styles>
+								<spacing top="2" bottom="2" left="4"/>
+							</styles>
+						</skuid__text>
+					</components>
+					<styles>
+						<spacing/>
+					</styles>
+					<background type="color" color="#bfbfbf"/>
+				</skuid__layoutRegion>
+			</components>
+		</pageregioncontent>
+	</pageregioncontents>
+</skuid__page>
