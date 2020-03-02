@@ -1,0 +1,245 @@
+<skuidpage showsidebar="false" showheader="true" tabtooverride="Opportunity" unsavedchangeswarning="" theme="">
+   <models>
+      <model id="Opportunity" limit="" query="true" createrowifnonefound="false" sobject="Opportunity" doclone="" type="" orderby="Name DESC">
+         <fields>
+            <field id="Name"/>
+            <field id="Amount"/>
+            <field id="StageName"/>
+            <field id="Owner.Name"/>
+            <field id="OwnerId"/>
+            <field id="AccountId"/>
+            <field id="Account.Name"/>
+            <field id="CloseDate"/>
+            <field id="Probability"/>
+            <field id="TotalOpportunityQuantity"/>
+         </fields>
+         <conditions>
+            <condition type="multiple" field="AccountId" operator="in" inactive="true" enclosevalueinquotes="true" name="__autofilter__AccountId" state="filterableoff" value=""/>
+            <condition type="multiple" field="StageName" operator="in" inactive="true" enclosevalueinquotes="true" name="__autofilter__StageName" state="filterableoff" value=""/>
+            <condition type="fieldvalue" field="CloseDate" operator="gte" inactive="true" enclosevalueinquotes="false" name="__autofilter__start__CloseDate" state="filterableoff" value=""/>
+            <condition type="fieldvalue" field="CloseDate" operator="lte" inactive="true" enclosevalueinquotes="false" name="__autofilter__end__CloseDate" state="filterableoff" value=""/>
+            <condition type="multiple" field="OwnerId" operator="in" inactive="true" enclosevalueinquotes="true" name="__autofilter__OwnerId" state="filterableoff" value=""/>
+         </conditions>
+         <actions/>
+      </model>
+      <model id="RecentUpdates_Opportunity" limit="1" query="false" createrowifnonefound="false" sobject="Opportunity" doclone="" type="">
+         <fields>
+            <field id="Id"/>
+         </fields>
+         <conditions>
+            <condition type="fieldvalue" value="" enclosevalueinquotes="false" field="LastModifiedDate" operator="gte" state="filterableoff" inactive="true" name="LastModifiedDate"/>
+         </conditions>
+         <actions/>
+      </model>
+   </models>
+   <components>
+      <pagetitle model="Opportunity">
+         <maintitle>
+            <template>{{Model.labelPlural}}</template>
+         </maintitle>
+         <subtitle>
+            <template>Home</template>
+         </subtitle>
+         <actions>
+            <action type="savecancel">
+               <savehotkeys>
+                  <hotkey modifiers="meta" key="s"/>
+                  <hotkey modifiers="ctrl" key="s"/>
+               </savehotkeys>
+            </action>
+         </actions>
+      </pagetitle>
+      <custom name="newRecordsAlert" uniqueid="UpdatedRecordsAlert" cssclass="nx-warning">
+         <renderconditions logictype="and"/>
+      </custom>
+      <panelset type="custom" scroll="">
+         <panels>
+            <panel width="50%">
+               <components>
+                  <skuidvis__chart model="Opportunity" maintitle="by Stage" type="column">
+                     <dataaxes>
+                        <axis id="axis1" title="Total Amount"/>
+                     </dataaxes>
+                     <categoryaxes>
+                        <axis id="categories" categorytype="field" field="CloseDate" fillvals="true" dategranularity="calyear" title="Close Date">
+                           <allowedgranularities>
+                              <type>calmonth</type>
+                              <type>calquarter</type>
+                              <type>calyear</type>
+                           </allowedgranularities>
+                        </axis>
+                     </categoryaxes>
+                     <serieslist>
+                        <series valuefield="Amount" splittype="field" modelId="Opportunity" categoryField="CloseDate" aggfunction="sum" splitfield="StageName"/>
+                     </serieslist>
+                     <colors/>
+                     <legend layout="horizontal" halign="center" valign="bottom"/>
+                     <allowedtypes>
+                        <type>line</type>
+                        <type>spline</type>
+                        <type>area</type>
+                        <type>areaspline</type>
+                        <type>column</type>
+                        <type>bar</type>
+                     </allowedtypes>
+                  </skuidvis__chart>
+               </components>
+            </panel>
+            <panel width="50%">
+               <components>
+                  <skuidvis__chart model="Opportunity" maintitle="by Owner" type="donut">
+                     <dataaxes>
+                        <axis id="axis1"/>
+                     </dataaxes>
+                     <categoryaxes>
+                        <axis id="categories"/>
+                     </categoryaxes>
+                     <serieslist>
+                        <series valuefield="Amount" splittype="field" modelId="Opportunity" aggfunction="sum" splitfield="Owner.Name"/>
+                     </serieslist>
+                     <colors/>
+                     <legend layout="horizontal" halign="center" valign="bottom"/>
+                  </skuidvis__chart>
+               </components>
+            </panel>
+         </panels>
+      </panelset>
+      <skootable showconditions="true" showsavecancel="false" searchmethod="server" searchbox="true" showexportbuttons="false" pagesize="10" createrecords="false" model="Opportunity" mode="read" instantfilters="false" allowscrollbars="true" tablescrollheight="300px" floatheader="true" freezeleftcolumns="false">
+         <fields>
+            <field id="Name" valuehalign="" type="" allowordering="true"/>
+            <field id="AccountId" valuehalign="" type="" allowordering="true">
+               <label>Account</label>
+            </field>
+            <field id="Amount" decimalplaces="" valuehalign="" type="" allowordering="true">
+               <summaries>
+                  <summary>sum</summary>
+                  <summary>avg</summary>
+               </summaries>
+            </field>
+            <field id="TotalOpportunityQuantity" decimalplaces="" valuehalign="" type="" allowordering="true">
+               <summaries>
+                  <summary>sum</summary>
+               </summaries>
+            </field>
+            <field id="StageName" valuehalign="" type=""/>
+            <field id="Probability" decimalplaces="" valuehalign="" type=""/>
+            <field id="CloseDate" valuehalign="" type="" allowordering="true"/>
+            <field id="OwnerId" valuehalign="" type="">
+               <label>Owner</label>
+            </field>
+         </fields>
+         <rowactions>
+            <action type="edit"/>
+            <action type="delete"/>
+         </rowactions>
+         <massactions usefirstitemasdefault="true">
+            <action type="massupdate"/>
+            <action type="massdelete"/>
+         </massactions>
+         <views>
+            <view type="standard"/>
+         </views>
+         <actions defaultlabel="Global Actions" defaulticon="ui-silk-wand" usefirstitemasdefault="true"/>
+         <filters>
+            <filter type="multiselect" filteroffoptionlabel="Any Account" createfilteroffoption="true" affectcookies="true" autocompthreshold="25" conditionsource="auto" labelmode="auto" conditionfield="AccountId" conditionoperator="in"/>
+            <filter type="multiselect" filteroffoptionlabel="Any Stage" createfilteroffoption="true" affectcookies="true" autocompthreshold="25" conditionsource="auto" labelmode="auto" conditionfield="StageName" conditionoperator="in"/>
+            <filter type="daterange" filteroffoptionlabel="New Filter" createfilteroffoption="true" affectcookies="true" autocompthreshold="25" conditionsource="auto" labelmode="auto" conditionfield="CloseDate"/>
+            <filter type="multiselect" filteroffoptionlabel="Any Owner" createfilteroffoption="true" affectcookies="true" autocompthreshold="25" conditionsource="auto" labelmode="auto" conditionfield="OwnerId" conditionoperator="in"/>
+         </filters>
+         <searchfields/>
+      </skootable>
+   </components>
+   <resources>
+      <labels/>
+      <css/>
+      <javascript>
+         <jsitem location="inline" name="poll for updates" cachelocation="false" url="">(function(skuid){
+	var $ = skuid.$;
+	$(function(){
+	    // THe names of the Models that should be checked every so often for updates
+	    // These should NOT be the Models associated with Charts / Tables, etc.
+	    var RECENT_UPDATES_MODELS = [
+	        'RecentUpdates_Opportunity'
+	    ];
+	    // The number of seconds to wait before checking for updates
+		var INTERVAL_IN_SECONDS = 10;
+		// Each of our Models should have a Condition named "LastModifiedDate"
+		var COMMON_CONDITION_NAME = "LastModifiedDate";
+		
+		var milliseconds = INTERVAL_IN_SECONDS * 1000;
+		var RecentUpdates = $.map(RECENT_UPDATES_MODELS,function(modelId){ return skuid.$M(modelId); });
+		setInterval(function(){
+		    var now = new Date();
+		    var previous = new Date(now.getTime() - milliseconds);
+		    $.each(RecentUpdates,function(i,model){
+		        var condition = model.getConditionByName(COMMON_CONDITION_NAME,true);
+    		    var sfDateTime = skuid.time.getSFDateTime(previous);
+    		    model.setCondition(condition,previous);
+		    });
+		    $.when(skuid.model.updateData(RecentUpdates))
+		        .done(function(){
+		           // If there are records in any of our Models, show our message
+		           var foundModelWithUpdates = false;
+		           $.each(RecentUpdates,function(i,model){
+		               if (model.getRows().length) {
+		                    foundModelWithUpdates = true;
+		               }
+		           });
+		           // If we found any Model(s) with recent updates,
+		           // show our updated records alert
+		           if (foundModelWithUpdates) {
+		                $('#UpdatedRecordsAlert').show('fast');    
+		           }
+		        });
+		},milliseconds);
+	});
+})(skuid);</jsitem>
+         <jsitem location="inlinecomponent" name="newRecordsAlert" cachelocation="false" url="">var element = arguments[0],
+	$ = skuid.$;
+
+// The names of the Models that we want to REFRESH
+// if there are any updates
+var MODELS_TO_REFRESH = {
+    'RecentUpdates_Opportunity' : 'Opportunity' 
+};
+var ALERT_MESSAGE = 'There are new / updated Opportunities.';
+var MESSAGE_WHILE_LOADING = 'Loading new / updated records...';
+
+var dismissMessage = function(){
+  element.hide('fast');
+};
+
+var refreshList = $('&lt;a&gt;Click to refresh list&lt;/a&gt;')
+    .css('text-decoration','underline')
+    .css('color','white')
+    .on('click',function(){
+        $.blockUI({
+            message: MESSAGE_WHILE_LOADING
+        });
+        // Determine the Models we need to update
+        // Only update the ones whose corresponding RecentUpdate model has data rows
+        var modelsToUpdate = [];
+        $.each(MODELS_TO_REFRESH,function(checkModelId,updateModelId){
+            var checkModel = skuid.$M(checkModelId);
+            var updateModel = skuid.$M(updateModelId);
+           if (checkModel &amp;&amp; checkModel.getRows().length &amp;&amp; updateModel) {
+               modelsToUpdate.push(updateModel); 
+           }
+        });
+        $.when(skuid.model.updateData(modelsToUpdate))
+            .done(function(){
+                dismissMessage();    
+                $.unblockUI(); 
+            });
+        
+    });
+
+element
+    .on('click',dismissMessage)
+    .append(ALERT_MESSAGE)
+    .append(refreshList)
+    // Hide our element initially
+    .hide();</jsitem>
+      </javascript>
+   </resources>
+</skuidpage>
