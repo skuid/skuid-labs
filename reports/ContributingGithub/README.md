@@ -1,9 +1,9 @@
-# Contributing to Github only using Github
+# Contributing to Github using only Github
 This document is a step by step tutorial to contribution to Skuid Labs (or other status site generator) using just Github. 
 
 One of the challenges many find to contributing to Github is the infrastructure typically required to do local development and then push changes to the remote repository.  The local copy is a convenience,  and is required if you need to ensure some piece of code works before committing it to the repository.  But in the case of content,  it is not required.  One may work entirely in the remote repository making changes and the daunting infrastructure of a code editor,  terminal commands,  git clients etc can be avoided.  This document shows how one does this work. 
 
-## Instructions
+# Instructions
 
 **Step 1.  Go to the SkuidLabs Repo.** 
 
@@ -65,7 +65,7 @@ Commit your Readme file and navigate to the directory your created.   You want t
 - Commit your work and look it over one last time.
 - Makes sure it looks perfect in your branch. 
 
-### Open Pull Request for others review before merging. 
+# Open a Pull Request for review and approval. 
 Github provides really good tools for collaborative review and editing.  We use the "Pull Request" mechanism to get this started.
 
 **Step 12. Create a Pull Request**
@@ -77,29 +77,25 @@ Github provides really good tools for collaborative review and editing.  We use 
 **Step 13.  Fill out Pull Request**
 
 <img src="CompletePullRequest.png" width="500"></img>
+
 - How hard can this be? 
 - Make sure you are merging `Your Branch` to `Master`. 
   - Github allows for super complex branching, but there is no need to get into all that here. 
-
 - Document what you are trying to do in the title and description.  
   - No need to replicate your document in this description...
-
 - Click the :gear: next to `Reviewers` to request editorial help. 
   - One of these reviewers will need to approve your work before merging to master and making available to the world. 
-
 - Click `Create Pull Request`
   - Email notifications will be sent to the reviewers you have requested
   - You can send them gifts as reminders.  $20.00 bills work well.  
 
 **Step 14.  Handle the back and forth.** 
-
 Now the Pull Request is in play and you'll go back and forth with the editors. 
 - Use the "Pull Requests" link at the top of Github to see all the ones you have outstanding. 
 
 <img src="OpenPullRequests.png" width="500"></img>
 
 The reviewer will comment generally,  or will highlight specific areas of your code that needs to be improved. 
-
 - You will get an email when they have commented.  
   - Or Just check your Pull Request.  
   - Icons in the list will indicate when there have been comments or approvals. 
@@ -111,13 +107,11 @@ The reviewer will comment generally,  or will highlight specific areas of your c
 <img src="PullRequestComments.png" width="500"></img>
 
 **Step 15. Glorious Approval!!** 
-
 When your reviewer has approved your new article you will get an email,  or you will see the status change in the PR list. 
 - Your Job is not Done! 
 - At the bottom of the Pull Request screeen look for the "Squash and Merge" button.
   - Add a final commit message with a basic description of the project
   - Confirm the merge
-  - After merging make sure you Delete your original branch 
+- After merging make sure you Delete your original branch 
 
 Celebrate your contribution to our code repository.  :tada: :tada:
-
