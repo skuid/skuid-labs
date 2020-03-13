@@ -64,8 +64,65 @@ Commit your Readme file and navigate to the directory your created.   You want t
 - Upload design system zip files in the same way. 
 
 **Step 11.  Rinse and Repeat until you have it just perfect.**
+- Commit your work and look it over one last time.
+- Makes sure it looks perfect in your branch. 
 
 ### Open Pull Request for others review before merging. 
 Github provides really good tools for collaborative review and editing.  We use the "Pull Request" mechanism to get this started.
 
+**Step 12. Create a Pull Request**
+- Navigate to the directory where all your work is contained. 
+- Click "Pull Request" in header bar of the directory. 
+
+<img src="StartPullRequest.png" width="500"></img>
+
+**Step 13.  Fill out Pull Request**
+
+<img src="CompletePullRequest.png" width="500"></img>
+
+- How hard can this be? 
+
+- Make sure you are merging `Your Branch` to `Master`. 
+  - Github allows for super complex branching, but there is no need to get into all that here. 
+
+- Document what you are trying to do in the title and description.  
+  - No need to replicate your document in this description...
+
+- Click the :gear: next to `Reviewers` to request editorial help. 
+  - One of these reviewers will need to approve your work before merging to master and making available to the world. 
+
+- Click `Create Pull Request`
+  - Email notifications will be sent to the reviewers you have requested
+  - But you can send them gifts as well. 
+
+**Step 14.  Handle the back and forth. 
+
+Now the Pull Request is in play and you'll go back and forth with the editors. 
+- Use the "Pull Requests" link at the top of Github to see all the ones you have outstanding. 
+
+<img src="OpenPullRequest.png" width="500"></img>
+
+The reviewer will comment generally,  or will highlight specific areas of your code that needs to be improved. 
+
+- You will get an email when they have commented.  
+  - Or Just check your Pull Request.  
+  - Icons in the list will indicate when there have been comments or approvals. 
+
+- Adjust your code as requested by your reviewer. 
+  - You can sometimes accept reccomendations directly in the pull request conversation and commit changes there. 
+  - Other times you need to edit your code in the directory and commit it again. 
+
+- All this change history shows up in the Commits Tab. 
+
+<img src="PullRequestComments.png" width="500"></img>
+
+**Step 15. Glorious Approval!!** 
+When your reviewer has approved your new article you will get an email,  or you will see the status change in the PR list. 
+- Your Job is not Done! 
+- At the bottom of the Pull Request screeen look for the "Squash and Merge" button.
+  - Add a final commit message with a basic description of the project
+  - Confirm the merge
+  - After merging make sure you Delete your original branch 
+
+Celebrate your contribution to our code repository.  :tada: :tada:
 
