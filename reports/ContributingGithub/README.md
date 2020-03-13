@@ -7,35 +7,65 @@ One of the challenges many find to contributing to Github is the infrastructure 
 
 **Step 1.  Go to the SkuidLabs Repo.** 
 
-**Step 2.  Create a new branch.**
-- Open the branch selector button and type name of a new branch (or select the branch you have started working on)
+Remember:  https://github.com/skuid/skuid-labs
 
-<img src="NewBranch.png" width="400"></img>
+**Step 2.  Create a new branch.**
+- Open the branch selector button and type name of a new branch (or select the branch you were already working on). 
+- Don't try to edit documents in Master.  
+
+<img src="NewBranch.png" width="500"></img>
 
 **Step 3. Navigate to the directory where you want to create your new document.**
 
-<img src="NavigateToFolder.png" width="300"></img>
+<img src="NavigateToFolder.png" width="500"></img>
 
 **Step 4. Click Create New File button.**
 
 **Step 5. Start typing name of new directory and Readme file.**
-- When you type a "/" Github will interpret this as a new directory and send you to a new text box. 
-- After you have created the directory name a file "README.md" 
+- When you type a "/" Github will interpret this as a new directory and expose a new text box.
+  - Backspace to get back and edit the directory name
+- The first file you create should be  `README.md` 
 
-<img src="CreateNewFile.png" width="300"></img>
+<img src="CreateNewFile.png" width="500"></img>
 
 **Step 6. Write your document using Markdown syntax.**
 - [Here is a helpful document](https://help.github.com/en/github/writing-on-github/basic-writing-and-formatting-syntax) for styling your document using Markdown
-- Preview changes as you work. 
+- Preview your changes as you work. 
+
+<img src="PreviewChanges.png" width="500"></img>
 
 **Step 7. Commit your changes early and often.**
 - Navigate to the bottom of your document 
 - Write a commit message
 - Select the "commit directoy to the <<branch name>> branch
   
-<img src="CommitFile.png" width="300"></img>
+<img src="CommitFile.png" width="500"></img>
 
-**Step 8.  After committing - you will have to edit your document to keep working.**
-  
+**Step 8.  After committing - you will have to click edit to keep working.**
+- Look for the edit pencil in the title bar for your file. 
+
 ### Adding Images and other Files
-After committing click the Upload Files icon
+Commit your Readme file and navigate to the directory your created.   You want to make sure images and other files related to your experiment are in the same Directory as your ReadMe file. 
+
+**Step 9. Click the `Add Files` button and drag files into the big box**
+
+<img src="UploadFiles.png" width="500"></img>
+
+- After uploading you need to commit these files to your repo.  
+- Make sure your commit message is suitably snarky. 
+
+**Step 10.  Edit your Readme file to include relative links to the images you just uploaded.**  
+- Like this:  `<img src="CommitFile.png" width="500"></img>`
+
+- Upload page xml in the same way 
+  - Or create a new file as shown above, with an `.xml` file extension.  
+  - Then copy your page xml into that new file. 
+
+- Upload design system zip files in the same way. 
+
+**Step 11.  Rinse and Repeat until you have it just perfect.**
+
+### Open Pull Request for others review before merging. 
+Github provides really good tools for collaborative review and editing.  We use the "Pull Request" mechanism to get this started.
+
+
