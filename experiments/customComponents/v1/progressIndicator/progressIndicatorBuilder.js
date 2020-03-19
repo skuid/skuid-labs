@@ -27,59 +27,59 @@
 				name : 'Step',
 				hideWrapper: true,
 				componentRenderer : function (stepComponent) {
-						// The main display of the stepBuilder
-						var disp = $('<div class="progress-chunk">');
+					// The main display of the stepBuilder
+					var disp = $('<div class="progress-chunk">');
 						
-						var text = $('<div class="progress-text">');
-						var icon = stepComponent.state.attr('icon');
-						var editable = stepComponent.state.attr('editable') === undefined || stepComponent.state.attr('editable') == "true"
+					var text = $('<div class="progress-text">');
+					var icon = stepComponent.state.attr('icon');
+					var editable = stepComponent.state.attr('editable') === undefined || stepComponent.state.attr('editable') == "true";
 
-						if(icon){
-							text.append($('<div>').addClass('nx-step-icon ' + icon + ' sk-icon inline'));
-						}
-						text.append('<div class="text-content">' + stepComponent.state.attr('label') + '</div>');
+					if(icon){
+						text.append($('<div>').addClass('nx-step-icon ' + icon + ' sk-icon inline'));
+					}
+					text.append('<div class="text-content">' + stepComponent.state.attr('label') + '</div>');
 
-						disp.append(text);
-						disp.append('<div class="progress-triangle"></div>');
-						disp.append('<div class="progress-triangle-outline"></div>');
+					disp.append(text);
+					disp.append('<div class="progress-triangle"></div>');
+					disp.append('<div class="progress-triangle-outline"></div>');
 						
-						// Add the component element to the display div,
-						// instead of the other way around (read more at bottom)
-						disp.append(stepComponent.element);
+					// Add the component element to the display div,
+					// instead of the other way around (read more at bottom)
+					disp.append(stepComponent.element);
 
-						// Adds the configurable parts to the specific div
-						component.stepsWrapper.append(disp);
+					// Adds the configurable parts to the specific div
+					component.stepsWrapper.append(disp);
 
-						disp.find('.progress-text').on('click', function(e){
-							stepComponent.element.click();
-							// Prevent the parent component from being selected
-							return false;
-						});
+					disp.find('.progress-text').on('click', function(e){
+						stepComponent.element.click();
+						// Prevent the parent component from being selected
+						return false;
+					});
 
-						// If this is a new step, give it a new id
-						if(stepComponent.state.attr('data-id') === undefined){
-							var idIndex = Number(component.state.attr('id-index'));
-							stepComponent.state.attr('data-id', idIndex);
-							component.state.attr('id-index', idIndex + 1);
-						}
+					// If this is a new step, give it a new id
+					if(stepComponent.state.attr('data-id') === undefined){
+						var idIndex = Number(component.state.attr('id-index'));
+						stepComponent.state.attr('data-id', idIndex);
+						component.state.attr('id-index', idIndex + 1);
+					}
 
-						stepComponent.previewElement = disp;
+					stepComponent.previewElement = disp;
 
-						if(editable){
-							stepComponent.addActionItem('Remove Step','sk-bi-tab-delete',function() {
-								// Remove the display portion
-								stepComponent.element.remove();
-								disp.remove();
+					if(editable){
+						stepComponent.addActionItem('Remove Step','sk-bi-tab-delete',function() {
+							// Remove the display portion
+							stepComponent.element.remove();
+							disp.remove();
 								
-								// Remove it from the xml 
-								var findString = '[data-id="' + stepComponent.state.attr('data-id') + '"]';
-								component.state.find(findString).remove();
-								component.save();
-							});
-						}
+							// Remove it from the xml 
+							var findString = '[data-id="' + stepComponent.state.attr('data-id') + '"]';
+							component.state.find(findString).remove();
+							component.save();
+						});
+					}
 				},
 				propertiesRenderer : function (propertiesObj,stepComponent) {
-					var editable = stepComponent.state.attr('editable') === undefined || stepComponent.state.attr('editable') == "true"
+					var editable = stepComponent.state.attr('editable') === undefined || stepComponent.state.attr('editable') == "true";
 
 					if(editable){
 
@@ -274,13 +274,13 @@
 				type: "picklist",
 				label: "Mode",
 				picklistEntries: [{
-						value: "tabwiz",
-						label: "Tabset/Wizard"
-					},
-					{
-						value: "picklist",
-						label: "Picklist"
-					}],
+					value: "tabwiz",
+					label: "Tabset/Wizard"
+				},
+				{
+					value: "picklist",
+					label: "Picklist"
+				}],
 
 				defaultValue: 'tabwiz',
 				onChange: function(){

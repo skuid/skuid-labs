@@ -169,13 +169,13 @@
 							return false;
 						}
 					});
-				}
+				};
 				setPicklist();
 				skuid.events.subscribe('row.updated',function(updateResult){
-				 if ((updateResult.modelId === xmlDef.attr('model'))) {
-						 setPicklist();
-				 }
-			});
+					if ((updateResult.modelId === xmlDef.attr('model'))) {
+						setPicklist();
+					}
+				});
 
 			}
 		}
