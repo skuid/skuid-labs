@@ -40,7 +40,7 @@ Remember:  https://github.com/skuid/skuid-labs
 **Step 7. Commit your changes early and often.**
 - Scroll to the bottom of your document 
 - Write a commit message
-- Select the `commit directoy to the <<branch name>> branch` option
+- Select the `commit directly to the <<branch name>> branch` option
   
 <img src="CommitFile.png" width="500"></img>
 
