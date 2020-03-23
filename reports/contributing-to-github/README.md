@@ -1,14 +1,10 @@
 # Contributing to Github using only Github
 
-This is a step by step tutorial for contributing content to Skuid Labs (or other repos) using just the Github website. 
+Typically, developers who contribute to a central source code repository like Github have a series of tools required to do local development. However, the tools used for local development (code editors,  terminal commands,  git clients, etc.) can sometimes be an obstacle to submitting work.
 
-Typically,  developers who contribute to a central source code repository like Github have a series of tools required to do local development. When code is completed and tested locally,  they push changes to the remote repository.  The local copy is a convenience,  and is required if you need to ensure some piece of code works before committing it to the repository.  However in the case of documentation and other forms of content, there is no "local testing". This makes the local developement infrastructure (code editors,  terminal commands,  git clients etc) a unecessary obstacle to participation. One may work entirely in the github website (the remote repository). This document shows how one does this work. 
+Since Skuid Labs consists mainly of READMEs, Skuid pages, and short code snippets, there's often not a need for a complex development setup. And since it's possible to work and submit content entirely through the Github website, we wanted to show people how to submit their ideas faster.
 
-However in the case of documentation and other forms of content, there is no "local testing". This makes the local developement infrastructure (code editors,  terminal commands,  git clients etc) a unecessary obstacle to participation. One may work entirely in the github website (the remote repository). This document shows how one does this work. 
-
-There will come a time when local development infrastructure is needed or convenient,  but it can not be an obstacle to content contribution. 
-
-# Instructions
+Follow along with the instructions below to learn how to **submit pull requests to Skuid Labs (or other repos) using just your web browser and the Github UI.**
 
 ## Instructions
 
