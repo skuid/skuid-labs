@@ -70,13 +70,13 @@
 		}
 
 		if(doneStepColor !== undefined && doneStepColor.split(/\s*/).join() !== ''){
-			var style = '<style>#' + id + ' .progress-chunk.done {background: red !important;} #' + id + ' .progress-chunk.done .progress-triangle {border-left-color: red;}</style>';
+			style = '<style>#' + id + ' .progress-chunk.done {background: red !important;} #' + id + ' .progress-chunk.done .progress-triangle {border-left-color: red;}</style>';
 			style = style.split('red').join(doneStepColor);
 			component.element.append(style);
 		}
 
 		if(futureStepColor !== undefined && futureStepColor.split(/\s*/).join() !== ''){
-			var style = '<style>#' + id + ' .progress-chunk {background: red !important;} #' + id + ' .progress-chunk .progress-triangle {border-left-color: red;}</style>';
+			style = '<style>#' + id + ' .progress-chunk {background: red !important;} #' + id + ' .progress-chunk .progress-triangle {border-left-color: red;}</style>';
 			style = style.split('red').join(futureStepColor);
 			component.element.append(style);
 		}

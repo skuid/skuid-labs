@@ -15,7 +15,7 @@
 			var bc = skuid.builder.core;
 			var state = component.state;
 
-			var content = $j('<div class="progress-indicator">');
+			var content = $('<div class="progress-indicator">');
 			var cTable = $('<table>');
 			var cRow = $('<tr>');
 
@@ -312,7 +312,7 @@
 				.attr('mode', 'tabwiz');
 
 			// Always wrap lists in plural nodes
-			steps = $xml('<steps/>').appendTo(progressIndicator);
+			var steps = $xml('<steps/>').appendTo(progressIndicator);
 			steps.append($xml('<step label="New Step"/>').append($xml('<components/>')));
 			return progressIndicator;
 		}
