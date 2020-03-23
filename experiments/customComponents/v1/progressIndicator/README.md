@@ -22,7 +22,8 @@ From there, upload the component pack to your Skuid instance by following the do
 After the component pack loads within the Composer, drag the Progress Indicator into the canvas.
 
 1. Connect this Progress Indicator to a Tab Set or Wizard component using that component's unique Id.
-1. Add one step in your Progress Indicator to correspond to each tab in your Tab Set or step in your Wizard. (You can click on an Indicator step to change its name or enter a descriptive title, e.g. "Create Contact," "Create Related Cases," "Confirm," etc.).
+1. Add one step in your Progress Indicator to correspond to each tab in your Tab Set or step in your Wizard. **Note that these steps are not added automatically.** 
+1. Click on an Indicator step to change its name or enter a descriptive title, e.g. "Create Contact," "Create Related Cases," "Confirm," etc.
 1. Choose the color in which you want the user's current tab/step to be shown.
 1. Choose the color for previous steps.
 1. Choose the color for future steps.
