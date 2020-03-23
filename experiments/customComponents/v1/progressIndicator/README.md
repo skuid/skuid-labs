@@ -27,3 +27,7 @@ After the component pack loads within the Composer, drag the Progress Indicator 
 1. Choose the color for previous steps.
 1. Choose the color for future steps.
 1. Now, when your users are working through the process on this page, the Progress Indicator will light up the step that they’re on and show them where they are in the process.
+
+## Sample page
+
+The included sample page XML demonstrates a very basic Wizard and Progress Indicator connection. It contains no data and can be used in any Skuid instance.

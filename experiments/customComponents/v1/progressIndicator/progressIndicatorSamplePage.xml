@@ -1,0 +1,62 @@
+<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true">
+	<models/>
+	<components>
+<progressindicator__progress_indicator id-index="3" future-color="#eeeeee" current-color="#555" done-color="#888888" mode="tabwiz" uniqueid="sk-7z_-442" friendId="wizard">
+	<steps>
+		<step label="Step 1" data-id="0">
+			<components/>
+		</step>
+		<step label="Step 2" data-id="1">
+			<components/>
+		</step>
+		<step label="Final step" data-id="2">
+			<components/>
+		</step>
+	</steps>
+</progressindicator__progress_indicator>
+<wizard deferstepcontentsrendering="false" buttonslocation="top" uniqueid="wizard">
+	<steps>
+		<step stepid="step1" steplabel="Step 1">
+			<components>
+				<template multiple="false" uniqueid="sk-7_0-468">
+					<contents>This is step 1.</contents>
+				</template>
+			</components>
+			<actions>
+				<action uniqueid="sk-7z--447" type="navigate" stepid="step2" label="Next Step" icon="sk-icon-arrow-right" window="self"/>
+			</actions>
+		</step>
+		<step stepid="step2" steplabel="Step 2">
+			<components>
+				<template multiple="false" uniqueid="sk-7_7-565">
+					<contents>This is step 2.</contents>
+				</template>
+			</components>
+			<actions>
+				<action uniqueid="sk-7z--448" type="navigate" stepid="step1" label="Previous Step" icon="sk-icon-arrow-left" secondary="true" window="self"/>
+				<action uniqueid="sk-7z--449" type="navigate" label="Next Step" icon="sk-icon-arrow-right" window="self" stepid="step3"/>
+			</actions>
+		</step>
+		<step stepid="step3" steplabel="Step 3">
+			<components>
+				<template multiple="false" uniqueid="sk-805-1209">
+					<contents>Complete!</contents>
+				</template>
+			</components>
+			<actions>
+				<action uniqueid="sk-7_A-620" type="navigate" stepid="step2" label="Previous Step" icon="sk-icon-arrow-left" secondary="true" window="self"/>
+			</actions>
+		</step>
+	</steps>
+</wizard>
+</components>
+	<resources>
+		<labels/>
+		<javascript/>
+		<css/>
+		<actionsequences/>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+</skuidpage>
