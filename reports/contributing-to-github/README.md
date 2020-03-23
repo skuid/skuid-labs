@@ -10,13 +10,17 @@ There will come a time when local development infrastructure is needed or conven
 
 # Instructions
 
-**Step 1. Go to the SkuidLabs repo.** 
+## Instructions
+
+**Step 1. Go to the SkuidLabs repo.**
 
 Remember:  https://github.com/skuid/skuid-labs
 
-**Step 2. Create a new branch.**
-- Open the branch selector button and type name of a new branch (or select the branch you were already working on). 
-- Don't try to edit documents in Master. 
+**Step 2. Create a new branch or select your existing one.**
+
+Don't try to edit documents in the `master` branch. This is bad practice, and our repo doesn't allow it anyway.
+
+Instead, **open the branch selector button** and type the name of a new branch. You'll see an option to create a new branch if the name you entered matches no existing branches. Of course, you can also select a branch you were already working on.
 
 ![](./NewBranch.png)
 
@@ -24,100 +28,104 @@ Remember:  https://github.com/skuid/skuid-labs
 
 ![](./NavigateToFolder.png)
 
-**Step 4. Click `Create New File` button.**
+**Step 4. Click `Create new file`.**
 
-**Step 5. Start typing name of new directory and readme file.**
+**Step 5. Start typing name of new directory and README file.**
 
-- When you type a `/` Github will interpret this as a new directory and expose a new text box.
+- You can create the directory for you submission when you create your README file. When you type a forward slash (`/`) Github will interpret this as a new directory, create that directory, and expose a new text box for your file name. Repeat as needed.
   - Backspace to get back and edit the directory name
-- The first file you create should be  `README.md` 
-- Be careful. Once you've created a file, it is difficult to change the directory name. 
+- The first file you create should be  `README.md`
+- Be careful. Once you've created a file, it is difficult to change the directory name.
 
 ![](./CreateNewFile.png)
 
 **Step 6. Write your document using Markdown syntax.**
 
 - [Here is a helpful document](https://help.github.com/en/github/writing-on-github/basic-writing-and-formatting-syntax) for styling your document using Markdown
-- Preview your changes as you work. 
+- Preview your changes as you work.
 
 ![](./PreviewChanges.png)
 
 **Step 7. Commit your changes early and often.**
 
-- Scroll to the bottom of your document 
-- Write a commit message
-- Select the `commit directly to the <<branch name>> branch` option
+- Scroll to the bottom of your document.
+- Write a commit message.
+- Select the `Commit directly to the <<branch name>> branch` option.
 
 ![](./CommitFile.png)
 
 **Step 8. After committing - you will have to click edit to keep working.**
 
-- Look for the edit pencil in the title bar for your file. 
+- Look for the edit pencil in the title bar for your file.
 
-# Adding images and other files
+## Adding images and other files
 
-Commit your Readme file and navigate to the directory your created. You want to make sure images and other files related to your experiment are in the same directory as your ReadMe file. 
+Commit your README file and navigate to the directory your created. You want to make sure images and other files related to your experiment are in the same directory as your README file.
 
 **Step 9. Click the `Add Files` button and drag files into the big box**
 
 ![](./UploadFiles.png)
 
-- After uploading you need to commit these files to your repo.
-- Make sure your commit message is suitably snarky. 
+Upload the rest of your experiment or report files from here. Including:
 
-**Step 10. Edit your readme file to include relative links to the images you just uploaded.**  
+- Sample page XML, as well as any other JS or CSS files, in the same way.
+  - Alternatively, create a new file with an `.XML` file extension, and then copy your page XML into that new file.
+- Design system zip files
+- JavaScript files for custom components, snippets, or formula functions
+- CSS files
 
-- Like this:  `<img src="CommitFile.png" width="500"></img>`
-- Upload page xml in the same way 
-  - Or create a new file as shown above, with an `.xml` file extension.
-  - Then copy your page xml into that new file. 
-- Upload design system zip files in the same way. 
+After uploading you need to commit these files to your repo. Make sure your commit message is suitably snarky.
+
+**Step 10. Edit your README file to include relative links to the images you just uploaded.**
+
+- Like this: `![](./CommitFile.png)`
 
 **Step 11. Rinse and repeat until you have it just perfect.**
 
 - Commit your work and look it over one last time.
-- Makes sure it looks perfect in your branch. 
+- Makes sure it looks perfect in your branch.
 
-# Open a Pull Request for review and approval. 
+## Open a pull request for review and approval.
 
-Github provides really good tools for collaborative review and editing. The `Pull Request` mechanism gets this started. This is a request to the maintainers of this repo to "pull" your code into the master branch. 
+Github provides really good tools for collaborative review and editing. The `pull request` mechanism gets this started. This is a request to the maintainers of this repo to "pull" your code into the `master` branch.
 
-**Step 12. Create a Pull Request**
+**Step 12. Create a pull request**
 
-- Navigate to the directory where all your work is contained. 
-- Click `Pull Request` in header bar of the directory. 
+- Navigate to the directory where all your work is contained.
+- Click `pull request` in header bar of the directory.
 
 ![](./StartPullRequest.png)
 
-**Step 13. Fill out Pull Request**
+**Step 13. Fill out pull request**
 
 ![](./CompletePullRequest.png)
 
-- Make sure you are merging `Your Branch` to `Master`. 
-  - Github allows for super complex branching, but there is no need to get into all that here. 
+- Make sure you are merging `Your Branch` to `master`.
+  - Github allows for super complex branching, but there is no need to get into all that here.
 - Document what you are trying to do in the title and description.
-  - Don't simply copy your document in this description...
-- Click the :gear: next to `Reviewers` to request editorial approval. 
-  - One of these reviewers will need to approve your work before merging to master and making available to the world. 
-- Click `Create Pull Request`
+  - Don't simply copy your README in this description.
+- Click the :gear: next to `Reviewers` to request editorial approval.
+  - One of these reviewers will need to approve your work before merging to master and making available to the world.
+  - Skuid Labs has several code owners who are automatically assigned all pull requests. At least one of those code owners will also need to approve your pull request before it can be merged.
+- Click `Create pull request`
   - Email notifications will be sent to the reviewers you have requested
   - You can send them a reminder on the back of a $20.00 bill.
 
-**Step 14. Handle the back and forth.** 
+**Step 14. Handle the back and forth.**
 
-Now the Pull Request is in play and you'll go back and forth with the editors in a pull request conversation. 
-- Use the "Pull Requests" link at the top of Github to see the ones you have outstanding. 
+Now the pull request is in play and you'll go back and forth with the editors in a pull request conversation.
+- Use the **Pull requests** link at the top of Github's navbar to see the ones you have outstanding.
 
 ![](./OpenPullRequests.png)
 
-The reviewer will comment generally, or will highlight specific areas of your code that needs to be improved. 
+The reviewer will comment generally or will highlight specific areas of your code that needs to be improved.
 - You will get an email when they have commented.
-  - You can also just check your Pull Request.
-  - Icons in the list will indicate when there have been comments or approvals. 
-- Adjust your code as requested by your reviewer. 
-  - You can sometimes accept reccomendations directly in the pull request conversation and commit changes there. 
-  - Other times you need to edit your code in the directory and commit it again. 
-- All this change history shows up in the `Commits` tab. 
+  - You can also just check your pull request.
+  - Icons in the list will indicate when there have been comments or approvals.
+- Adjust your code as requested by your reviewer.
+  - You can sometimes accept recommendations directly in the pull request conversation and commit changes there.
+  - Other times you need to edit your code in the browser and commit it again.
+- All this change history shows up in the `Commits` tab.
 
 ![](./PullRequestComments.png)
 
