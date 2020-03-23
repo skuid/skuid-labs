@@ -15,11 +15,11 @@ Remember:  https://github.com/skuid/skuid-labs
 - Open the branch selector button and type name of a new branch (or select the branch you were already working on). 
 - Don't try to edit documents in Master.  
 
-<img src="NewBranch.png" width="500"></img>
+![](./NewBranch.png)
 
 **Step 3. Navigate to the directory where you want to create your new document.**
 
-<img src="NavigateToFolder.png" width="500"></img>
+![](./NavigateToFolder.png)
 
 **Step 4. Click `Create New File` button.**
 
@@ -29,20 +29,20 @@ Remember:  https://github.com/skuid/skuid-labs
 - The first file you create should be  `README.md` 
 - Be careful.  Once you've created a file, it is difficult to change the directory name. 
 
-<img src="CreateNewFile.png" width="500"></img>
+![](./CreateNewFile.png)
 
 **Step 6. Write your document using Markdown syntax.**
 - [Here is a helpful document](https://help.github.com/en/github/writing-on-github/basic-writing-and-formatting-syntax) for styling your document using Markdown
 - Preview your changes as you work. 
 
-<img src="PreviewChanges.png" width="500"></img>
+![](./PreviewChanges.png)
 
 **Step 7. Commit your changes early and often.**
 - Scroll to the bottom of your document 
 - Write a commit message
 - Select the `commit directly to the <<branch name>> branch` option
   
-<img src="CommitFile.png" width="500"></img>
+![](./CommitFile.png)
 
 **Step 8.  After committing - you will have to click edit to keep working.**
 - Look for the edit pencil in the title bar for your file. 
@@ -52,7 +52,7 @@ Commit your Readme file and navigate to the directory your created. You want to 
 
 **Step 9. Click the `Add Files` button and drag files into the big box**
 
-<img src="UploadFiles.png" width="500"></img>
+![](./UploadFiles.png)
 
 - After uploading you need to commit these files to your repo.  
 - Make sure your commit message is suitably snarky. 
@@ -75,11 +75,11 @@ Github provides really good tools for collaborative review and editing.  The `Pu
 - Navigate to the directory where all your work is contained. 
 - Click `Pull Request` in header bar of the directory. 
 
-<img src="StartPullRequest.png" width="500"></img>
+![](./StartPullRequest.png)
 
 **Step 13.  Fill out Pull Request**
 
-<img src="CompletePullRequest.png" width="500"></img>
+![](./CompletePullRequest.png)
 
 - Make sure you are merging `Your Branch` to `Master`. 
   - Github allows for super complex branching, but there is no need to get into all that here. 
@@ -95,7 +95,7 @@ Github provides really good tools for collaborative review and editing.  The `Pu
 Now the Pull Request is in play and you'll go back and forth with the editors in a pull request conversation. 
 - Use the "Pull Requests" link at the top of Github to see the ones you have outstanding. 
 
-<img src="OpenPullRequests.png" width="500"></img>
+![](./OpenPullRequests.png)
 
 The reviewer will comment generally, or will highlight specific areas of your code that needs to be improved. 
 - You will get an email when they have commented.  
@@ -106,7 +106,7 @@ The reviewer will comment generally, or will highlight specific areas of your co
   - Other times you need to edit your code in the directory and commit it again. 
 - All this change history shows up in the `Commits` tab. 
 
-<img src="PullRequestComments.png" width="500"></img>
+![](./PullRequestComments.png)
 
 **Step 15. Glorious Approval!!** 
 When your reviewer has approved your new article you will get an email, or you will see the status change in the PR list. 
