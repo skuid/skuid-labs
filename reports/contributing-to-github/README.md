@@ -121,13 +121,34 @@ The reviewer will comment generally, or will highlight specific areas of your co
 
 ![](./PullRequestComments.png)
 
-**Step 15. Glorious Approval!!** 
 
-When your reviewer has approved your new article you will get an email, or you will see the status change in the PR list. 
-- Your Job is not Done! 
-- At the bottom of the Pull Request screeen look for the "Squash and Merge" button.
-  - Add a final commit message with a basic description of the project
-  - Confirm the merge
-- After merging make sure you delete your original branch 
+**Step 14a. Linting**
+
+For some file types, Skuid Labs uses a **linter** known as ESLint. Linters ensure that code meets certain style guidelines. We try to maintain a certain level of consistency with the code in Labs, so enforce a linter on all pull requests. That means if your code breaks the rules **you cannot merge your pull request**.
+
+But fear not! Our linter outputs exactly what's wrong, in which file and on which line.
+
+To see what went wrong, see if your build passed. Builds run whenever you commit to the branch, and in this case our build just tests your code to make sure it doesn't break the rules. A failed build looks like this:
+
+To see what went wrong, click **Details** where it noted the build failed.
+
+![](./failedBuild.png)
+
+You'll now see the log of that build. Within that log, you'll see what ESLint took issue with.
+
+![](./eslintLog.png)
+
+From there, navigate to the problematic file and fix the issues within the editor. Then create a new commit with your fixes.
+
+This part of the process is easier to do locally, but it's still possible within the browser! Depending on the nature of your code, fixing one thing may uncover, but such is life.
+
+**Step 15. Glorious Approval!!**
+
+When your reviewer has approved your new article you will get an email, or you will see the status change in the PR list.
+- Your job is not done!
+- At the bottom of the pull request screen look for the **Squash and Merge** button.
+  - Add a final commit message with a basic description of the project.
+  - Confirm the merge.
+- After merging make sure you delete your original branch.
 
 Celebrate your contribution to our code repository. :tada: :tada:
