@@ -81,6 +81,28 @@ After uploading you need to commit these files to your repo. Make sure your comm
 - Commit your work and look it over one last time.
 - Makes sure it looks perfect in your branch.
 
+## Linting
+
+For some file types, Skuid Labs uses a **linter** known as ESLint. Linters ensure that code meets certain style guidelines. We try to maintain a certain level of consistency with the code in Labs, so enforce a linter on all pull requests. That means if your code breaks the rules **you cannot merge your pull request**.
+
+But fear not! Our linter outputs exactly what's wrong, in which file and on which line.
+
+To see what went wrong, see if your build passed. Builds run whenever you commit to the branch, and in this case our build just tests your code to make sure it doesn't break the rules. A failed build looks like this:
+
+To see what went wrong, click **Details** where it noted the build failed.
+
+![](./failedBuild.png)
+
+You'll now see the log of that build. Within that log, you'll see what ESLint took issue with.
+
+![](./eslintLog.png)
+
+From there, navigate to the problematic file and fix the issues within the editor. Then create a new commit with your fixes.
+
+This part of the process is easier to do locally, but it's still possible within the browser! Depending on the nature of your code, fixing one thing may uncover another, but such is life.
+
+
+
 ## Open a pull request for review and approval.
 
 Github provides really good tools for collaborative review and editing. The `pull request` mechanism gets this started. This is a request to the maintainers of this repo to "pull" your code into the `master` branch.
@@ -124,27 +146,6 @@ The reviewer will comment generally or will highlight specific areas of your cod
 - All this change history shows up in the `Commits` tab.
 
 ![](./PullRequestComments.png)
-
-
-**Step 14a. Linting**
-
-For some file types, Skuid Labs uses a **linter** known as ESLint. Linters ensure that code meets certain style guidelines. We try to maintain a certain level of consistency with the code in Labs, so enforce a linter on all pull requests. That means if your code breaks the rules **you cannot merge your pull request**.
-
-But fear not! Our linter outputs exactly what's wrong, in which file and on which line.
-
-To see what went wrong, see if your build passed. Builds run whenever you commit to the branch, and in this case our build just tests your code to make sure it doesn't break the rules. A failed build looks like this:
-
-To see what went wrong, click **Details** where it noted the build failed.
-
-![](./failedBuild.png)
-
-You'll now see the log of that build. Within that log, you'll see what ESLint took issue with.
-
-![](./eslintLog.png)
-
-From there, navigate to the problematic file and fix the issues within the editor. Then create a new commit with your fixes.
-
-This part of the process is easier to do locally, but it's still possible within the browser! Depending on the nature of your code, fixing one thing may uncover, but such is life.
 
 **Step 15. Glorious Approval!!**
 
