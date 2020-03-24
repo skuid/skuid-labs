@@ -153,6 +153,11 @@ When your reviewer has approved your new article you will get an email, or you w
 - At the bottom of the pull request screen look for the **Squash and Merge** button.
   - Add a final commit message with a basic description of the project.
   - Confirm the merge.
+
+![](./ReadyToMerge.png)
+
 - After merging make sure you delete your original branch.
+
+![](./DeleteBranch.png)
 
 Celebrate your contribution to our code repository. :tada: :tada:
