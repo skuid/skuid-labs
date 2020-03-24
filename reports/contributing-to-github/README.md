@@ -6,11 +6,27 @@ Since Skuid Labs consists mainly of READMEs, Skuid pages, and short code snippet
 
 Follow along with the instructions below to learn how to **submit pull requests to Skuid Labs (or other repos) using just your web browser and the Github UI.**
 
-## Instructions
+## Creating your branch
 
 **Step 1. Go to the SkuidLabs repo.**
 
 Remember:  https://github.com/skuid/skuid-labs
+
+**If you are not a Skuid Labs contributor, then you'll need to fork this repo.**
+
+This just means that you'll have a copy of the repo associated with *your* Github account, since you may not have access to the Skuid organization's copy of the repo.
+
+You'll still be able to submit your changes easily! For now, create the fork.
+
+Click the **Fork** buton.
+
+![](./forkButton.png)
+
+You'll be asked where you want your fork to be made. This is only relevant if you have multiple accounts or are associated with another organization. Select your Github account.
+
+![](./forkWhere.png)
+
+From here, continue following the steps to make your changes on your fork. Don't worry, you'll be able to submit the changes from your fork into our main repo later on!
 
 **Step 2. Create a new branch or select your existing one.**
 
@@ -95,7 +111,15 @@ Github provides really good tools for collaborative review and editing. The `pul
 
 **Step 13. Fill out pull request**
 
+If you're a Skuid Labs contributor, your screen will look like this:
+
 ![](./CompletePullRequest.png)
+
+If you had to create a fork in the beginner, your screen will look like this:
+
+![](./forkPullRequest.png)
+
+But the process is the same! Just make sure your base repository is set to the main repo, in our case `skuid/skuid-labs`.
 
 - Make sure you are merging `Your Branch` to `master`.
   - Github allows for super complex branching, but there is no need to get into all that here.
