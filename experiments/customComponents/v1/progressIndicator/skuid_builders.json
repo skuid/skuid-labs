@@ -1,0 +1,27 @@
+{
+   "id": "progressindicator",
+   "components": [
+      {
+         "id": "progress_indicator",
+         "folderId": "progressindicatorfolder"
+      }
+   ],
+   "folders": [
+      {
+         "id": "progressindicatorfolder",
+         "name": "Progress Indicator Component",
+         "icon": "sk-icon-component-pack"
+      }
+   ],
+   "js": [
+      {
+         "path": "progressIndicatorBuilder.js"
+      }
+   ],
+   "css": [
+      {
+
+         "path": "progressIndicator.css"
+      }
+   ]
+}
