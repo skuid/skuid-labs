@@ -108,15 +108,15 @@ Github provides really good tools for collaborative review and editing. The `pul
   - Email notifications will be sent to the reviewers you have requested
   - You can send them a reminder on the back of a $20.00 bill.
 
-**Step 14. Handle any linting errors.**  
+**Step 14. Handle any linting errors.**
 
-For some file types, Skuid Labs uses a **linter** known as ESLint. Linters ensure that code meets certain style guidelines. We try to maintain a certain level of consistency with the code in Labs, so enforce a linter on all pull requests. That means if your code breaks the rules **you cannot merge your pull request**.
+For some file types, Skuid Labs uses a **linter** known as ESLint. Linters ensure that code meets certain style guidelines. We try to maintain a certain level of consistency with the code in Labs, so we enforce a linter on all pull requests. That means if your code breaks the rules **you cannot merge your pull request**.
 
 But fear not! Our linter outputs exactly what's wrong, in which file and on which line.
 
-To see what went wrong, go to the bottom of your PR Page to see if your all the checks are passed for your build. Builds run whenever you commit to the branch, and in this case our build just checks your code to make sure it doesn't break the linting rules. A failed build looks like this:
+To see what went wrong, go to the bottom of your PR page to see if all the checks have passed for your build. Builds run whenever you commit to the branch, checking your code to make sure it doesn't break the linting rules.
 
-To see what went wrong, click **Details** where it noted the build failed.
+A failed build looks like this. To see what went wrong, click **Details** where it noted the build failed.
 
 ![](./failedBuild.png)
 
