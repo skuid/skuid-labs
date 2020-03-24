@@ -97,7 +97,6 @@ After uploading you need to commit these files to your repo. Make sure your comm
 - Commit your work and look it over one last time.
 - Makes sure it looks perfect in your branch.
 
-
 ## Open a pull request for review and approval.
 
 Github provides really good tools for collaborative review and editing. The `pull request` mechanism gets this started. This is a request to the maintainers of this repo to "pull" your code into the `master` branch.
