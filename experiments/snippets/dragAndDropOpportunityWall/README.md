@@ -2,7 +2,7 @@
 
 This page creates a kanban-inspired view of opportunities. They are broken down into columns for each stage.  A snippet enables drag and drop interactions, so an opportunity can be dragged from one column into another - which updates the stage name value.
 
-## Stage Names. 
+## Stage Names
 
 This example uses the following stage names.  
 - Prospecting
