@@ -4,7 +4,7 @@ Kanban boards are a very popular type of interface for managing lots of objects 
 
 While Skuid does not offer a kanban board out of the box - with a little customization and javascript - one can be developed. 
 
-Here are two Skuid Kanban boards:  
+Here are two Skuid kanban boards:  
 
 1.  Drag-and-drop opportunity planning wall. 
 
