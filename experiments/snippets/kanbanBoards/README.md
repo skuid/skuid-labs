@@ -1,6 +1,6 @@
 # Kanban Boards. 
 
-a very popular type of interface for managing lots of objects through a series of phases is the Kanban board.  Perhaps made most popular by Trello. The column arrangement seems very intuitive.  And everyone loves to drag and drop - moving items through the process! 
+Kanban boards are a very popular type of interface for managing lots of objects through a series of phases.  Perhaps made most popular by Trello, the column arrangement is very intuitive for moving items through a process.  And everyone loves to drag and drop!
 
 While Skuid does not offer a Kanban board out of the box - with a little customization and javascript - one can be developed. 
 
