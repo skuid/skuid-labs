@@ -6,7 +6,7 @@ While Skuid does not offer a kanban board out of the box - with a little customi
 
 Here are two Skuid Kanban boards:  
 
-1.  Drag and drop opportunity planning wall. 
+1.  Drag-and-drop opportunity planning wall. 
 
 Here we see opportunities. They are broken down into columns for each stage.  A snippet enables drag and drop interactions, so an opportunity can be dragged from one column into another - which updates the stage name value.
 
