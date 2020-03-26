@@ -1,4 +1,4 @@
-<skuidpage showsidebar="false" showheader="true" tabtooverride="Opportunity">
+<skuidpage showsidebar="false" showheader="true" tabtooverride="Opportunity" personalizationmode="server">
    <models>
       <model id="Opps_Prospecting" limit="100" query="true" createrowifnonefound="false" sobject="Opportunity" orderby="Name">
          <fields>
@@ -87,10 +87,10 @@
       </model>
    </models>
    <components>
-      <pagetitle model="Opps_Prospecting">
+      <pagetitle model="Opps_Prospecting" uniqueid="sk-O9h-320">
          <maintitle>Drag and Drop Opportunity Planning Wall</maintitle>
          <actions>
-            <action type="savecancel" window="self">
+            <action type="savecancel" window="self" uniqueid="sk-O9h-318">
                <models>
                   <model>Opps_NegotiationReview</model>
                   <model>Opps_ProposalPriceQuote</model>
@@ -104,86 +104,76 @@
             </action>
          </actions>
       </pagetitle>
-      <panelset type="custom" scroll="variable" offset="220" uniqueid="">
+      <panelset type="custom" scroll="variable" offset="220" uniqueid="sk-O9h-360">
          <panels>
             <panel width="20%">
                <components>
-                  <queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" clickactiontype="multi" searchbox="true" model="Opps_Prospecting" title="Prospecting" rendersnippet="Queue.ItemRenderer">
+                  <queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" searchbox="true" model="Opps_Prospecting" title="Prospecting" rendersnippet="Queue.ItemRenderer" uniqueid="sk-O9h-330" tokenizesearch="true">
                      <filters/>
-                     <actions>
-                        <action type="showPopup">
-                           <popup title="Opportunity Details: {{Name}}" width="80%">
-                              <components>
-                                 <includepanel type="skuid" pagename="OpportunityDetail_AFDeepDive" module="" querystring="id={{{Id}}}"/>
-                              </components>
-                           </popup>
-                        </action>
-                     </actions>
-                  </queue>
+                     
+                  <interactions>
+<interaction type="tap">
+                        
+                     <action type="action-sequence" action-sequence-id="d587cb07-adc2-406b-8a08-2de98149c503"/>
+</interaction>
+</interactions>
+</queue>
                </components>
             </panel>
             <panel width="20%">
                <components>
-                  <queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" clickactiontype="multi" searchbox="true" model="Opps_ProposalPriceQuote" title="Proposal/Price Quote" rendersnippet="Queue.ItemRenderer">
+                  <queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" searchbox="true" model="Opps_ProposalPriceQuote" title="Proposal/Price Quote" rendersnippet="Queue.ItemRenderer" uniqueid="sk-O9h-337" tokenizesearch="true">
                      <filters/>
-                     <actions>
-                        <action type="showPopup">
-                           <popup title="Opportunity Details: {{Name}}" width="80%">
-                              <components>
-                                 <includepanel type="skuid" pagename="OpportunityDetail_AFDeepDive" module="" querystring="id={{{Id}}}"/>
-                              </components>
-                           </popup>
-                        </action>
-                     </actions>
-                  </queue>
+                     
+                  <interactions>
+<interaction type="tap">
+                        
+                     <action type="action-sequence" action-sequence-id="d587cb07-adc2-406b-8a08-2de98149c503"/>
+</interaction>
+</interactions>
+</queue>
                </components>
             </panel>
             <panel width="20%">
                <components>
-                  <queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" clickactiontype="multi" searchbox="true" model="Opps_NegotiationReview" title="Negotiation/Review" rendersnippet="Queue.ItemRenderer">
+                  <queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" searchbox="true" model="Opps_NegotiationReview" title="Negotiation/Review" rendersnippet="Queue.ItemRenderer" uniqueid="sk-O9h-344" tokenizesearch="true">
                      <filters/>
-                     <actions>
-                        <action type="showPopup">
-                           <popup title="Opportunity Details: {{Name}}" width="80%">
-                              <components>
-                                 <includepanel type="skuid" pagename="OpportunityDetail_AFDeepDive" module="" querystring="id={{{Id}}}"/>
-                              </components>
-                           </popup>
-                        </action>
-                     </actions>
-                  </queue>
+                     
+                  <interactions>
+<interaction type="tap">
+                        
+                     <action type="action-sequence" action-sequence-id="d587cb07-adc2-406b-8a08-2de98149c503"/>
+</interaction>
+</interactions>
+</queue>
                </components>
             </panel>
             <panel width="20%">
                <components>
-                  <queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" clickactiontype="multi" searchbox="true" model="Opps_ClosedWon" title="Closed Won" rendersnippet="Queue.ItemRenderer">
+                  <queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" searchbox="true" model="Opps_ClosedWon" title="Closed Won" rendersnippet="Queue.ItemRenderer" uniqueid="sk-O9h-351" tokenizesearch="true">
                      <filters/>
-                     <actions>
-                        <action type="showPopup">
-                           <popup title="Opportunity Details: {{Name}}" width="80%">
-                              <components>
-                                 <includepanel type="skuid" pagename="OpportunityDetail_AFDeepDive" module="" querystring="id={{{Id}}}"/>
-                              </components>
-                           </popup>
-                        </action>
-                     </actions>
-                  </queue>
+                     
+                  <interactions>
+<interaction type="tap">
+                        
+                     <action type="action-sequence" action-sequence-id="d587cb07-adc2-406b-8a08-2de98149c503"/>
+</interaction>
+</interactions>
+</queue>
                </components>
             </panel>
             <panel width="20%">
                <components>
-                  <queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" clickactiontype="multi" searchbox="true" model="Opps_ClosedLost" title="Closed Lost" rendersnippet="Queue.ItemRenderer">
+                  <queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" searchbox="true" model="Opps_ClosedLost" title="Closed Lost" rendersnippet="Queue.ItemRenderer" uniqueid="sk-O9h-358" tokenizesearch="true">
                      <filters/>
-                     <actions>
-                        <action type="showPopup">
-                           <popup title="Opportunity Details: {{Name}}" width="80%">
-                              <components>
-                                 <includepanel type="skuid" pagename="OpportunityDetail_AFDeepDive" module="" querystring="id={{{Id}}}"/>
-                              </components>
-                           </popup>
-                        </action>
-                     </actions>
-                  </queue>
+                     
+                  <interactions>
+<interaction type="tap">
+                        
+                     <action type="action-sequence" action-sequence-id="d587cb07-adc2-406b-8a08-2de98149c503"/>
+</interaction>
+</interactions>
+</queue>
                </components>
             </panel>
          </panels>
@@ -209,7 +199,7 @@
     row = item.row,
     renderTemplate = 
         '&lt;img src="{{{Owner.SmallPhotoUrl}}}" width="20" height="20" style="margin-right: 8px;"/&gt;'
-        + '{{Name}} ({{CloseDate}})',
+        + '{{{Name}}} ({{CloseDate}})',
     mergeSettings = {
         createFields: true,
         registerFields: true
@@ -266,12 +256,12 @@ draggable({
         return queueList;
     };
    
-   $(function(){
+   $(".nx-page").one("pageload", function(){
       $('.nx-queue').each(function(){
          var queue = $(this);
          var listContents = queue.find('.nx-list-contents');
          listContents.droppable({
-            hoverClass: 'ui-state-highlight',
+            hoverClass: 'highlight',
             accept: function(draggables) {
                 // Do not accept draggables
                 // that came from this list
@@ -303,6 +293,7 @@ draggable({
                 // and apply it to our target row.
                 // (that is, change the Stage of the dragged Opportunity)
                 var targetModelCondition = targetModel.conditions[0];
+                console.log("target model condition",targetModelCondition);
                 targetModel.updateRow(
                     targetRow,
                     targetModelCondition.field,
@@ -324,5 +315,33 @@ draggable({
    
 })(skuid);</jsitem>
       </javascript>
-   </resources>
+   <actionsequences>
+<actionsequence id="d587cb07-adc2-406b-8a08-2de98149c503" label="OpenDetail" type="reusable">
+	<description>Stub Seqence for showing opportunity detail. </description>
+	<actions>
+		<action type="showPopup">
+			<popup title="Opportunity Detail : {{Name}}" width="90%">
+				<components>
+					<richtext multiple="false" uniqueid="sk-OCA-676">
+						<contents>&lt;p&gt;&lt;strong&gt;What happens when someone double clicks on an opportunity?&amp;nbsp; &lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;What do you want to happen?&amp;nbsp; &amp;nbsp; You choose......&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Here are some options:&amp;nbsp;&lt;/strong&gt;&lt;br /&gt;
+- Redirect to the OPP detail page using a &amp;quot;Go To URL action&amp;quot;&amp;nbsp; with the opportunity ID merged into the URL.&amp;nbsp;&lt;br /&gt;
+- Pass the opportunity ID into conditions on a &amp;quot;Detail&amp;quot; model to get more information about that particular opp.&amp;nbsp; &amp;nbsp;&lt;br /&gt;
+-&amp;nbsp;Expose that in this popup,&amp;nbsp; or in a sliding panel,&amp;nbsp; or in a dedicated space on the page.&amp;nbsp;&lt;br /&gt;
+- Query related data on line items,&amp;nbsp; opp/contact roles, tasks,&amp;nbsp; content items.&amp;nbsp; etc.&amp;nbsp;&amp;nbsp;&lt;/p&gt;
+</contents>
+					</richtext>
+				</components>
+			</popup>
+		</action>
+	</actions>
+</actionsequence>
+</actionsequences>
+</resources>
+<styles>
+<styleitem type="background" bgtype="none"/>
+</styles>
 </skuidpage>

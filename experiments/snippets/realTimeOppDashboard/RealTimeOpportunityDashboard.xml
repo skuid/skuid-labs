@@ -1,4 +1,4 @@
-<skuidpage showsidebar="false" showheader="true" tabtooverride="Opportunity" unsavedchangeswarning="" theme="">
+<skuidpage showsidebar="false" showheader="true" tabtooverride="Opportunity" unsavedchangeswarning="">
    <models>
       <model id="Opportunity" limit="" query="true" createrowifnonefound="false" sobject="Opportunity" doclone="" type="" orderby="Name DESC">
          <fields>
