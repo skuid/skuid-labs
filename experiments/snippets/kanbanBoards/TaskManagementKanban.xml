@@ -1,0 +1,1010 @@
+<skuidpage showsidebar="false" showheader="false" tabtooverride="Lead" personalizationmode="server" theme="Modern">
+	<models>
+		<model id="Tasks_NotStarted" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Task" orderby="ActivityDate DESC NULLS LAST">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Id"/>
+				<field id="Subject"/>
+				<field id="TaskSubtype"/>
+				<field id="ActivityDate"/>
+				<field id="CreatedDate"/>
+				<field id="Status"/>
+				<field id="WhatId"/>
+				<field id="What.Name"/>
+				<field id="Priority"/>
+				<field id="WhoId"/>
+				<field id="Who.Name"/>
+				<field id="Description"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="Not Started" enclosevalueinquotes="true" field="Status"/>
+				<condition type="fieldvalue" value="Marketing Request" enclosevalueinquotes="true" field="Subject" operator="does not contain"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="Tasks_InProgress" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Task" orderby="ActivityDate DESC NULLS LAST">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Id"/>
+				<field id="Subject"/>
+				<field id="TaskSubtype"/>
+				<field id="ActivityDate"/>
+				<field id="CreatedDate"/>
+				<field id="Status"/>
+				<field id="WhatId"/>
+				<field id="What.Name"/>
+				<field id="Priority"/>
+				<field id="WhoId"/>
+				<field id="Who.Name"/>
+				<field id="Description"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="In Progress" enclosevalueinquotes="true" field="Status"/>
+				<condition type="fieldvalue" value="Marketing Request" enclosevalueinquotes="true" field="Subject" operator="does not contain"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="Tasks_Completed" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Task" orderby="ActivityDate DESC NULLS LAST">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Id"/>
+				<field id="Subject"/>
+				<field id="TaskSubtype"/>
+				<field id="ActivityDate"/>
+				<field id="CreatedDate"/>
+				<field id="Status"/>
+				<field id="WhatId"/>
+				<field id="What.Name"/>
+				<field id="Priority"/>
+				<field id="WhoId"/>
+				<field id="Who.Name"/>
+				<field id="Description"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="Completed" enclosevalueinquotes="true" field="Status"/>
+				<condition type="fieldvalue" value="Marketing Request" enclosevalueinquotes="true" field="Subject" operator="does not contain"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="TaskDetail" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Task">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Id"/>
+				<field id="Subject"/>
+				<field id="TaskSubtype"/>
+				<field id="ActivityDate"/>
+				<field id="CreatedDate"/>
+				<field id="Status"/>
+				<field id="WhatId"/>
+				<field id="What.Name"/>
+				<field id="Priority"/>
+				<field id="WhoId"/>
+				<field id="Who.Name"/>
+				<field id="Description"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" enclosevalueinquotes="true" field="Id" state="filterableoff" inactive="true" name="Id"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="RelatedAccount" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Account">
+			<fields>
+				<field id="Id"/>
+				<field id="Description"/>
+				<field id="Name"/>
+				<field id="Phone"/>
+				<field id="Type"/>
+				<field id="AnnualRevenue"/>
+				<field id="NumberOfEmployees"/>
+				<field id="Industry"/>
+				<field id="Website"/>
+				<field id="BillingAddress"/>
+				<field id="BillingCity"/>
+				<field id="BillingCountry"/>
+				<field id="BillingState"/>
+				<field id="BillingStreet"/>
+				<field id="BillingPostalCode"/>
+			</fields>
+			<conditions>
+				<condition type="modelmerge" value="" field="Id" operator="=" model="TaskDetail" enclosevalueinquotes="true" mergefield="AccountId" novaluebehavior="noquery" fieldtargetobjects="Account"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="RelatedLead" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Lead">
+			<fields>
+				<field id="Address"/>
+				<field id="AnnualRevenue"/>
+				<field id="Company"/>
+				<field id="City"/>
+				<field id="Country"/>
+				<field id="Description"/>
+				<field id="Email"/>
+				<field id="FirstName"/>
+				<field id="Name"/>
+				<field id="Industry"/>
+				<field id="LastName"/>
+				<field id="Id"/>
+				<field id="LeadSource"/>
+				<field id="MobilePhone"/>
+				<field id="MiddleName"/>
+				<field id="Phone"/>
+				<field id="OwnerId"/>
+				<field id="Owner.Name"/>
+				<field id="Rating"/>
+				<field id="State"/>
+				<field id="Status"/>
+				<field id="Street"/>
+				<field id="Title"/>
+				<field id="PostalCode"/>
+				<field id="Website"/>
+			</fields>
+			<conditions>
+				<condition type="modelmerge" value="" field="Id" operator="=" model="TaskDetail" enclosevalueinquotes="true" mergefield="WhoId" novaluebehavior="noquery" fieldtargetobjects="Contact,Lead"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="RelatedContact" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Contact">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Birthdate"/>
+				<field id="Phone"/>
+				<field id="Description"/>
+				<field id="Id"/>
+				<field id="Department"/>
+				<field id="Email"/>
+				<field id="FirstName"/>
+				<field id="Name"/>
+				<field id="HomePhone"/>
+				<field id="LastName"/>
+				<field id="LeadSource"/>
+				<field id="MobilePhone"/>
+				<field id="OwnerId"/>
+				<field id="Owner.Name"/>
+				<field id="Title"/>
+			</fields>
+			<conditions>
+				<condition type="modelmerge" value="" field="Id" operator="=" model="TaskDetail" enclosevalueinquotes="true" mergefield="WhoId" novaluebehavior="noquery" fieldtargetobjects="Contact,Lead"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="RelatedOpp" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Opportunity">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Amount"/>
+				<field id="CloseDate"/>
+				<field id="Description"/>
+				<field id="Name"/>
+				<field id="Id"/>
+				<field id="Type"/>
+				<field id="OwnerId"/>
+				<field id="Owner.Name"/>
+				<field id="StageName"/>
+			</fields>
+			<conditions>
+				<condition type="modelmerge" value="" field="Id" operator="=" model="TaskDetail" enclosevalueinquotes="true" mergefield="WhatId" novaluebehavior="noquery" fieldtargetobjects="Account,Asset,AssetRelationship,Bundle__c,Campaign,Case,Case_Response__c,Case_Upload__c,ChannelProgram,ChannelProgramLevel,Contact_Address__c,Contract,Demo_Inventory_Entry__c,Fitting__c,KW_Child_1__c,KW_Child_2__c,KW_Child_3__c,KW_Master__c,Marketing_Consent__c,NewCustomerReq__c,Opp_Child_Stale__c,Opportunity,Opportunity_Story__c,PartnerFundAllocation,PartnerFundClaim,PartnerFundRequest,PartnerMarketingBudget,Product2,Question_Response__c,Quote,Related_Product__c,Solution,TestCustomObject__c,TestObject__c,WorkOrder,WorkOrderLineItem,jSignatureTest__c,qbdialer__UserStatusLog__c"/>
+			</conditions>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<wrapper uniqueid="sk-27sp0s-141">
+			<components>
+				<wrapper uniqueid="sk-28XHwV-473">
+					<components>
+						<grid uniqueid="sk-28X6m--453" columngutter="4px">
+							<divisions>
+								<division behavior="flex" verticalalign="center" minwidth="100px" ratio="1">
+									<components>
+										<richtext multiple="false" uniqueid="sk-1JHGgh-1414">
+											<contents>&lt;p&gt;&lt;span style="font-size:28px;"&gt;&lt;span style="color:#ffffff;"&gt;Drag &amp;amp; Drop Task Planning or Action Management&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+										</richtext>
+									</components>
+								</division>
+								<division behavior="fit" verticalalign="center">
+									<components>
+										<buttonset model="TaskDetail" uniqueid="sk-1AeU-28461">
+											<buttons>
+												<button type="multi" label="New Task" uniqueid="sk-1AeU-28474">
+													<actions>
+														<action type="emptyModelData">
+															<models>
+																<model>TaskDetail</model>
+															</models>
+														</action>
+														<action type="createRow" model="TaskDetail" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+															<defaults>
+																<default type="fieldvalue" field="Status" fieldtargetobjects="Task" enclosevalueinquotes="true" value="Not Started"/>
+															</defaults>
+														</action>
+														<action type="showPopup">
+															<popup title="New Task" width="90%">
+																<components>
+																	<wrapper uniqueid="sk-1Fhc-2171">
+																		<components>
+																			<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="TaskDetail" uniqueid="sk-1Fhc-1798" mode="edit" layout="above">
+																				<columns layoutmode="responsive" columngutter="8px" rowgutter="8px">
+																					<column ratio="1" minwidth="300px" behavior="flex">
+																						<sections>
+																							<section collapsible="no" showheader="true" title="Basics">
+																								<fields>
+																									<field uniqueid="sk-1Fhc-1859" id="Subject"/>
+																									<field uniqueid="sk-1Fhc-1860" id="Priority"/>
+																									<field uniqueid="sk-1Fhc-1866" id="Status"/>
+																									<field uniqueid="sk-1Fhc-1865" id="ActivityDate">
+																										<label>Due Date</label>
+																									</field>
+																								</fields>
+																							</section>
+																						</sections>
+																					</column>
+																					<column ratio="1" minwidth="300px" behavior="flex">
+																						<sections>
+																							<section title="Related " collapsible="no">
+																								<fields>
+																									<field uniqueid="sk-1Fhc-1862" id="WhoId" redirecttype="datasourcedefault" pagesize="5">
+																										<label>Who</label>
+																									</field>
+																									<field uniqueid="sk-1Fhc-1863" id="WhatId">
+																										<label>What</label>
+																									</field>
+																									<field uniqueid="sk-1Fhc-1864" id="Description" displayrows="4">
+																										<label>Description</label>
+																									</field>
+																								</fields>
+																							</section>
+																						</sections>
+																					</column>
+																				</columns>
+																			</basicfieldeditor>
+																			<wrapper uniqueid="sk-1Fhc-2443">
+																				<components>
+																					<buttonset model="Tasks_Completed" uniqueid="sk-1Fhc-2361" position="center">
+																						<buttons>
+																							<button type="multi" label="Save" uniqueid="sk-1Fhc-2367">
+																								<actions>
+																									<action type="save">
+																										<models>
+																											<model>TaskDetail</model>
+																										</models>
+																									</action>
+																									<action type="requeryModels" behavior="standard">
+																										<models>
+																											<model>Tasks_NotStarted</model>
+																											<model>Tasks_InProgress</model>
+																											<model>Tasks_Completed</model>
+																										</models>
+																									</action>
+																									<action type="closeAllPopups"/>
+																								</actions>
+																							</button>
+																							<button type="multi" label="Cancel" uniqueid="sk-1Fhc-2371" secondary="true">
+																								<actions>
+																									<action type="cancel">
+																										<models>
+																											<model>TaskDetail</model>
+																										</models>
+																									</action>
+																									<action type="closeAllPopups"/>
+																								</actions>
+																							</button>
+																						</buttons>
+																					</buttonset>
+																				</components>
+																				<styles>
+																					<styleitem type="background"/>
+																					<styleitem type="border" padding="top,">
+																						<styles>
+																							<styleitem property="padding-top" value="24px"/>
+																							<styleitem property="box-sizing" value="border-box"/>
+																						</styles>
+																					</styleitem>
+																					<styleitem type="size"/>
+																				</styles>
+																			</wrapper>
+																		</components>
+																		<styles>
+																			<styleitem type="background"/>
+																			<styleitem type="border" padding="bottom,top,">
+																				<styles>
+																					<styleitem property="padding-top" value="16px"/>
+																					<styleitem property="padding-bottom" value="16px"/>
+																					<styleitem property="box-sizing" value="border-box"/>
+																				</styles>
+																			</styleitem>
+																			<styleitem type="size"/>
+																		</styles>
+																	</wrapper>
+																</components>
+															</popup>
+														</action>
+													</actions>
+												</button>
+											</buttons>
+										</buttonset>
+									</components>
+								</division>
+							</divisions>
+							<styles>
+								<styleitem type="background" bgtype="none"/>
+							</styles>
+						</grid>
+					</components>
+					<styles>
+						<styleitem type="background" bgtype="none"/>
+						<styleitem type="border" padding="top,bottom," margin="bottom,">
+							<styles>
+								<styleitem property="padding-top" value="15px"/>
+								<styleitem property="padding-bottom" value="15px"/>
+								<styleitem property="margin-bottom" value="30px"/>
+								<styleitem property="box-sizing" value="border-box"/>
+							</styles>
+						</styleitem>
+						<styleitem type="size"/>
+					</styles>
+				</wrapper>
+				<wrapper uniqueid="sk-28Tsfx-367">
+					<components>
+						<grid uniqueid="sk-vNhDR-321" columngutter="20px">
+							<divisions>
+								<division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+									<components>
+										<wrapper uniqueid="sk-1Fhc-377">
+											<components>
+												<richtext multiple="false" uniqueid="sk-1Fhc-389">
+													<contents>&lt;p&gt;&lt;span style="color:#ffffff;"&gt;&lt;strong&gt;Not Started&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+												</richtext>
+											</components>
+											<styles>
+												<styleitem type="background" bgtype="color">
+													<styles>
+														<styleitem property="background-color" value="#9b59b6"/>
+													</styles>
+												</styleitem>
+												<styleitem type="border" padding="bottom,right,top,left," borders="none" margin="bottom,">
+													<styles>
+														<styleitem property="padding-left" value="24px"/>
+														<styleitem property="padding-top" value="4px"/>
+														<styleitem property="padding-right" value="4px"/>
+														<styleitem property="padding-bottom" value="4px"/>
+														<styleitem property="margin-bottom" value="-4px"/>
+														<styleitem property="box-sizing" value="border-box"/>
+													</styles>
+												</styleitem>
+												<styleitem type="size"/>
+											</styles>
+										</wrapper>
+										<queue model="Tasks_NotStarted" tagrendertype="snippet" searchbox="true" tokenizesearch="true" showsearchbydefault="true" uniqueid="sk-vNnFm-347" title="Not Started" rendersnippet="TaskQueueItemRenderer" hideheader="true">
+											<interactions>
+												<interaction type="tap">
+													<action type="action-sequence" action-sequence-id="598a1db6-9e7f-444c-96e7-a1b5528e6c61"/>
+												</interaction>
+											</interactions>
+											<searchfields/>
+										</queue>
+									</components>
+								</division>
+								<division behavior="flex" minwidth="100px" ratio="1" verticalalign="top">
+									<components>
+										<wrapper uniqueid="sk-1Fhc-622">
+											<components>
+												<richtext multiple="false" uniqueid="sk-1Fhc-623">
+													<contents>&lt;p&gt;&lt;span style="color:#ffffff;"&gt;&lt;strong&gt;In Progress&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+												</richtext>
+											</components>
+											<styles>
+												<styleitem type="background" bgtype="color">
+													<styles>
+														<styleitem property="background-color" value="#9b59b6"/>
+													</styles>
+												</styleitem>
+												<styleitem type="border" padding="bottom,right,top,left," borders="none" margin="bottom,">
+													<styles>
+														<styleitem property="padding-left" value="24px"/>
+														<styleitem property="padding-top" value="4px"/>
+														<styleitem property="padding-right" value="4px"/>
+														<styleitem property="padding-bottom" value="4px"/>
+														<styleitem property="margin-bottom" value="-4px"/>
+														<styleitem property="box-sizing" value="border-box"/>
+													</styles>
+												</styleitem>
+												<styleitem type="size"/>
+											</styles>
+										</wrapper>
+										<queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" searchbox="true" model="Tasks_InProgress" title="In Progress" rendersnippet="TaskQueueItemRenderer" uniqueid="sk-27sV-z-74" tokenizesearch="true" searchmethod="server" searchplaceholdertext=" Search Opportunities" emptysearchbehavior="query" showsearchbydefault="true" hideheader="true">
+											<filters/>
+											<searchfields/>
+											<renderconditions logictype="and"/>
+											<interactions>
+												<interaction type="tap">
+													<action type="action-sequence" datasource="salesforce" actionname="chatterPost" action-sequence-id="598a1db6-9e7f-444c-96e7-a1b5528e6c61"/>
+												</interaction>
+											</interactions>
+										</queue>
+									</components>
+								</division>
+								<division behavior="flex" verticalalign="top" minwidth="100px" ratio="1">
+									<components>
+										<wrapper uniqueid="sk-1Fhc-598">
+											<components>
+												<richtext multiple="false" uniqueid="sk-1Fhc-599">
+													<contents>&lt;p&gt;&lt;span style="color:#ffffff;"&gt;&lt;strong&gt;Completed&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+</contents>
+												</richtext>
+											</components>
+											<styles>
+												<styleitem type="background" bgtype="color">
+													<styles>
+														<styleitem property="background-color" value="#9b59b6"/>
+													</styles>
+												</styleitem>
+												<styleitem type="border" padding="bottom,right,top,left," borders="none" margin="bottom,">
+													<styles>
+														<styleitem property="padding-left" value="24px"/>
+														<styleitem property="padding-top" value="4px"/>
+														<styleitem property="padding-right" value="4px"/>
+														<styleitem property="padding-bottom" value="4px"/>
+														<styleitem property="margin-bottom" value="-4px"/>
+														<styleitem property="box-sizing" value="border-box"/>
+													</styles>
+												</styleitem>
+												<styleitem type="size"/>
+											</styles>
+										</wrapper>
+										<queue tagrendertype="snippet" parameter="id" defaultitemparameter="id" searchbox="true" model="Tasks_Completed" title="Completed" rendersnippet="TaskQueueItemRenderer" uniqueid="sk-27sV-z-76" tokenizesearch="true" showsearchbydefault="true" hideheader="true">
+											<filters/>
+											<interactions>
+												<interaction type="tap">
+													<action type="action-sequence" action-sequence-id="598a1db6-9e7f-444c-96e7-a1b5528e6c61"/>
+												</interaction>
+											</interactions>
+											<searchfields/>
+											<renderconditions logictype="and"/>
+										</queue>
+									</components>
+								</division>
+							</divisions>
+							<styles>
+								<styleitem type="background" bgtype="none"/>
+							</styles>
+						</grid>
+					</components>
+					<styles>
+						<styleitem type="background"/>
+						<styleitem type="border" padding="none">
+							<styles>
+								<styleitem property="box-sizing" value="border-box"/>
+							</styles>
+						</styleitem>
+						<styleitem type="size"/>
+					</styles>
+				</wrapper>
+			</components>
+			<styles>
+				<styleitem type="background" bgtype="none"/>
+				<styleitem type="border" padding="all">
+					<styles>
+						<styleitem property="padding" value="25px"/>
+						<styleitem property="box-sizing" value="border-box"/>
+					</styles>
+				</styleitem>
+				<styleitem type="size"/>
+			</styles>
+		</wrapper>
+	</components>
+	<resources>
+		<labels/>
+		<css>
+			<cssitem location="inline" name="hoverClass" cachelocation="false">.highlight {
+    border:1px dashed #f7f7f7;
+}</cssitem>
+		</css>
+		<javascript>
+			<jsitem location="inline" name="Make Queue contents Droppable" cachelocation="false" url="">(function(skuid){
+   
+   // Global setting -- if true, then all changes will be immediately saved,
+   // otherwise, changes will remain unsaved until you click Save.
+   var SAVE_IMMEDIATELY = true;
+    
+   var $ = skuid.$;
+   
+    var getQueueList = function(queueElement){
+        var queueList;
+        $.each(skuid.model.list(),function(i,model){
+           $.each(model.registeredEditors,function(){
+              if (this.element.is(queueElement)) {
+                  queueList = this.lists[0];
+                  return false;
+              } 
+           });
+           if (queueList) return false;
+        });
+        return queueList;
+    };
+   
+   $(".nx-page").one("pageload", function(){
+      $('.nx-queue').each(function(){
+         var queue = $(this);
+         var listContents = queue.find('.nx-list-contents');
+         listContents.droppable({
+            hoverClass: 'highlight',
+            accept: function(draggables) {
+                // Do not accept draggables
+                // that came from this list
+                return (!listContents.is($(draggables[0]).data('listContents')));
+            },
+            drop: function(e,ui){
+                var draggable = ui.draggable;
+                
+                var sourceItem = draggable.parent().data('object');
+                
+                // You will get a jQUery UI bug unless you detach the draggable.
+                // We wait until now to detach in order to get a 
+                draggable.detach();
+                
+                var sourceRow = sourceItem.row;
+                var sourceRowId = sourceRow.Id;
+                var sourceList = sourceItem.list;
+                var sourceModel = sourceItem.list.model;
+                
+                var targetList = getQueueList(queue);
+                var targetModel = targetList.model;
+                
+                targetModel.adoptRow(sourceRow);
+                sourceModel.removeRowById(sourceRowId);
+                
+                var targetRow = targetModel.getRowById(sourceRowId);
+                
+                // Find the first Condition in our target Model,
+                // and apply it to our target row.
+                // (that is, change the Stage of the dragged Opportunity)
+                var targetModelCondition = targetModel.conditions[0];
+                console.log("target model condition",targetModelCondition);
+                targetModel.updateRow(
+                    targetRow,
+                    targetModelCondition.field,
+                    targetModelCondition.value
+                );
+                
+                if (SAVE_IMMEDIATELY) {
+                    targetModel.save();
+                }
+                
+                // Re-render just the Source List and the Target List
+                sourceList.render();
+                targetList.render();
+                
+            }
+         });
+      });
+   });
+   
+})(skuid);</jsitem>
+			<jsitem location="inlinesnippet" name="TaskQueueItemRenderer" cachelocation="false">var args = arguments[0],
+    item = args.item,
+    list = args.list,
+    model = args.model,
+    element = args.element,
+    row = item.row,
+    mergeSettings = {
+        createFields: true,
+        registerFields: false
+    },
+    $ = skuid.$;
+    
+    var priority = row.Priority;
+    var bor = "";
+    if (priority == "Low") {
+        bor = "#FFC120";
+    } else if (priority == "Normal") {
+        bor = "#60993C";
+    } else if (priority == "High") {
+        bor = "#D2321A";
+    } else {
+        bor = "#60993C";
+    }
+    console.log("priority",priority);
+    
+    renderTemplate = '&lt;div style="height: 8px; width:8px; margin:5px 12px 0 8px; border-radius:100%; float:left; background:' + bor + ';"&gt;&lt;/div&gt;' + 
+                    '&lt;div&gt;{{{Subject}}}&lt;/div&gt;' + 
+                    '&lt;div style="color:#7f8c8d; padding-left:28px;"&gt;Due {{ActivityDate}}&lt;/div&gt;';
+    
+element.html(
+    skuid.utils.merge('row',renderTemplate,mergeSettings,model,row)
+).draggable({
+    revert: 'invalid',
+    appendTo : 'body',
+	helper : function() {
+        var original = $(this);
+        $(this).css({'background': '#f7f7f7'});
+        var helper = original.clone();
+        // Pass along a reference to the current list's contents
+        // so that we can compare lists
+        // to ensure we're not allowing dropping on the current list
+        original.data('listContents',list.contents);
+		
+		helper.css({
+			'z-index' : 1000,
+			'width' : $(this).css('width'),
+			'height' : $(this).css('height'),
+			'border' : '1px #d8d8d8 solid',
+			'border-radius' : '4px',
+			'line-height' : '20px',
+			'background-color' : '#fff',
+			'font-size' : '14px',
+			'font-family': 'Roboto,sans-serif',
+			'cursor':'move'
+		});
+		
+		return helper; 
+	}
+});</jsitem>
+		</javascript>
+		<actionsequences uniqueid="sk-1E82i6-693">
+			<actionsequence id="598a1db6-9e7f-444c-96e7-a1b5528e6c61" label="OpenPopup" type="reusable" uniqueid="sk-1Fhc-3334">
+				<description/>
+				<actions>
+					<action type="setCondition" model="TaskDetail" condition="Id" value="{{{Id}}}"/>
+					<action type="requeryModels" model="TaskDetail" behavior="standard">
+						<models>
+							<model>TaskDetail</model>
+							<model>RelatedAccount</model>
+							<model>RelatedLead</model>
+							<model>RelatedContact</model>
+							<model>RelatedOpp</model>
+						</models>
+					</action>
+					<action type="showPopup">
+						<popup title="{{{Subject}}}" width="90%">
+							<components>
+								<wrapper uniqueid="sk-1Fhc-2822">
+									<components>
+										<buttonset model="RelatedOpp" uniqueid="sk-1Fhc-7073">
+											<buttons>
+												<button type="multi" label="Save" uniqueid="sk-1Fhc-7079">
+													<actions>
+														<action type="save">
+															<models>
+																<model>TaskDetail</model>
+																<model>RelatedAccount</model>
+																<model>RelatedLead</model>
+																<model>RelatedContact</model>
+																<model>RelatedOpp</model>
+															</models>
+														</action>
+													</actions>
+													<renderconditions logictype="and"/>
+													<enableconditions logictype="or">
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="RelatedOpp" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="RelatedContact" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="RelatedLead" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="RelatedAccount" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="TaskDetail" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+													</enableconditions>
+												</button>
+												<button type="multi" label="Cancel" uniqueid="sk-1Fhc-7083" secondary="true">
+													<actions>
+														<action type="cancel">
+															<models>
+																<model>TaskDetail</model>
+																<model>RelatedAccount</model>
+																<model>RelatedLead</model>
+																<model>RelatedContact</model>
+																<model>RelatedOpp</model>
+															</models>
+														</action>
+													</actions>
+													<renderconditions logictype="and"/>
+													<enableconditions logictype="or">
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="TaskDetail" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="RelatedAccount" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="RelatedLead" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="RelatedContact" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="RelatedOpp" sourcetype="modelproperty" sourceproperty="hasChanged" operator="=" value="true"/>
+													</enableconditions>
+												</button>
+												<button type="multi" label="Delete" uniqueid="sk-3Mf5-894" secondary="true">
+													<actions>
+														<action type="markRowsForDeletion" model="TaskDetail" affectedrows="context"/>
+														<action type="save">
+															<models>
+																<model>TaskDetail</model>
+															</models>
+														</action>
+														<action type="requeryModels" behavior="standard">
+															<models>
+																<model>Tasks_NotStarted</model>
+																<model>Tasks_InProgress</model>
+																<model>Tasks_Completed</model>
+															</models>
+														</action>
+														<action type="closeAllPopups"/>
+													</actions>
+													<renderconditions logictype="and"/>
+													<enableconditions logictype="and">
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="TaskDetail" sourcetype="modelproperty" sourceproperty="hasChanged" value="false" operator="="/>
+													</enableconditions>
+												</button>
+											</buttons>
+										</buttonset>
+										<tabset rememberlastusertab="true" defertabrendering="true" uniqueid="sk-1Fhc-3420" renderas="lefttabs">
+											<tabs>
+												<tab name="Basics">
+													<components>
+														<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="TaskDetail" uniqueid="sk-1AeU-2865" mode="read" layout="above">
+															<columns>
+																<column width="30vw">
+																	<sections>
+																		<section title="Profile" collapsible="no">
+																			<fields>
+																				<field uniqueid="sk-1AeU-2888" id="Subject"/>
+																				<field uniqueid="sk-1AeU-2885" id="Priority"/>
+																				<field uniqueid="sk-1AeU-2887" id="Status"/>
+																				<field uniqueid="sk-1AeU-2883" id="ActivityDate">
+																					<label>Due Date</label>
+																				</field>
+																			</fields>
+																		</section>
+																	</sections>
+																</column>
+																<column width="30vw">
+																	<sections>
+																		<section title="Related" collapsible="no">
+																			<fields>
+																				<field uniqueid="sk-1AeU-2880" id="AccountId">
+																					<label>Account</label>
+																				</field>
+																				<field uniqueid="sk-1AeU-2884" id="WhoId">
+																					<label>Who</label>
+																				</field>
+																				<field uniqueid="sk-1AeU-2886" id="WhatId">
+																					<label>What</label>
+																				</field>
+																			</fields>
+																		</section>
+																		<section title="Other" collapsible="no">
+																			<fields>
+																				<field uniqueid="sk-1AeU-2882" id="Description"/>
+																				<field uniqueid="sk-1AeU-2881" id="CreatedDate"/>
+																			</fields>
+																		</section>
+																	</sections>
+																</column>
+															</columns>
+														</basicfieldeditor>
+													</components>
+													<oninitialshowactions/>
+													<onshowactions/>
+													<renderconditions logictype="and"/>
+												</tab>
+												<tab name="Related Account" loadlazypanels="true">
+													<components>
+														<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="RelatedAccount" uniqueid="sk-1Fhc-3499" mode="read" layout="above">
+															<columns>
+																<column width="30vw">
+																	<sections>
+																		<section title="Profile" collapsible="no">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-3515" id="Name"/>
+																				<field uniqueid="sk-1Fhc-3527" id="Industry"/>
+																				<field uniqueid="sk-1Fhc-3526" id="NumberOfEmployees"/>
+																				<field uniqueid="sk-1Fhc-3518" id="Type"/>
+																				<field uniqueid="sk-1Fhc-3519" id="AnnualRevenue"/>
+																				<field uniqueid="sk-1Fhc-3528" id="Website"/>
+																				<field uniqueid="sk-1Fhc-3516" id="Phone"/>
+																				<field uniqueid="sk-1Fhc-3514" id="Description"/>
+																			</fields>
+																		</section>
+																	</sections>
+																</column>
+																<column width="30vw">
+																	<sections>
+																		<section collapsible="no" title="Address">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-3521" id="BillingCity"/>
+																				<field uniqueid="sk-1Fhc-3522" id="BillingCountry"/>
+																				<field uniqueid="sk-1Fhc-3523" id="BillingState"/>
+																				<field uniqueid="sk-1Fhc-3524" id="BillingStreet"/>
+																				<field uniqueid="sk-1Fhc-3525" id="BillingPostalCode"/>
+																			</fields>
+																		</section>
+																	</sections>
+																</column>
+															</columns>
+														</basicfieldeditor>
+													</components>
+													<oninitialshowactions/>
+													<onshowactions/>
+													<renderconditions logictype="and">
+														<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="RelatedAccount" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+													</renderconditions>
+												</tab>
+												<tab name="Related Contact" loadlazypanels="true">
+													<components>
+														<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="RelatedContact" uniqueid="sk-1Fhc-4443" mode="read" layout="above">
+															<columns layoutmode="fixed">
+																<column width="400px">
+																	<sections>
+																		<section title="Profile" collapsible="no">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-4476" id="FirstName"/>
+																				<field uniqueid="sk-1Fhc-4479" id="LastName"/>
+																				<field uniqueid="sk-1Fhc-4468" id="AccountId">
+																					<label>Account</label>
+																				</field>
+																				<field uniqueid="sk-1Fhc-4483" id="Title"/>
+																				<field uniqueid="sk-1Fhc-4474" id="Department"/>
+																				<field uniqueid="sk-1Fhc-4480" id="LeadSource"/>
+																				<field uniqueid="sk-1Fhc-4482" id="OwnerId">
+																					<label>Owner</label>
+																				</field>
+																			</fields>
+																		</section>
+																	</sections>
+																</column>
+																<column width="400px">
+																	<sections>
+																		<section title="Communication" collapsible="no">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-4481" id="MobilePhone"/>
+																				<field uniqueid="sk-1Fhc-4471" id="Phone"/>
+																				<field uniqueid="sk-1Fhc-4478" id="HomePhone"/>
+																				<field uniqueid="sk-1Fhc-4475" id="Email" showhelp="false"/>
+																				<field uniqueid="sk-1Fhc-4472" id="Description">
+																					<label>Description</label>
+																				</field>
+																			</fields>
+																			<renderconditions logictype="and"/>
+																		</section>
+																	</sections>
+																</column>
+															</columns>
+														</basicfieldeditor>
+													</components>
+													<renderconditions logictype="and">
+														<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="RelatedContact" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+													</renderconditions>
+												</tab>
+												<tab name="Related Lead" loadlazypanels="true">
+													<components>
+														<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="RelatedLead" uniqueid="sk-1Fhc-4341" mode="read" layout="above">
+															<columns>
+																<column width="30vw">
+																	<sections>
+																		<section title="Personal Information" collapsible="no">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-4376" id="FirstName"/>
+																				<field uniqueid="sk-1Fhc-4382" id="MiddleName"/>
+																				<field uniqueid="sk-1Fhc-4379" id="LastName"/>
+																				<field uniqueid="sk-1Fhc-4390" id="Title"/>
+																			</fields>
+																		</section>
+																		<section title="Contact Info" collapsible="no" uniqueid="sk-hiO-1046">
+																			<fields>
+																				<field uniqueid="sk-hiR-1079" type="COMBO" editmodebehavior="autopopup">
+																					<label>Address</label>
+																					<template>{{Street}}
+{{City}}, {{State}}{{PostalCode}}
+{{Country}}</template>
+																				</field>
+																				<field uniqueid="sk-1Fhc-4375" id="Email"/>
+																				<field uniqueid="sk-1Fhc-4386" id="Phone"/>
+																				<field uniqueid="sk-1Fhc-4383" id="MobilePhone"/>
+																			</fields>
+																		</section>
+																		<section title="Description" collapsible="no" uniqueid="sk-hiz-1243">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-4374" id="Description">
+																					<label>  </label>
+																				</field>
+																			</fields>
+																		</section>
+																	</sections>
+																</column>
+																<column width="30vw">
+																	<sections>
+																		<section title="Company" collapsible="no">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-4372" id="Company"/>
+																				<field uniqueid="sk-1Fhc-4391" id="Website"/>
+																				<field uniqueid="sk-1Fhc-4378" id="Industry"/>
+																				<field uniqueid="sk-1Fhc-4370" id="AnnualRevenue"/>
+																			</fields>
+																		</section>
+																		<section title="Disposition" collapsible="no" uniqueid="sk-hik-1181">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-4381" id="LeadSource"/>
+																				<field uniqueid="sk-1Fhc-4385" id="Rating"/>
+																				<field uniqueid="sk-1Fhc-4388" id="Status"/>
+																				<field uniqueid="sk-1Fhc-4384" id="OwnerId"/>
+																			</fields>
+																		</section>
+																	</sections>
+																</column>
+															</columns>
+														</basicfieldeditor>
+													</components>
+													<renderconditions logictype="and">
+														<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="RelatedLead" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+													</renderconditions>
+												</tab>
+												<tab name="Related Opportunity" loadlazypanels="true">
+													<components>
+														<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="RelatedOpp" uniqueid="sk-1Fhc-6416" mode="read" layout="above">
+															<columns>
+																<column width="30vw">
+																	<sections>
+																		<section title="Profile" collapsible="no">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-6450" id="Name"/>
+																				<field uniqueid="sk-1Fhc-6446" id="AccountId">
+																					<label>Account</label>
+																				</field>
+																				<field uniqueid="sk-1Fhc-6452" id="Type"/>
+																				<field uniqueid="sk-1Fhc-6455" id="StageName"/>
+																				<field uniqueid="sk-1Fhc-6447" id="Amount"/>
+																				<field uniqueid="sk-1Fhc-6448" id="CloseDate"/>
+																			</fields>
+																		</section>
+																	</sections>
+																</column>
+																<column width="30vw">
+																	<sections>
+																		<section title="Other" collapsible="no">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-6449" id="Description"/>
+																				<field uniqueid="sk-1Fhc-6453" id="OwnerId">
+																					<label>Owner</label>
+																				</field>
+																			</fields>
+																		</section>
+																	</sections>
+																</column>
+															</columns>
+														</basicfieldeditor>
+													</components>
+													<renderconditions logictype="and">
+														<rendercondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="RelatedOpp" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+													</renderconditions>
+												</tab>
+											</tabs>
+										</tabset>
+									</components>
+									<styles>
+										<styleitem type="background"/>
+										<styleitem type="border" padding="bottom,right,top,left,">
+											<styles>
+												<styleitem property="padding-left" value="8px"/>
+												<styleitem property="padding-top" value="8px"/>
+												<styleitem property="padding-right" value="8px"/>
+												<styleitem property="padding-bottom" value="16px"/>
+												<styleitem property="box-sizing" value="border-box"/>
+											</styles>
+										</styleitem>
+										<styleitem type="size"/>
+									</styles>
+								</wrapper>
+							</components>
+						</popup>
+					</action>
+				</actions>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="color">
+			<styles>
+				<styleitem property="background-color" value="#0E69A4"/>
+			</styles>
+		</styleitem>
+	</styles>
+	<interactions/>
+</skuidpage>
