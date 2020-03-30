@@ -6,7 +6,7 @@ While Skuid does not offer a kanban board out of the box - with a little customi
 
 Here are two Skuid kanban boards:  
 
-1.  Drag-and-drop opportunity planning wall. 
+1.  Drag-and-drop opportunity planning wall
 
 Here we see opportunities. They are broken down into columns for each stage.  A snippet enables drag and drop interactions, so an opportunity can be dragged from one column into another - which updates the stage name value.
 
@@ -19,9 +19,9 @@ This example uses the following stage names.
 
 If you have defined different stage names in your org,  you will need to update the conditions on the opportunity models. 
 
-2. Task management Kanban.  
+2. Task management kanban 
 
-Tasks are another type of record that benefit from the Kanban view.  
+Tasks are another type of record that benefit from the kanban view.  
 
 ## Notes
 

@@ -1,8 +1,7 @@
-<skuidpage showsidebar="false" showheader="false" tabtooverride="Lead" personalizationmode="server">
+<skuidpage showsidebar="false" showheader="false" tabtooverride="Lead" personalizationmode="server" theme="PlainRobotoTheme">
 	<models>
 		<model id="Tasks_NotStarted" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Task" orderby="ActivityDate DESC NULLS LAST">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="AccountId"/>
 				<field id="Account.Name"/>
 				<field id="Id"/>
@@ -10,7 +9,6 @@
 				<field id="TaskSubtype"/>
 				<field id="ActivityDate"/>
 				<field id="CreatedDate"/>
-				<field id="Type"/>
 				<field id="Status"/>
 				<field id="WhatId"/>
 				<field id="What.Name"/>
@@ -27,7 +25,6 @@
 		</model>
 		<model id="Tasks_InProgress" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Task" orderby="ActivityDate DESC NULLS LAST">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="AccountId"/>
 				<field id="Account.Name"/>
 				<field id="Id"/>
@@ -35,7 +32,6 @@
 				<field id="TaskSubtype"/>
 				<field id="ActivityDate"/>
 				<field id="CreatedDate"/>
-				<field id="Type"/>
 				<field id="Status"/>
 				<field id="WhatId"/>
 				<field id="What.Name"/>
@@ -52,7 +48,6 @@
 		</model>
 		<model id="Tasks_Completed" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Task" orderby="ActivityDate DESC NULLS LAST">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="AccountId"/>
 				<field id="Account.Name"/>
 				<field id="Id"/>
@@ -60,7 +55,6 @@
 				<field id="TaskSubtype"/>
 				<field id="ActivityDate"/>
 				<field id="CreatedDate"/>
-				<field id="Type"/>
 				<field id="Status"/>
 				<field id="WhatId"/>
 				<field id="What.Name"/>
@@ -77,7 +71,6 @@
 		</model>
 		<model id="TaskDetail" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Task">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="AccountId"/>
 				<field id="Account.Name"/>
 				<field id="Id"/>
@@ -85,7 +78,6 @@
 				<field id="TaskSubtype"/>
 				<field id="ActivityDate"/>
 				<field id="CreatedDate"/>
-				<field id="Type"/>
 				<field id="Status"/>
 				<field id="WhatId"/>
 				<field id="What.Name"/>
@@ -101,7 +93,6 @@
 		</model>
 		<model id="RelatedAccount" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Account">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="Id"/>
 				<field id="Description"/>
 				<field id="Name"/>
@@ -109,7 +100,6 @@
 				<field id="Type"/>
 				<field id="AnnualRevenue"/>
 				<field id="NumberOfEmployees"/>
-				<field id="Geographic_Location__c"/>
 				<field id="Industry"/>
 				<field id="Website"/>
 				<field id="BillingAddress"/>
@@ -161,7 +151,6 @@
 			<fields>
 				<field id="AccountId"/>
 				<field id="Account.Name"/>
-				<field id="Birth_Year__c"/>
 				<field id="Birthdate"/>
 				<field id="Phone"/>
 				<field id="Description"/>
@@ -249,8 +238,6 @@
 																									<field uniqueid="sk-1Fhc-1859" id="Subject"/>
 																									<field uniqueid="sk-1Fhc-1860" id="Priority"/>
 																									<field uniqueid="sk-1Fhc-1866" id="Status"/>
-																									<field uniqueid="sk-1Fhc-1867" id="Type"/>
-																									<field uniqueid="sk-1Fhc-1868" id="TaskSubtype"/>
 																									<field uniqueid="sk-1Fhc-1865" id="ActivityDate">
 																										<label>Due Date</label>
 																									</field>
@@ -749,21 +736,19 @@ element.html(
 												</button>
 											</buttons>
 										</buttonset>
-										<tabset rememberlastusertab="true" defertabrendering="true" uniqueid="sk-1Fhc-3420">
+										<tabset rememberlastusertab="true" defertabrendering="true" uniqueid="sk-1Fhc-3420" renderas="lefttabs">
 											<tabs>
 												<tab name="Basics">
 													<components>
 														<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="TaskDetail" uniqueid="sk-1AeU-2865" mode="read" layout="above">
 															<columns>
-																<column width="50%">
+																<column width="30vw">
 																	<sections>
 																		<section title="Profile" collapsible="no">
 																			<fields>
 																				<field uniqueid="sk-1AeU-2888" id="Subject"/>
 																				<field uniqueid="sk-1AeU-2885" id="Priority"/>
 																				<field uniqueid="sk-1AeU-2887" id="Status"/>
-																				<field uniqueid="sk-1AeU-2891" id="Type"/>
-																				<field uniqueid="sk-1AeU-2890" id="TaskSubtype"/>
 																				<field uniqueid="sk-1AeU-2883" id="ActivityDate">
 																					<label>Due Date</label>
 																				</field>
@@ -771,7 +756,7 @@ element.html(
 																		</section>
 																	</sections>
 																</column>
-																<column width="50%">
+																<column width="30vw">
 																	<sections>
 																		<section title="Related" collapsible="no">
 																			<fields>
@@ -797,12 +782,15 @@ element.html(
 															</columns>
 														</basicfieldeditor>
 													</components>
+													<oninitialshowactions/>
+													<onshowactions/>
+													<renderconditions logictype="and"/>
 												</tab>
 												<tab name="Related Account" loadlazypanels="true">
 													<components>
 														<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="RelatedAccount" uniqueid="sk-1Fhc-3499" mode="read" layout="above">
-															<columns layoutmode="fixed">
-																<column width="50%">
+															<columns>
+																<column width="30vw">
 																	<sections>
 																		<section title="Profile" collapsible="no">
 																			<fields>
@@ -818,7 +806,7 @@ element.html(
 																		</section>
 																	</sections>
 																</column>
-																<column width="50%">
+																<column width="30vw">
 																	<sections>
 																		<section collapsible="no" title="Address">
 																			<fields>
@@ -843,8 +831,8 @@ element.html(
 												<tab name="Related Contact" loadlazypanels="true">
 													<components>
 														<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="RelatedContact" uniqueid="sk-1Fhc-4443" mode="read" layout="above">
-															<columns>
-																<column width="50%">
+															<columns layoutmode="fixed">
+																<column width="400px">
 																	<sections>
 																		<section title="Profile" collapsible="no">
 																			<fields>
@@ -863,7 +851,7 @@ element.html(
 																		</section>
 																	</sections>
 																</column>
-																<column width="50%">
+																<column width="400px">
 																	<sections>
 																		<section title="Communication" collapsible="no">
 																			<fields>
@@ -875,6 +863,7 @@ element.html(
 																					<label>Description</label>
 																				</field>
 																			</fields>
+																			<renderconditions logictype="and"/>
 																		</section>
 																	</sections>
 																</column>
@@ -889,42 +878,55 @@ element.html(
 													<components>
 														<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="RelatedLead" uniqueid="sk-1Fhc-4341" mode="read" layout="above">
 															<columns>
-																<column width="50%">
+																<column width="30vw">
 																	<sections>
-																		<section title="Section A" collapsible="no">
+																		<section title="Personal Information" collapsible="no">
 																			<fields>
-																				<field uniqueid="sk-1Fhc-4369" id="Address"/>
-																				<field uniqueid="sk-1Fhc-4370" id="AnnualRevenue"/>
-																				<field uniqueid="sk-1Fhc-4371" id="City"/>
-																				<field uniqueid="sk-1Fhc-4372" id="Company"/>
-																				<field uniqueid="sk-1Fhc-4373" id="Country"/>
-																				<field uniqueid="sk-1Fhc-4374" id="Description"/>
-																				<field uniqueid="sk-1Fhc-4375" id="Email"/>
 																				<field uniqueid="sk-1Fhc-4376" id="FirstName"/>
-																				<field uniqueid="sk-1Fhc-4377" id="Name"/>
-																				<field uniqueid="sk-1Fhc-4378" id="Industry"/>
-																				<field uniqueid="sk-1Fhc-4379" id="LastName"/>
-																				<field uniqueid="sk-1Fhc-4380" id="Id"/>
-																				<field uniqueid="sk-1Fhc-4381" id="LeadSource"/>
 																				<field uniqueid="sk-1Fhc-4382" id="MiddleName"/>
-																				<field uniqueid="sk-1Fhc-4383" id="MobilePhone"/>
-																				<field uniqueid="sk-1Fhc-4384" id="OwnerId"/>
-																				<field uniqueid="sk-1Fhc-4385" id="Rating"/>
-																				<field uniqueid="sk-1Fhc-4386" id="Phone"/>
-																				<field uniqueid="sk-1Fhc-4387" id="State"/>
-																				<field uniqueid="sk-1Fhc-4388" id="Status"/>
-																				<field uniqueid="sk-1Fhc-4389" id="Street"/>
+																				<field uniqueid="sk-1Fhc-4379" id="LastName"/>
 																				<field uniqueid="sk-1Fhc-4390" id="Title"/>
-																				<field uniqueid="sk-1Fhc-4391" id="Website"/>
-																				<field uniqueid="sk-1Fhc-4392" id="PostalCode"/>
+																			</fields>
+																		</section>
+																		<section title="Contact Info" collapsible="no" uniqueid="sk-hiO-1046">
+																			<fields>
+																				<field uniqueid="sk-hiR-1079" type="COMBO" editmodebehavior="autopopup">
+																					<label>Address</label>
+																					<template>{{Street}}
+{{City}}, {{State}}{{PostalCode}}
+{{Country}}</template>
+																				</field>
+																				<field uniqueid="sk-1Fhc-4375" id="Email"/>
+																				<field uniqueid="sk-1Fhc-4386" id="Phone"/>
+																				<field uniqueid="sk-1Fhc-4383" id="MobilePhone"/>
+																			</fields>
+																		</section>
+																		<section title="Description" collapsible="no" uniqueid="sk-hiz-1243">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-4374" id="Description">
+																					<label>  </label>
+																				</field>
 																			</fields>
 																		</section>
 																	</sections>
 																</column>
-																<column width="50%">
+																<column width="30vw">
 																	<sections>
-																		<section title="Section B">
-																			<fields/>
+																		<section title="Company" collapsible="no">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-4372" id="Company"/>
+																				<field uniqueid="sk-1Fhc-4391" id="Website"/>
+																				<field uniqueid="sk-1Fhc-4378" id="Industry"/>
+																				<field uniqueid="sk-1Fhc-4370" id="AnnualRevenue"/>
+																			</fields>
+																		</section>
+																		<section title="Disposition" collapsible="no" uniqueid="sk-hik-1181">
+																			<fields>
+																				<field uniqueid="sk-1Fhc-4381" id="LeadSource"/>
+																				<field uniqueid="sk-1Fhc-4385" id="Rating"/>
+																				<field uniqueid="sk-1Fhc-4388" id="Status"/>
+																				<field uniqueid="sk-1Fhc-4384" id="OwnerId"/>
+																			</fields>
 																		</section>
 																	</sections>
 																</column>
@@ -939,7 +941,7 @@ element.html(
 													<components>
 														<basicfieldeditor showheader="true" showsavecancel="false" showerrorsinline="true" model="RelatedOpp" uniqueid="sk-1Fhc-6416" mode="read" layout="above">
 															<columns>
-																<column width="50%">
+																<column width="30vw">
 																	<sections>
 																		<section title="Profile" collapsible="no">
 																			<fields>
@@ -947,15 +949,15 @@ element.html(
 																				<field uniqueid="sk-1Fhc-6446" id="AccountId">
 																					<label>Account</label>
 																				</field>
+																				<field uniqueid="sk-1Fhc-6452" id="Type"/>
 																				<field uniqueid="sk-1Fhc-6455" id="StageName"/>
 																				<field uniqueid="sk-1Fhc-6447" id="Amount"/>
 																				<field uniqueid="sk-1Fhc-6448" id="CloseDate"/>
-																				<field uniqueid="sk-1Fhc-6452" id="Type"/>
 																			</fields>
 																		</section>
 																	</sections>
 																</column>
-																<column width="50%">
+																<column width="30vw">
 																	<sections>
 																		<section title="Other" collapsible="no">
 																			<fields>
@@ -975,7 +977,6 @@ element.html(
 													</renderconditions>
 												</tab>
 											</tabs>
-											<renderconditions logictype="and"/>
 										</tabset>
 									</components>
 									<styles>
