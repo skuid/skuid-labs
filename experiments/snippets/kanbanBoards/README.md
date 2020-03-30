@@ -1,4 +1,4 @@
-# Kanban Boards. 
+# Kanban Boards
 
 Kanban boards are a very popular type of interface for managing lots of objects through a series of phases.  Perhaps made most popular by Trello, the column arrangement is very intuitive for moving items through a process.  And everyone loves to drag and drop!
 

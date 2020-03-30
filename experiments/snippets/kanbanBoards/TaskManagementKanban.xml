@@ -1,4 +1,4 @@
-<skuidpage showsidebar="false" showheader="false" tabtooverride="Lead" personalizationmode="server" theme="PlainRobotoTheme">
+<skuidpage showsidebar="false" showheader="false" tabtooverride="Lead" personalizationmode="server" theme="Modern">
 	<models>
 		<model id="Tasks_NotStarted" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Task" orderby="ActivityDate DESC NULLS LAST">
 			<fields>
@@ -174,7 +174,6 @@
 		</model>
 		<model id="RelatedOpp" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Opportunity">
 			<fields>
-				<field id="RecordTypeId"/>
 				<field id="AccountId"/>
 				<field id="Account.Name"/>
 				<field id="Amount"/>
