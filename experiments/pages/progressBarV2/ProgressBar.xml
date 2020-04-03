@@ -1,0 +1,469 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="ProgressBarDSS">
+<models>
+<model id="UiOnly" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
+	<fields>
+		<field id="Steps" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="1" precision="9" scale="2">
+			<picklistentries>
+				<entry value="1" label="Step 1"/>
+				<entry value="2" label="Step 2"/>
+				<entry label="Step 3" value="3"/>
+			</picklistentries>
+		</field>
+		<field id="NextStep" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="2">
+			<formula>{{Steps}} + 1</formula>
+		</field>
+		<field id="PreviousStep" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="2">
+			<formula>{{Steps}} -1</formula>
+		</field>
+		<field id="Percent" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="PERCENT" precision="9" scale="0">
+			<formula>CASE({{Steps}}, 1, 33, 2, 66, 3, 100)</formula>
+		</field>
+	</fields>
+	<conditions/>
+	<actions/>
+</model>
+</models>
+<components>
+<skuid__header model="UiOnly" uniqueid="sk-oMO-11143" title="Stages/Stepper" styleSettingsVariant="a7d5a4b6-3246-493d-a0eb-bea4cdab84fe">
+	<styles>
+		<spacing left="1.875" bottom="1.5" top="1.5" styleSettingsVariant="a7d5a4b6-3246-493d-a0eb-bea4cdab84fe"/>
+	</styles>
+</skuid__header>
+<skuid__wrapper uniqueid="sk-jF4-22384" styleSettingsVariant="c9c3dd84-338e-45ce-a0ea-d7c1149f9dca">
+	<components>
+		<skuid__grid uniqueid="sk-jF0-21929" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+			<divisions>
+				<division minWidth="100px" ratio="1" alignSelf="auto">
+					<components>
+						<skuid__wrapper uniqueid="sk-jFH-26197" styleSettingsVariant="8b36c4f7-9a7d-4971-bf50-d6bff9e87357">
+							<components>
+								<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;Step 1&lt;/span&gt;&lt;/div&gt;&#10;" uniqueid="sk-jFK-27968">
+									<styles>
+										<spacing top="1.875" bottom="1.875"/>
+									</styles>
+								</skuid__text>
+							</components>
+							<background/>
+						</skuid__wrapper>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="100px" ratio="1">
+					<components>
+						<skuid__wrapper uniqueid="sk-jFI-26894">
+							<components>
+								<skuid__grid uniqueid="sk-jGL-38427" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+									<divisions>
+										<division alignSelf="auto">
+											<components>
+												<skuid__wrapper uniqueid="sk-jGL-38428" styleSettingsVariant="b216e2f7-b6d7-4f19-b6c2-32a34a59b470">
+													<components/>
+													<background/>
+													<renderConditions logictype="and"/>
+													<styleVariantConditions/>
+													<interactions/>
+												</skuid__wrapper>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="100px" ratio="1">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;Step 2&lt;/span&gt;&lt;/div&gt;&#10;" uniqueid="sk-jGL-38429">
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" operator="gte" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+													</renderConditions>
+													<styleVariantConditions/>
+													<styles>
+														<spacing top="1.875" bottom="1.875"/>
+													</styles>
+												</skuid__text>
+											</components>
+										</division>
+									</divisions>
+								</skuid__grid>
+							</components>
+							<styles>
+								<spacing/>
+							</styles>
+							<background/>
+							<renderConditions logictype="and"/>
+							<styleVariantConditions>
+								<rule logictype="and" styleSettingsVariantOverride="d26ccb4a-bcdd-409b-9b76-e28343c60b67">
+									<condition type="fieldvalue" operator="gte" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+								</rule>
+							</styleVariantConditions>
+						</skuid__wrapper>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="100px" ratio="1">
+					<components>
+						<skuid__wrapper uniqueid="sk-jFJ-27601">
+							<components>
+								<skuid__grid uniqueid="sk-jFR-29500" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+									<divisions>
+										<division alignSelf="auto">
+											<components>
+												<skuid__wrapper uniqueid="sk-jFU-30743">
+													<components/>
+													<background/>
+													<renderConditions logictype="and"/>
+													<styleVariantConditions>
+														<rule logictype="and" styleSettingsVariantOverride="806dc15d-2098-4054-9bab-bc378044c6bd">
+															<condition type="fieldvalue" operator="gte" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+														</rule>
+													</styleVariantConditions>
+													<interactions/>
+												</skuid__wrapper>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="100px" ratio="1">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;Step 3&lt;/span&gt;&lt;/div&gt;&#10;" uniqueid="sk-jFK-28243">
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" operator="gte" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="3"/>
+													</renderConditions>
+													<styleVariantConditions/>
+													<styles>
+														<spacing top="1.875" bottom="1.875"/>
+													</styles>
+												</skuid__text>
+											</components>
+										</division>
+									</divisions>
+								</skuid__grid>
+							</components>
+							<styles>
+								<spacing/>
+							</styles>
+							<background/>
+							<renderConditions logictype="and"/>
+							<styleVariantConditions>
+								<rule logictype="and" styleSettingsVariantOverride="10648bb2-5b76-43e5-a172-e5850b427a6b">
+									<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="3"/>
+								</rule>
+							</styleVariantConditions>
+						</skuid__wrapper>
+					</components>
+				</division>
+			</divisions>
+		</skuid__grid>
+	</components>
+	<background/>
+	<styles>
+		<spacing/>
+	</styles>
+</skuid__wrapper>
+<skuid__text contents="This is the easier version of the two stepper progress bars to build for two reasons:&#10;&lt;ol&gt;&#10;&#9;&lt;li&gt;You&amp;#39;re only showing the steps you&amp;#39;ve already past so you don&amp;#39;t have to configure styling for an empty state.&amp;nbsp;&lt;/li&gt;&#10;&#9;&lt;li&gt;Because every step is a different color, you only need one wrapper per next arrow.&amp;nbsp;&lt;/li&gt;&#10;&lt;/ol&gt;&#10;" uniqueid="sk-jJo-7940">
+	<styles>
+		<spacing top="1.875" bottom="1.875" left="1.875"/>
+	</styles>
+</skuid__text>
+<skuid__wrapper uniqueid="sk-jJl-6206" styleSettingsVariant="c9c3dd84-338e-45ce-a0ea-d7c1149f9dca">
+	<components>
+		<skuid__grid uniqueid="sk-jJl-6207" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+			<divisions>
+				<division minWidth="100px" ratio="1" alignSelf="auto">
+					<components>
+						<skuid__wrapper uniqueid="sk-jJl-6208" styleSettingsVariant="10648bb2-5b76-43e5-a172-e5850b427a6b">
+							<components>
+								<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;Step 1&lt;/span&gt;&lt;/div&gt;&#10;" uniqueid="sk-jJl-6209">
+									<styles>
+										<spacing top="1.875" bottom="1.875"/>
+									</styles>
+								</skuid__text>
+							</components>
+							<background/>
+							<styles>
+								<spacing/>
+							</styles>
+							<renderConditions logictype="and"/>
+							<styleVariantConditions>
+								<rule logictype="and" styleSettingsVariantOverride="d26ccb4a-bcdd-409b-9b76-e28343c60b67">
+									<condition type="fieldvalue" operator="gte" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="1"/>
+								</rule>
+							</styleVariantConditions>
+						</skuid__wrapper>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="100px" ratio="1">
+					<components>
+						<skuid__wrapper uniqueid="sk-jJl-6210">
+							<components>
+								<skuid__grid uniqueid="sk-jJl-6211" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+									<divisions>
+										<division alignSelf="auto">
+											<components>
+												<skuid__wrapper uniqueid="sk-jJl-6212" styleSettingsVariant="325ca979-5c99-4a3d-beae-dfef47aaa062">
+													<components/>
+													<background/>
+													<renderConditions logictype="and"/>
+													<styleVariantConditions>
+														<rule logictype="and" styleSettingsVariantOverride="d756ee14-a2f5-453c-bf48-b3a4e7874574">
+															<condition type="fieldvalue" operator="gt" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+														</rule>
+													</styleVariantConditions>
+													<interactions/>
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__wrapper>
+											</components>
+										</division>
+										<division alignSelf="auto">
+											<components>
+												<skuid__wrapper uniqueid="sk-jKN-58231">
+													<components/>
+													<background/>
+													<renderConditions logictype="and"/>
+													<styleVariantConditions>
+														<rule logictype="and" styleSettingsVariantOverride="806dc15d-2098-4054-9bab-bc378044c6bd">
+															<condition type="fieldvalue" operator="gte" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="1"/>
+														</rule>
+													</styleVariantConditions>
+													<interactions/>
+													<styles>
+														<spacing left="-4.25"/>
+													</styles>
+												</skuid__wrapper>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="100px" ratio="1">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;Step 2&lt;/div&gt;&#10;" uniqueid="sk-jJl-6213" styleSettingsVariant="11027431-da78-4a9f-9453-9fea9ae6284d">
+													<renderConditions logictype="and"/>
+													<styleVariantConditions>
+														<rule logictype="and" styleSettingsVariantOverride="1b036c50-325a-49bc-b6f0-b53c74a01a34">
+															<condition type="fieldvalue" operator="gte" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+														</rule>
+													</styleVariantConditions>
+													<styles>
+														<spacing top="1.875" bottom="1.875" styleSettingsVariant="11027431-da78-4a9f-9453-9fea9ae6284d"/>
+													</styles>
+												</skuid__text>
+											</components>
+										</division>
+									</divisions>
+								</skuid__grid>
+							</components>
+							<styles>
+								<spacing/>
+							</styles>
+							<background/>
+							<renderConditions logictype="and"/>
+							<styleVariantConditions>
+								<rule logictype="and" styleSettingsVariantOverride="d26ccb4a-bcdd-409b-9b76-e28343c60b67">
+									<condition type="fieldvalue" operator="gt" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+								</rule>
+								<rule logictype="and" styleSettingsVariantOverride="10648bb2-5b76-43e5-a172-e5850b427a6b">
+									<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+								</rule>
+							</styleVariantConditions>
+						</skuid__wrapper>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="100px" ratio="1">
+					<components>
+						<skuid__wrapper uniqueid="sk-jJl-6214">
+							<components>
+								<skuid__grid uniqueid="sk-jJl-6215" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+									<divisions>
+										<division alignSelf="auto">
+											<components>
+												<skuid__wrapper uniqueid="sk-jJl-6216" styleSettingsVariant="35f7778e-093b-4503-83e9-84851e9748f2">
+													<components/>
+													<background/>
+													<renderConditions logictype="and"/>
+													<styleVariantConditions>
+														<rule logictype="and" styleSettingsVariantOverride="325ca979-5c99-4a3d-beae-dfef47aaa062">
+															<condition type="fieldvalue" operator="gt" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+														</rule>
+														<rule logictype="and" styleSettingsVariantOverride="325ca979-5c99-4a3d-beae-dfef47aaa062">
+															<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+														</rule>
+													</styleVariantConditions>
+													<interactions/>
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__wrapper>
+											</components>
+										</division>
+										<division alignSelf="auto">
+											<components>
+												<skuid__wrapper uniqueid="sk-jKR-59737" styleSettingsVariant="d756ee14-a2f5-453c-bf48-b3a4e7874574">
+													<components/>
+													<background/>
+													<renderConditions logictype="and"/>
+													<styleVariantConditions>
+														<rule logictype="and" styleSettingsVariantOverride="806dc15d-2098-4054-9bab-bc378044c6bd">
+															<condition type="fieldvalue" operator="gt" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+														</rule>
+														<rule logictype="and" styleSettingsVariantOverride="325ca979-5c99-4a3d-beae-dfef47aaa062">
+															<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+														</rule>
+													</styleVariantConditions>
+													<interactions/>
+													<styles>
+														<spacing left="-4.25" styleSettingsVariant="d756ee14-a2f5-453c-bf48-b3a4e7874574"/>
+													</styles>
+												</skuid__wrapper>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="100px" ratio="1">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;Step 3&lt;/div&gt;&#10;" uniqueid="sk-jJl-6217" styleSettingsVariant="11027431-da78-4a9f-9453-9fea9ae6284d">
+													<renderConditions logictype="and"/>
+													<styleVariantConditions>
+														<rule logictype="and" styleSettingsVariantOverride="1b036c50-325a-49bc-b6f0-b53c74a01a34">
+															<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="3"/>
+														</rule>
+													</styleVariantConditions>
+													<styles>
+														<spacing top="1.875" bottom="1.875" styleSettingsVariant="11027431-da78-4a9f-9453-9fea9ae6284d"/>
+													</styles>
+												</skuid__text>
+											</components>
+										</division>
+									</divisions>
+								</skuid__grid>
+							</components>
+							<styles>
+								<spacing/>
+							</styles>
+							<background/>
+							<renderConditions logictype="and"/>
+							<styleVariantConditions>
+								<rule logictype="and" styleSettingsVariantOverride="10648bb2-5b76-43e5-a172-e5850b427a6b">
+									<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="3"/>
+								</rule>
+							</styleVariantConditions>
+						</skuid__wrapper>
+					</components>
+				</division>
+			</divisions>
+		</skuid__grid>
+	</components>
+	<background/>
+	<styles>
+		<spacing/>
+	</styles>
+</skuid__wrapper>
+<skuid__text contents="This one may be closer to the pattern that people ask for. This requires a lot more style varient conditions though + extra wrappers to achieve the &amp;gt; outlined effect. You&amp;#39;ll probably two styling conditonsions and default style for:&#10;&lt;ul&gt;&#10;&#9;&lt;li&gt;Your main step background&lt;/li&gt;&#10;&#9;&lt;li&gt;Your arrow&lt;/li&gt;&#10;&#9;&lt;li&gt;Your outline&lt;/li&gt;&#10;&#9;&lt;li&gt;Your text components&lt;/li&gt;&#10;&lt;/ul&gt;&#10;If you get more than 4 steps, this can become quite a task to set up. It looks and works well though once it&amp;#39;s there.&amp;nbsp;&lt;br /&gt;&#10;&amp;nbsp;" uniqueid="sk-jP0-10108">
+	<styles>
+		<spacing top="1.875" bottom="1.875" left="1.875"/>
+	</styles>
+</skuid__text>
+<skuid__header model="UiOnly" uniqueid="sk-oMZ-13812" title="Percents" styleSettingsVariant="a7d5a4b6-3246-493d-a0eb-bea4cdab84fe">
+	<styles>
+		<spacing left="1.875" bottom="1.5" top="1.5" styleSettingsVariant="a7d5a4b6-3246-493d-a0eb-bea4cdab84fe"/>
+	</styles>
+</skuid__header>
+<skuid__wrapper uniqueid="sk-oMi-14811" styleSettingsVariant="c9c3dd84-338e-45ce-a0ea-d7c1149f9dca">
+	<components>
+		<skuid__grid uniqueid="sk-oMr-15671" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+			<divisions>
+				<division alignSelf="auto" ratio="1" maxWidth="100%" minWidth="33%">
+					<components>
+						<skuid__wrapper uniqueid="sk-oN6-19194" styleSettingsVariant="d26ccb4a-bcdd-409b-9b76-e28343c60b67">
+							<components>
+								<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;{{Percent}}&lt;/span&gt;&lt;/div&gt;&#10;" uniqueid="sk-oND-19919" model="UiOnly">
+									<styles>
+										<spacing top="1.875" bottom="1.875"/>
+									</styles>
+								</skuid__text>
+							</components>
+							<background/>
+						</skuid__wrapper>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="33%" maxWidth="33%">
+					<components/>
+					<renderConditions logictype="and">
+						<renderCondition type="fieldvalue" operator="lte" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="1"/>
+					</renderConditions>
+				</division>
+				<division alignSelf="auto" minWidth="33%" maxWidth="33%">
+					<components/>
+					<renderConditions logictype="and">
+						<renderCondition type="fieldvalue" operator="lte" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Steps" value="2"/>
+					</renderConditions>
+				</division>
+			</divisions>
+		</skuid__grid>
+	</components>
+	<background/>
+</skuid__wrapper>
+<skuid__text contents="This is actually the easiest progress bar to build. Set your progress bar with the current % value and make sure it&amp;#39;s a flexible width. Then set your other divisions to the internals you want to show and make sure they only render if your value is below the threshold for that interval.&amp;nbsp;&lt;br /&gt;&#10;&lt;br /&gt;&#10;If your percent is going to be tied to steps like the case above, it may be good to use a formula field with a CASE clause to evaluate what percentage of compleation each stage should result in.&amp;nbsp;" uniqueid="sk-oPm-21317">
+	<styles>
+		<spacing top="1.875" bottom="1.875" left="1.875"/>
+	</styles>
+</skuid__text>
+</components>
+<resources>
+	<labels/>
+	<javascript/>
+	<css/>
+	<actionsequences/>
+</resources>
+<styles>
+	<styleitem type="background" bgtype="none"/>
+</styles>
+<background/>
+<pageregioncontents>
+	<pageregioncontent uniqueid="__header">
+		<components>
+			<skuid__layoutRegion sticky="true">
+				<components>
+					<skuid__wrapper uniqueid="sk-oRD-123164">
+						<components>
+							<skuid__header model="UiOnly" title="Progress Bar(s)" uniqueid="sk-jDe-7115">
+								<styles>
+									<spacing top="3" bottom="2" left="2"/>
+								</styles>
+								<skuid__buttonSet model="UiOnly">
+									<groups>
+										<skuid__buttonGroup displayType="attached" maxSelected="Infinity">
+											<buttons>
+												<skuid__button uniqueId="sk-jDo-8525" icon="sk-webicon-ink:arrow-left">
+													<renderConditions logictype="and"/>
+													<enableConditions logictype="and">
+														<condition type="fieldvalue" operator="gt" enclosevalueinquotes="true" fieldmodel="UiOnly" sourcetype="fieldvalue" field="Steps" value="1"/>
+													</enableConditions>
+													<styleVariantConditions/>
+													<actions>
+														<action type="updateRow" fieldmodel="UiOnly" affectedrows="context">
+															<updates>
+																<update valuesource="fieldvalue" field="Steps" enclosevalueinquotes="false" value="{{PreviousStep}}"/>
+															</updates>
+														</action>
+													</actions>
+												</skuid__button>
+												<skuid__button uniqueId="sk-jDp-9096" icon="sk-webicon-ink:arrow-right">
+													<renderConditions logictype="and"/>
+													<enableConditions logictype="and">
+														<condition type="fieldvalue" operator="lt" enclosevalueinquotes="false" fieldmodel="UiOnly" sourcetype="fieldvalue" field="Steps" value="3"/>
+													</enableConditions>
+													<styleVariantConditions/>
+													<actions>
+														<action type="updateRow" fieldmodel="UiOnly" affectedrows="context">
+															<updates>
+																<update valuesource="fieldvalue" field="Steps" enclosevalueinquotes="false" value="{{NextStep}}"/>
+															</updates>
+														</action>
+													</actions>
+												</skuid__button>
+											</buttons>
+										</skuid__buttonGroup>
+									</groups>
+								</skuid__buttonSet>
+							</skuid__header>
+						</components>
+						<styles>
+							<spacing/>
+						</styles>
+						<background type="color" color="#fff"/>
+					</skuid__wrapper>
+				</components>
+			</skuid__layoutRegion>
+		</components>
+	</pageregioncontent>
+</pageregioncontents>
+</skuid__page>
