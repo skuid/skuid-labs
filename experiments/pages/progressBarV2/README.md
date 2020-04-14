@@ -34,7 +34,14 @@ Steppers can be a little tricky to do in V2 with no custom css, but they're stil
 ## Progress Bar: Percents
 Percent based progress bars are much simpler than steppers because there's not much styling needed and responsive grids already are set up to operate off of percents.
 
-Make sure that the division that the progress bar + text is set in is flexible, and that all other divisions are at fixed percents. Render conditions on the the other devisions will cause the progress bar to expand as the other divisions are removed. 
+Make sure that the division that the progress bar + text is set in is flexible, and that all other divisions are at fixed percents. Render conditions on the the other devisions will cause the progress bar to expand as the other divisions are removed.
 
 ## Future Improvement
 For future flexibility and abstraction, this really ought to be in a custom component, but that functionality is not out yet for V2.
+
+## Usage
+Note: This example uses a UI-only model for dummy data, so it should work in any Salesforce org or Skuid site.
+
+1. Import the `ProgressBarDSS.designsystem` design system into your Salesforce org.
+2. Create a new Skuid page and paste/upload the XML file.
+3. Edit away
