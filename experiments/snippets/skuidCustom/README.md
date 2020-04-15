@@ -187,5 +187,7 @@ $.when(skuid.custom.modelLoader(skuid.$M('OurModel'),{progressCallback: callback
 	});
 	
 	console.log('MODELLOADER DONE');
+}).fail(function(){
+    //fail logic here
 });
 ```
