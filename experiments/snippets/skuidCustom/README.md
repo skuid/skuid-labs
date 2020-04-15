@@ -65,7 +65,7 @@ Converts a string for an operator in SOQL format to HTML/XML safe format (eg. ">
 ###skuid.custom.htmlEscape(string)
 **string:** string to escape
 
-HTML escapes a string. For use when creating XML to define template contents when creating a custom component via XML. Returns the HTML escaped string to be placed in the "<contents>" area of the XML defining the template field.
+HTML escapes a string. For use when creating XML to define template contents when creating a custom component via XML. Returns the HTML escaped string to be placed in the `<contents>` area of the XML defining the template field.
 
 ###skuid.custom.reRenderComponent(componentId)
 **componentId:** Id of a component on the page
