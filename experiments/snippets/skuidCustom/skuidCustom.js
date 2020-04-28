@@ -1,3 +1,7 @@
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable no-tabs */
+/* eslint-disable indent */
+/* eslint-disable semi */
 /* eslint-disable max-len */
 /* eslint-disable no-continue */
 /* eslint-disable no-shadow */
@@ -6,11 +10,10 @@
 /* eslint-disable no-undef */
 const $ = skuid.$;
 
-//Custom SKUID Functions
+// Custom SKUID Functions
 skuid.custom = {};
 
-
-//Date.formatDate(date)
+// Date.formatDate(date)
 // formats a javascript date as YYYY-MM-DD for use with Salesforce
 Date.formatDate = function (date) {
 	const d = new Date(date);
@@ -31,7 +34,7 @@ Date.prototype.formatDate = function () {
 	return Date.formatDate(this);
 };
 
-//Date.getDateFromSFDate(dateStr)
+// Date.getDateFromSFDate(dateStr)
 // Takes a Salesforce formatted date (YYYY-MM-DD) and converts it to a Javascript Date object
 // returns Javascript date object
 Date.getDateFromSFDate = function (dateStr) {
@@ -58,7 +61,7 @@ Date.getDateFromSFDate = function (dateStr) {
 	return d;
 };
 
-//Date.isLeapYear(year)
+// Date.isLeapYear(year)
 // Checks if a year is a leap year, returns true or false
 Date.isLeapYear = function (year) {
 	return (year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0);
@@ -67,7 +70,7 @@ Date.prototype.isLeapYear = function () {
 	return Date.isLeapYear(this.getFullYear()); 
 };
 
-//Date.getDaysInMonth(year,month)
+// Date.getDaysInMonth(year,month)
 // Given a year and a month returns the number of days in that month. Accounts for leap years.
 Date.getDaysInMonth = function (year, month) {
 	return [31, (Date.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
@@ -76,7 +79,7 @@ Date.prototype.getDaysInMonth = function () {
 	return Date.getDaysInMonth(this.getFullYear(), this.getMonth());
 };
 
-//Date.addMonths(months)
+// Date.addMonths(months)
 // Adds a number of months to a date, returns the updated date
 Date.prototype.addMonths = function (months) {
 	const n = this.getDate();
@@ -86,7 +89,7 @@ Date.prototype.addMonths = function (months) {
 	return this;
 };
 
-//Date.addDays(days)
+// Date.addDays(days)
 // adds a number of days to a date, returns the updated date
 Date.prototype.addDays = function (days) {
 	const date = new Date(this.valueOf());
@@ -94,8 +97,7 @@ Date.prototype.addDays = function (days) {
 	return date;
 };
 
-
-//Object.byString(ourObject,fieldToGet);
+// Object.byString(ourObject,fieldToGet);
 // Able to get object's sub-objects with a single string variable
 // instead of needing dot notation between multiple separate variables
 // eg: Object.byString(ourObject,'Field__r.SubField__c')
@@ -117,15 +119,15 @@ Object.byString = function (ourObject, fieldToGet) {
 	return o;
 };
 
-//skuid.custom.fixCurrency(number)
+// skuid.custom.fixCurrency(number)
 // remove anything past 2 digits after the decimal point for a number
 // necessary to do after doing any mathematical operations between 2 floating point numbers
 skuid.custom.fixCurrency = function (num) {
-	//return Math.floor(num*100)/100;
+	// return Math.floor(num*100)/100;
 	return parseFloat(num.toFixed(2));
 };
 
-//skuid.custom.clearArray(array)
+// skuid.custom.clearArray(array)
 // force-clears the data out of an array which may still otherwise have data in it
 skuid.custom.clearArray = function (array) {
 	while (array.length) {
@@ -133,7 +135,7 @@ skuid.custom.clearArray = function (array) {
 	}
 };
 
-//skuid.custom.operatorSOQL(operatorSafe)
+// skuid.custom.operatorSOQL(operatorSafe)
 // Converts an operator from SKUID XML/HTML safe format to SOQL format
 skuid.custom.operatorSOQL = function (operatorSafe) {
 	if (operatorSafe === 'gt') {
@@ -149,7 +151,7 @@ skuid.custom.operatorSOQL = function (operatorSafe) {
 	return operatorSafe;
 };
 
-//skuid.custom.operatorSafe(operatorSOQL)
+// skuid.custom.operatorSafe(operatorSOQL)
 // Converts an operator from SOQL format to SKUID XML/HTML safe format
 skuid.custom.operatorSafe = function (operatorSOQL) {
 	if (operatorSOQL === '>') {
@@ -165,7 +167,7 @@ skuid.custom.operatorSafe = function (operatorSOQL) {
 	return operatorSOQL;
 };
 
-//skuid.custom.htmlEscape(string)
+// skuid.custom.htmlEscape(string)
 // HTML escape a string, for use when declaring XML for
 // dynamic Template objects that require html escaped contents.
 skuid.custom.htmlEscape = function (string) {
@@ -183,7 +185,7 @@ skuid.custom.htmlEscape = function (string) {
 	return (`${string}`).replace(htmlEscaper, (match) => htmlEscapes[match]);
 };
 
-//skuid.custom.reRenderComponent(componentId)
+// skuid.custom.reRenderComponent(componentId)
 // try to re-render a component, catching errors
 skuid.custom.reRenderComponent = function (componentId) {
 	const component = skuid.component.getById(componentId);
@@ -197,7 +199,7 @@ skuid.custom.reRenderComponent = function (componentId) {
 	}
 };
 
-//skuid.custom.waitForElement(fparams,callback)
+// skuid.custom.waitForElement(fparams,callback)
 // wait for an element to be ready on the screen before performing the callback function
 // fparams = {
 //	initEle: function to initialize the element / check if the element is initialized,
@@ -207,12 +209,19 @@ skuid.custom.reRenderComponent = function (componentId) {
 // }
 skuid.custom.waitForElement = function (fparams, callback) {
 	fparams = fparams || {};
-	initEle = fparams.initEle || undefined;
-	context = fparams.context || window;
-	chunkTime = fparams.chunkTime || 250;
+	const initEle = fparams.initEle || undefined;
+	const element = fparams.element || undefined;
+	const context = fparams.context || window;
+	const chunkTime = fparams.chunkTime || 250;
 	
-	function doChunk() {
-		const ele = initEle.call(context);
+	function doChunk () {
+		let ele;
+		if (initEle === undefined && element !== undefined) {
+			ele = element;
+		} else if (initEle !== undefined) {
+			ele = initEle.call(context);
+		}
+		
 		if (typeof ele !== 'undefined') {
 			let error = false;
 			try {
@@ -231,12 +240,11 @@ skuid.custom.waitForElement = function (fparams, callback) {
 		}
 	}
 	
-	//Keep trying to get the element and perform the callback until there isn't an error
+	// Keep trying to get the element and perform the callback until there isn't an error
 	const ourInterval = setInterval(doChunk, chunkTime);
 };
 
-
-//skuid.custom.iterateArrayAsync(array, fn, chunkEndFn, endFn, maxTimePerChunk, context)
+// skuid.custom.iterateArrayAsync(array, fn, chunkEndFn, endFn, maxTimePerChunk, context)
 //	Iterate an array asynchronously
 //	If iterating over Model Rows,
 //	first get the rows into an array using model.getRows(), use that as the array variable
@@ -263,11 +271,11 @@ skuid.custom.iterateArrayAsync = function (array, fn, chunkEndFn, endFn, maxTime
 	maxTimePerChunk = maxTimePerChunk || 200;
 	let index = 0;
 
-	function now() {
+	function now () {
 		return new Date().getTime();
 	}
 
-	function doChunk() {
+	function doChunk () {
 		const startTime = now();
 		while (index < array.length && (now() - startTime) <= maxTimePerChunk) {
 			// callback called with args (value, index, array)
@@ -275,7 +283,7 @@ skuid.custom.iterateArrayAsync = function (array, fn, chunkEndFn, endFn, maxTime
 			++index;
 		}
 		if ((now() - startTime) > maxTimePerChunk && chunkEndFn !== undefined) {
-			//callback called with args (row, length,percentDone)
+			// callback called with args (row, length,percentDone)
 			chunkEndFn.call(context, index, array.length, parseInt((index / array.length) * 100, 10));
 		}
 		if (index < array.length) {
@@ -288,7 +296,7 @@ skuid.custom.iterateArrayAsync = function (array, fn, chunkEndFn, endFn, maxTime
 	doChunk();    
 };
 
-//skuid.custom.iterateMapAsync(map, fn, chunkEndFn, endFn, maxTimePerChunk, context)
+// skuid.custom.iterateMapAsync(map, fn, chunkEndFn, endFn, maxTimePerChunk, context)
 //	Iterate a map asynchronously
 //	fn = the function to call while iterating over the map (for loop function call)
 //	chunkEndFn (optional, use undefined if not using) = the function to call when the chunk ends,
@@ -314,11 +322,11 @@ skuid.custom.iterateMapAsync = function (map, fn, chunkEndFn, endFn, maxTimePerC
 	maxTimePerChunk = maxTimePerChunk || 200;
 	let index = 0;
 
-	function now() {
+	function now () {
 		return new Date().getTime();
 	}
 
-	function doChunk() {
+	function doChunk () {
 		const startTime = now();
 		while (index < array.length && (now() - startTime) <= maxTimePerChunk) {
 			// callback called with args (value, key, map)
@@ -326,7 +334,7 @@ skuid.custom.iterateMapAsync = function (map, fn, chunkEndFn, endFn, maxTimePerC
 			++index;
 		}
 		if ((now() - startTime) > maxTimePerChunk && chunkEndFn !== undefined) {
-			//callback called with args (index, length, percentDone)
+			// callback called with args (index, length, percentDone)
 			chunkEndFn.call(context, index, array.length, parseInt((index / array.length) * 100, 10));
 		}
 		if (index < array.length) {
@@ -339,7 +347,7 @@ skuid.custom.iterateMapAsync = function (map, fn, chunkEndFn, endFn, maxTimePerC
 	doChunk();
 };
 
-//skuid.custom.modelLoader(model,fparams);
+// skuid.custom.modelLoader(model,fparams);
 //	Clear and Load all records in a model in chunks limited by the model's limit propery,
 //	a passed limit, or otherwise if both are undefined defaults to 200.
 //	Model can be Basic or Aggregate, both will load in chunks limited by the limit.
@@ -375,7 +383,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 	const exportOptions = fparams.exportOptions || {};
 	const progressCallback = fparams.progressCallback || undefined;
 
-	//Set Initial Progress
+	// Set Initial Progress
 	if (progressCallback !== undefined) {
 		progressCallback.call(this, {
 			count: 0,
@@ -386,7 +394,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 	}
 	model.abandonAllRows();
 
-	//Run through our recursive function to load all rows
+	// Run through our recursive function to load all rows
 	modelLoadSOQL(model, {
 		limit,
 		progressCallback,
@@ -396,7 +404,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 		exportOptions
 	});
 
-	function modelLoadSOQL(model, fparams) {
+	function modelLoadSOQL (model, fparams) {
 		fparams = fparams || {};
 		const limit = fparams.limit || model.recordsLimit || 200;
 		const last = fparams.last || undefined;
@@ -410,7 +418,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 
 		const displayTypesToEnclose = ['STRING', 'ID', 'TEXT', 'TEXTAREA', 'PICKLIST', 'MULTIPICKLIST',
 			'PHONE', 'REFERENCE', 'URL', 'EMAIL', 'ADDRESS', 'ENCRYPTEDSTRING'];
-		//const displayTypesDontEnclose = ['DOUBLE', 'BOOLEAN', 'CURRENCY', 'DATE',
+		// const displayTypesDontEnclose = ['DOUBLE', 'BOOLEAN', 'CURRENCY', 'DATE',
 		//	'DATETIME', 'INTEGER', 'PERCENT'];
 
 		let orderby = '';
@@ -420,24 +428,31 @@ skuid.custom.modelLoader = function (model, fparams) {
 
 		let fieldsStr = '';
 
-		//construct fields from model fields
+		let noIdField = true;
+
+		// construct fields from model fields
 		if (model.fields !== undefined) {
 			for (let i = 0; i < model.fields.length; i++) {
 				const f = model.fields[i];
 
-				//skip UI only fields
-				if (f.uiOnly === true) {
+				// skip UI only fields and non-querying fields
+				if (f.uiOnly === true || f.query === false) {
 					continue;
 				}
 
 				let fieldBefore = '';
 				let fieldAfter = '';
 				const field = f.id;
+
+				if (field === 'Id') {
+					noIdField = false;
+				}
+				
 				let fieldName = f.name || '';
 				if (fieldName !== '') {
 					fieldName = ` ${fieldName}`;	
 				}
-				//remove name for non-aggregate models
+				// remove name for non-aggregate models
 				if (model.isAggregate === false) {
 					fieldName = '';
 				}
@@ -453,7 +468,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 
 				fieldsStr += `${fieldBefore}${field}${fieldAfter}${fieldName}`;
 
-				//if this is a group by field, add it to our groupby string and groupbyItemsArr
+				// if this is a group by field, add it to our groupby string and groupbyItemsArr
 				if (model.isAggregate === true && f.groupable === true) {
 					if (groupby !== '') {
 						groupby += ',';
@@ -464,16 +479,25 @@ skuid.custom.modelLoader = function (model, fparams) {
 			}
 		}
 
-		//Get our conditions into an array of SOQL condition strings
+		// Need to add ID field to query if none exists
+		if (model.isAggregate === false && noIdField === true) {
+			if (fieldsStr !== '') {
+				fieldsStr += ',';
+			}
+
+			fieldsStr += 'Id';
+		}
+
+		// Get our conditions into an array of SOQL condition strings
 		//	to put in the WHEN area of the query
 		// if a condition is disabled, it will have a value of undefined in this array
 		const ourConditions = parseConditionsSOQL(model.conditions);
-		//abort query on undefined
+		// abort query on undefined
 		if (ourConditions === undefined) {
 			promiseResolve({ aborted: true });
 			return;
 		}
-		//Get our condition logic into an array of the format ['(',0, ' AND ', 1, ')']
+		// Get our condition logic into an array of the format ['(',0, ' AND ', 1, ')']
 		//	where numbers are positions in the parseConditionsSOQL array to include
 		//	in the SOQL string and non-numbers are condition logic to include
 		//	disabled conditions and the condition logic directly around
@@ -487,12 +511,12 @@ skuid.custom.modelLoader = function (model, fparams) {
 		let ourConditionStrPre = '';
 		let ourConditionStr = '';
 
-		//iterate the returned condition logic
+		// iterate the returned condition logic
 		for (let i = 0; i < ourConditionLogic.length; i++) {
 			const cl = ourConditionLogic[i];
 
-			//if the item is not a number, add it to our string
-			//if the item is a number, get it out of the ourConditions array and add it
+			// if the item is not a number, add it to our string
+			// if the item is a number, get it out of the ourConditions array and add it
 			if (isNaN(cl)) {
 				ourConditionStr += cl;
 			} else {
@@ -500,23 +524,23 @@ skuid.custom.modelLoader = function (model, fparams) {
 			}
 		}
 
-		//Get our Last Row Conditions for querying the next iteration
+		// Get our Last Row Conditions for querying the next iteration
 		let lastRowConditions = '';
 		
 		if (!model.isAggregate) {
-			//Basic Model
+			// Basic Model
 
-			//If we have a last row, set our lastRowConditions to only take Ids higher than our last Id
+			// If we have a last row, set our lastRowConditions to only take Ids higher than our last Id
 			if (last !== undefined) {
 				lastRowConditions = `(Id > '${last.Id}')`;
 			}
 
-			//Make sure our model is ordered by Id
+			// Make sure our model is ordered by Id
 			orderby = ' ORDER BY Id';
 		} else {
-			//Aggregate Model
+			// Aggregate Model
 
-			//Set up our order by string based on our group by items
+			// Set up our order by string based on our group by items
 			for (let i = 0; i < groupbyItemsArr.length; i++) {
 				if (orderby !== '') {
 					orderby += ',';
@@ -529,28 +553,27 @@ skuid.custom.modelLoader = function (model, fparams) {
 				orderby = ` ORDER BY ${orderby}`;
 			}
 
-			//If we have a last row, set up our last row conditions
+			// If we have a last row, set up our last row conditions
 			if (last !== undefined) {
 				lastRowConditions = '';
 				const lrcArr = [];
 
-				//Loop through our last row fields finding grouped fields to condition on
+				// Loop through our last row fields finding grouped fields to condition on
 				for (const [key, value] of Object.entries(last)) {
-					//Ignore attributes and non-grouped fields
-					//Make sure to get the field Id from the field Name
+					// Ignore attributes and non-grouped fields
+					// Make sure to get the field Id from the field Name
 					const aggFieldId = getAggFieldIdFromName(model, key);
-					if (key !== 'attributes' && aggFieldId !== undefined 
-							&& groupbyItemsArr.includes(aggFieldId)) {
+					if (key !== 'attributes' && aggFieldId !== undefined && groupbyItemsArr.includes(aggFieldId)) {
 						const obj = {};
 						obj[aggFieldId] = value;
 						lrcArr.push(obj);
 					}
 				}
 
-				//while we still have group by fields to condition on, loop
-				//constructing conditions to aggregately query the remaining rows we have not yet queried
-				//pop the last element in lrcArr after each iteration
-				//When complete this should give us a lastRowConditions string in the format
+				// while we still have group by fields to condition on, loop
+				// constructing conditions to aggregately query the remaining rows we have not yet queried
+				// pop the last element in lrcArr after each iteration
+				// When complete this should give us a lastRowConditions string in the format
 				// --
 				//	(GroupByFieldA = ValueA AND GroupByFieldB = ValueB AND GroupByFieldC > Value C)
 				//	OR
@@ -564,7 +587,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 				//	Instead we manually insert logic where we consider true > false
 				while (lrcArr.length > 0) {
 					let orCondition = '';
-					//add OR if not the first condition
+					// add OR if not the first condition
 					if (lastRowConditions !== '') {
 						orCondition = ' OR ';
 					}
@@ -574,11 +597,11 @@ skuid.custom.modelLoader = function (model, fparams) {
 					let thisCondition = '';
 
 					let first = true;
-					//loop through our last row group by fields
+					// loop through our last row group by fields
 					$.each(lrcArr, (i, row) => {
 						if (i === lrcArr.length - 1) {
-							//If we're at the last field, set greater than condition
-							//Loop through the fields
+							// If we're at the last field, set greater than condition
+							// Loop through the fields
 							for (const [key, value] of Object.entries(row)) {
 								let enclose = false;
 								let ourValue = value;
@@ -598,7 +621,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 									ourValue = 'false';
 								}
 
-								//Ignore if boolean true
+								// Ignore if boolean true
 								if (model.fieldsMap[key].displaytype !== 'BOOLEAN' || (model.fieldsMap[key].displaytype === 'BOOLEAN' && ourValue === 'false')) {
 									if (!first) {
 										thisCondition += ' AND ';
@@ -616,7 +639,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 								}
 							}
 						} else {
-							//If we're not at the last field, set equal condition
+							// If we're not at the last field, set equal condition
 							for (const [key, value] of Object.entries(row)) {
 								let enclose = false;
 								let ourValue = value;
@@ -648,7 +671,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 						first = false;
 					});
 
-					//add to our lastRowConditions
+					// add to our lastRowConditions
 					if (thisCondition !== '' && !dontQueryNextBoolean) {
 						if (lastRowConditions === '') {
 							lastRowConditions = '(';
@@ -656,7 +679,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 						lastRowConditions += `${orCondition}(${thisCondition})`;
 					}
 
-					//pop the last field to condition on
+					// pop the last field to condition on
 					lrcArr.pop();
 				}
 
@@ -668,12 +691,12 @@ skuid.custom.modelLoader = function (model, fparams) {
 
 		let lastRowConditionsPre = '';
 
-		//If we have Last Row conditions, need to add AND
+		// If we have Last Row conditions, need to add AND
 		if (lastRowConditions !== '' && ourConditionStr !== '') {
 			lastRowConditionsPre = ' AND ';
 		}
 
-		//If we have conditions, need to add WHERE
+		// If we have conditions, need to add WHERE
 		if (ourConditionStr !== '' || lastRowConditions !== '') {
 			ourConditionStrPre = ' WHERE ';
 		}
@@ -684,7 +707,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 			groupbyPre = ' GROUP BY ';
 		}
 
-		//Construct our HAVING strings
+		// Construct our HAVING strings
 		let havingPre = '';
 
 		if (model.havings !== undefined && model.havings.length > 0) {
@@ -700,7 +723,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 				let valuePre = '';
 				let valuePost = '';
 
-				//skip inactive fields
+				// skip inactive fields
 				if (h.inactive === true) {
 					continue;
 				} else {
@@ -733,27 +756,27 @@ skuid.custom.modelLoader = function (model, fparams) {
 
 		const queryStr = `SELECT ${fieldsStr} FROM ${model.objectName}${ourConditionStrPre}${ourConditionStr}${lastRowConditionsPre}${lastRowConditions}${groupbyPre}${groupby}${havingPre}${having}${orderby} LIMIT ${limit}`;
 
-		//console.log('QUERY:');
-		//console.log(queryStr);
+		// console.log('QUERY:');
+		// console.log(queryStr);
 
 		skuid.$.when(skuid.sfdc.api.query(queryStr)).done(function (queryResult) {
-			//Records is an array of query results in the format {field: value, field2: value2}
+			// Records is an array of query results in the format {field: value, field2: value2}
 			const records = queryResult.records;
 
 			if (records !== undefined && records !== null && records.length > 0) {
 				for (let i = 0; i < records.length; i++) {
-					//Remove attributes, we won't adopt that field into our rows
+					// Remove attributes, we won't adopt that field into our rows
 					if (records[i].attributes !== undefined) {
 						delete records[i].attributes;
 					}
 				}
 
-				//Adopt our rows into our tempModel
+				// Adopt our rows into our tempModel
 				tempRows = tempRows.concat(records);
 			}
 			
 			if (records.length === limit) {
-				//If we hit our query limit, we need to query again
+				// If we hit our query limit, we need to query again
 				if (progressCallback !== undefined) {
 					progressCallback.call(this, {
 						count,
@@ -775,11 +798,11 @@ skuid.custom.modelLoader = function (model, fparams) {
 					exportOptions
 				});
 			} else {
-				//Otherwise we've finished querying, resolve
-				//sort our tempRows based on original sorting parameters set in the model
+				// Otherwise we've finished querying, resolve
+				// sort our tempRows based on original sorting parameters set in the model
 				tempRows = sortRows(tempRows, model);
 
-				//adopt our tempRows into our model
+				// adopt our tempRows into our model
 				model.adoptRows(tempRows);
 
 				if (exportWhenDone) {
@@ -796,7 +819,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 			promiseReject(queryResult.error);
 		});
 
-		function getAggFieldIdFromName(model, name) {
+		function getAggFieldIdFromName (model, name) {
 			if (model.isAggregate === false) {
 				return name;
 			}
@@ -810,7 +833,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 			return name;
 		}
 
-		function getAggFieldNameFromId(model, id) {
+		function getAggFieldNameFromId (model, id) {
 			if (model.isAggregate === false) {
 				return id;
 			}
@@ -824,7 +847,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 			return id;
 		}
 
-		function operatorConvert(operator) {
+		function operatorConvert (operator) {
 			if (operator === 'gt') {
 				return '>';
 			} else if (operator === 'gte') {
@@ -838,24 +861,24 @@ skuid.custom.modelLoader = function (model, fparams) {
 			return operator;
 		}
 
-		//Pass an array of conditions
-		//returns an array of the conditions translated into SOQL format
-		//if no conditions exist, returns empty array
-		//inactivated conditions will be undefined in the array
-		//if we need to abort the query, returns undefined
-		function parseConditionsSOQL(conditions) {
+		// Pass an array of conditions
+		// returns an array of the conditions translated into SOQL format
+		// if no conditions exist, returns empty array
+		// inactivated conditions will be undefined in the array
+		// if we need to abort the query, returns undefined
+		function parseConditionsSOQL (conditions) {
 			if (conditions === undefined || conditions.length === 0) {
 				return [];
 			}
 
 			const conditionsItems = [];
 
-			//loop through conditions
+			// loop through conditions
 			for (let i = 0; i < conditions.length; i++) {
 				const c = conditions[i];
 
-				//only pick up active conditions
-				//if a condition is inactive push an element to the array to preserve condition ordering
+				// only pick up active conditions
+				// if a condition is inactive push an element to the array to preserve condition ordering
 				if (c.inactive === true) {
 					conditionsItems.push(undefined);
 				} else if (c.type === 'modelmerge') {
@@ -865,13 +888,13 @@ skuid.custom.modelLoader = function (model, fparams) {
 					const noValueBehavior = c.noValueBehavior;
 					const mergeModel = skuid.model.getModel(c.model);
 					const mergeModelFirstRow = mergeModel.getFirstRow();
-					//If we have no row
+					// If we have no row
 					if (mergeModelFirstRow === undefined || mergeModelFirstRow === null) {
-						//if noquery specified, abort query
+						// if noquery specified, abort query
 						if (noValueBehavior === 'noquery') {
 							return undefined;
 						}
-						//otherwise skip this condition
+						// otherwise skip this condition
 						
 							conditionsItems.push(undefined);
 					}
@@ -902,7 +925,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 						precede = 'NOT ';
 					}
 
-					//if in or not in, we need to iterate over the other model and include / exclude all those values
+					// if in or not in, we need to iterate over the other model and include / exclude all those values
 					if (operator === 'in' || operator === 'not in') {
 						valueBefore = '(';
 						valueAfter = ')';
@@ -932,20 +955,20 @@ skuid.custom.modelLoader = function (model, fparams) {
 						}
 					}
 
-					//LIKE NULL set operator to = instead
+					// LIKE NULL set operator to = instead
 					if (operator === 'LIKE' && value === 'NULL') {
 						operator = '=';
 					}
-					//IN nothing set value to NULL instead
+					// IN nothing set value to NULL instead
 					if ((operator === 'in' || operator === 'not in') && value === '') {
 						value = 'NULL';
 					}
 					
 					conditionsItems.push(`(${precede}${thisField} ${operator} ${valueBefore}${value}${valueAfter})`);
 				} else if (c.type === 'multiple') {
-					//multiple specified values
-					//Field in (
-					//Field not in (
+					// multiple specified values
+					// Field in (
+					// Field not in (
 					let thisItem = `${c.field} ${c.operator} (`;
 
 					if (c.values === undefined || c.values.length === 0) {
@@ -970,17 +993,17 @@ skuid.custom.modelLoader = function (model, fparams) {
 
 					conditionsItems.push(thisItem);
 				} else if (c.type === 'join') {
-					//subquery
+					// subquery
 					const field = c.field;
 					const subConditionLogic = c.subConditionLogic;
-					//const encloseValueInQuotes = c.encloseValueInQuotes;
+					// const encloseValueInQuotes = c.encloseValueInQuotes;
 					const operator = operatorConvert(c.operator);
-					//const fieldTargetObjects = c.fieldTargetObjects;
+					// const fieldTargetObjects = c.fieldTargetObjects;
 					const joinField = c.joinField;
 					const joinObject = c.joinObject;
-					//array of subconditions
+					// array of subconditions
 					const subConditions = c.subConditions;
-					//construct subcondition logic in string form
+					// construct subcondition logic in string form
 					let subConditionsParsed;
 					let subConditionLogicParsed;
 
@@ -990,12 +1013,12 @@ skuid.custom.modelLoader = function (model, fparams) {
 						thisItem += ' WHERE ';
 						
 						subConditionLogicParsed = parseConditionLogic(subConditions, subConditionLogic);
-						//Abort if undefined
+						// Abort if undefined
 						if (subConditionLogicParsed === undefined) {
 							return undefined;
 						}
 						subConditionsParsed = parseConditionsSOQL(subConditions);
-						//Abort if undefined
+						// Abort if undefined
 						if (subConditionsParsed === undefined) {
 							return undefined;
 						}
@@ -1003,12 +1026,11 @@ skuid.custom.modelLoader = function (model, fparams) {
 						for (let j = 0; j < subConditionLogicParsed.length; j++) {
 							const scl = subConditionLogicParsed[j];
 							
-							
 							if (isNaN(scl)) {
-								//If not a number, add to our thisItem string
+								// If not a number, add to our thisItem string
 								thisItem += scl;
 							} else {
-								//otherwise get from our subConditionsParsed array
+								// otherwise get from our subConditionsParsed array
 								thisItem += subConditionsParsed[scl];
 							}
 						}
@@ -1018,7 +1040,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 
 					conditionsItems.push(thisItem);
 				} else {
-					//standard fieldvalue, userinfo, datasourceuserinfo
+					// standard fieldvalue, userinfo, datasourceuserinfo
 					let value = c.value;
 					let operator = operatorConvert(c.operator);
 					const noValueBehavior = c.noValueBehavior;
@@ -1057,7 +1079,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 						value = `'${value}'`;
 					}
 					
-					//LIKE NULL is invalid, switch operator to equals
+					// LIKE NULL is invalid, switch operator to equals
 					if (operator === 'LIKE' && value === 'NULL') {
 						operator = '=';
 					}
@@ -1069,7 +1091,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 			return conditionsItems;
 		}
 
-		function sortRows(rows, model) {
+		function sortRows (rows, model) {
 			if (model === undefined) {
 				return rows;
 			}
@@ -1079,7 +1101,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 				return rows;
 			}
 
-			//turn orderby into an array of objects
+			// turn orderby into an array of objects
 			const orderbyArr = [];
 
 			const orderbySplit = orderby.split(',');
@@ -1090,7 +1112,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 				let ascDesc;
 				let nullsLast = false;
 
-				//take care of nulls last condition
+				// take care of nulls last condition
 				if (os.toUpperCase().endsWith(' NULLS LAST')) {
 					nullsLast = true;
 					os = os.substring(0, os.length - 11).trim();
@@ -1114,7 +1136,6 @@ skuid.custom.modelLoader = function (model, fparams) {
 
 				orderbyArr.push({ field, ascDesc, nullsLast });
 			}
-
 
 			rows.sort((a, b) => {
 				for (let i = 0; i < orderbyArr.length; i++) {
@@ -1169,25 +1190,30 @@ skuid.custom.modelLoader = function (model, fparams) {
 			return o;
 		};
 
-		//Takes an array of conditions and a string of condition logic
-		//Returns an array of strings and numbers
-		//Strings are SOQL condition logic to directly embed (eg. AND OR ())
-		//Numbers are array positions in the conditions array of those conditions
-		//If undefined is returned, abort query
-		function parseConditionLogic(conditions, conditionLogic) {
+		// Takes an array of conditions and a string of condition logic
+		// Returns an array of strings and numbers
+		// Strings are SOQL condition logic to directly embed (eg. AND OR ())
+		// Numbers are array positions in the conditions array of those conditions
+		// If undefined is returned, abort query
+		function parseConditionLogic (conditions, conditionLogic) {
 			if (conditionLogic === undefined || conditionLogic === '') {
 				return [];
 			}
 
-			//always surround with parenthesis
-			conditionLogic = `(${conditionLogic})`;
-			
+			const hasOr = conditionLogic.match(/( OR )/gi);
 
-			let match = conditionLogic.match(/( AND )|([0-9]+)|([()])|( OR )/g);
+			// If there is an OR in the condition logic, surround with parenthesis
+			// Otherwise it is not necessary to surround with parenthesis and surrounding
+			// with parenthesis may cause certain queries (that involve subquerues) to fail
+			if (hasOr !== null && hasOr !== undefined) {
+				conditionLogic = `(${conditionLogic})`;
+			}
+			
+			let match = conditionLogic.match(/( AND )|([0-9]+)|([()])|( OR )/gi);
 
 			const ourConditions = parseConditionsSOQL(conditions);
 
-			//abort query if undefined
+			// abort query if undefined
 			if (ourConditions === undefined) {
 				return undefined;
 			}
@@ -1196,13 +1222,13 @@ skuid.custom.modelLoader = function (model, fparams) {
 
 			for (let i = 0; i < match.length; i++) {
 				if (!isNaN(match[i])) {
-					//fix to numerical index of condition itself
+					// fix to numerical index of condition itself
 					match[i] = (Number(match[i]) - 1);
 				}
 			}
 			
-			//recursive function to deactivate logic
-			function deactivateLogic(fparams) {
+			// recursive function to deactivate logic
+			function deactivateLogic (fparams) {
 				fparams = fparams || {};
 				let match = fparams.match || undefined;
 				let index = fparams.index || undefined;
@@ -1211,39 +1237,38 @@ skuid.custom.modelLoader = function (model, fparams) {
 				const ourConditions = fparams.ourConditions || false;
 				
 				if (index === undefined) {
-					//index is undefined, this is the base function call outside of recursion
+					// index is undefined, this is the base function call outside of recursion
 					index = 0;
 				} else if (match.length <= index) {
-					//we got to the end of iteration, return match
+					// we got to the end of iteration, return match
 					return match;
 				}
 
 				const m = match[index];
 				
-				
 				if (!deactivate) {
-					//we're not in deactivation mode
+					// we're not in deactivation mode
 					if (!isNaN(m)) {
-						//If this is a number
+						// If this is a number
 						const n = Number(m) - 1;
-						//if this condition is inactive or has been deactivated in ourConditions due to missing rows, recurse to deactivate logic
+						// if this condition is inactive or has been deactivated in ourConditions due to missing rows, recurse to deactivate logic
 						if (conditions[n].inactive === true || ourConditions[n] === undefined) {
-							//remove the item
+							// remove the item
 							match.splice(index, 1);
-							//run over our match array fixing validity issues
+							// run over our match array fixing validity issues
 							match = deactivateLogic({ match, conditions, ourConditions, deactivate: true });
-							//rerun from scratch
+							// rerun from scratch
 							match = deactivateLogic({ match, conditions, ourConditions });
 						} else if (index + 1 < match.length) {
-							//otherwise it's valid let's iterate recursively
+							// otherwise it's valid let's iterate recursively
 							match = deactivateLogic({ match, index: index + 1, conditions, ourConditions });
 						}
 					} else if (index + 1 < match.length) {
-						//if this is not a number, iterate recursively
+						// if this is not a number, iterate recursively
 						match = deactivateLogic({ match, index: index + 1, conditions, ourConditions });
 					}
 				} else {
-					//we're in deactivation mode, check match array for validity
+					// we're in deactivation mode, check match array for validity
 					let lastItem;
 					let lastIndex;
 					if (index !== 0) {
@@ -1257,53 +1282,53 @@ skuid.custom.modelLoader = function (model, fparams) {
 						nextItem = match[nextIndex];
 					}
 
-					//get rid of touching AND/OR items or AND/OR that are preceded by '(' or have ')' after them
+					// get rid of touching AND/OR items or AND/OR that are preceded by '(' or have ')' after them
 					if (m === ' AND ' || m === ' OR ') {
 						if (lastItem === undefined) {
-							//Remove this AND/OR
+							// Remove this AND/OR
 							match.splice(index, 1);
-							//rerun deactivation check from scratch
+							// rerun deactivation check from scratch
 							match = deactivateLogic({ match, conditions, ourConditions, deactivate: true });
 						} else if (nextItem === ' AND ' || nextItem === ' OR ' || nextItem === ')' || nextItem === undefined) {
-							//Remove this AND/OR
+							// Remove this AND/OR
 							match.splice(index, 1);
-							//rerun deactivation check from scratch
+							// rerun deactivation check from scratch
 							match = deactivateLogic({ match, conditions, ourConditions, deactivate: true });
 						} else if (lastItem === ' AND ' || lastItem === ' OR ' || lastItem === '(') {
-							//Remove this AND/OR
+							// Remove this AND/OR
 							match.splice(index, 1);
-							//rerun deactivation check from scratch
+							// rerun deactivation check from scratch
 							match = deactivateLogic({ match, conditions, ourConditions, deactivate: true });
 						} else if (index + 1 < match.length) {
-							//nothing broken here, proceed to next index
+							// nothing broken here, proceed to next index
 							match = deactivateLogic({ match, index: index + 1, conditions, ourConditions, deactivate: true });
 						}
 					} else if (m === '(') {
-						//fix broken parenthesis
+						// fix broken parenthesis
 						if (nextItem === ')') {
 							match.splice(index, 2);
-							//rerun deactivation check from scratch
+							// rerun deactivation check from scratch
 							match = deactivateLogic({ match, conditions, ourConditions, deactivate: true });
 						} else if (index + 1 < match.length) {
-							//nothing broken here, proceed to next index
+							// nothing broken here, proceed to next index
 							match = deactivateLogic({ match, index: index + 1, conditions, ourConditions, deactivate: true });
 						}
 					} else if (m === ')') {
 						if (lastItem === undefined) {
-							//Remove this )
+							// Remove this )
 							match.splice(index, 1);
-							//rerun deactivation check from scratch
+							// rerun deactivation check from scratch
 							match = deactivateLogic({ match, conditions, ourConditions, deactivate: true });
 						} else if (lastItem === '(') {
 							match.splice(lastIndex, 2);
-							//rerun deactivation check from scratch
+							// rerun deactivation check from scratch
 							match = deactivateLogic({ match, conditions, ourConditions, deactivate: true });
 						} else if (index + 1 < match.length) {
-							//nothing broken here, proceed to next index
+							// nothing broken here, proceed to next index
 							match = deactivateLogic({ match, index: index + 1, conditions, ourConditions, deactivate: true });
 						}
 					} else if (index + 1 < match.length) {
-						//nothing broken here, proceed to next index
+						// nothing broken here, proceed to next index
 						match = deactivateLogic({ match, index: index + 1, conditions, ourConditions, deactivate: true });
 					}
 				}
