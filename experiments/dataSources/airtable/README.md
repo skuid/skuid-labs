@@ -35,7 +35,7 @@ And within *Headers to send with every request*, append the following values in 
 
 If prompted for a Remote Site Setting, accept it. Otherwise, you'll need to create one manually. 
 
-## Configure a Skuid model for reading Airtable Data
+## Configure a Skuid model for reading Airtable data
 
 When using Airtable as a data source, you can think of your sheets as *objects*. So for any sheets whose columns you wish to access, you'll need to create a model. Let's do that now.
 
@@ -80,15 +80,15 @@ If you've set the data source URL correctly, clicking on **Fields** will show yo
 You'll want to select Id, Created Time (if you prefer), and then you'll want to click into the Fields "field." You'll find your sheet's columns listed here. Select all relevant fields, and then build your page!
 
 
-## Lets make this DataSource Full CRUD! 
+## Lets make this data source do full CRUD! 
 
-Reading data is nice.  But when you can read and write.. Why not!!   Skuid supports all the HTTP verbs - so you can Create,  Update and Delete  (as well as just Read). 
+Reading data is nice.  But when you can read and write... Why not!!   Skuid supports all the HTTP verbs - so you can Create,  Update and Delete  (as well as Read). 
 
 Go back to your Read Only model and make the following change: 
 
 - **Model Behavior**: Read/Write
 
-This exposes a "Methods" area of the model,  and moves your Query action there. Now we'll add separate entries for the other methods for doing full CRUD.   Using the Airtable API docs we can configure each of these methods. 
+This exposes a "Methods" area of the model,  and moves your Query action. Now we'll add separate entries for the other methods for doing full CRUD.   Using the Airtable API docs we can configure each of these methods. 
 
 ### Delete
 Configuring delete is easiest. 
@@ -97,7 +97,7 @@ Configuring delete is easiest.
 - **Data Source URL**: ``<baseId>/<ObjectName>/{{id}}``
 - **Data Source HTTP Verb**: ``DELETE``
 
-This Data Source URL takes the ID of one record and passes it to Airtable to delete.  You can use the "Mark row(s) for deletion" and "Save" actions to trigger this method.  
+This Data Source URL takes the ``id`` of one record and passes it to Airtable to delete.  In your Skuid page,  you can use the "Mark row(s) for deletion" and "Save" actions to trigger this method.  
 
 ### Insert
 Lets create a new record. 
@@ -136,6 +136,8 @@ Below is the template for creating a record with all the fields in the applicant
         }
 }
 ```
+Note:  Double check this payload with the fields you selected when you set up the "Read Only" version of this model.  Just because fields are in your model does not mean they will be passed to Airtable.   They have to be documented here.   (Let's just say I lost a few hours and pulled out some hair because of this). 
+
 ### Update
 Lets update an existing record.  
 
@@ -150,11 +152,11 @@ The same request body template used for ``Insert`` can be used for ``update``
 
 ## Sample page
 
-The included sample page is based off of Airtable's default Applicant Tracking base. It has one model for the Applicants sheet, aka object, and it lists all of the default columns. To see it in action, do the following:
+The included sample page is based off of Airtable's default Applicant Tracking base. It has one model for the Applicants sheet, aka object, and it shows the default data (either in the table or in the Popups that describe the application interviews). To see it in action, do the following:
 
 1. Create the data source as outlined above
 2. Upload the XML to your Skuid site as a **v2** page.
-3. **You will see an error!** This is because you need to update the base ID for the model. Replace the `<Your_Base_Id>` string within all of the model's data source URLs with **your base ID.**  (There are 6 instances where you will have to replace this string - multiselect is your friend)
+3. **You will see an error!** This is because you need to update the base ID for the model. Replace the `<Your_Base_Id>` string within all of the model's data source URLs with **your base ID.**  (There are 6 instances where you will have to replace this string - multi-select is your friend)
 4. Save and preview.  
 
 Take full CRUD control over your Airtable data! 
@@ -162,13 +164,13 @@ Take full CRUD control over your Airtable data!
 
 ## Notes
 
-Airtable Picklist and Reference fields present interesting challenges.  Both are solved in this page. 
+Airtable picklist and Reference fields present interesting challenges.  Both are solved in this page. 
 
 Picklists:   
-Field metadata suggests that the Picklists are simply ``strings``.  But Skuid allows you to override these fields to be Picklists - and define the options availble.  Look for the ``Stage`` field in the Applicants model. 
+Field metadata suggests that the picklists are simply ``strings``.  But Skuid allows you to override these fields to be picklists - and define the options available.  Look for the ``Stage`` field in the Applicants model. 
 
 Reference Fields: 
-The relationship between Applicant and Position is managed with a reference.  The Airtable metadata suggest this an ``Array`` type field.  Skuid does not handle these fields very well, and so you cannot simply override their metadata.  What I had to do was create UI-only Picklist fields to represent these fields.  Look at the "ApplyingFor" field in the Applicants model. 
+The relationship between Applicant and Position is managed with a reference.  The Airtable metadata suggest this an ``Array`` type field.  Skuid does not handle these fields very well, and so you cannot simply override their metadata.  What I had to do was create UI-only picklist fields to represent these fields.  Look at the "ApplyingFor" field in the Applicants model. 
 - The source for the picklist values is another model. 
 - Model actions on the Applicants model are used to populate the UI field on model query, and to update the Airtable field whenever the UI-only field is changed.  This keeps the UI elegant and the database correct. 
 
