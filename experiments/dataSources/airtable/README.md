@@ -139,7 +139,7 @@ Below is the template for creating a record with all the fields in the applicant
 Note:  Double check this payload with the fields you selected when you set up the "Read Only" version of this model.  Just because fields are in your model does not mean they will be passed to Airtable.   They have to be documented here.   (Let's just say I lost a few hours and pulled out some hair because of this). 
 
 ### Update
-Lets update an existing record.  
+Let's update an existing record.  
 
 - **Type**: "UPDATE"
 - **Data Source URL**: ``<baseId>/<ObjectName>/{{id}}``
