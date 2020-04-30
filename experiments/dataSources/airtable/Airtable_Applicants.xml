@@ -1,66 +1,435 @@
-<skuidpage unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true">
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true">
 	<models>
-		<model id="Applicants" query="true" createrowifnonefound="false" datasource="Airtable" processonclient="true" verb="GET" payloadcontenttype="JSON" endpoint="&lt;Your_Base_Id&gt;/Applicants" pathtocontent="records" fieldtargetobjects="records">
+		<model id="Interviewers" query="true" createrowifnonefound="false" datasource="Airtable" verb="GET" payloadcontenttype="JSON" endpoint="&lt;Your_Base_Id&gt;/Interviewers" pathtocontent="records" fieldtargetobjects="records">
 			<fields>
 				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
-				<field id="fields.Applying for" label="Applying For" ispolymorphic="false" isnamepointing="false" displaytype="ARRAY" rel="Applying for" ref="Applying for" accessible="true" filterable="true"/>
+				<field id="fields.Name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Positions" query="true" datasource="Airtable" verb="GET" payloadcontenttype="JSON" endpoint="&lt;Your_Base_Id&gt;/Positions" pathtocontent="records" fieldtargetobjects="records">
+			<fields>
+				<field id="fields.Description" label="Description" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="fields.Name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Applicants" query="true" createrowifnonefound="false" datasource="Airtable" processonclient="true" payloadcontenttype="JSON" fieldtargetobjects="records" type="readwrite">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="fields.Applying for" label="Applying For" ispolymorphic="false" isnamepointing="false" displaytype="ARRAY" rel="Applying for" ref="Applying for" accessible="true" filterable="true" uionly="false"/>
 				<field id="fields.Attachments" label="Attachments" ispolymorphic="false" isnamepointing="false" displaytype="ARRAY" rel="Attachments" ref="Attachments" accessible="true" filterable="true"/>
 				<field id="fields.Email Address" label="Email Address" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
 				<field id="fields.Name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
 				<field id="fields.Onsite Interview Date" label="Onsite Interview Date" ispolymorphic="false" isnamepointing="false" displaytype="DATE" accessible="true" filterable="true"/>
 				<field id="fields.Onsite Interview Notes" label="Onsite Interview Notes" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
-				<field id="fields.Onsite Interview Score" label="Onsite Interview Score" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="fields.Onsite Interview Score" label="Onsite Interview Score" ispolymorphic="false" isnamepointing="false" displaytype="PICKLIST" accessible="true" filterable="true" ogdisplaytype="STRING" picklistsource="manual" returntype="TEXT" defaultvaluetype="fieldvalue">
+					<picklistentries>
+						<entry value="0 - no hire" label="0 - no hire"/>
+						<entry value="1 - probably no hire" label="1 - probably no hire"/>
+						<entry value="2 - worth consideration" label="2 - worth consideration"/>
+						<entry value="3 - good candidate" label="3 - good candidate"/>
+						<entry value="4 - please hire this person" label="4 - please hire this person"/>
+					</picklistentries>
+				</field>
 				<field id="fields.Onsite Interviewer" label="Onsite Interviewer" ispolymorphic="false" isnamepointing="false" displaytype="ARRAY" rel="Onsite Interviewer" ref="Onsite Interviewer" accessible="true" filterable="true"/>
 				<field id="fields.Phone" label="Phone" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
 				<field id="fields.Phone Screen Date" label="Phone Screen Date" ispolymorphic="false" isnamepointing="false" displaytype="DATE" accessible="true" filterable="true"/>
 				<field id="fields.Phone Screen Interviewer" label="Phone Screen Interviewer" ispolymorphic="false" isnamepointing="false" displaytype="ARRAY" rel="Phone Screen Interviewer" ref="Phone Screen Interviewer" accessible="true" filterable="true"/>
-				<field id="fields.Phone Screen Notes" label="Phone Screen Notes" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
-				<field id="fields.Phone Screen Score" label="Phone Screen Score" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
-				<field id="fields.Stage" label="Stage" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="fields.Phone Screen Notes" label="Phone Screen Notes" ispolymorphic="false" isnamepointing="false" displaytype="TEXTAREA" accessible="true" filterable="true" ogdisplaytype="STRING"/>
+				<field id="fields.Phone Screen Score" label="Phone Screen Score" ispolymorphic="false" isnamepointing="false" displaytype="PICKLIST" accessible="true" filterable="true" ogdisplaytype="STRING" picklistsource="manual" returntype="TEXT" defaultvaluetype="fieldvalue">
+					<picklistentries>
+						<entry value="0 - no hire" label="0 - no hire"/>
+						<entry value="1 - probably no hire" label="1 - probably no hire"/>
+						<entry value="2 - worth consideration" label="2 - worth consideration"/>
+						<entry value="3 - good candidate" label="3 - good candidate"/>
+						<entry value="4 - please hire this person" label="4 - please hire this person"/>
+					</picklistentries>
+				</field>
+				<field id="fields.Stage" label="Stage" ispolymorphic="false" isnamepointing="false" displaytype="PICKLIST" accessible="true" filterable="true" ogdisplaytype="STRING" picklistsource="manual" returntype="TEXT">
+					<picklistentries>
+						<entry value="No Hire" label="No Hire"/>
+						<entry value="Interviewing" label="Interviewing"/>
+						<entry value="Decision Needed" label="Decision Needed"/>
+						<entry value="Hire" label="Hire"/>
+					</picklistentries>
+				</field>
+				<field id="ApplyingFor" displaytype="PICKLIST" label="Applying For" ogdisplaytype="TEXT" picklistsource="rowsinmodel" returntype="TEXT" picklistmodel="Positions" entryvalue="{{id}}" entrylabel="{{fields.Name}}"/>
+				<field id="OnsiteInterviewer" displaytype="PICKLIST" ogdisplaytype="TEXT" picklistsource="rowsinmodel" returntype="TEXT" picklistmodel="Interviewers" entryvalue="{{id}}" entrylabel="{{fields.Name}}" label="Onsite Interviewer"/>
+				<field id="PhoneInterviewer" displaytype="PICKLIST" label="Phone Interviewer" ogdisplaytype="TEXT" picklistsource="rowsinmodel" returntype="TEXT" picklistmodel="Interviewers" entryvalue="{{id}}" entrylabel="{{fields.Name}}"/>
 			</fields>
-			<conditions/>
-			<actions/>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="id" state="filterableoff" inactive="true" name="id"/>
+			</conditions>
+			<actions>
+				<action>
+					<actions>
+						<action type="updateRow" fieldmodel="Applicants" affectedrows="all">
+							<updates>
+								<update valuesource="fieldvalue" field="ApplyingFor" enclosevalueinquotes="true" value="{{fields.Applying for}}"/>
+								<update valuesource="fieldvalue" field="OnsiteInterviewer" enclosevalueinquotes="true" value="{{fields.Onsite Interviewer}}"/>
+								<update valuesource="fieldvalue" field="PhoneInterviewer" enclosevalueinquotes="true" value="{{fields.Phone Screen Interviewer}}"/>
+							</updates>
+						</action>
+					</actions>
+					<events>
+						<event>models.loaded</event>
+					</events>
+				</action>
+				<action>
+					<actions>
+						<action type="updateRow" fieldmodel="Applicants" affectedrows="context">
+							<updates>
+								<update valuesource="fieldvalue" field="fields.Applying for" fieldtargetobjects="Applying for" enclosevalueinquotes="true" value="{{ApplyingFor}}"/>
+								<update valuesource="fieldvalue" field="fields.Onsite Interviewer" fieldtargetobjects="Onsite Interviewer" enclosevalueinquotes="true" value="{{OnsiteInterviewer}}"/>
+								<update valuesource="fieldvalue" field="fields.Phone Screen Interviewer" fieldtargetobjects="Phone Screen Interviewer" enclosevalueinquotes="true" value="{{PhoneInterviewer}}"/>
+							</updates>
+						</action>
+					</actions>
+					<events>
+						<event>row.updated</event>
+					</events>
+					<fields>
+						<field>ApplyingFor</field>
+						<field>OnsiteInterviewer</field>
+						<field>PhoneInterviewer</field>
+					</fields>
+				</action>
+			</actions>
+			<methods>
+				<method type="query" verb="GET" endpoint="&lt;Your_Base_Id&gt;/Applicants" pathtocontent="records" payloadcontenttype="JSON"/>
+				<method type="insert" verb="POST" payloadcontenttype="JSON" successif="requestsucceeds" sendchanges="usetemplaterequest" insertresponse="recordinbody" endpoint="&lt;Your_Base_Id&gt;/Applicants" customrequesttemplate="{&quot;fields&quot;: {&#10;        &quot;Email Address&quot;: &quot;{{fields.Email Address}}&quot;,&#10;        &quot;Name&quot;: &quot;{{fields.Name}}&quot;,&#10;        &quot;Applying for&quot;: [&#10;          &quot;{{fields.Applying for}}&quot;&#10;        ],&#10;        &quot;Onsite Interview Date&quot;: &quot;{{fields.Onsite Interview Date}}&quot;,&#10;        &quot;Onsite Interview Notes&quot;: &quot;{{fields.Onsite Interview Notes}}&quot;,&#10;        &quot;Onsite Interview Score&quot;: &quot;{{fields.Onsite Interview Score}}&quot;,&#10;        &quot;Onsite Interviewer&quot;: [&#10;          &quot;{{fields.Onsite Interviewer}}&quot;&#10;            ],&#10;        &quot;Phone&quot;: &quot;{{fields.Phone}}&quot;,&#10;        &quot;Phone Screen Date&quot;: &quot;{{fields.Phone Screen Date}}&quot;,&#10;        &quot;Phone Screen Notes&quot;: &quot;{{fields.Phone Screen Notes}}&quot;,&#10;        &quot;Phone Screen Score&quot;: &quot;{{fields.Phone Screen Score}}&quot;,&#10;        &quot;Phone Screen Interviewer&quot;: [&#10;          &quot;{{fields.Phone Screen Interviewer}}&quot;&#10;        ],&#10;        &quot;Stage&quot;: &quot;{{fields.Stage}}&quot;&#10;        }&#10;}"/>
+				<method type="delete" verb="DELETE" payloadcontenttype="JSON" successif="requestsucceeds" endpoint="&lt;Your_Base_Id&gt;/Applicants/{{id}}"/>
+				<method type="update" verb="PATCH" payloadcontenttype="JSON" sendchanges="usetemplaterequest" endpoint="&lt;Your_Base_Id&gt;/Applicants/{{id}}" successif="requestsucceeds" customrequesttemplate="{&quot;fields&quot;: {&#10;        &quot;Email Address&quot;: &quot;{{fields.Email Address}}&quot;,&#10;        &quot;Name&quot;: &quot;{{fields.Name}}&quot;,&#10;        &quot;Applying for&quot;: [&#10;          &quot;{{fields.Applying for}}&quot;&#10;        ],&#10;        &quot;Onsite Interview Date&quot;: &quot;{{fields.Onsite Interview Date}}&quot;,&#10;        &quot;Onsite Interview Notes&quot;: &quot;{{fields.Onsite Interview Notes}}&quot;,&#10;        &quot;Onsite Interview Score&quot;: &quot;{{fields.Onsite Interview Score}}&quot;,&#10;        &quot;Onsite Interviewer&quot;: [&#10;          &quot;{{fields.Onsite Interviewer}}&quot;&#10;            ],&#10;        &quot;Phone&quot;: &quot;{{fields.Phone}}&quot;,&#10;        &quot;Phone Screen Date&quot;: &quot;{{fields.Phone Screen Date}}&quot;,&#10;        &quot;Phone Screen Notes&quot;: &quot;{{fields.Phone Screen Notes}}&quot;,&#10;        &quot;Phone Screen Score&quot;: &quot;{{fields.Phone Screen Score}}&quot;,&#10;        &quot;Phone Screen Interviewer&quot;: [&#10;          &quot;{{fields.Phone Screen Interviewer}}&quot;&#10;        ],&#10;        &quot;Stage&quot;: &quot;{{fields.Stage}}&quot;&#10;        }&#10;}"/>
+			</methods>
 		</model>
 	</models>
 	<components>
-		<skootable showconditions="true" showsavecancel="true" showerrorsinline="true" searchmethod="server" searchbox="true" showexportbuttons="false" hideheader="false" hidefooter="false" pagesize="10" alwaysresetpagination="false" createrecords="true" model="Applicants" buttonposition="" mode="read" allowcolumnreordering="true" responsive="true" uniqueid="sk-2Bz6-514">
+		<skuid__buttonSet uniqueid="sk-33Ob-5389" position="left">
+			<groups>
+				<skuid__buttonGroup>
+					<buttons>
+						<skuid__button label="New Applicant" uniqueId="sk-33Ob-5388" icon="sk-webicon-ink:add-user">
+							<actions>
+								<action type="createRow" model="Applicants" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context"/>
+								<action type="action-sequence" action-sequence-id="9c653f8c-39a2-4221-93b8-b639af7f4fca"/>
+							</actions>
+						</skuid__button>
+					</buttons>
+				</skuid__buttonGroup>
+				<skuid__buttonGroup displayType="attached" maxSelected="Infinity">
+					<buttons>
+						<skuid__button label="Save" uniqueId="sk-33On-8334" styleSettingsVariant="primary">
+							<actions>
+								<action type="save">
+									<models>
+										<model>Applicants</model>
+									</models>
+								</action>
+								<action type="showToast" duration="4" styleSettingsVariant="default" message="Changes Saved"/>
+							</actions>
+							<renderConditions logictype="and"/>
+							<enableConditions logictype="and"/>
+							<styleVariantConditions/>
+						</skuid__button>
+						<skuid__button label="Cancel" uniqueId="sk-33Oo-8787">
+							<actions>
+								<action type="cancel">
+									<models/>
+								</action>
+							</actions>
+							<renderConditions logictype="and"/>
+							<enableConditions logictype="and"/>
+							<styleVariantConditions/>
+						</skuid__button>
+					</buttons>
+					<renderConditions logictype="and"/>
+					<styleVariantConditions/>
+				</skuid__buttonGroup>
+			</groups>
+			<styles>
+				<spacing top="4" bottom="4" left="4" right="4"/>
+			</styles>
+		</skuid__buttonSet>
+		<skuid__table allowColumnFreezing="dragDrop" model="Applicants" uniqueid="sk-33GG-44702" mode="read" pageSize="10" showSaveCancel="false">
 			<fields>
-				<field id="id" uniqueid="fi-2Bz6-515"/>
-				<field id="fields.Applying for" uniqueid="fi-2Bz6-516"/>
-				<field id="fields.Attachments" uniqueid="fi-2Bz6-517"/>
-				<field id="fields.Email Address" uniqueid="fi-2Bz6-518"/>
-				<field id="fields.Name" uniqueid="fi-2Bz6-519"/>
-				<field id="fields.Onsite Interview Date" uniqueid="fi-2Bz6-520"/>
-				<field id="fields.Onsite Interview Notes" uniqueid="fi-2Bz6-521"/>
-				<field id="fields.Onsite Interview Score" uniqueid="fi-2Bz6-522"/>
-				<field id="fields.Onsite Interviewer" uniqueid="fi-2Bz6-523"/>
-				<field id="fields.Phone" uniqueid="fi-2Bz6-524"/>
-				<field id="fields.Phone Screen Date" uniqueid="fi-2Bz6-525"/>
-				<field id="fields.Phone Screen Interviewer" uniqueid="fi-2Bz6-526"/>
-				<field id="fields.Phone Screen Notes" uniqueid="fi-2Bz6-527"/>
-				<field id="fields.Phone Screen Score" uniqueid="fi-2Bz6-528"/>
-				<field id="fields.Stage" uniqueid="fi-2Bz6-529"/>
+				<field id="fields.Name" uniqueid="fi-33GG-45583"/>
+				<field id="fields.Email Address" uniqueid="fi-33GG-45582"/>
+				<field id="fields.Phone" uniqueid="fi-33GG-45588"/>
+				<field id="ApplyingFor" uniqueid="fi-33GG-45594"/>
+				<field id="fields.Stage" uniqueid="fi-33GG-45593"/>
+				<field id="PhoneInterviewer"/>
+				<field type="COMBO" label="Phone Interview" template="Result: {{fields.Phone Screen Score}}.  On {{fields.Phone Screen Date}}" uniqueid="fi-33Gx-54952" readOnly="true"/>
+				<field id="OnsiteInterviewer"/>
+				<field type="COMBO" label="Onsite Interview" template="Result: {{fields.Onsite Interview Score}}  on  {{fields.Onsite Interview Date}}" uniqueid="fi-33HL-62058" readOnly="true"/>
 			</fields>
-			<rowactions>
-				<action type="edit"/>
-				<action type="delete"/>
-			</rowactions>
-			<massactions usefirstitemasdefault="true">
-				<action type="massupdate"/>
-				<action type="massdelete"/>
-			</massactions>
-			<views>
-				<view type="standard"/>
-			</views>
-		</skootable>
+			<filtering enableSearch="false"/>
+			<rowActions>
+				<action type="multi"/>
+				<action type="multi" label="Delete" icon="sk-webicon-ink:close">
+					<actions>
+						<action type="markRowsForDeletion" model="Applicants" affectedrows="context"/>
+						<action type="save">
+							<models>
+								<model>Applicants</model>
+							</models>
+						</action>
+						<action type="showToast" duration="4" styleSettingsVariant="default" message="Record Deleted"/>
+					</actions>
+				</action>
+				<action type="multi" label="Phone Interview" icon="sk-webicon-ink:phone-portrait">
+					<actions>
+						<action type="showModal">
+							<skuid__modal title="Phone Interview" width="640px">
+								<components>
+									<skuid__form showErrorsInline="true" model="Applicants" uniqueid="sk-33Hn-64942" mode="edit">
+										<sections>
+											<section title="New Section" showHeading="false">
+												<rows>
+													<row>
+														<fields>
+															<skuid__field id="fields.Phone Screen Date"/>
+														</fields>
+													</row>
+													<row>
+														<fields>
+															<skuid__field id="PhoneInterviewer"/>
+														</fields>
+													</row>
+													<row>
+														<fields>
+															<skuid__field id="fields.Phone Screen Score"/>
+														</fields>
+													</row>
+													<row>
+														<fields>
+															<skuid__field id="fields.Phone Screen Notes"/>
+														</fields>
+													</row>
+												</rows>
+											</section>
+										</sections>
+										<conditions>
+											<condition type="contextrow" field="id" mergefield="id" operator="="/>
+										</conditions>
+									</skuid__form>
+								</components>
+								<buttons>
+									<skuid__button label="Close" uniqueId="sk-33IB-68369" styleSettingsVariant="primary">
+										<actions>
+											<action type="closeAllPopups"/>
+										</actions>
+									</skuid__button>
+								</buttons>
+							</skuid__modal>
+						</action>
+					</actions>
+				</action>
+				<action type="multi" label="Onsite Iterview" icon="sk-webicon-ink:avatar">
+					<actions>
+						<action type="showModal">
+							<skuid__modal title="Onsite Interview" width="640px">
+								<components>
+									<skuid__form showErrorsInline="true" model="Applicants" uniqueid="sk-33IO-70849" mode="edit">
+										<sections>
+											<section title="New Section" showHeading="false">
+												<rows>
+													<row>
+														<fields>
+															<skuid__field id="fields.Onsite Interview Date"/>
+														</fields>
+													</row>
+													<row>
+														<fields>
+															<skuid__field id="OnsiteInterviewer"/>
+														</fields>
+													</row>
+													<row>
+														<fields>
+															<skuid__field id="fields.Onsite Interview Score"/>
+														</fields>
+													</row>
+													<row>
+														<fields>
+															<skuid__field id="fields.Onsite Interview Notes"/>
+														</fields>
+													</row>
+												</rows>
+											</section>
+										</sections>
+										<conditions>
+											<condition type="contextrow" field="id" mergefield="id" operator="="/>
+										</conditions>
+									</skuid__form>
+								</components>
+								<buttons>
+									<skuid__button label="Close" uniqueId="sk-33IY-73570" styleSettingsVariant="primary">
+										<actions>
+											<action type="closeAllPopups"/>
+										</actions>
+									</skuid__button>
+								</buttons>
+							</skuid__modal>
+						</action>
+					</actions>
+				</action>
+			</rowActions>
+			<massActions/>
+			<styles>
+				<spacing left="4" right="4"/>
+			</styles>
+		</skuid__table>
 	</components>
 	<resources>
 		<labels/>
 		<javascript/>
 		<css/>
-		<actionsequences/>
+		<actionsequences>
+			<actionsequence id="9c653f8c-39a2-4221-93b8-b639af7f4fca" label="NewRecord" type="reusable">
+				<description/>
+				<actions>
+					<action type="showModal">
+						<skuid__modal title="Applicant Detail" width="640px">
+							<components>
+								<skuid__form showErrorsInline="true" model="Applicants" uniqueid="sk-32bE-46239" mode="edit">
+									<sections>
+										<section title="New Section" showHeading="false">
+											<rows>
+												<row>
+													<fields>
+														<skuid__field id="fields.Name"/>
+													</fields>
+												</row>
+												<row>
+													<fields>
+														<skuid__field id="fields.Email Address"/>
+													</fields>
+												</row>
+												<row>
+													<fields>
+														<skuid__field id="fields.Phone"/>
+													</fields>
+												</row>
+												<row>
+													<fields>
+														<skuid__field id="ApplyingFor"/>
+													</fields>
+												</row>
+												<row>
+													<fields>
+														<skuid__field id="fields.Stage"/>
+													</fields>
+												</row>
+												<row>
+													<fields>
+														<skuid__field id="OnsiteInterviewer"/>
+														<skuid__field id="fields.Onsite Interview Date"/>
+													</fields>
+												</row>
+												<row>
+													<fields>
+														<skuid__field id="fields.Onsite Interview Score"/>
+													</fields>
+												</row>
+												<row>
+													<fields>
+														<skuid__field id="fields.Onsite Interview Notes"/>
+													</fields>
+												</row>
+												<row>
+													<fields>
+														<skuid__field id="PhoneInterviewer"/>
+														<skuid__field id="fields.Phone Screen Date"/>
+													</fields>
+												</row>
+												<row>
+													<fields>
+														<skuid__field id="fields.Phone Screen Score"/>
+													</fields>
+												</row>
+												<row>
+													<fields>
+														<skuid__field id="fields.Phone Screen Notes"/>
+													</fields>
+												</row>
+											</rows>
+										</section>
+									</sections>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__form>
+							</components>
+							<afterCloseActions>
+								<action type="cancel">
+									<models>
+										<model>Applicants</model>
+									</models>
+								</action>
+							</afterCloseActions>
+							<buttons>
+								<skuid__button label="Save" uniqueId="sk-32cg-61941" styleSettingsVariant="primary">
+									<actions>
+										<action type="updateRow" fieldmodel="Applicants" affectedrows="context">
+											<updates>
+												<update valuesource="fieldvalue" field="fields.Applying for" enclosevalueinquotes="true" value="{{ApplyingFor}}"/>
+												<update valuesource="fieldvalue" field="fields.Phone Screen Interviewer" enclosevalueinquotes="true" value="{{PhoneInterviewer}}"/>
+												<update valuesource="fieldvalue" field="fields.Onsite Interviewer" enclosevalueinquotes="true" value="{{OnsiteInterviewer}}"/>
+											</updates>
+										</action>
+										<action type="save">
+											<models>
+												<model>Applicants</model>
+											</models>
+										</action>
+										<action type="closeAllPopups"/>
+										<action type="requeryModel" model="Applicants" behavior="standard"/>
+									</actions>
+								</skuid__button>
+								<skuid__button label="Cancel" uniqueId="sk-32ch-62143">
+									<actions>
+										<action type="cancel">
+											<models>
+												<model>Applicants</model>
+											</models>
+										</action>
+										<action type="closeAllPopups"/>
+									</actions>
+								</skuid__button>
+							</buttons>
+						</skuid__modal>
+					</action>
+				</actions>
+				<inputs/>
+			</actionsequence>
+		</actionsequences>
 	</resources>
 	<styles>
 		<styleitem type="background" bgtype="none"/>
 	</styles>
-</skuidpage>
+	<pageregioncontents>
+		<pageregioncontent uniqueid="__header">
+			<components>
+				<skuid__layoutRegion sticky="true">
+					<components>
+						<skuid__text contents="Airtable DataSource" uniqueid="sk-32MQ-2883" styleSettingsVariant="large">
+							<styles>
+								<spacing top="2" bottom="2" left="4" styleSettingsVariant="large"/>
+							</styles>
+						</skuid__text>
+					</components>
+					<styles>
+						<spacing/>
+					</styles>
+					<background type="color" color="#bfbfbf"/>
+				</skuid__layoutRegion>
+			</components>
+		</pageregioncontent>
+	</pageregioncontents>
+	<background type="color" color="#f2f2f2"/>
+</skuid__page>

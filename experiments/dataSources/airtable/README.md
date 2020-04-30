@@ -1,7 +1,5 @@
 # Airtable
 
-Note: **This is a read-only example**, but we're trying ways to make this read/write using [templated request bodies](https://docs.skuid.com/latest/en/data/rest/#request-bodies). Stay tuned to this experiment for that in the future.
-
 Combining the ease of use of a spreadsheet with powerful features of a database, Airtable's product offers a great to organize, well, just about anything. We've used it for a few projects here at Skuid, so of course we wanted to see if we could use Airtable's REST API in a Skuid page. Spoiler alert: you can! This experiment walks you through the basic setup and includes a sample page.
 
 One thing to note is that, while this example walks you through the basics for setting up the data source and an Airtable model **your data source URLs will vary for your specific Airtable base and the column you're acccessing.** For this example we're working from Airtable's Applicant Tracking template.
@@ -37,7 +35,7 @@ And within *Headers to send with every request*, append the following values in 
 
 If prompted for a Remote Site Setting, accept it. Otherwise, you'll need to create one manually. 
 
-## Configure a Skuid model
+## Configure a Skuid model for reading Airtable data
 
 When using Airtable as a data source, you can think of your sheets as *objects*. So for any sheets whose columns you wish to access, you'll need to create a model. Let's do that now.
 
@@ -81,20 +79,100 @@ If you've set the data source URL correctly, clicking on **Fields** will show yo
 
 You'll want to select Id, Created Time (if you prefer), and then you'll want to click into the Fields "field." You'll find your sheet's columns listed here. Select all relevant fields, and then build your page!
 
+
+## Let's make this data source do full CRUD! 
+
+Reading data is nice. But when you can read and write... Why not!! Skuid supports all the HTTP verbs - so you can Create, Update and Delete (as well as Read). 
+
+Go back to your Read Only model and make the following change: 
+
+- **Model Behavior**: Read/Write
+
+This exposes a "Methods" area of the model,  and moves your Query action. Now we'll add separate entries for the other methods for doing full CRUD.   Using the Airtable API docs we can configure each of these methods. 
+
+### Delete
+Configuring delete is easiest. 
+
+- **Type**: "DELETE"
+- **Data Source URL**: ``<baseId>/<ObjectName>/{{id}}``
+- **Data Source HTTP Verb**: ``DELETE``
+
+This Data Source URL takes the ``id`` of one record and passes it to Airtable to delete.  In your Skuid page,  you can use the "Mark row(s) for deletion" and "Save" actions to trigger this method.  
+
+### Insert
+Allows you to create new records. 
+
+- **Type**: "INSERT"
+- **Data Source URL**: ``<baseId>/<ObjectName>``
+- **Data Source HTTP Verb**: ``POST``
+- **Send new field values**: ``As templated request body``
+- **Method succeeds if...**: ``Request Succeeds``
+- **Response handling**: ``Created Record will be returned``
+
+You configure exactly how the new fields are passed to Airtable in the Custom Request template. 
+Below is the template for creating a record with all the fields in the applicants table. 
+
+```json
+{"fields": {
+        "Email Address": "{{fields.Email Address}}",
+        "Name": "{{fields.Name}}",
+        "Applying for": [
+          "{{fields.Applying for}}"
+        ],
+        "Onsite Interview Date": "{{fields.Onsite Interview Date}}",
+        "Onsite Interview Notes": "{{fields.Onsite Interview Notes}}",
+        "Onsite Interview Score": "{{fields.Onsite Interview Score}}",
+        "Onsite Interviewer": [
+          "{{fields.Onsite Interviewer}}"
+            ],
+        "Phone": "{{fields.Phone}}",
+        "Phone Screen Date": "{{fields.Phone Screen Date}}",
+        "Phone Screen Notes": "{{fields.Phone Screen Notes}}",
+        "Phone Screen Score": "{{fields.Phone Screen Score}}",
+        "Phone Screen Interviewer": [
+          "{{fields.Phone Screen Interviewer}}"
+        ],
+        "Stage": "{{fields.Stage}}"
+        }
+}
+```
+Note:  Double check this payload with the fields you selected when you set up the "Read Only" version of this model.  Just because fields are in your model does not mean they will be passed to Airtable.   They have to be documented here.   (Let's just say I lost a few hours and pulled out some hair because of this). 
+
+### Update
+Let's update an existing record.  
+
+- **Type**: "UPDATE"
+- **Data Source URL**: ``<baseId>/<ObjectName>/{{id}}``
+- **Data Source HTTP Verb**: ``PATCH``
+- **Send new field values**: ``As templated request body``
+- **Method succeeds if...**: ``Request Succeeds``
+
+The same request body template used for ``Insert`` can be used for ``Update``
+
+
 ## Sample page
 
-The included sample page is based off of Airtable's default Applicant Tracking base. It has one model for the Applicants sheet, aka object, and it lists all of the default columns. To see it in action, do the following:
+The included sample page is based off of Airtable's default Applicant Tracking base. It has one model for the Applicants sheet, aka object, and it shows the default data (either in the table or in the Popups that describe the application interviews). To see it in action, do the following:
 
 1. Create the data source as outlined above
-2. Upload the XML to your Skuid site as a **v1** page.
-3. **You will see an error!** This is because you need to update the base ID for the model. Replace the `<Your_Base_Id>` string within the model's data source URL with **your base ID.**
-4. Save and preview.
+2. Upload the XML to your Skuid site as a **v2** page.
+3. **You will see an error!** This is because you need to update the base ID for the model. Replace the `<Your_Base_Id>` string within all of the model's data source URLs with **your base ID.**  (There are 6 instances where you will have to replace this string)
+4. Save and preview.  
 
-And you're set! While this basic example doesn't do much, it does illustrate how you would configure your own Airtable model.
+Take full CRUD control over your Airtable data! 
 
-## Next steps
 
-Using templated request bodies should allow us to read/write, but I'm having some issues with this right now. Will update when those are sorted, or feel free to submit a PR on this!
+## Notes
+
+Airtable picklist and Reference fields present interesting challenges.  Both are solved in this page. 
+
+Picklists:   
+Field metadata suggests that the picklists are simply ``strings``.  But Skuid allows you to override these fields to be picklists - and define the options available.  Look for the ``Stage`` field in the Applicants model. 
+
+Reference Fields: 
+The relationship between Applicant and Position is managed with a reference. Airtable metadata indicates that this an ``Array`` type field.  Skuid does not handle these fields very well. You cannot simply override their metadata as a Picklist. What I had to do was create UI-only picklist fields to represent these fields.  Look at the "ApplyingFor" field in the Applicants model. 
+- The source for the picklist values is another model. 
+- Model actions on the Applicants model are used to populate the UI field on model query, and to update the Airtable field whenever the UI-only field is changed.  This keeps the UI elegant and the database correct. 
 
 ## Additional resources
 
