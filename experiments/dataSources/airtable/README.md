@@ -100,7 +100,7 @@ Configuring delete is easiest.
 This Data Source URL takes the ``id`` of one record and passes it to Airtable to delete.  In your Skuid page,  you can use the "Mark row(s) for deletion" and "Save" actions to trigger this method.  
 
 ### Insert
-Lets create a new record. 
+Allows you to create new records. 
 
 - **Type**: "INSERT"
 - **Data Source URL**: ``<baseId>/<ObjectName>``
@@ -147,7 +147,7 @@ Lets update an existing record.
 - **Send new field values**: ``As templated request body``
 - **Method succeeds if...**: ``Request Succeeds``
 
-The same request body template used for ``Insert`` can be used for ``update``
+The same request body template used for ``Insert`` can be used for ``Update``
 
 
 ## Sample page
@@ -170,7 +170,7 @@ Picklists:
 Field metadata suggests that the picklists are simply ``strings``.  But Skuid allows you to override these fields to be picklists - and define the options available.  Look for the ``Stage`` field in the Applicants model. 
 
 Reference Fields: 
-The relationship between Applicant and Position is managed with a reference.  The Airtable metadata suggest this an ``Array`` type field.  Skuid does not handle these fields very well, and so you cannot simply override their metadata.  What I had to do was create UI-only picklist fields to represent these fields.  Look at the "ApplyingFor" field in the Applicants model. 
+The relationship between Applicant and Position is managed with a reference. Airtable metadata indicates that this an ``Array`` type field.  Skuid does not handle these fields very well. You cannot simply override their metadata as a Picklist. What I had to do was create UI-only picklist fields to represent these fields.  Look at the "ApplyingFor" field in the Applicants model. 
 - The source for the picklist values is another model. 
 - Model actions on the Applicants model are used to populate the UI field on model query, and to update the Airtable field whenever the UI-only field is changed.  This keeps the UI elegant and the database correct. 
 
