@@ -80,9 +80,9 @@ If you've set the data source URL correctly, clicking on **Fields** will show yo
 You'll want to select Id, Created Time (if you prefer), and then you'll want to click into the Fields "field." You'll find your sheet's columns listed here. Select all relevant fields, and then build your page!
 
 
-## Lets make this data source do full CRUD! 
+## Let's make this data source do full CRUD! 
 
-Reading data is nice.  But when you can read and write... Why not!!   Skuid supports all the HTTP verbs - so you can Create,  Update and Delete  (as well as Read). 
+Reading data is nice. But when you can read and write... Why not!! Skuid supports all the HTTP verbs - so you can Create, Update and Delete (as well as Read). 
 
 Go back to your Read Only model and make the following change: 
 
@@ -156,7 +156,7 @@ The included sample page is based off of Airtable's default Applicant Tracking b
 
 1. Create the data source as outlined above
 2. Upload the XML to your Skuid site as a **v2** page.
-3. **You will see an error!** This is because you need to update the base ID for the model. Replace the `<Your_Base_Id>` string within all of the model's data source URLs with **your base ID.**  (There are 6 instances where you will have to replace this string - multi-select is your friend)
+3. **You will see an error!** This is because you need to update the base ID for the model. Replace the `<Your_Base_Id>` string within all of the model's data source URLs with **your base ID.**  (There are 6 instances where you will have to replace this string)
 4. Save and preview.  
 
 Take full CRUD control over your Airtable data! 
