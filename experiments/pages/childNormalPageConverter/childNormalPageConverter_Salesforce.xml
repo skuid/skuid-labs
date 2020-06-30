@@ -111,7 +111,7 @@
               </fields>
               <rowactions>
                 <action type="delete"/>
-                <action type="multi" label="Convert to normal page" icon="sk-icon-escalate">
+                <action type="multi" label="Convert to normal page" icon="sk-icon-remove-reference">
                   <renderconditions logictype="and">
                     <rendercondition type="fieldvalue" operator="!=" enclosevalueinquotes="false" fieldmodel="pages" sourcetype="fieldvalue" field="skuid__IsMaster__c" fieldtargetobjects="skuid__Page__c" value="true"/>
                     <rendercondition type="blank" operator="!=" fieldmodel="pages" sourcetype="fieldvalue" field="skuid__MasterPage__c" fieldtargetobjects="skuid__Page__c" value="null" enclosevalueinquotes="false"/>
@@ -126,7 +126,7 @@
                     </action>
                   </actions>
                 </action>
-                <action type="multi" label="Convert to child page" icon="sk-icon-remove-reference">
+                <action type="multi" label="Convert to child page" icon="sk-icon-hierarchy">
                   <renderconditions logictype="and">
                     <rendercondition type="blank" operator="=" fieldmodel="pages" sourcetype="fieldvalue" field="skuid__MasterPage__c" fieldtargetobjects="skuid__Page__c" value="null" enclosevalueinquotes="false"/>
                   </renderconditions>
