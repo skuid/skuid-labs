@@ -76,7 +76,7 @@
 										<action type="createRow" model="variableStore" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
 											<defaults>
 												<default valuesource="fieldvalue" field="oldContent" enclosevalueinquotes="true" value="{{content}}"/>
-												<default valuesource="fieldvalue" field="newName" enclosevalueinquotes="true" value="{{name}}-Emancipated"/>
+												<default valuesource="fieldvalue" field="newName" enclosevalueinquotes="true" value="{{name}}-Decoupled"/>
 											</defaults>
 										</action>
 										<action type="custom" snippet="childPageToNormalPage">

@@ -200,8 +200,8 @@ var oSerializer = new XMLSerializer();
 var sXML = oSerializer.serializeToString(xmlDoc);
 variableStore.updateRow(r,{newContent: sXML})</jsitem>
       <jsitem location="inlinesnippet" name="normalPageToChildPage" cachelocation="false">// normalPageToChildPage
-console.log(&apos;Starting conversion&apos;)  
-// Skuid variables  
+console.log(&apos;Starting conversion&apos;)
+// Skuid variables
 var pagesModel = skuid.$M(&apos;pages&apos;)
 var variableStore = skuid.$M(&apos;variableStore&apos;)
 var r = variableStore.getFirstRow()
@@ -452,7 +452,7 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
           <action type="action-sequence" action-sequence-id="25e9872b-0c61-4447-81f4-4325508f5578"/>
           <action type="createRow" model="variableStore" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
             <defaults>
-              <default valuesource="fieldvalue" field="newName" enclosevalueinquotes="true" value="{{Name}}-Emancipated"/>
+              <default valuesource="fieldvalue" field="newName" enclosevalueinquotes="true" value="{{Name}}-Decoupled"/>
             </defaults>
           </action>
           <action type="action-sequence" action-sequence-id="0df7a4d6-1aea-4bba-a5f6-07e62f5b5f7b">
