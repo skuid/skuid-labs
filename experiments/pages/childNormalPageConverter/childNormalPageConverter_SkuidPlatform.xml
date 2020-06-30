@@ -76,7 +76,7 @@
 										<action type="createRow" model="variableStore" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
 											<defaults>
 												<default valuesource="fieldvalue" field="oldContent" enclosevalueinquotes="true" value="{{content}}"/>
-												<default valuesource="fieldvalue" field="newName" enclosevalueinquotes="true" value="{{name}}-Decoupled"/>
+												<default valuesource="fieldvalue" field="newName" enclosevalueinquotes="true" value="{{name}}-Detached"/>
 											</defaults>
 										</action>
 										<action type="custom" snippet="childPageToNormalPage">
@@ -167,8 +167,8 @@ var oSerializer = new XMLSerializer();
 var sXML = oSerializer.serializeToString(xmlDoc);
 variableStore.updateRow(r,{newContent: sXML})</jsitem>
 			<jsitem location="inlinesnippet" name="normalPageToChildPage" cachelocation="false">// normalPageToChildPage
-console.log('Starting conversion')  
-// Skuid variables  
+console.log('Starting conversion')
+// Skuid variables
 var pagesModel = skuid.$M('pages')
 var variableStore = skuid.$M('variableStore')
 var r = variableStore.getFirstRow()
