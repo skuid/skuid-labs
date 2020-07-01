@@ -70,13 +70,13 @@
 							</fields>
 							<rowactions>
 								<action type="delete"/>
-								<action type="multi" label="Convert to normal page" icon="sk-icon-escalate">
+								<action type="multi" label="Convert to normal page" icon="sk-icon-remove-reference">
 									<actions>
 										<action type="action-sequence" action-sequence-id="25e9872b-0c61-4447-81f4-4325508f5578"/>
 										<action type="createRow" model="variableStore" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
 											<defaults>
 												<default valuesource="fieldvalue" field="oldContent" enclosevalueinquotes="true" value="{{content}}"/>
-												<default valuesource="fieldvalue" field="newName" enclosevalueinquotes="true" value="{{name}}-Emancipated"/>
+												<default valuesource="fieldvalue" field="newName" enclosevalueinquotes="true" value="{{name}}-Detached"/>
 											</defaults>
 										</action>
 										<action type="custom" snippet="childPageToNormalPage">
@@ -90,7 +90,7 @@
 										<rendercondition type="blank" operator="!=" fieldmodel="pages" sourcetype="fieldvalue" field="master_page_id" fieldtargetobjects="SkuidLocal" value="null" enclosevalueinquotes="false"/>
 									</renderconditions>
 								</action>
-								<action type="multi" label="Convert to child page" icon="sk-icon-remove-reference">
+								<action type="multi" label="Convert to child page" icon="sk-icon-hierarchy">
 									<actions>
 										<action type="action-sequence" action-sequence-id="25e9872b-0c61-4447-81f4-4325508f5578"/>
 										<action type="createRow" model="variableStore" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
@@ -167,8 +167,8 @@ var oSerializer = new XMLSerializer();
 var sXML = oSerializer.serializeToString(xmlDoc);
 variableStore.updateRow(r,{newContent: sXML})</jsitem>
 			<jsitem location="inlinesnippet" name="normalPageToChildPage" cachelocation="false">// normalPageToChildPage
-console.log('Starting conversion')  
-// Skuid variables  
+console.log('Starting conversion')
+// Skuid variables
 var pagesModel = skuid.$M('pages')
 var variableStore = skuid.$M('variableStore')
 var r = variableStore.getFirstRow()
