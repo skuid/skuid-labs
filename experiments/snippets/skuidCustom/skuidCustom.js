@@ -372,10 +372,11 @@ skuid.custom.iterateMapAsync = function (map, fn, chunkEndFn, endFn, maxTimePerC
 	doChunk();
 };
 
-// skuid.custom.modelLoader(model,fparams);
+// skuid.custom.modelLoader(model[],fparams);
 //	Clear and Load all records in a model in chunks limited by the model's limit propery,
 //	a passed limit, or otherwise if both are undefined defaults to 200.
 //	Model can be Basic or Aggregate, both will load in chunks limited by the limit.
+//  Can take as a parameter a single model, or an array of models
 //	NOTE: Cannot use subquerying on aggregate models as we need to use OR
 //		to run more than one query and OR is not allowed along with subqueries in SOQL
 // 	Runs Asynchronously and works with $.when();
@@ -1485,8 +1486,9 @@ skuid.custom.modelLoader = function (model, fparams) {
 	return deferred.promise();
 };
 
-// skuid.custom.modelSaver(model,fparams)
+// skuid.custom.modelSaver(model[],fparams)
 // Saves a model incrementally as to not overload the save process with too many saves at once
+// Can take as a parameter a single model or an array of models
 //	fparams: object
 //	{
 //		limit: Number of rows to limit by. If unspecified will choose
@@ -1498,7 +1500,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 //				limit: our limit for how many rows to save per run
 //				nextStart: the row # of the next row to be saved
 //				nextEnd: the last row # to be saved (based on limit)
-//				model: the model currently being queried
+//				model: the model currently being saved
 //			}
 //	}
 skuid.custom.modelSaver = function (model, fparams) {
