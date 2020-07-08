@@ -76,18 +76,6 @@ skuid.custom.fixCurrency = function (num) {
 	return parseFloat(num.toFixed(2));
 };
 
-// String.random(length)
-// Return a string of random (length) characters
-String.random = function (length) {
-	const radom13chars = function () {
-		return Math.random().toString(16).substring(2, 15)
-	}
-	const loops = Math.ceil(length / 13)
-	return new Array(loops).fill(radom13chars).reduce((string, func) => {
-		return string + func()
-	}, '').substring(0, length)
-}
-
 // skuid.custom.operatorSOQL(operatorSafe)
 // Converts an operator from SKUID XML/HTML safe format to SOQL format
 skuid.custom.operatorSOQL = function (operatorSafe) {
