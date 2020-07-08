@@ -88,12 +88,6 @@ String.random = function (length) {
 	}, '').substring(0, length)
 }
 
-// String.generateToken()
-// Generate a random 50 character token
-String.generateToken = function () {
-	return String.random(50);
-}
-
 // skuid.custom.operatorSOQL(operatorSafe)
 // Converts an operator from SKUID XML/HTML safe format to SOQL format
 skuid.custom.operatorSOQL = function (operatorSafe) {
@@ -841,11 +835,6 @@ skuid.custom.modelLoader = function (model, fparams) {
 		}
 
 		const queryStr = `SELECT ${fieldsStr} FROM ${model.objectName}${ourConditionStrPre}${ourConditionStr}${lastRowConditionsPre}${lastRowConditions}${groupbyPre}${groupby}${havingPre}${having}${orderby}${limitStr}`;
-
-		if (model.id === 'BankRecInclude__CDs') {
-			console.log('QUERY:');
-			console.log(queryStr);
-		} 
 
 		skuid.sfdc.api.query(queryStr).done(function (queryResult) {
 			// Records is an array of query results in the format {field: value, field2: value2}
