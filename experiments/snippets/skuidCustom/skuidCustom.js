@@ -13,52 +13,23 @@ const $ = skuid.$;
 // Custom SKUID Functions
 skuid.custom = {};
 
-// Date.formatDate(date)
-// formats a javascript date as YYYY-MM-DD for use with Salesforce
-Date.formatDate = function (date) {
-	const d = new Date(date);
-	let month = `${(d.getMonth() + 1)}`;
-	let day = `${d.getDate()}`;
-	const year = d.getFullYear();
-
-	if (month.length < 2) {
-		month = `0${month}`;
-	}
-	if (day.length < 2) {
-		day = `0${day}`;
-	}
-
-	return [year, month, day].join('-');
-};
-Date.prototype.formatDate = function () { 
-	return Date.formatDate(this);
+// skuid.custom.isBlank(v)
+// returns true for undefined, null, or ''
+skuid.custom.isBlank = function (v) {
+	return v === undefined || v === null || v === '';
 };
 
-// Date.getDateFromSFDate(dateStr)
-// Takes a Salesforce formatted date (YYYY-MM-DD) and converts it to a Javascript Date object
-// returns Javascript date object
-Date.getDateFromSFDate = function (dateStr) {
-	if (dateStr === undefined || dateStr === null || typeof dateStr !== 'string') {
-		return undefined;
+// skuid.custom.blockUI(obj)
+// blocks the UI with specified object as parameters to the blockUI function
+// if the UI is already blocked, will instead update the existing block's message with obj.message
+// rather than momentarily removing the block and replacing it with a new block
+// as the standard blockUI function would do
+skuid.custom.blockUI = function (obj) {
+	if ($('.blockUI.blockMsg.blockPage') !== undefined && $('.blockUI.blockMsg.blockPage')[0] !== undefined && obj !== undefined && obj.message !== undefined) {
+		$('.blockUI.blockMsg.blockPage')[0].textContent = obj.message;
+	} else {
+		$.blockUI(obj);
 	}
-	
-	const dateArr = dateStr.split('-');
-	
-	if (dateArr.length !== 3) {
-		return undefined;
-	}
-	
-	const year = dateArr[0];
-	const month = dateArr[1];
-	const day = dateArr[2];
-	
-	const yearInt = Number(year);
-	const monthInt = Number(month);
-	const dayInt = Number(day);
-	
-	const d = new Date(yearInt, monthInt - 1, dayInt);
-	
-	return d;
 };
 
 // Date.isLeapYear(year)
@@ -97,28 +68,6 @@ Date.prototype.addDays = function (days) {
 	return date;
 };
 
-// Object.byString(ourObject,fieldToGet);
-// Able to get object's sub-objects with a single string variable
-// instead of needing dot notation between multiple separate variables
-// eg: Object.byString(ourObject,'Field__r.SubField__c')
-// instead of needing to do ourObject['Field__r']['SubField__c'] or ourObject.Field__r.SubField__c
-Object.byString = function (ourObject, fieldToGet) {
-	let s = fieldToGet;
-	let o = ourObject;
-	s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-	s = s.replace(/^\./, ''); // strip a leading dot
-	const a = s.split('.');
-	for (let i = 0, n = a.length; i < n; ++i) {
-		const k = a[i];
-		if (k in o) {
-			o = o[k];
-		} else {
-			return;
-		}
-	}
-	return o;
-};
-
 // skuid.custom.fixCurrency(number)
 // remove anything past 2 digits after the decimal point for a number
 // necessary to do after doing any mathematical operations between 2 floating point numbers
@@ -127,13 +76,23 @@ skuid.custom.fixCurrency = function (num) {
 	return parseFloat(num.toFixed(2));
 };
 
-// skuid.custom.clearArray(array)
-// force-clears the data out of an array which may still otherwise have data in it
-skuid.custom.clearArray = function (array) {
-	while (array.length) {
-		array.pop();
+// String.random(length)
+// Return a string of random (length) characters
+String.random = function (length) {
+	const radom13chars = function () {
+		return Math.random().toString(16).substring(2, 15)
 	}
-};
+	const loops = Math.ceil(length / 13)
+	return new Array(loops).fill(radom13chars).reduce((string, func) => {
+		return string + func()
+	}, '').substring(0, length)
+}
+
+// String.generateToken()
+// Generate a random 50 character token
+String.generateToken = function () {
+	return String.random(50);
+}
 
 // skuid.custom.operatorSOQL(operatorSafe)
 // Converts an operator from SKUID XML/HTML safe format to SOQL format
@@ -244,6 +203,72 @@ skuid.custom.waitForElement = function (fparams, callback) {
 	const ourInterval = setInterval(doChunk, chunkTime);
 };
 
+// skuid.custom.createUpdateExistingRow(ourModel,row)
+//  Create a row for an already existing Salesforce object with any specified fields acting as updates to the row when saving
+//  createRow will normally assume the newly created row needs to be inserted, but if this is an existing row
+//  we will instead be updating the row when saving the model
+//  row is an object of field value pairs and must include a salesforce Id field
+skuid.custom.createUpdateExistingRow = function (model, row) {
+	if (row === undefined) {
+		return false;
+	}
+	if (row.Id === undefined) {
+		return false;
+	}
+	const retRows = model.adoptRows([{ Id: row.Id }], { doAppend: true });
+	let retRow;
+	if (retRows !== undefined && retRows.length > 0) {
+		retRow = retRows[0];
+	}
+
+	const upd = row;
+	delete upd.Id;
+	if (upd !== {}) {
+		model.updateRow(model.data[model.data.length - 1], upd);
+	}
+
+	return retRow;
+}
+
+// skuid.custom.createUpdateExistingRows(ourModel,rows)
+//  Create rows for already existing Salesforce objects with any specified fields acting as updates to those rows when saving
+//  createRow will normally assume the newly created row needs to be inserted, but if this is an existing row
+//  we will instead be updating the row when saving the model
+//  rows is an array of objects of field value pairs and must include a salesforce Id field
+skuid.custom.createUpdateExistingRows = function (model, rows) {
+	if (rows === undefined) {
+		return false;
+	}
+	
+	// Construct our adoptrows and updaterows array / object
+	const rowsIds = [];
+	const rowsUpdates = {};
+	for (let i = 0; i < rows.length; i++) {
+		const row = rows[i];
+		if (row.Id === undefined) {
+			return false;
+		}
+
+		const id = row.Id;
+		rowsIds.push({ Id: id });
+		delete row.Id;
+		rowsUpdates[id] = row;
+	}
+
+	// First adopt the rows with just the row IDs
+	let retRows = model.adoptRows(rowsIds, { doAppend: true });
+	if (retRows === undefined) {
+		return false;
+	}
+
+	// Now update the rows with all the other fields as updates
+	// This causes all these rows / fields to be treated as needing to be updated when saved
+	// which doesn't happen on a regular adoptRows as set up in the above adoptRows function call
+	retRows = model.updateRows(rowsUpdates);
+
+	return retRows;
+}
+
 // skuid.custom.iterateArrayAsync(array, fn, chunkEndFn, endFn, maxTimePerChunk, context)
 //	Iterate an array asynchronously
 //	If iterating over Model Rows,
@@ -255,7 +280,7 @@ skuid.custom.waitForElement = function (fparams, callback) {
 //	last two args are optional
 /*
 //Usage
-iterateArrayAsync(ourArray,function(value, index, array){
+skuid.custom.iterateArrayAsync(ourArray,function(value, index, array){
 	//runs each iteration of the loop
 },
 function(row,length,percentDone){
@@ -305,7 +330,7 @@ skuid.custom.iterateArrayAsync = function (array, fn, chunkEndFn, endFn, maxTime
 //	last two args are optional
 /*
 //Usage
-iterateMapAsync(ourMap,function(value, key, map){
+skuid.custom.iterateMapAsync(ourMap,function(value, key, map){
 	//runs each iteration of the loop
 },
 function(index,length,percentDone){
@@ -365,6 +390,7 @@ skuid.custom.iterateMapAsync = function (map, fn, chunkEndFn, endFn, maxTimePerC
 //				limit: our limit for how many rows to query per query run
 //				nextStart: the row # of the next row to be queried,
 //				nextEnd: the last row # to be queried (based on limit)
+//				model: the current model being queried
 //			}
 //		exportWhenDone: true or false for whether or not to export when done loading, default false
 //		exportOptions: options object to pass to the export function for customized options
@@ -378,31 +404,67 @@ skuid.custom.modelLoader = function (model, fparams) {
 
 	fparams = fparams || {};
 
-	const limit = fparams.limit || model.recordsLimit || 200;
-	const exportWhenDone = fparams.exportWhenDone || false;
-	const exportOptions = fparams.exportOptions || {};
-	const progressCallback = fparams.progressCallback || undefined;
+	if (Array.isArray(model)) {
+		if (model.length > 0) {
+			const m = model[0];
+			const limit = fparams.limit || undefined;
+			const localLimit = fparams.limit || m.recordsLimit || 200;
+			const exportWhenDone = fparams.exportWhenDone || false;
+			const exportOptions = fparams.exportOptions || {};
+			const progressCallback = fparams.progressCallback || undefined;
 
-	// Set Initial Progress
-	if (progressCallback !== undefined) {
-		progressCallback.call(this, {
-			count: 0,
-			limit,
-			nextStart: 1,
-			nextEnd: limit
+			// Set Initial Progress
+			if (progressCallback !== undefined) {
+				progressCallback.call(this, {
+					count: 0,
+					limit: localLimit,
+					nextStart: 1,
+					nextEnd: localLimit,
+					model: m
+				});
+			}
+			m.abandonAllRows();
+
+			modelLoadSOQL(m, {
+				limit: limit,
+				progressCallback: progressCallback,
+				promiseResolve: deferred.resolve,
+				promiseReject: deferred.reject,
+				exportWhenDone: exportWhenDone,
+				exportOptions: exportOptions,
+				modelArrayPosition: 0,
+				modelArray: model
+			});
+		}
+	} else {
+		const limit = fparams.limit || undefined;
+		const localLimit = fparams.limit || model.recordsLimit || 200;
+		const exportWhenDone = fparams.exportWhenDone || false;
+		const exportOptions = fparams.exportOptions || {};
+		const progressCallback = fparams.progressCallback || undefined;
+
+		// Set Initial Progress
+		if (progressCallback !== undefined) {
+			progressCallback.call(this, {
+				count: 0,
+				limit: localLimit,
+				nextStart: 1,
+				nextEnd: localLimit,
+				model: model
+			});
+		}
+		model.abandonAllRows();
+
+		// Run through our recursive function to load all rows
+		modelLoadSOQL(model, {
+			limit: limit,
+			progressCallback: progressCallback,
+			promiseResolve: deferred.resolve,
+			promiseReject: deferred.reject,
+			exportWhenDone: exportWhenDone,
+			exportOptions: exportOptions
 		});
 	}
-	model.abandonAllRows();
-
-	// Run through our recursive function to load all rows
-	modelLoadSOQL(model, {
-		limit,
-		progressCallback,
-		promiseResolve: deferred.resolve,
-		promiseReject: deferred.reject,
-		exportWhenDone,
-		exportOptions
-	});
 
 	function modelLoadSOQL (model, fparams) {
 		fparams = fparams || {};
@@ -415,6 +477,17 @@ skuid.custom.modelLoader = function (model, fparams) {
 		const promiseReject = fparams.promiseReject || undefined;
 		const exportWhenDone = fparams.exportWhenDone || false;
 		const exportOptions = fparams.exportOptions || {};
+		const modelArrayPosition = fparams.modelArrayPosition || 0;
+		const modelArray = fparams.modelArray || undefined;
+		let limitSpecified = fparams.limitSpecified;
+
+		if (limitSpecified === undefined) {
+			if (fparams.limit !== undefined) {
+				limitSpecified = true;
+			} else {
+				limitSpecified = false;
+			}
+		}
 
 		const displayTypesToEnclose = ['STRING', 'ID', 'TEXT', 'TEXTAREA', 'PICKLIST', 'MULTIPICKLIST',
 			'PHONE', 'REFERENCE', 'URL', 'EMAIL', 'ADDRESS', 'ENCRYPTEDSTRING'];
@@ -448,7 +521,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 					noIdField = false;
 				}
 				
-				let fieldName = f.name || '';
+				let fieldName = escapeSOQL(f.name) || '';
 				if (fieldName !== '') {
 					fieldName = ` ${fieldName}`;	
 				}
@@ -461,6 +534,11 @@ skuid.custom.modelLoader = function (model, fparams) {
 					fieldsStr += ',';
 				}
 
+				// If this is a child relationship field
+				if (f.type !== undefined && f.type === 'childRelationship') {
+
+				}
+
 				if (f.function !== undefined) {
 					fieldBefore = `${f.function}(`;
 					fieldAfter = ')';
@@ -469,7 +547,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 				fieldsStr += `${fieldBefore}${field}${fieldAfter}${fieldName}`;
 
 				// if this is a group by field, add it to our groupby string and groupbyItemsArr
-				if (model.isAggregate === true && f.groupable === true) {
+				if (model.isAggregate === true && f.groupable === true && (f.function === undefined || f.function === null)) {
 					if (groupby !== '') {
 						groupby += ',';
 					}
@@ -717,7 +795,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 				const fieldfunction = h.fieldfunction || '';
 				const field = h.field;
 				const value = h.value;
-				const operator = operatorConvert(h.operator);
+				const operator = skuid.custom.operatorSOQL(h.operator);
 				let fieldPre = '';
 				let fieldPost = '';
 				let valuePre = '';
@@ -754,12 +832,21 @@ skuid.custom.modelLoader = function (model, fparams) {
 			}
 		}
 
-		const queryStr = `SELECT ${fieldsStr} FROM ${model.objectName}${ourConditionStrPre}${ourConditionStr}${lastRowConditionsPre}${lastRowConditions}${groupbyPre}${groupby}${havingPre}${having}${orderby} LIMIT ${limit}`;
+		let limitStr = ` LIMIT ${limit}`;
 
-		// console.log('QUERY:');
-		// console.log(queryStr);
+		// Aggregate models that have no group by fields should not have a limit
+		if (model.isAggregate && groupby === '') {
+			limitStr = '';
+		}
 
-		skuid.$.when(skuid.sfdc.api.query(queryStr)).done(function (queryResult) {
+		const queryStr = `SELECT ${fieldsStr} FROM ${model.objectName}${ourConditionStrPre}${ourConditionStr}${lastRowConditionsPre}${lastRowConditions}${groupbyPre}${groupby}${havingPre}${having}${orderby}${limitStr}`;
+
+		if (model.id === 'BankRecInclude__CDs') {
+			console.log('QUERY:');
+			console.log(queryStr);
+		} 
+
+		skuid.sfdc.api.query(queryStr).done(function (queryResult) {
 			// Records is an array of query results in the format {field: value, field2: value2}
 			const records = queryResult.records;
 
@@ -775,29 +862,39 @@ skuid.custom.modelLoader = function (model, fparams) {
 				tempRows = tempRows.concat(records);
 			}
 			
-			if (records.length === limit) {
+			if (limitStr !== '' && records.length === limit) {
 				// If we hit our query limit, we need to query again
 				if (progressCallback !== undefined) {
 					progressCallback.call(this, {
-						count,
-						limit,
+						count: count,
+						limit: limit,
 						nextStart: count + records.length + 1,
-						nextEnd: count + (records.length * 2)
+						nextEnd: count + (records.length * 2),
+						model: model
 					});
 				}
 
 				modelLoadSOQL(model, {
-					limit,
+					limit: limit,
 					last: records[limit - 1],
 					count: count + records.length,
-					progressCallback,
-					promiseResolve,
-					promiseReject,
-					tempRows,
-					exportWhenDone,
-					exportOptions
+					progressCallback: progressCallback,
+					promiseResolve: promiseResolve,
+					promiseReject: promiseReject,
+					tempRows: tempRows,
+					exportWhenDone: exportWhenDone,
+					exportOptions: exportOptions,
+					modelArrayPosition: modelArrayPosition,
+					modelArray: modelArray,
+					limitSpecified: limitSpecified
 				});
 			} else {
+				let nextQuery = 0;
+				// If we have a next model to query, next query will be > 0, otherwisw will be 0
+				if (modelArray !== undefined && (modelArrayPosition + 1) < modelArray.length) {
+					nextQuery = (modelArrayPosition + 1);
+				}
+
 				// Otherwise we've finished querying, resolve
 				// sort our tempRows based on original sorting parameters set in the model
 				tempRows = sortRows(tempRows, model);
@@ -807,12 +904,75 @@ skuid.custom.modelLoader = function (model, fparams) {
 
 				if (exportWhenDone) {
 					skuid.$.when(model.exportData(exportOptions)).done((result) => {
-						promiseResolve(result);
+						if (nextQuery === 0) {
+							promiseResolve(result);
+						} else {
+							let localLimit = modelArray[nextQuery].recordsLimit || 200;
+
+							if (limitSpecified) {
+								localLimit = limit;
+							}
+
+							// Set Initial Progress
+							if (progressCallback !== undefined) {
+								progressCallback.call(this, {
+									count: 0,
+									limit: localLimit,
+									nextStart: 1,
+									nextEnd: localLimit,
+									model: modelArray[nextQuery]
+								});
+							}
+							modelArray[nextQuery].abandonAllRows();
+							// Recurse to next model to load
+							modelLoadSOQL(modelArray[nextQuery], {
+								limit: localLimit,
+								progressCallback: progressCallback,
+								promiseResolve: promiseResolve,
+								promiseReject: promiseReject,
+								exportWhenDone: exportWhenDone,
+								exportOptions: exportOptions,
+								modelArrayPosition: nextQuery,
+								modelArray: modelArray,
+								limitSpecified: limitSpecified
+							});
+						}
 					}).fail((result) => {
 						promiseReject(result.error);
 					});
 				} else {
-					promiseResolve();
+					if (nextQuery === 0) {
+						promiseResolve();
+					} else {
+						let localLimit = modelArray[nextQuery].recordsLimit || 200;
+
+						if (limitSpecified) {
+							localLimit = limit;
+						}
+						// Set Initial Progress
+						if (progressCallback !== undefined) {
+							progressCallback.call(this, {
+								count: 0,
+								limit: localLimit,
+								nextStart: 1,
+								nextEnd: localLimit,
+								model: modelArray[nextQuery]
+							});
+						}
+						modelArray[nextQuery].abandonAllRows();
+						// Recurse to next model to load
+						modelLoadSOQL(modelArray[nextQuery], {
+							limit: localLimit,
+							progressCallback: progressCallback,
+							promiseResolve: promiseResolve,
+							promiseReject: promiseReject,
+							exportWhenDone: exportWhenDone,
+							exportOptions: exportOptions,
+							modelArrayPosition: nextQuery,
+							modelArray: modelArray,
+							limitSpecified: limitSpecified
+						});
+					}
 				}
 			}
 		}).fail((queryResult) => {
@@ -838,27 +998,13 @@ skuid.custom.modelLoader = function (model, fparams) {
 				return id;
 			}
 
-			for (let i = 0; i < model.fields.length; i++) {
-				if (model.fields[i].function === undefined && model.fields[i].id === id) {
-					return model.fields[i].name;
-				}
+			const field = model.getField(id);
+
+			if (field.function === undefined) {
+				return field.name;
 			}
 
 			return id;
-		}
-
-		function operatorConvert (operator) {
-			if (operator === 'gt') {
-				return '>';
-			} else if (operator === 'gte') {
-				return '>=';
-			} else if (operator === 'lt') {
-				return '<';
-			} else if (operator === 'lte') {
-				return '<=';
-			}
-
-			return operator;
 		}
 
 		// Pass an array of conditions
@@ -884,7 +1030,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 				} else if (c.type === 'modelmerge') {
 					const thisField = c.field;
 					const mergeField = c.mergeField;
-					let operator = operatorConvert(c.operator);
+					let operator = skuid.custom.operatorSOQL(c.operator);
 					const noValueBehavior = c.noValueBehavior;
 					const mergeModel = skuid.model.getModel(c.model);
 					const mergeModelFirstRow = mergeModel.getFirstRow();
@@ -898,7 +1044,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 						
 							conditionsItems.push(undefined);
 					}
-					let mergeModelFirstRowValue = mergeModel.getFieldValue(mergeModelFirstRow, mergeField, true);
+					let mergeModelFirstRowValue = escapeSOQL(mergeModel.getFieldValue(mergeModelFirstRow, mergeField, true));
 					if (mergeModelFirstRowValue === undefined || mergeModelFirstRowValue === null) {
 						mergeModelFirstRowValue = 'NULL';
 					}
@@ -931,7 +1077,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 						valueAfter = ')';
 						for (let j = 0; j < mergeModelData.length; j++) {
 							const mr = mergeModelData[j];
-							let mf = mergeModel.getFieldValue(mr, mergeField, true);
+							let mf = escapeSOQL(mergeModel.getFieldValue(mr, mergeField, true));
 
 							if (mf === undefined || mf === null) {
 								mf = 'NULL';
@@ -975,7 +1121,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 						thisItem += 'NULL';
 					} else {
 						for (let j = 0; j < c.values.length; j++) {
-							const v = c.values[j];
+							const v = escapeSOQL(c.values[j]);
 
 							if (j !== 0) {
 								thisItem += ',';
@@ -997,7 +1143,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 					const field = c.field;
 					const subConditionLogic = c.subConditionLogic;
 					// const encloseValueInQuotes = c.encloseValueInQuotes;
-					const operator = operatorConvert(c.operator);
+					const operator = skuid.custom.operatorSOQL(c.operator);
 					// const fieldTargetObjects = c.fieldTargetObjects;
 					const joinField = c.joinField;
 					const joinObject = c.joinObject;
@@ -1041,8 +1187,8 @@ skuid.custom.modelLoader = function (model, fparams) {
 					conditionsItems.push(thisItem);
 				} else {
 					// standard fieldvalue, userinfo, datasourceuserinfo
-					let value = c.value;
-					let operator = operatorConvert(c.operator);
+					let value = escapeSOQL(c.value);
+					let operator = skuid.custom.operatorSOQL(c.operator);
 					const noValueBehavior = c.noValueBehavior;
 
 					if (noValueBehavior !== undefined && (value === undefined || value === '')) {
@@ -1144,8 +1290,8 @@ skuid.custom.modelLoader = function (model, fparams) {
 					const ascDesc = ob.ascDesc;
 					const nullsLast = ob.nullsLast;
 
-					const aField = Object.byString(a, field);
-					const bField = Object.byString(b, field);
+					const aField = skuid.utils.getObjectProperty(a, field);
+					const bField = skuid.utils.getObjectProperty(b, field);
 
 					if (nullsLast && aField === null && bField !== null) {
 						return 1;
@@ -1175,21 +1321,6 @@ skuid.custom.modelLoader = function (model, fparams) {
 			return rows;
 		}
 
-		Object.byString = function (o, s) {
-			s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-			s = s.replace(/^\./, ''); // strip a leading dot
-			const a = s.split('.');
-			for (let i = 0, n = a.length; i < n; ++i) {
-				const k = a[i];
-				if (k in o) {
-					o = o[k];
-				} else {
-					return;
-				}
-			}
-			return o;
-		};
-
 		// Takes an array of conditions and a string of condition logic
 		// Returns an array of strings and numbers
 		// Strings are SOQL condition logic to directly embed (eg. AND OR ())
@@ -1209,7 +1340,7 @@ skuid.custom.modelLoader = function (model, fparams) {
 				conditionLogic = `(${conditionLogic})`;
 			}
 			
-			let match = conditionLogic.match(/( AND )|([0-9]+)|([()])|( OR )/gi);
+			let match = conditionLogic.match(/([ ]*AND[ ]*)|([0-9]+)|([()])|([ ]*OR[ ]*)/gi);
 
 			const ourConditions = parseConditionsSOQL(conditions);
 
@@ -1224,6 +1355,10 @@ skuid.custom.modelLoader = function (model, fparams) {
 				if (!isNaN(match[i])) {
 					// fix to numerical index of condition itself
 					match[i] = (Number(match[i]) - 1);
+				} else if (match[i] !== undefined && (match[i].toUpperCase() === 'AND' || match[i].toUpperCase() === 'AND ' || match[i].toUpperCase() === ' AND' || match[i].toUpperCase() === ' AND ')) {
+					match[i] = ' AND ';
+				} else if (match[i] !== undefined && (match[i].toUpperCase() === 'OR' || match[i].toUpperCase() === 'OR ' || match[i].toUpperCase() === ' OR' || match[i].toUpperCase() === ' OR ')) {
+					match[i] = ' OR ';
 				}
 			}
 			
@@ -1337,6 +1472,289 @@ skuid.custom.modelLoader = function (model, fparams) {
 			}
 
 			return match;
+		}
+	}
+
+	function escapeSOQL (v) {
+		if (v === undefined || v === null || typeof v !== 'string') {
+			return v;
+		}
+		return v.replace(/'/g, '\\\'');
+	}
+
+	return deferred.promise();
+};
+
+// skuid.custom.modelSaver(model,fparams)
+// Saves a model incrementally as to not overload the save process with too many saves at once
+//	fparams: object
+//	{
+//		limit: Number of rows to limit by. If unspecified will choose
+//			the model's recordsLimit property or if that is unspecified defaults to 100
+//		progressCallback: function to call before running each individual query
+//			in the format progressCallback(fparams), fparams is an object
+//			progressCallback fparams = {
+//				count: count of rows saved so far
+//				limit: our limit for how many rows to save per run
+//				nextStart: the row # of the next row to be saved
+//				nextEnd: the last row # to be saved (based on limit)
+//				model: the model currently being queried
+//			}
+//	}
+skuid.custom.modelSaver = function (model, fparams) {
+	const deferred = $.Deferred();
+	if (model === undefined) {
+		deferred.reject('Model undefined');
+		return deferred.promise();
+	}
+
+	fparams = fparams || {};
+
+	if (Array.isArray(model)) {
+		if (model.length > 0) {
+			const m = model[0];
+
+			const localLimit = fparams.limit || m.recordsLimit || 100;
+			const limit = fparams.limit || undefined;
+			const progressCallback = fparams.progressCallback || undefined;
+
+			// Set Initial Progress
+			if (progressCallback !== undefined) {
+				progressCallback.call(this, {
+					count: 0,
+					limit: localLimit,
+					nextStart: 1,
+					nextEnd: localLimit,
+					model: m,
+					percentDone: 0
+				});
+			}
+
+			// Back up the changes object from the model and clear it
+			// We will only save the changes we want to save
+			m.changesTemp = m.changes;
+			m.changes = {};
+
+			// Run through our recursive function to save all rows
+			modelSave(m, {
+				limit: limit,
+				progressCallback: progressCallback,
+				promiseResolve: deferred.resolve,
+				promiseReject: deferred.reject,
+				modelArray: model,
+				modelArrayPosition: 0
+			});
+		}
+	} else {
+		const limit = fparams.limit || undefined;
+		const localLimit = fparams.limit || model.recordsLimit || 100;
+		const progressCallback = fparams.progressCallback || undefined;
+
+		// Set Initial Progress
+		if (progressCallback !== undefined) {
+			progressCallback.call(this, {
+				count: 0,
+				limit: localLimit,
+				nextStart: 1,
+				nextEnd: localLimit,
+				model: model,
+				percentDone: 0
+			});
+		}
+
+		// Back up the changes object from the model and clear it
+		// We will only save the changes we want to save
+		model.changesTemp = model.changes;
+		model.changes = {};
+
+		// Run through our recursive function to save all rows
+		modelSave(model, {
+			limit: limit,
+			progressCallback: progressCallback,
+			promiseResolve: deferred.resolve,
+			promiseReject: deferred.reject
+		});
+	}
+
+	function modelSave (model, fparams) {
+		fparams = fparams || {};
+		const limit = fparams.limit || model.recordsLimit || 100;
+		const count = fparams.count || 0;
+		const progressCallback = fparams.progressCallback || undefined;
+		const promiseResolve = fparams.promiseResolve || undefined;
+		const promiseReject = fparams.promiseReject || undefined;
+		const modelArray = fparams.modelArray || undefined;
+		const modelArrayPosition = fparams.modelArrayPosition || 0;
+		let limitSpecified = fparams.limitSpecified;
+
+		if (limitSpecified === undefined) {
+			if (fparams.limit !== undefined) {
+				limitSpecified = true;
+			} else {
+				limitSpecified = false;
+			}
+		}
+		
+		let localCount = 0;
+		for (const [key, value] of Object.entries(model.changesTemp)) {
+			// Only process up to limit
+			if (localCount >= limit) {
+				break;
+			}
+
+			// Move from our temp changes back to changes
+			model.changes[key] = value;
+			// Make sure the model is set to hasChanged
+			model.hasChanged = true;
+			// Delete our temp key
+			delete model.changesTemp[key];
+
+			localCount++;
+		}
+
+		// Save the model
+		if (Object.keys(model.changes).length > 0) {
+			$.when(model.save()).done(f => {
+				if (Object.keys(model.changesTemp).length > 0) {
+					// If we still have changesTemp
+					if (progressCallback !== undefined) {
+						// Call our progressCallback if defined
+						let localEnd = limit;
+						if (Object.keys(model.changesTemp).length < localEnd) {
+							localEnd = Object.keys(model.changesTemp).length;
+						}
+						progressCallback.call(this, {
+							count: count + localCount,
+							limit: limit,
+							nextStart: count + localCount + 1,
+							nextEnd: count + localCount + localEnd,
+							model: model,
+							percentDone: parseInt(((count + localCount) / model.data.length) * 100, 10)
+						});
+					}
+
+					// Recurse our modelSave
+					modelSave(model, {
+						limit: limit,
+						count: (count + localCount),
+						progressCallback: progressCallback,
+						promiseResolve: promiseResolve,
+						promiseReject: promiseReject,
+						modelArray: modelArray,
+						modelArrayPosition: modelArrayPosition,
+						limitSpecified: limitSpecified
+					});
+				} else {
+					// We have no remaining changesTemp, resolve
+					delete model.changesTemp;
+					model.hasChanged = false;
+
+					let nextQuery = 0;
+					// If we have a next model to query, next query will be > 0, otherwisw will be 0
+					if (modelArray !== undefined && (modelArrayPosition + 1) < modelArray.length) {
+						nextQuery = (modelArrayPosition + 1);
+					}
+					
+					if (nextQuery === 0) {
+						promiseResolve();
+					} else {
+						let localLimit = modelArray[nextQuery].recordsLimit || 100;
+						if (limitSpecified) {
+							localLimit = limit;
+						}
+						// Set Initial Progress
+						if (progressCallback !== undefined) {
+							progressCallback.call(this, {
+								count: 0,
+								limit,
+								nextStart: 1,
+								nextEnd: localLimit,
+								model: modelArray[nextQuery],
+								percentDone: 0
+							});
+						}
+
+						// Back up the changes object from the model and clear it
+						// We will only save the changes we want to save
+						modelArray[nextQuery].changesTemp = modelArray[nextQuery].changes;
+						modelArray[nextQuery].changes = {};
+
+						// Recurse our modelSave
+						modelSave(modelArray[nextQuery], {
+							limit: localLimit,
+							progressCallback: progressCallback,
+							promiseResolve: promiseResolve,
+							promiseReject: promiseReject,
+							modelArray: modelArray,
+							modelArrayPosition: nextQuery,
+							limitSpecified: limitSpecified
+						});
+					}
+				}
+			}).fail(f => {
+				if (Object.keys(model.changesTemp).length === 0) {
+					model.hasChanged = false;
+				}
+				// Save failed, reject
+				for (const [key, value] of Object.entries(model.changesTemp)) {
+					// Move from our temp changes back to changes
+					model.changes[key] = value;
+					// Make sure the model is set to hasChanged
+					model.hasChanged = true;
+					// Delete our temp key
+					delete model.changesTemp[key];
+				}
+				delete model.changesTemp;
+				
+				promiseReject(f);
+			});
+		} else {
+			// No changes were needed, resolve
+			delete model.changesTemp;
+			model.hasChanged = false;
+			
+			let nextQuery = 0;
+			// If we have a next model to query, next query will be > 0, otherwisw will be 0
+			if (modelArray !== undefined && (modelArrayPosition + 1) < modelArray.length) {
+				nextQuery = (modelArrayPosition + 1);
+			}
+			
+			if (nextQuery === 0) {
+				promiseResolve();
+			} else {
+				let localLimit = modelArray[nextQuery].recordsLimit || 100;
+				if (limitSpecified) {
+					localLimit = limit;
+				}
+
+				// Set Initial Progress
+				if (progressCallback !== undefined) {
+					progressCallback.call(this, {
+						count: 0,
+						limit,
+						nextStart: 1,
+						nextEnd: localLimit,
+						model: modelArray[nextQuery],
+						percentDone: 0
+					});
+				}
+
+				// Back up the changes object from the model and clear it
+				// We will only save the changes we want to save
+				modelArray[nextQuery].changesTemp = modelArray[nextQuery].changes;
+				modelArray[nextQuery].changes = {};
+
+				// Recurse our modelSave
+				modelSave(modelArray[nextQuery], {
+					limit: localLimit,
+					progressCallback: progressCallback,
+					promiseResolve: promiseResolve,
+					promiseReject: promiseReject,
+					modelArray: modelArray,
+					modelArrayPosition: nextQuery,
+					limitSpecified: limitSpecified
+				});
+			}
 		}
 	}
 
