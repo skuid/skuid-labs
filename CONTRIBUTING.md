@@ -39,7 +39,6 @@ We do ask that your submission follow our general code and structure guidelines:
 
   - If you’ll be using variables that are not defined in the file, you may [set your globals in a comment at the top of your file](https://eslint.org/docs/user-guide/configuring#specifying-globals), but only use this when appropriate.
   - If you have a 3rd-party library that you are using in a component pack, we prefer that you reference that library via an external reference in your component pack manifest files, rather than including the library's minified JS locally in your component pack, unless the library is fairly small.
-  - We recommend using ES5 for maximum compatibility among browsers.
 
 ## Who owns the code I contribute?
 
