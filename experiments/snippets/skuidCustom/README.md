@@ -5,16 +5,6 @@ This library has been tested and is working with SKUID 12.1.7 and API v1.
 
 ## skuidCustom.js Functions
 
-### Date.formatDate(date)
-* date: a Javascript Date object
-
-Takes a javascript date and returns a string in Salesforce date format "YYYY-MM-DD". Can also be used directly on a date object. (eg. d.formatDate();)
-
-### Date.getDateFromSFDate(dateStr)
-* dateStr: a salesforce formatted date string ("YYYY-MM-DD")
-
-Takes a salesforce formatted date and returns a javascript date object.
-
 ### Date.isLeapYear(year)
 * year: a year
 
@@ -35,12 +25,6 @@ Adds months to the given javascript date and returns a new javascript date with 
 * days: days to add to the given date.
 
 Adds days to the given javascript date and returns a new javascript date with the days added (eg. d.addDays(3);)
-
-### Object.byString(ourObject,fieldToGet)
-* ourObject: object to get field from
-* fieldToGet: field to get from object
-
-Get field from an object. Allows for the field to be a subfield on a subobject. If fieldToGet = 'Field__r.OtherField__r.OtherOtherField__c', it will peroperly get the OtherOtherField__c using the single fieldToGet variable rather than needing 3 separate variables to get that field out from the sub-objects.
 
 ### skuid.custom.fixCurrency(number)
 * number: any number
@@ -132,8 +116,8 @@ function(){
 });
 ```
 
-### skuid.custom.modelLoader(model,fparams)
-* model: model to load
+### skuid.custom.modelLoader(model[],fparams)
+* model: model or array of models to load
 * fparams = {
     * limit: Number of rows to limit by. If unspecified will choose the model's recordsLimit property	or if that is unspecified defaults to 200
     * progressCallback: function to call before running each individual query in the format progressCallback(fparams), fparams is an object
@@ -147,7 +131,7 @@ function(){
     * exportOptions: options object to pass to the export function for customized options
 }
 
-Clear and Load all records in a model in chunks limited by the model's limit propery, a passed limit, or otherwise if both are undefined defaults to 200.
+Clear and Load all records in a model (or array of models) in chunks limited by the model's limit propery, a passed limit, or otherwise if both are undefined defaults to 200.
 
 This will load all rows from the model's query in chunks, preventing APEX Heap Errors when querying too much data at once.
 
@@ -191,3 +175,19 @@ $.when(skuid.custom.modelLoader(skuid.$M('OurModel'),{progressCallback: callback
     //fail logic here
 });
 ```
+
+### skuid.custom.modelSaver(model[],fparams)
+* model: model or array of models to save
+* fparams = {
+    * limit: Number of rows to limit by. If unspecified will choose the model's recordsLimit property or if that is unspecified defaults to 100
+    * progressCallback: function to call before running each individual query in the format progressCallback(fparams), fparams is an object
+        progressCallback fparams = {
+            * count: count of rows queried so far
+            * limit: our limit for how many rows to query per query run
+            * nextStart: the row # of the next row to be queried,
+            * nextEnd: the last row # to be queried (based on limit)
+	    * model: the model currently being saved
+        }
+}
+
+Saves a model (or array of models) incrementally as to not overload the save process with too many saves at once
