@@ -9,7 +9,7 @@
 		"arguments": false
 	},
 	"parserOptions": {  
-		"ecmaVersion": 5
+		"ecmaVersion": 7
 	},
 	"plugins": [
 		"json"
