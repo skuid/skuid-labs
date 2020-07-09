@@ -518,9 +518,9 @@ skuid.custom.modelLoader = function (model, fparams) {
 				}
 
 				// If this is a child relationship field
-				if (f.type !== undefined && f.type === 'childRelationship') {
-
-				}
+				// if (f.type !== undefined && f.type === 'childRelationship') {
+				//
+				// }
 
 				if (f.function !== undefined) {
 					fieldBefore = `${f.function}(`;
