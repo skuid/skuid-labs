@@ -1,5 +1,3 @@
-var debugging = false;
-
 var params = arguments[0],
 	sourceModelName = params.hasOwnProperty("$Input") && params.$Input.hasOwnProperty("SourceModel") ? params.$Input.SourceModel : false,
 	sourceModelIDField = params.hasOwnProperty("$Input") && params.$Input.hasOwnProperty("SourceModelIDField") ? params.$Input.SourceModelIDField : false,
@@ -14,7 +12,6 @@ var params = arguments[0],
 	del = params.hasOwnProperty("$Input") && params.$Input.hasOwnProperty("Delete") ? trueish(params.$Input.Delete) : false,
 	append = params.hasOwnProperty("$Input") && params.$Input.hasOwnProperty("Append") ? trueish(params.$Input.Append) : false,
 	idOnly = params.hasOwnProperty("$Input") && params.$Input.hasOwnProperty("IDOnly") ? trueish(params.$Input.IDOnly) : false,
-	iterations = params.hasOwnProperty("$Input") && params.$Input.hasOwnProperty("Iterations") && create && !update && !del && parseInt(params.$Input.Iterations) ? Math.max(parseInt(params.$Input.Iterations), 1) : 1,
 	excludes = params.hasOwnProperty("$Input") && params.$Input.hasOwnProperty("ExcludeFields") ? params.$Input.ExcludeFields : "",
 	includes = params.hasOwnProperty("$Input") && params.$Input.hasOwnProperty("IncludeFields") ? params.$Input.IncludeFields : "",
 	sourceRecordRegistry = {}, //Records with ID's
@@ -35,32 +32,13 @@ var params = arguments[0],
 excludes = excludes.split(",");
 includes = includes.split(",");
 for (var e = 0; e < excludes.length; e++) excludes[e] = excludes[e].trim();
+for (var f = 0; f < includes.length; f++) includes[f] = includes[f].trim();
 
-let fieldMap = buildFieldMap(sourceModel, sourceModelIDField, destModel, destModelIDField, idOnly, excludes, includes);
+if (excludes.length === 1 && excludes[0] === "") excludes = [];
+if (includes.length === 1 && includes[0] === "") includes = [];
+
+var fieldMap = buildFieldMap(sourceModel, sourceModelIDField, destModel, destModelIDField, idOnly, excludes, includes);
 if (!fieldMap) return false;
-
-
-if (debugging)
-	console.log({
-		sourceModelName: sourceModelName,
-		sourceModelIDField: sourceModelIDField,
-		destModelName: destModelName,
-		destModelIDField: destModelIDField,
-		sourceModel: sourceModel,
-		destModel: destModel,
-		sourceModelRows: sourceModelRows,
-		destModelRows: destModelRows,
-		create: create,
-		update: update,
-		del: del,
-		idOnly: idOnly,
-		sourceRecordRegistry: sourceRecordRegistry,
-		destRecordRegistry: destRecordRegistry,
-		contextModel: contextModel,
-		contextRows: contextRows,
-		fieldMap: fieldMap,
-		context: params.context
-	});
 
 if (contextRows && contextModel) {
 	if (contextModel !== sourceModel) console.warn("Source Model " + sourceModel.id + " is not the same as Context Model " + contextModel.id);
@@ -89,12 +67,9 @@ if (sourceModelIDField && sourceModelRows) {
 
 //Populate destRecordRegistry, and possibly mark new rows for removal
 if (destModelIDField && destModelRows) {
-	for (var i = 0; i < destModelRows.length; i++) {
-		if (destModelRows[i].hasOwnProperty(destModelIDField) && destModelRows[i][destModelIDField]) destRecordRegistry[destModelRows[i][destModelIDField]] = destModelRows[i];
-		else {
-			//Do we delete?
-			if (del) destModel.deleteRow(destModelRows[i]);
-		}
+	for (var j = 0; j < destModelRows.length; j++) {
+		if (destModelRows[j].hasOwnProperty(destModelIDField) && destModelRows[j][destModelIDField]) destRecordRegistry[destModelRows[j][destModelIDField]] = destModelRows[j];
+		else if (del) destModel.deleteRow(destModelRows[j]);
 	}
 }
 
@@ -116,12 +91,10 @@ for (var sourceID in sourceRecordRegistry) {
 	//Rows in source that aren't in dest
 	if (!destRecordRegistry.hasOwnProperty(sourceID)) {
 		if (create) {
-			for (var j = 0; j < iterations; j++) {
-				destModel.createRow({
-					doAppend: append,
-					additionalConditions: buildAdditionalConditions(sourceRecordRegistry[sourceID], fieldMap)
-				});
-			}
+			destModel.createRow({
+				doAppend: append,
+				additionalConditions: buildAdditionalConditions(sourceRecordRegistry[sourceID], fieldMap)
+			});
 		}
 	} else {
 		if (update) {
@@ -132,11 +105,9 @@ for (var sourceID in sourceRecordRegistry) {
 
 //Handle sourceRecordNew rows
 if (create) {
-	for (var j = 0; j < iterations; j++) {
-		for (var i = 0; i < sourceRecordNew.length; i++) {
-			var rowData = buildRow(sourceRecordNew[i], fieldMap, sourceModelIDField);
-			destModel.updateRow(destModel.createRow({doAppend: append}), rowData);
-		}
+	for (var k = 0; k < sourceRecordNew.length; k++) {
+		var rowData = buildRow(sourceRecordNew[k], fieldMap, sourceModelIDField);
+		destModel.updateRow(destModel.createRow({doAppend: append}), rowData);
 	}
 }
 
@@ -167,13 +138,11 @@ function buildFieldMap(sourceModel, sourceIDField, destModel, destIDField, idOnl
 	excludes = excludes !== undefined ? excludes : [];
 	includes = includes !== undefined ? includes : [];
 
-	console.log("excludes", excludes);
-
 	var result = {},
 		sourceFields = Object.keys(sourceModel.fieldsMap);
 
-	for (let i = 0; i < sourceFields.length; i++) {
-		const sourceFieldName = sourceFields[i];
+	for (var i = 0; i < sourceFields.length; i++) {
+		var sourceFieldName = sourceFields[i];
 
 		if (sourceIDField) {
 			if (sourceFieldName === sourceIDField) {
@@ -182,14 +151,15 @@ function buildFieldMap(sourceModel, sourceIDField, destModel, destIDField, idOnl
 					return false;
 				}
 				result[sourceIDField] = destIDField;
-			} else if (!idOnly && excludes.indexOf(sourceFieldName) == -1) {
-				if (destModel.fieldsMap.hasOwnProperty(sourceFieldName) && (includes.length == 0 || includes.indexOf(sourceFieldName) !== -1)) result[sourceFieldName] = sourceFieldName;
+			} else if (!idOnly && excludes.indexOf(sourceFieldName) === -1) {
+				if (destModel.fieldsMap.hasOwnProperty(sourceFieldName) && (includes.length === 0 || includes.indexOf(sourceFieldName) !== -1)) {
+					result[sourceFieldName] = sourceFieldName;
+				}
 			}
 		}
 	}
 
 	if (sourceModel.objectName && sourceModel.objectName !== destModel.objectName) {
-		if (debugging) console.log("Dissimilar objects... removing recordtypes from fieldsMap");
 		delete result.RecordType;
 		delete result.RecordTypeId;
 	}

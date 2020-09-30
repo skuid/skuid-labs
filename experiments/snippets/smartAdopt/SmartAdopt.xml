@@ -16,7 +16,6 @@
 		<input type="value" name="Update"/>
 		<input type="value" name="Delete"/>
 		<input type="value" name="IDOnly"/>
-		<input type="value" name="Iterations"/>
 		<input type="value" name="Append"/>
 		<input type="value" name="IncludeFields"/>
 		<input type="value" name="ExcludeFields"/>
