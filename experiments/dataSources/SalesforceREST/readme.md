@@ -55,8 +55,11 @@ First you'll need to create a new REST data source that connects to the  **the c
 * Query method with this URL:  ``/services/data/v46.0/query/?q=SELECT+id,FullName,Email+from+Contact``
 * The query string accepts your full SOQL query.     
 
-## Deploy this DataSource in Lightning Experience
+## Deploy this data source in Lightning Experience
 
-Salesforce does not allow a custom Lightning component to access their own SF API. [See more details about why here.](https://salesforce.stackexchange.com/questions/55306/how-to-call-a-salesforce-rest-url-from-lightning-component). If you try to deploy the Skuid pages build with this model using the Skuid Page Lightning component - it won't work.  But if you use the VisualForce page component available in the Lightning App Builder - and expose your Skuid page with that method.  It will work!   
+### A warning
+Salesforce does not allow a custom Lightning component to access their own Rest API. For more details [look here.](https://salesforce.stackexchange.com/questions/55306/how-to-call-a-salesforce-rest-url-from-lightning-component) 
+* If you try to deploy the Skuid pages build with this model using the Skuid Page Lightning component - it won't work. (Boo) 
+* But if you use the VisualForce page component available in the Lightning App Builder - and expose your Skuid page with that method.  It will work!   
 
-[This page](https://docs.skuid.com/latest/v2/en/skuid/deploy/salesforce/visualforce/skuid-page-visualforce-component.html#object-controller-independent-pages) in our Docs has the VF markup you will need to use. 
+[This page](https://docs.skuid.com/latest/v2/en/skuid/deploy/salesforce/visualforce/skuid-page-visualforce-component.html#object-controller-independent-pages) in Skuid docs has the VF markup you will need to use. 
