@@ -57,9 +57,9 @@ First you'll need to create a new REST data source that connects to the  **the c
 
 ## Deploy this data source in Lightning Experience
 
-### A warning
-Salesforce does not allow a custom Lightning component to access their own Rest API. For more details [look here.](https://salesforce.stackexchange.com/questions/55306/how-to-call-a-salesforce-rest-url-from-lightning-component) 
-* If you try to deploy the Skuid pages build with this model using the Skuid Page Lightning component - it won't work. (Boo) 
+### A warning!
+Salesforce does not allow a custom lightning component to access their own Rest API. For more details [look here.](https://salesforce.stackexchange.com/questions/55306/how-to-call-a-salesforce-rest-url-from-lightning-component) 
+* If you try to deploy a Skuid pages built with these Rest models using the Skuid Page Lightning component - it won't work. You will just get CORS errors - no Data. (Boo)  
 * But if you use the VisualForce page component available in the Lightning App Builder - and expose your Skuid page with that method.  It will work!   
 
 [This page](https://docs.skuid.com/latest/v2/en/skuid/deploy/salesforce/visualforce/skuid-page-visualforce-component.html#object-controller-independent-pages) in Skuid docs has the VF markup you will need to use. 
