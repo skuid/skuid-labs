@@ -161,7 +161,7 @@ Okay, now that that's out of the way:
 
 This is a special case, because _we won't be styling our Skuid components_ with CSS—that's brittle and not great. Instead, we're just styling _Shepherd's dialog boxes_. In this case, we're tweaking them to fit more with Skuid's Ink design system.
 
-We'll insert the rules through some` &lt;style> `tag hackery. You'll find the full CSS in the example page, but these are the basics:
+We'll insert the rules through some `<style> `tag hackery. You'll find the full CSS in the example page, but these are the basics:
 
 1. Drag and drop a Text component into the canvas.
 2. In the Advanced tab, enable **Allow HTML.**
@@ -311,25 +311,17 @@ First, let's look at a step's code beside the dialog box it generates:
 
 <table>
   <tr>
-   <td><code>{</code>
-<p>
-<code>       title: "Product ratings",</code>
-<p>
-<code>       text: `&lt;p>This graph displays product ratings as horizontal bars. This allows you to quickly parse how different products stack up against each other.&lt;/p></code>
-<p>
-<code>           &lt;p>This graph is also interactive. If you edit a product's rating in the table below, this graph will automatically update to reflect the latest rating.&lt;/p>`,</code>
-<p>
-<code>       attachTo: {</code>
-<p>
-<code>           element: productsByRating,</code>
-<p>
-<code>           on: "right"</code>
-<p>
-<code>       },</code>
-<p>
-<code>       buttons: [previousButton, nextButton]</code>
-<p>
-<code>   }</code>
+   <td>
+   <pre>{
+  title: "Product ratings",
+  text: `&lt;p>This graph displays product ratings as horizontal bars. This allows you to quickly parse how different products stack up against each other.&lt;/p>
+     &lt;p>This graph is also interactive. If you edit a product's rating in the table below, this graph will automatically update to reflect the latest rating.&lt;/p>`,
+  attachTo: {
+     element: productsByRating,
+     on: "right"
+  },
+  buttons: [previousButton, nextButton]
+}</pre>
    </td>
   </tr>
   <tr>
@@ -345,7 +337,7 @@ Pretty cool right? Let's break down each part of that step so we can script the 
 
 Shepherd can accept HTML within each step's text. You ideally won't need much markup, but if you need line breaks, emphasized text, or images, you'll need HTML. That's why it's best to use [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals), which are much more flexible in terms of writing strings in JavaScript.
 
-In our example step we only need basic HTML: two line breaks. We'll surround these paragraphs with the `&lt;p>` tag so they render properly, otherwise the entire step text will be on one line:
+In our example step we only need basic HTML: two line breaks. We'll surround these paragraphs with the `<p>` tag so they render properly, otherwise the entire step text will be on one line:
 
 ```javascript
    {
