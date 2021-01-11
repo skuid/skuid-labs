@@ -43,7 +43,7 @@ Since I'm trying to be thorough that's going to be… A lot of text. In light of
 - [Deploy and call it a day](#deploy-and-call-it-a-day)
 - [Additional resources](#additional-resources)
 
-Oh, and here's the XML if you're the type to start tinkering without reading the docs. (Speaking as a tech writer, _for shame_.)
+Oh, and [here's the XML](./ShepherdIntro.xml) if you're the type to start tinkering without reading the docs. (Speaking as a tech writer, _for shame_.)
 
 With all that said, let's get started!
 
@@ -66,6 +66,8 @@ The page I'll be writing a tour for is based on the Products page of the Skuid S
 If you follow along with the example page I provided, there is one important thing to note: I've used an action sequence and some JavaScript to generate the page's data. That means you don't have to worry about setting up the Northwind data source just to try it out. Yay!
 
 That doesn't impact the rest of this explanation, but if you had questions about where the data comes from, now you know. There's some other trickery there to make the data "work" but please, ignore the man behind the curtain.
+
+[Click here to access the example page XML](./ShepherdIntro.xml), which has all the tour code discussed below.
 
 ## Scripting your tour
 
