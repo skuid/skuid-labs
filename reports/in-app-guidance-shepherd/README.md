@@ -2,7 +2,7 @@
 
 Hi! Cody, Skuid tech writer here. I've been dabbling in using in-app guidance tools alongside Skuid, and I got to experiment with a great library called Shepherd. Here's a quick look at what it looks like in a Skuid page:
 
-![alt_text](images/image1.gif "image_tooltip")
+![](images/tour-preview.gif)
 
 Once you learn the basics, it's pretty intuitive to make tours for all kinds of sites and web apps! So while I'll be running through these steps from a Skuid-perspective, I'll do my best to keep the advice general enough to apply to any UI framework (or lack thereof) you may be using.
 
@@ -49,7 +49,7 @@ _Quick sidenote before we begin: I know the prose of this example script is not 
 
 First, it's best to script out your guidance before even going to code. Run through your application, remember what the highlights are, and don't try and explain _everything_ with your tour. Focus on giving users ways to discover how to use your application by themselves. Unless you're teaching something complex, try to **keep your tour step count to single digits** and test that users can** complete the tour in only a few minutes**.
 
-I like to imagine my tour scripts as a way to make explicit the connection between _user stories_ (i.e., what users should be able to accomplish with your app) and _UI elements_. It's similar to docs, but since you're in-app, you must adopt the user's perspective more directly.
+I like to imagine tour scripts as a way to make explicit the connection between _user stories_ (i.e., what users should be able to accomplish with your app) and _UI elements_. It's similar to docs, but since you're in-app, you must adopt the user's perspective more directly.
 
 (Side note: This is also why I like to embrace more casual language in in-app scripts. While docs are reference material, in-app guidance is a conversation.)
 
@@ -59,9 +59,9 @@ Also, knowing _how_ users enter your tour is an important thing to consider, so 
 
 But enough philosophizing! Let's take a look at the page and make an outline.
 
-![alt_text](images/image2.png "image_tooltip")
+![](images/outlining-scripts.png)
 
-There are several main elements / interactions I want to highlight for users:
+There are several main interactions I want to highlight for users:
 
 - Hovering over items in the top-left bar graph displays more detail on products
 - Hovering over the top-right donut chart segments displays more detail on suppliers
@@ -72,7 +72,7 @@ Since it's usually best to keep tours short, I'd say these four bullet points re
 
 #### Script writing tips {#script-writing-tips}
 
-I prepare my scripts in Google Docs, tweaking the text as I click through my app. I separate each step with horizontal lines (**Insert > Horizontal line** in GDocs), and I'll put any "stage directions" at the top of each step's section.
+I prepare scripts in Google Docs, tweaking the text as I click through the app. I separate each step with horizontal lines (**Insert > Horizontal line** in GDocs), and I'll put any "stage directions" at the top of each step's section.
 
 So something like this:
 
@@ -88,7 +88,7 @@ So something like this:
 
 ---
 
-    &lt;Pointing to donut chart element>
+    <Pointing to donut chart element>
 
     **Next step title**
 
@@ -131,11 +131,11 @@ So before we start I am also contractually obligated to say 🚨 **Do not use cu
 
 Okay, now that that's out of the way:
 
-![alt_text](images/image3.jpg "image_tooltip")
+![](images/get-in-loser.jpg)
 
 This is a special case, because _we won't be styling our Skuid components_ with CSS—that's brittle and not great. Instead, we're just styling _Shepherd's dialog boxes_. In this case, we're tweaking them to fit more with Skuid's Ink design system.
 
-We'll insert the rules through some` &lt;style> `tag hackery. You'll find my full CSS in the example page, but these are the basics:
+We'll insert the rules through some` &lt;style> `tag hackery. You'll find the full CSS in the example page, but these are the basics:
 
 1. Drag and drop a Text component into the canvas.
 2. In the Advanced tab, enable **Allow HTML.**
@@ -144,15 +144,15 @@ We'll insert the rules through some` &lt;style> `tag hackery. You'll find my ful
 ```html
 <style type="text/css">
    .shepherd-element {
-       min-width: 352px;
-    max-width: 500px;
-       box-sizing: border-box;
-       border-radius: 3px;
-       background-color: #fff;
-       font-family: Roboto, Helvetica, sans-serif;
-       box-shadow: 0 7px 6px 0 rgba(0, 0, 0, .23), 0 3px 6px 0 rgba(0, 0, 0, .16);
-       background-color: #fff;
-       z-index: 9999;
+      min-width: 352px;
+      max-width: 500px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      background-color: #fff;
+      font-family: Roboto, Helvetica, sans-serif;
+      box-shadow: 0 7px 6px 0 rgba(0, 0, 0, .23), 0 3px 6px 0 rgba(0, 0, 0, .16);
+      background-color: #fff;
+      z-index: 9999;
    }
 
    /* Other CSS rules here*/
@@ -169,10 +169,9 @@ You'll see the full JavaScript script (_let's try to say script a few more times
 
 #### Elements {#elements}
 
-I like to set a sort of "element reference" at the top of my scripts:
+I like to set a sort of "element reference" at the top of scripts:
 
 ```javascript
-// Element reference
 const productsByRating = "#products-by-rating",
    productsBySupplier = "#products-by-supplier",
    productList = "#product-list",
@@ -187,7 +186,6 @@ It's also possible to use complex CSS selectors or even JavaScript functions to 
 Check this out:
 
 ```javascript
-// Element reference
 const productsByRating = document.querySelectorAll('div[data-te="skuid__chart"]')[0],
    productsBySupplier = document.querySelectorAll('div[data-te="skuid__chart"]')[1],
    productList = "#product-list",
@@ -205,11 +203,11 @@ Try to stick to selector strings unless your needs are more complex.
 
 ##### Complexity in action: What about those donut chart segments? {#complexity-in-action-what-about-those-donut-chart-segments}
 
-You'll most likely resort to complex selectors when working with Skuid subcomponents or component elements. For example, I've outlined that I want a step highlighting the on-click action for my donut chart. So how do I target a specific segment of the Chart component?
+You'll most likely resort to complex selectors when working with Skuid subcomponents or component elements. For example, I've outlined that I want a step highlighting the on-click action for the donut chart. So how do I target a specific segment of the Chart component?
 
 Time to jump into your browser's Inspector tool and use a nested query selector. Get ready for a busy looking screenshot!:
 
-![alt_text](images/image4.png "image_tooltip")
+![](images/inspector-on-chart.png)
 
 Let's break down what's going on in that screenshot:
 
@@ -229,7 +227,7 @@ Since this is an array, I need to use an index position to specifically target o
 
 Each Shepherd step can display navigation buttons (e.g. _Next_ and _Previous_) by declaring a `buttons` array. This array contains an object for each button. I won't go into details about how to build buttons (check [the Shepherd docs](https://shepherdjs.dev/docs/Step.html#Step) for that information), but I'd like to talk about some general things.
 
-Like element targets, and in keeping with the spirit of _Don't repeat yourself_, I like to define my buttons at the top of my scripts instead of copy/pasting them to each step. So you'll see this at the top of my script code:
+Like element targets, and in keeping with the spirit of _Don't repeat yourself_, I define buttons at the top of my scripts instead of copy/pasting to each step. So you'll see this at the top of my script code:
 
 ```javascript
 const previousButton = {
@@ -334,7 +332,7 @@ In our example step we only need basic HTML: two line breaks. We'll surround the
 
 #### Targets and the attachTo attribute {#targets-and-the-attachto-attribute}
 
-Shepherd steps can attach to individual DOM elements with the `attachTo` attribute. This causes the dialog box to point directly to the element instead of just appearing in the center of the screen—which is super useful for explaining specific UI elements to your users. This is also why setting those unique IDs was so important earlier.
+Shepherd steps can attach to individual DOM elements with the `attachTo` attribute. This causes the dialog box to point directly to the element instead of just appearing in the center of the screen. This `attachTo` behavior is super useful for explaining specific UI elements to your users, and it's also why setting those unique IDs earlier was so important.
 
 ```javascript
        attachTo: {
@@ -343,9 +341,7 @@ Shepherd steps can attach to individual DOM elements with the `attachTo` attribu
          }
 ```
 
-You'll notice that `attachTo` is an object, where we provide both an element and the direction the dialog box should appear on. I like to make sure my step dialogs appear _over_ elements not mentioned in the current step.
-
-For example, I'm intentionally covering the product supplier donut chart in this step so the user is gradually introduced to the app's UI instead of being confronted with every chart at once.
+You'll notice that `attachTo` is an object, where we provide both an element and the direction the dialog box should appear on. I like making step dialogs appear _over_ elements not mentioned in the current step, so the user is gradually introduced to the app's UI instead of being confronted with every chart at once. For example, I'm intentionally covering the product supplier donut chart in this step.
 
 #### Step buttons {#step-buttons}
 
@@ -388,7 +384,7 @@ So what does the step code look like?
    },
 ```
 
-So, per the instructions, I want users to click the element to proceed. Shepherd does have an `advanceOn` step property,  but it's finicky and [even the library's authors don't endorse its use.](https://github.com/shipshapecode/shepherd/issues/511#issuecomment-520810849) I find it's easier to just skip the troubleshooting and put a one-time event listener on the element using a function in the `when` property on the `show` event. Now the user **must** click the element to continue (again, assuming you set `keyboardNavigation` to false in the tour options.
+So, per the instructions, I want users to click the chart segment to proceed. Shepherd does have an `advanceOn` step property,  but it's finicky and [even the library's authors don't endorse its use.](https://github.com/shipshapecode/shepherd/issues/511#issuecomment-520810849) I find it's easier to just skip the troubleshooting and put a one-time event listener on the element using a function in the `when` property on the `show` event. Now the user **must** click the element to continue, assuming you set `keyboardNavigation` to false in the tour options.
 
 (As a side-note, [{once:true} on addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Browser_compatibility) won't work on IE11. But if you have to support IE11, you're probably already enough of a wizard to know the workarounds.)
 
@@ -408,7 +404,7 @@ How you handle this is a bit of a choose-your-own-adventure story. First, you ha
 And as for the waiting-for-element logic, you also have a few options:
 
 - Using [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout) logic, you can check for an element's existence in a loop until it does exist.
-- You can use the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) API for a nuanced system in terms of waiting for elements or changes to elements.
+- You can use the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) API for a nuanced element observation system.
 
 Or you can be truly lazy like my example and just wait 400 milliseconds:
 
@@ -434,7 +430,7 @@ Or you can be truly lazy like my example and just wait 400 milliseconds:
    }
 ```
 
-**Obligatory "this is not best practice" warning.** I would recommend coding a much more exhaustive check for the element. But for now, just consider this a lesson on iteration—it works, now make it better!
+**Obligatory "this is not best practice" warning.** I recommend coding a much more exhaustive check for the element. But for now, consider my code a lesson on iteration—it works, now make it better!
 
 ## Including and activating your tour in the page {#including-and-activating-your-tour-in-the-page}
 
@@ -472,7 +468,7 @@ And with that, your tour can be activated with the click of a button! I recommen
 
 All right, so those are the basics of turning your written script into a coded script. I've covered the biggest things, so I won't go through that translation process for each step. However, I'll give one last piece of advice: **test early and often.**
 
-I often have the App Composer open in one window with a page preview open in another, splitting my screen real estate between the two. Then it's just a matter of _make a tweak, save, refresh, repeat ad nauseum_. You'll find yourself making a lot of little UX choices while doing this, because it helps keep you focused on the viewpoint of the user—and the whole point is to make their lives easier, right?
+I often have the App Composer open in one window with a page preview open in another, splitting screen real estate between the two. Then it's just a matter of _make a tweak, save, refresh, repeat ad nauseum_. You'll find yourself making a lot of little UX choices while doing this, because it helps keep you focused on the viewpoint of the user—and the whole point is to make their lives easier, right?
 
 ## User testing {#user-testing}
 
@@ -482,7 +478,7 @@ Get some trusted internal stakeholders—both people who have proofread your scr
 
 Often you'll find really interesting user behaviors you wouldn't have otherwise just by watching. After you gather their initial feedback,_ then_ ask them questions about choices they've made. Many times users won't even realize they did something you have questions, and those little interactions are where some of the best UX improvements can be discovered.
 
-What you'll likely find during this stage is that certain steps need to be divided up into other, smaller steps, or maybe the information that's attached to one element would be better displayed as a central modal, unconnected to anything. Since your script is written as JavaScript, it's pretty easy to comment out things, like element selectors, so that you can test which works best. Don't be afraid to make small adjustments and (if you haven't annoyed them enough) ask your users to go through the tour again.  \
+What you'll likely find during this stage is that certain steps need to be divided up into other, smaller steps, or maybe the information that's attached to one element would be better displayed as a central modal, unconnected to anything. Since your script is written as JavaScript, it's pretty easy to comment out things, like element selectors, so that you can test which works best. Don't be afraid to make small adjustments and (if you haven't annoyed them enough) ask your users to go through the tour again.
 
 Take each suggestion, weigh it against the goal of the tour, and iterate often!
 
@@ -494,7 +490,7 @@ Your work likely isn't over though. You'll hear more and more ideas and suggesti
 
 Remember, be like Tron:
 
-![alt_text](images/image6.gif "image_tooltip")
+![](images/be-like-tron.gif)
 
 # Additional resources {#additional-resources}
 
