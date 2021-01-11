@@ -15,13 +15,39 @@ This report is going to try to go from concept to implementation, so I'll talk a
 
 Since I'm trying to be thorough that's going to be… A lot of text. In light of that, here's a table of contents for hopping around this document:
 
-[TOC]
+- [What's Shepherd?](#whats-shepherd)
+- [The example page](#the-example-page)
+- [Scripting your tour](#scripting-your-tour)
+    - [Basic considerations](#basic-considerations)
+    - [Deciding what to cover](#deciding-what-to-cover)
+    - [Script writing tips](#script-writing-tips)
+- [The Skuid work](#the-skuid-work)
+- [Add unique IDs to elements](#add-unique-ids-to-elements)
+- [Add Shepherd to the Skuid page](#add-shepherd-to-the-skuid-page)
+- [Add some CSS rules for Shepherd's elements](#add-some-css-rules-for-shepherds-elements)
+- [From script to code](#from-script-to-code)
+- [Setting up common references](#setting-up-common-references)
+    - [Elements](#elements)
+    - [Complexity in action: What about those donut chart segments?](#complexity-in-action-what-about-those-donut-chart-segments)
+    - [Button patterns](#button-patterns)
+- [Creating a tour and its options](#creating-a-tour-and-its-options)
+- [Coding individual steps](#coding-individual-steps)
+    - [Text and text styling](#text-and-text-styling)
+    - [Targets and the attachTo attribute](#targets-and-the-attachto-attribute)
+    - [Step buttons](#step-buttons)
+    - [Advancing when an element is clicked](#advancing-when-an-element-is-clicked)
+    - [My element doesn't exist yet!](#my-element-doesnt-exist-yet)
+- [Including and activating your tour in the page](#including-and-activating-your-tour-in-the-page)
+- [Iterating on your tour](#iterating-on-your-tour)
+- [User testing](#user-testing)
+- [Deploy and call it a day](#deploy-and-call-it-a-day)
+- [Additional resources](#additional-resources)
 
 Oh, and here's the XML if you're the type to start tinkering without reading the docs. (Speaking as a tech writer, _for shame_.)
 
 With all that said, let's get started!
 
-## What's Shepherd? {#what's-shepherd}
+## What's Shepherd?
 
 TL;DR: [Shepherd](https://shepherdjs.dev/) is an in-app guidance JavaScript library. But why use it instead of something else?
 
@@ -33,7 +59,7 @@ Also if you want the control that code can give you, Shepherd is a great option.
 
 Speaking of code, let's talk about how Shepherd works. It parses a `Tour` object, which is made up of general options and step objects, i.e. you'll be writing a lot of JavaScript in JavaScript objects. Check out [the Shepherd website](https://shepherdjs.dev/) for all the docs, or read along for a full breakdown of my example below.
 
-## The example page {#the-example-page}
+## The example page
 
 The page I'll be writing a tour for is based on the Products page of the Skuid Sample Pages package, which uses the Northwind OData database. It displays some products and has a few nifty Skuid components for visualizations.
 
@@ -41,13 +67,13 @@ If you follow along with the example page I provided, there is one important thi
 
 That doesn't impact the rest of this explanation, but if you had questions about where the data comes from, now you know. There's some other trickery there to make the data "work" but please, ignore the man behind the curtain.
 
-## Scripting your tour {#scripting-your-tour}
+## Scripting your tour
 
-#### Basic considerations {#basic-considerations}
+#### Basic considerations
 
 _Quick sidenote before we begin: I know the prose of this example script is not 10/10 great, and it's not meant to be. It's for illustrative purposes_ 🙇
 
-First, it's best to script out your guidance before even going to code. Run through your application, remember what the highlights are, and don't try and explain _everything_ with your tour. Focus on giving users ways to discover how to use your application by themselves. Unless you're teaching something complex, try to **keep your tour step count to single digits** and test that users can** complete the tour in only a few minutes**.
+First, it's best to script out your guidance before even going to code. Run through your application, remember what the highlights are, and don't try and explain _everything_ with your tour. Focus on giving users ways to discover how to use your application by themselves. Unless you're teaching something complex, try to **keep your tour step count to single digits** and test that users can **complete the tour in only a few minutes**.
 
 I like to imagine tour scripts as a way to make explicit the connection between _user stories_ (i.e., what users should be able to accomplish with your app) and _UI elements_. It's similar to docs, but since you're in-app, you must adopt the user's perspective more directly.
 
@@ -55,7 +81,7 @@ I like to imagine tour scripts as a way to make explicit the connection between 
 
 Also, knowing _how_ users enter your tour is an important thing to consider, so make that choice early and keep it in mind as you're writing. For this example, I'm just going to put a **help button** in the top right of the page. Users click this button, and the tour begins.
 
-#### Deciding what to cover {#deciding-what-to-cover}
+#### Deciding what to cover
 
 But enough philosophizing! Let's take a look at the page and make an outline.
 
@@ -70,7 +96,7 @@ There are several main interactions I want to highlight for users:
 
 Since it's usually best to keep tours short, I'd say these four bullet points represent the main points of the tour, with a few additional steps for more information about those features.
 
-#### Script writing tips {#script-writing-tips}
+#### Script writing tips
 
 I prepare scripts in Google Docs, tweaking the text as I click through the app. I separate each step with horizontal lines (**Insert > Horizontal line** in GDocs), and I'll put any "stage directions" at the top of each step's section.
 
@@ -98,9 +124,9 @@ This helps reviewers parse the document as individual steps instead of one big p
 
 After that work is done, and you have ✨ the script ✨ prepared, let's get down to business on prepping our Skuid page for our tour.
 
-## The Skuid work {#the-skuid-work}
+## The Skuid work
 
-### Add unique IDs to elements {#add-unique-ids-to-elements}
+### Add unique IDs to elements
 
 Shepherd works by targeting DOM elements and using [the Popper.js library](https://popper.js.org/) to render step dialog boxes. While CSS class selectors can work, the best way to reliably target specific DOM elements is through **unique IDs**. This is great because, as a Skuid developer, you can apply unique IDs in _a lot_ of places.
 
@@ -113,7 +139,7 @@ Let's apply these unique IDs to the elements we noted in our outline above (Not 
 
 We'll use these unique IDs in the Shepherd script code below.
 
-### Add Shepherd to the Skuid page {#add-shepherd-to-the-skuid-page}
+### Add Shepherd to the Skuid page
 
 To utilize the Shepherd library, we'll need to make sure it's in the Skuid page. This is done via the JavaScript resources tab.
 
@@ -125,7 +151,7 @@ You could put the whole library inline, but I'm just going to use a CDN external
     2. **Resource Name**: Shepherd
     3. **Resource URL**: `https://cdn.jsdelivr.net/npm/shepherd.js@8.1.0/dist/js/shepherd.js`
 
-### Add some CSS rules for Shepherd's elements {#add-some-css-rules-for-shepherd's-elements}
+### Add some CSS rules for Shepherd's elements
 
 So before we start I am also contractually obligated to say 🚨 **Do not use custom CSS in your Skuid pages.** 🚨  It is widely regarded as a very bad move, and it probably won't work. If you need to style your Skuid components, look at creating style variants in the Design System Studio, potentially [extending those style variants with JSS ](https://docs.skuid.com/latest/v2/en/skuid/design-system-studio/extend/) if need be.
 
@@ -159,15 +185,15 @@ We'll insert the rules through some` &lt;style> `tag hackery. You'll find the fu
 </style>
 ```
 
-## From script to code {#from-script-to-code}
+## From script to code
 
 Now that our Skuid page is ready, we can start translating the script into JavaScript code for Shepherd.
 
 You'll see the full JavaScript script (_let's try to say script a few more times)_ in the example page,  but I'll cover the broad strokes.
 
-### Setting up common references {#setting-up-common-references}
+### Setting up common references
 
-#### Elements {#elements}
+#### Elements
 
 I like to set a sort of "element reference" at the top of scripts:
 
@@ -201,7 +227,7 @@ So, while using unique IDs is best practice—and the most reliable—method of 
 
 Try to stick to selector strings unless your needs are more complex.
 
-##### Complexity in action: What about those donut chart segments? {#complexity-in-action-what-about-those-donut-chart-segments}
+##### Complexity in action: What about those donut chart segments?
 
 You'll most likely resort to complex selectors when working with Skuid subcomponents or component elements. For example, I've outlined that I want a step highlighting the on-click action for the donut chart. So how do I target a specific segment of the Chart component?
 
@@ -223,7 +249,7 @@ let donutChartSegments = productsBySupplier.querySelectorAll('path.highcharts-po
 
 Since this is an array, I need to use an index position to specifically target one in my step code later on, e.g. `donutChartSegments[2]`.
 
-#### Button patterns {#button-patterns}
+#### Button patterns
 
 Each Shepherd step can display navigation buttons (e.g. _Next_ and _Previous_) by declaring a `buttons` array. This array contains an object for each button. I won't go into details about how to build buttons (check [the Shepherd docs](https://shepherdjs.dev/docs/Step.html#Step) for that information), but I'd like to talk about some general things.
 
@@ -245,7 +271,7 @@ const nextButton = {
 }
 ```
 
-### Creating a tour and its options {#creating-a-tour-and-its-options}
+### Creating a tour and its options
 
 When creating the `Tour` object, you can set some useful defaults:
 
@@ -277,7 +303,7 @@ I won't go through every option possible ([see Shepherd docs for that](https://s
 - `keyboardNavigation`: This setting is _not_ essential most of the time, but if you have a step that requires users interact with the page, I recommend setting this to <code>false<em>.</em></code> Otherwise users can just use an arrow key to proceed to the next step.
 - <code>defaultStepOptions</code>: All steps added to this tour <em>inherit</em> all [step options](https://shepherdjs.dev/docs/Step.html) set here. This is great for setting up things you know are relevant throughout the tour. For example, I'm always going to want my cancel button visible on each step—so I set it in the default step options.
 
-### Coding individual steps {#coding-individual-steps}
+### Coding individual steps
 
 Steps are where a lot of logic happens, and more complicated steps can look intimidating until you understand how to write/read them.
 
@@ -308,16 +334,14 @@ First, let's look at a step's code beside the dialog box it generates:
   </tr>
   <tr>
    <td>
-
-<img src="images/image5.png" width="" alt="alt_text" title="image_tooltip">
-
+    <img src="images/compare-step-code.png">
    </td>
   </tr>
 </table>
 
 Pretty cool right? Let's break down each part of that step so we can script the rest of our tour. From there, I'll talk about some additional step attributes you can set for more complex interactions—like requiring a user to interact with an element before advancing.
 
-#### Text and text styling {#text-and-text-styling}
+#### Text and text styling
 
 Shepherd can accept HTML within each step's text. You ideally won't need much markup, but if you need line breaks, emphasized text, or images, you'll need HTML. That's why it's best to use [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals), which are much more flexible in terms of writing strings in JavaScript.
 
@@ -330,7 +354,7 @@ In our example step we only need basic HTML: two line breaks. We'll surround the
    }
 ```
 
-#### Targets and the attachTo attribute {#targets-and-the-attachto-attribute}
+#### Targets and the attachTo attribute
 
 Shepherd steps can attach to individual DOM elements with the `attachTo` attribute. This causes the dialog box to point directly to the element instead of just appearing in the center of the screen. This `attachTo` behavior is super useful for explaining specific UI elements to your users, and it's also why setting those unique IDs earlier was so important.
 
@@ -343,7 +367,7 @@ Shepherd steps can attach to individual DOM elements with the `attachTo` attribu
 
 You'll notice that `attachTo` is an object, where we provide both an element and the direction the dialog box should appear on. I like making step dialogs appear _over_ elements not mentioned in the current step, so the user is gradually introduced to the app's UI instead of being confronted with every chart at once. For example, I'm intentionally covering the product supplier donut chart in this step.
 
-#### Step buttons {#step-buttons}
+#### Step buttons
 
 Since we clarified our buttons early in the script, we can just enter a readable array of the buttons we want:
 
@@ -351,7 +375,7 @@ Since we clarified our buttons early in the script, we can just enter a readable
        buttons: [previousButton, nextButton]
 ```
 
-#### Advancing when an element is clicked {#advancing-when-an-element-is-clicked}
+#### Advancing when an element is clicked
 
 With that step broken down, let's talk about a more advanced one: targeting a chart segment and instructing users to click it to open the "drilldown" modal."
 
@@ -390,7 +414,7 @@ So, per the instructions, I want users to click the chart segment to proceed. Sh
 
 As a general rule, if you have other logic you need for a particular step, don't forget about the `when` property.
 
-#### My element doesn't exist yet! {#my-element-doesn't-exist-yet}
+#### My element doesn't exist yet!
 
 One thing that can be challenging with in-app content for more dynamic apps is, well, sometimes things don't _exist_ at the right time!
 
@@ -432,7 +456,7 @@ Or you can be truly lazy like my example and just wait 400 milliseconds:
 
 **Obligatory "this is not best practice" warning.** I recommend coding a much more exhaustive check for the element. But for now, consider my code a lesson on iteration—it works, now make it better!
 
-## Including and activating your tour in the page {#including-and-activating-your-tour-in-the-page}
+## Including and activating your tour in the page
 
 Now that we're writing script code, let's implement it within our page so we can test it as we write. Do all of the following from the App Composer:
 
@@ -464,13 +488,13 @@ Now, add the actions to activate the tour:
 
 And with that, your tour can be activated with the click of a button! I recommend doing this early in the coding process so you can test out your tour as you code it. Which brings me to...
 
-## Iterating on your tour {#iterating-on-your-tour}
+## Iterating on your tour
 
 All right, so those are the basics of turning your written script into a coded script. I've covered the biggest things, so I won't go through that translation process for each step. However, I'll give one last piece of advice: **test early and often.**
 
 I often have the App Composer open in one window with a page preview open in another, splitting screen real estate between the two. Then it's just a matter of _make a tweak, save, refresh, repeat ad nauseum_. You'll find yourself making a lot of little UX choices while doing this, because it helps keep you focused on the viewpoint of the user—and the whole point is to make their lives easier, right?
 
-## User testing {#user-testing}
+## User testing
 
 Once you've got the tour to a satisfactory place, put it in front of users! But don't just hit the big red Deploy button yet!
 
@@ -482,7 +506,7 @@ What you'll likely find during this stage is that certain steps need to be divid
 
 Take each suggestion, weigh it against the goal of the tour, and iterate often!
 
-## Deploy and call it a day {#deploy-and-call-it-a-day}
+## Deploy and call it a day
 
 Once you've iterated on your tour through your own testing _and_ user feedback, it's probably ready for primetime! Deploy your Skuid page (or publish your website if you've been doing this outside the context of Skuid) and take a break!
 
@@ -492,7 +516,7 @@ Remember, be like Tron:
 
 ![](images/be-like-tron.gif)
 
-# Additional resources {#additional-resources}
+# Additional resources
 
 There's a lot of great resources on how to best design and style your in-app guidance. You'll see this concept referred to in a few ways: in-app guidance, guided tours, etc. Here are some other resources to check out:
 
