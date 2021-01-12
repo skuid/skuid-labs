@@ -1,4 +1,4 @@
-<skuid__page unsavedchangeswarning="yes" personalizationmode="server">
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showheader="false" showsidebar="false">
 	<models uniqueId="sk-1Pbm-6838">
 		<model id="Products" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true" deferfieldrendering="true" sobject="ODataDemo.Products" sobjectlabel="ODataDemo.Products" label="Product" labelplural="Products" namefield="Name" orderby="ID" uniqueId="sk-1Pbm-6993" limit="20">
 			<fields uniqueId="sk-1Pbm-7024">
