@@ -249,7 +249,7 @@ With all of that, I can create a reference to these specific segments!
 let donutChartSegments = productsBySupplier.querySelectorAll('path.highcharts-point');
 ```
 
-Since this is an array, I need to use an index position to specifically target one in my step code later on, e.g. `donutChartSegments[2]`.
+Since this is an array, I need to use an index position to specifically target one in my step code later on, e.g. `donutChartSegments[1]`.
 
 #### Button patterns
 
@@ -388,12 +388,12 @@ So what does the step code look like?
        title: "Supplier information",
        text: "This chart also allows you to click individual segments for more information about the products that comprise it.<br\> Click this segment to see an example.",
        attachTo: {
-           element: donutChartSegments[2],
+           element: donutChartSegments[1],
            on: "left"
        },
        when: {
            show: () => {
-               donutChartSegments[2].addEventListener('click', () => {
+               donutChartSegments[1].addEventListener('click', () => {
                    Shepherd.activeTour.next();
                }, { once: true })
            }

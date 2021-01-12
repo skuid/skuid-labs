@@ -467,12 +467,12 @@ let steps = [
         title: "Supplier information",
         text: `This chart also allows you to &lt;b&gt;click&lt;/b&gt; individual segments for more information about the products that comprise it.&lt;br\&gt; Click this segment to see an example.`,
         attachTo: {
-            element: donutChartSegments[2],
+            element: donutChartSegments[1],
             on: "left"
         },
         when: {
             show: () =&gt; {
-                donutChartSegments[2].addEventListener('click', () =&gt; {
+                donutChartSegments[1].addEventListener('click', () =&gt; {
                     Shepherd.activeTour.next()
                         ;
                 }, { once: true })
