@@ -7,7 +7,7 @@
 				<field id="Rating" accessible="true" createable="true" editable="true" sortable="true" label="Rating" displaytype="DOUBLE" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7193" ogdisplaytype="NUMBER" precision="9" scale="0"/>
 				<field id="ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="UUID" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7262" readonly="true" ogdisplaytype="NUMBER"/>
 				<field id="Description" accessible="true" createable="true" editable="true" sortable="true" label="Description" displaytype="TEXTAREA" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-7331" length="255" ogdisplaytype="STRING"/>
-				<field id="Supplier" accessible="true" createable="true" editable="true" sortable="false" label="Supplier" displaytype="REFERENCE" required="false" filterable="false" mininputlength="1" rel="Supplier" keyfield="ID"  overridemetadata="false" ogdisplaytype="REFERENCE" datasource="Ui-Only" uniqueId="sk-1Pbm-7400"/>
+				<field id="Supplier" accessible="true" createable="true" editable="true" sortable="false" label="Supplier" displaytype="REFERENCE" required="false" filterable="false" mininputlength="1" rel="Supplier" keyfield="ID" overridemetadata="false" ogdisplaytype="REFERENCE" datasource="Ui-Only" uniqueId="sk-1Pbm-7400"/>
 				<field id="Supplier.ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="DOUBLE" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7469" ogdisplaytype="NUMBER" precision="9" scale="0"/>
 				<field id="Supplier.Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-7538" length="255"/>
 				<field id="Supplier.Location" accessible="true" createable="true" editable="true" sortable="true" label="Location" displaytype="STRING" required="false" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7607"/>
@@ -22,16 +22,6 @@
 			</fields>
 			<conditions uniqueId="sk-1Pbm-8128"/>
 			<actions uniqueId="sk-1Pbm-8197"/>
-		</model>
-		<model id="Categories" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true" deferfieldrendering="true" label="Category" labelplural="Categories" async="false" uniqueId="sk-1Pbm-9849">
-			<fields uniqueId="sk-1Pbm-9880">
-				<field id="ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="NUMBER" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-9911"/>
-				<field id="Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-9980"/>
-			</fields>
-			<conditions uniqueId="sk-1Pbm-10087">
-				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Name" operator="=" clientorserver="server" state="filterableoff" inactive="true" name="Name" uniqueId="sk-1Pbm-10118"/>
-			</conditions>
-			<actions uniqueId="sk-1Pbm-10225"/>
 		</model>
 		<model id="Suppliers" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true" deferfieldrendering="true" label="Supplier" labelplural="Suppliers" uniqueId="sk-1Pbm-10410">
 			<fields uniqueId="sk-1Pbm-10441">
@@ -60,7 +50,6 @@
 			</fields>
 			<conditions uniqueId="sk-1Pbm-11968">
 				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Supplier.Name" operator="=" clientorserver="server" state="filterableoff" inactive="true" name="Supplier.Name" uniqueId="sk-1Pbm-11999"/>
-				<condition type="modelmerge" value="" field="Categories" clientorserver="server" state="filterableoff" inactive="true" name="Categories.Name" operator="in" model="Categories" enclosevalueinquotes="true" mergefield="Name" novaluebehavior="noquery" uniqueId="sk-1Pbm-12068"/>
 			</conditions>
 			<actions uniqueId="sk-1Pbm-12175">
 				<action>
@@ -264,7 +253,7 @@
 																			<skuid__header title="{{Supplier.Name}}" uniqueid="sk-Kxf-552" model="ProductsDrilldown">
 																				<conditions/>
 																				<skuid__buttonSet model="ProductsDrilldown">
-																					<groups></groups>
+																					<groups/>
 																				</skuid__buttonSet>
 																			</skuid__header>
 																			<skuid__table model="ProductsDrilldown" uniqueid="drilldown-product-list" mode="read" pageSize="10">
@@ -337,8 +326,7 @@
 										<field id="Name" uniqueid="sk-AAk-729"/>
 										<field id="Description" uniqueid="sk-AAk-732"/>
 										<field label="Supplier" type="COMBO" uniqueid="sk-K_6-776" template="{{Supplier.Name}}"/>
-										<field id="Rating" uniqueid="sk-AAs-745"/>
-										<field label="Category" type="COMBO" uniqueid="sk-AAs-756" template="{{Categories.Name}}"/>
+										<field id="Rating" uniqueid="sk-AAs-745" hideable="trueShowByDefault"/>
 										<field id="Price" uniqueid="sk-AAz-794"/>
 									</fields>
 									<filtering enableSearch="true" instantSearch="false" searchMethod="server" emptySearchBehavior="query" searchPlaceholder="Find a product"/>
@@ -378,12 +366,10 @@
 	<resources>
 		<labels/>
 		<javascript uniqueId="sk-1Pbm-12391">
-			<jsitem location="inlinesnippet" name="createData" cachelocation="false">const productData = [{ "Name": "Bread", "Price": 2.5, "Rating": 4, "ID": 0, "Description": "Whole grain bread", "Supplier": { "ID": 1, "Name": "Tokyo Traders", "Location": { "type": "Point", "coordinates": [-122.107711791992, 47.6472206115723], "crs": { "type": "name", "properties": { "name": "EPSG:4326" } } } }, "ReleaseDate": "1992-01-01T00:00:00.000Z", "ProductDetail": null, "Categories": { "results": [{ "Name": "Food" }] } }, { "Name": "Milk", "Price": 3.5, "Rating": 3, "ID": 1, "Description": "Low fat milk", "Supplier": { "ID": 0, "Name": "Exotic Liquids", "Location": { "type": "Point", "coordinates": [-122.03547668457, 47.6316604614258], "crs": { "type": "name", "properties": { "name": "EPSG:4326" } } } }, "ReleaseDate": "1995-10-01T00:00:00.000Z", "ProductDetail": { "ProductID": 1, "Details": "Details of product 1" }, "Categories": { "results": [{ "Name": "Food" }, { "Name": "Beverages" }] } }, { "Name": "Vint soda", "Price": 20.9, "Rating": 3, "ID": 2, "Description": "Americana Variety - Mix of 6 flavors", "Supplier": { "ID": 0, "Name": "Exotic Liquids", "Location": { "type": "Point", "coordinates": [-122.03547668457, 47.6316604614258], "crs": { "type": "name", "properties": { "name": "EPSG:4326" } } } }, "ReleaseDate": "2000-10-01T00:00:00.000Z", "ProductDetail": null, "Categories": { "results": [{ "Name": "Beverages" }] } }, { "Name": "Havina Cola", "Price": 19.9, "Rating": 3, "ID": 3, "Description": "The Original Key Lime Cola", "Supplier": { "ID": 0, "Name": "Exotic Liquids", "Location": { "type": "Point", "coordinates": [-122.03547668457, 47.6316604614258], "crs": { "type": "name", "properties": { "name": "EPSG:4326" } } } }, "ReleaseDate": "2005-10-01T00:00:00.000Z", "ProductDetail": { "ProductID": 3, "Details": "Details of product 3" }, "Categories": { "results": [{ "Name": "Beverages" }] } }, { "Name": "Fruit Punch", "Price": 22.99, "Rating": 3, "ID": 4, "Description": "Mango flavor, 8.3 Ounce Cans (Pack of 24)", "Supplier": { "ID": 0, "Name": "Exotic Liquids", "Location": { "type": "Point", "coordinates": [-122.03547668457, 47.6316604614258], "crs": { "type": "name", "properties": { "name": "EPSG:4326" } } } }, "ReleaseDate": "2003-01-05T00:00:00.000Z", "ProductDetail": { "ProductID": 4, "Details": "Details of product 4" }, "Categories": { "results": [{ "Name": "Beverages" }] } }, { "Name": "Cranberry Juice", "Price": 22.8, "Rating": 3, "ID": 5, "Description": "16-Ounce Plastic Bottles (Pack of 12)", "Supplier": { "ID": 0, "Name": "Exotic Liquids", "Location": { "type": "Point", "coordinates": [-122.03547668457, 47.6316604614258], "crs": { "type": "name", "properties": { "name": "EPSG:4326" } } } }, "ReleaseDate": "2006-08-04T00:00:00.000Z", "ProductDetail": null, "Categories": { "results": [{ "Name": "Beverages" }] } }, { "Name": "Pink Lemonade", "Price": 18.8, "Rating": 3, "ID": 6, "Description": "36 Ounce Cans (Pack of 3)", "Supplier": { "ID": 0, "Name": "Exotic Liquids", "Location": { "type": "Point", "coordinates": [-122.03547668457, 47.6316604614258], "crs": { "type": "name", "properties": { "name": "EPSG:4326" } } } }, "ReleaseDate": "2006-11-05T00:00:00.000Z", "ProductDetail": null, "Categories": { "results": [{ "Name": "Beverages" }] } }, { "Name": "DVD Player", "Price": 35.88, "Rating": 5, "ID": 7, "Description": "1080P Upconversion DVD Player", "Supplier": { "ID": 1, "Name": "Tokyo Traders", "Location": { "type": "Point", "coordinates": [-122.107711791992, 47.6472206115723], "crs": { "type": "name", "properties": { "name": "EPSG:4326" } } } }, "ReleaseDate": "2006-11-15T00:00:00.000Z", "ProductDetail": null, "Categories": { "results": [{ "Name": "Electronics" }] } }, { "Name": "LCD HDTV", "Price": 1088.8, "Rating": 3, "ID": 8, "Description": "42 inch 1080p LCD with Built-in Blu-ray Disc Player", "Supplier": { "ID": 1, "Name": "Tokyo Traders", "Location": { "type": "Point", "coordinates": [-122.107711791992, 47.6472206115723], "crs": { "type": "name", "properties": { "name": "EPSG:4326" } } } }, "ReleaseDate": "2008-05-08T00:00:00.000Z", "ProductDetail": { "ProductID": 8, "Details": "Details of product 8" }, "Categories": { "results": [{ "Name": "Electronics" }] } }, { "Name": "Lemonade", "Price": 1.01, "Rating": 7, "ID": 9, "Description": "Classic, refreshing lemonade (Single bottle)", "Supplier": { "ID": null, "Name": null, "Location": null }, "ReleaseDate": "1970-01-01T00:00:00.000Z", "ProductDetail": null, "Categories": { "results": [{ "Name": "Beverages" }] } }, { "Name": "Coffee", "Price": 6.99, "Rating": 1, "ID": 10, "Description": "Bulk size can of instant coffee", "Supplier": { "ID": null, "Name": null, "Location": null }, "ReleaseDate": "1982-12-31T00:00:00.000Z", "ProductDetail": null, "Categories": { "results": [{ "Name": "Beverages" }] } }]
-const categoryData = [{ "ID": 0, "Name": "Food" }, { "ID": 1, "Name": "Beverages" }, { "ID": 2, "Name": "Electronics" }]
+			<jsitem location="inlinesnippet" name="createData" cachelocation="false">const productData = [{ Name: "Bread", Price: 2.5, Rating: 4, ID: 0, Description: "Whole grain bread", Supplier: { ID: 1, Name: "Tokyo Traders", }, }, { Name: "Milk", Price: 3.5, Rating: 3, ID: 1, Description: "Low fat milk", Supplier: { ID: 0, Name: "Exotic Liquids", }, }, { Name: "Vint soda", Price: 20.9, Rating: 3, ID: 2, Description: "Americana Variety - Mix of 6 flavors", Supplier: { ID: 0, Name: "Exotic Liquids", }, }, { Name: "Havina Cola", Price: 19.9, Rating: 3, ID: 3, Description: "The Original Key Lime Cola", Supplier: { ID: 0, Name: "Exotic Liquids", }, }, { Name: "Fruit Punch", Price: 22.99, Rating: 3, ID: 4, Description: "Mango flavor, 8.3 Ounce Cans (Pack of 24)", Supplier: { ID: 0, Name: "Exotic Liquids", }, }, { Name: "Cranberry Juice", Price: 22.8, Rating: 3, ID: 5, Description: "16-Ounce Plastic Bottles (Pack of 12)", Supplier: { ID: 0, Name: "Exotic Liquids", }, }, { Name: "Pink Lemonade", Price: 18.8, Rating: 3, ID: 6, Description: "36 Ounce Cans (Pack of 3)", Supplier: { ID: 0, Name: "Exotic Liquids", }, }, { Name: "DVD Player", Price: 35.88, Rating: 5, ID: 7, Description: "1080P Upconversion DVD Player", Supplier: { ID: 1, Name: "Tokyo Traders", }, }, { Name: "LCD HDTV", Price: 1088.8, Rating: 3, ID: 8, Description: "42 inch 1080p LCD with Built-in Blu-ray Disc Player", Supplier: { ID: 1, Name: "Tokyo Traders", }, }, { Name: "Lemonade", Price: 1.01, Rating: 7, ID: 9, Description: "Classic, refreshing lemonade (Single bottle)", Supplier: { ID: 0, Name: "Exotic Liquids", }, }, { Name: "Coffee", Price: 6.99, Rating: 1, ID: 10, Description: "Bulk size can of instant coffee", Supplier: { ID: 0, Name: "Exotic Liquids", }, }, ];
 const supplierData = [{ "Name": "Exotic Liquids", "ID": 0 }, { "Name": "Tokyo Traders", "ID": 1 }]
 const product = skuid.$M('Products');
 const productDrilldown = skuid.$M('ProductsDrilldown');
-const categories = skuid.$M('Categories');
 const suppliers = skuid.$M('Suppliers');
 productData.forEach(
     (r) =&gt; {
@@ -391,11 +377,6 @@ productData.forEach(
         productDrilldown.updateRow(productDrilldown.createRow(), r);
     }
 )
-
-categoryData.forEach(
-    (r) =&gt; { categories.updateRow(categories.createRow(), r) }
-)
-
 supplierData.forEach(
     (r) =&gt; { suppliers.updateRow(suppliers.createRow(), r) }
 )
@@ -523,7 +504,7 @@ let steps = [
 				// As a sidenote, due to how we're using UI-only models, changes from the drilldown won't affect the product list.
 				// However, changes from the product list do affect the drilldown. Obviously this wouldn't be ideal in the real world,
 				// and if this were important to describing this script, I'd fix it. Alas! Let's pretend the data works perfectly.
-        text: `Since this list is connected to the same data as the larger product list below, changing data will update it here. &lt;br/&gt; &lt;br/&gt; Close the drilldown modal when you're done.`,
+        text: `Since this list is connected to the same data as the larger product list below, changing data in that table will update it here. &lt;br/&gt; &lt;br/&gt; Close the drilldown modal to proceed.`,
         attachTo: {
             element: supplierDrilldown,
             on: "top"
