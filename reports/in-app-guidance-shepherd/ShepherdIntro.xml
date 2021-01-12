@@ -1,66 +1,66 @@
 <skuid__page unsavedchangeswarning="yes" personalizationmode="server" showheader="false" showsidebar="false">
 	<models uniqueId="sk-1Pbm-6838">
-		<model id="Products" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true" deferfieldrendering="true" sobject="ODataDemo.Products" sobjectlabel="ODataDemo.Products" label="Product" labelplural="Products" namefield="Name" orderby="ID" uniqueId="sk-1Pbm-6993" limit="20">
+		<model id="Products" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true" deferfieldrendering="true" label="Product" labelplural="Products" namefield="Name" orderby="ID" uniqueId="sk-1Pbm-6993" limit="20">
 			<fields uniqueId="sk-1Pbm-7024">
-				<field id="Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="TEXT" edmtype="Edm.String" required="true" filterable="true" mininputlength="1" overridemetadata="true" ogdisplaytype="STRING" uniqueId="sk-1Pbm-7055" length="255"/>
-				<field id="Price" accessible="true" createable="true" editable="true" sortable="true" label="Price" displaytype="CURRENCY" edmtype="Edm.Double" required="true" filterable="false" mininputlength="1" overridemetadata="true" ogdisplaytype="NUMBER" precision="9" scale="2" uniqueId="sk-1Pbm-7124"/>
-				<field id="Rating" accessible="true" createable="true" editable="true" sortable="true" label="Rating" displaytype="DOUBLE" edmtype="Edm.Int16" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7193" ogdisplaytype="NUMBER" precision="9" scale="0"/>
-				<field id="ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="UUID" edmtype="Edm.Int32" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7262" readonly="true" ogdisplaytype="NUMBER"/>
-				<field id="Description" accessible="true" createable="true" editable="true" sortable="true" label="Description" displaytype="TEXTAREA" edmtype="Edm.String" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-7331" length="255" ogdisplaytype="STRING"/>
-				<field id="Supplier" accessible="true" createable="true" editable="true" sortable="false" label="Supplier" displaytype="REFERENCE" edmtype="ODataDemo.Supplier" required="false" filterable="false" mininputlength="1" rel="Supplier" keyfield="ID" ref="ODataDemo.Supplier" referenceto="[object Object]" overridemetadata="false" ogdisplaytype="REFERENCE" datasource="Ui-Only" uniqueId="sk-1Pbm-7400"/>
-				<field id="Supplier.ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="DOUBLE" edmtype="Edm.Int32" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7469" ogdisplaytype="NUMBER" precision="9" scale="0"/>
-				<field id="Supplier.Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" edmtype="Edm.String" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-7538" length="255"/>
-				<field id="Supplier.Location" accessible="true" createable="true" editable="true" sortable="true" label="Location" displaytype="Edm.GeographyPoint" edmtype="Edm.GeographyPoint" required="false" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7607"/>
-				<field id="ReleaseDate" accessible="true" createable="true" editable="true" sortable="true" label="ReleaseDate" displaytype="DATETIME" edmtype="Edm.DateTimeOffset" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7676"/>
-				<field id="ProductDetail.Details" accessible="true" createable="true" editable="true" sortable="true" label="Details" displaytype="STRING" edmtype="Edm.String" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-7745"/>
-				<field id="ProductDetail.ProductID" accessible="true" createable="true" editable="true" sortable="true" label="ProductID" displaytype="NUMBER" edmtype="Edm.Int32" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7814"/>
-				<field id="ProductDetail" accessible="true" createable="true" editable="true" sortable="false" label="ProductDetail" displaytype="REFERENCE" edmtype="ODataDemo.ProductDetail" required="false" filterable="false" mininputlength="1" rel="ProductDetail" keyfield="ProductID" ref="ODataDemo.ProductDetail" referenceto="[object Object]" uniqueId="sk-1Pbm-7883"/>
-				<field id="Categories" accessible="true" createable="false" editable="false" sortable="false" label="Categories" displaytype="REFERENCE" edmtype="Collection(ODataDemo.Category)" required="false" filterable="false" mininputlength="1" rel="Categories" type="array" ref="ODataDemo.Category" referenceto="[object Object]" relationshipname="Categories" childsobject="ODataDemo.Category" uniqueId="sk-1Pbm-7952" defaultvaluetype="fieldvalue" datasource="SkuidLocal">
+				<field id="Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="TEXT" required="true" filterable="true" mininputlength="1" overridemetadata="true" ogdisplaytype="STRING" uniqueId="sk-1Pbm-7055" length="255"/>
+				<field id="Price" accessible="true" createable="true" editable="true" sortable="true" label="Price" displaytype="CURRENCY" required="true" filterable="false" mininputlength="1" overridemetadata="true" ogdisplaytype="NUMBER" precision="9" scale="2" uniqueId="sk-1Pbm-7124"/>
+				<field id="Rating" accessible="true" createable="true" editable="true" sortable="true" label="Rating" displaytype="DOUBLE" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7193" ogdisplaytype="NUMBER" precision="9" scale="0"/>
+				<field id="ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="UUID" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7262" readonly="true" ogdisplaytype="NUMBER"/>
+				<field id="Description" accessible="true" createable="true" editable="true" sortable="true" label="Description" displaytype="TEXTAREA" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-7331" length="255" ogdisplaytype="STRING"/>
+				<field id="Supplier" accessible="true" createable="true" editable="true" sortable="false" label="Supplier" displaytype="REFERENCE" required="false" filterable="false" mininputlength="1" rel="Supplier" keyfield="ID"  overridemetadata="false" ogdisplaytype="REFERENCE" datasource="Ui-Only" uniqueId="sk-1Pbm-7400"/>
+				<field id="Supplier.ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="DOUBLE" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7469" ogdisplaytype="NUMBER" precision="9" scale="0"/>
+				<field id="Supplier.Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-7538" length="255"/>
+				<field id="Supplier.Location" accessible="true" createable="true" editable="true" sortable="true" label="Location" displaytype="STRING" required="false" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7607"/>
+				<field id="ReleaseDate" accessible="true" createable="true" editable="true" sortable="true" label="ReleaseDate" displaytype="DATETIME" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7676"/>
+				<field id="ProductDetail.Details" accessible="true" createable="true" editable="true" sortable="true" label="Details" displaytype="STRING" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-7745"/>
+				<field id="ProductDetail.ProductID" accessible="true" createable="true" editable="true" sortable="true" label="ProductID" displaytype="NUMBER" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-7814"/>
+				<field id="ProductDetail" accessible="true" createable="true" editable="true" sortable="false" label="ProductDetail" displaytype="REFERENCE" required="false" filterable="false" mininputlength="1" rel="ProductDetail" keyfield="ProductID" uniqueId="sk-1Pbm-7883"/>
+				<field id="Categories" accessible="true" createable="false" editable="false" sortable="false" label="Categories" displaytype="REFERENCE" required="false" filterable="false" mininputlength="1" rel="Categories" type="array" relationshipname="Categories" uniqueId="sk-1Pbm-7952" defaultvaluetype="fieldvalue">
 					<batchfields/>
 				</field>
-				<field id="Categories.Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="REFERENCE" edmtype="Edm.String" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-8021" length="255" ogdisplaytype="STRING" datasource="SkuidLocal"/>
+				<field id="Categories.Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="REFERENCE" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-8021" length="255" ogdisplaytype="STRING"/>
 			</fields>
 			<conditions uniqueId="sk-1Pbm-8128"/>
 			<actions uniqueId="sk-1Pbm-8197"/>
 		</model>
-		<model id="Categories" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true" deferfieldrendering="true" sobject="ODataDemo.Categories" label="Category" labelplural="Categories" async="false" uniqueId="sk-1Pbm-9849">
+		<model id="Categories" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true" deferfieldrendering="true" label="Category" labelplural="Categories" async="false" uniqueId="sk-1Pbm-9849">
 			<fields uniqueId="sk-1Pbm-9880">
-				<field id="ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="NUMBER" edmtype="Edm.Int32" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-9911"/>
-				<field id="Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" edmtype="Edm.String" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-9980"/>
+				<field id="ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="NUMBER" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-9911"/>
+				<field id="Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-9980"/>
 			</fields>
 			<conditions uniqueId="sk-1Pbm-10087">
 				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Name" operator="=" clientorserver="server" state="filterableoff" inactive="true" name="Name" uniqueId="sk-1Pbm-10118"/>
 			</conditions>
 			<actions uniqueId="sk-1Pbm-10225"/>
 		</model>
-		<model id="Suppliers" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true" deferfieldrendering="true" sobject="ODataDemo.Suppliers" label="Supplier" labelplural="Suppliers" uniqueId="sk-1Pbm-10410">
+		<model id="Suppliers" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true" deferfieldrendering="true" label="Supplier" labelplural="Suppliers" uniqueId="sk-1Pbm-10410">
 			<fields uniqueId="sk-1Pbm-10441">
-				<field id="Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" edmtype="Edm.String" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-10472"/>
+				<field id="Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-10472"/>
 			</fields>
 			<conditions uniqueId="sk-1Pbm-10579"/>
 			<actions uniqueId="sk-1Pbm-10648"/>
 		</model>
-		<model id="ProductsDrilldown" query="false" createrowifnonefound="false" datasource="Ui-Only" processonclient="true" deferfieldrendering="true" sobject="ODataDemo.Products" sobjectlabel="ODataDemo.Products" label="Product" labelplural="Products" namefield="Name" orderby="ID" uniqueId="sk-1Pbm-10833" limit="20">
+		<model id="ProductsDrilldown" query="false" createrowifnonefound="false" datasource="Ui-Only" processonclient="true" deferfieldrendering="true" label="Product" labelplural="Products" namefield="Name" orderby="ID" uniqueId="sk-1Pbm-10833" limit="20">
 			<fields uniqueId="sk-1Pbm-10864">
-				<field id="Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" edmtype="Edm.String" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-10895"/>
-				<field id="Price" accessible="true" createable="true" editable="true" sortable="true" label="Price" displaytype="CURRENCY" edmtype="Edm.Double" required="true" filterable="false" mininputlength="1" overridemetadata="true" ogdisplaytype="NUMBER" precision="" scale="2" uniqueId="sk-1Pbm-10964"/>
-				<field id="Rating" accessible="true" createable="true" editable="true" sortable="true" label="Rating" displaytype="NUMBER" edmtype="Edm.Int16" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11033"/>
-				<field id="ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="NUMBER" edmtype="Edm.Int32" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11102"/>
-				<field id="Description" accessible="true" createable="true" editable="true" sortable="true" label="Description" displaytype="STRING" edmtype="Edm.String" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-11171"/>
-				<field id="Supplier" accessible="true" createable="true" editable="true" sortable="false" label="Supplier" displaytype="REFERENCE" edmtype="ODataDemo.Supplier" required="false" filterable="false" mininputlength="1" rel="Supplier" keyfield="ID" ref="ODataDemo.Supplier" referenceto="[object Object]" uniqueId="sk-1Pbm-11240"/>
-				<field id="Supplier.ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="NUMBER" edmtype="Edm.Int32" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11309"/>
-				<field id="Supplier.Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" edmtype="Edm.String" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-11378"/>
-				<field id="Supplier.Location" accessible="true" createable="true" editable="true" sortable="true" label="Location" displaytype="Edm.GeographyPoint" edmtype="Edm.GeographyPoint" required="false" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11447"/>
-				<field id="ReleaseDate" accessible="true" createable="true" editable="true" sortable="true" label="ReleaseDate" displaytype="DATETIME" edmtype="Edm.DateTimeOffset" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11516"/>
-				<field id="ProductDetail.Details" accessible="true" createable="true" editable="true" sortable="true" label="Details" displaytype="STRING" edmtype="Edm.String" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-11585"/>
-				<field id="ProductDetail.ProductID" accessible="true" createable="true" editable="true" sortable="true" label="ProductID" displaytype="NUMBER" edmtype="Edm.Int32" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11654"/>
-				<field id="ProductDetail" accessible="true" createable="true" editable="true" sortable="false" label="ProductDetail" displaytype="REFERENCE" edmtype="ODataDemo.ProductDetail" required="false" filterable="false" mininputlength="1" rel="ProductDetail" keyfield="ProductID" ref="ODataDemo.ProductDetail" referenceto="[object Object]" uniqueId="sk-1Pbm-11723"/>
-				<field id="Categories" accessible="true" createable="false" editable="false" sortable="false" label="Categories" displaytype="ARRAY" edmtype="Collection(ODataDemo.Category)" required="false" filterable="false" mininputlength="1" rel="Categories" type="array" ref="ODataDemo.Category" referenceto="[object Object]" relationshipname="Categories" childsobject="ODataDemo.Category" uniqueId="sk-1Pbm-11792"/>
-				<field id="Categories.Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" edmtype="Edm.String" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-11861"/>
+				<field id="Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-10895"/>
+				<field id="Price" accessible="true" createable="true" editable="true" sortable="true" label="Price" displaytype="CURRENCY" required="true" filterable="false" mininputlength="1" overridemetadata="true" ogdisplaytype="NUMBER" precision="" scale="2" uniqueId="sk-1Pbm-10964"/>
+				<field id="Rating" accessible="true" createable="true" editable="true" sortable="true" label="Rating" displaytype="NUMBER" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11033"/>
+				<field id="ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="NUMBER" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11102"/>
+				<field id="Description" accessible="true" createable="true" editable="true" sortable="true" label="Description" displaytype="STRING" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-11171"/>
+				<field id="Supplier" accessible="true" createable="true" editable="true" sortable="false" label="Supplier" displaytype="REFERENCE" required="false" filterable="false" mininputlength="1" rel="Supplier" keyfield="ID" uniqueId="sk-1Pbm-11240"/>
+				<field id="Supplier.ID" accessible="true" createable="true" editable="true" sortable="true" label="ID" displaytype="NUMBER" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11309"/>
+				<field id="Supplier.Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-11378"/>
+				<field id="Supplier.Location" accessible="true" createable="true" editable="true" sortable="true" label="Location" displaytype="STRING" required="false" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11447"/>
+				<field id="ReleaseDate" accessible="true" createable="true" editable="true" sortable="true" label="ReleaseDate" displaytype="DATETIME" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11516"/>
+				<field id="ProductDetail.Details" accessible="true" createable="true" editable="true" sortable="true" label="Details" displaytype="STRING" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-11585"/>
+				<field id="ProductDetail.ProductID" accessible="true" createable="true" editable="true" sortable="true" label="ProductID" displaytype="NUMBER" required="true" filterable="false" mininputlength="1" uniqueId="sk-1Pbm-11654"/>
+				<field id="ProductDetail" accessible="true" createable="true" editable="true" sortable="false" label="ProductDetail" displaytype="REFERENCE" required="false" filterable="false" mininputlength="1" rel="ProductDetail" keyfield="ProductID" uniqueId="sk-1Pbm-11723"/>
+				<field id="Categories" accessible="true" createable="false" editable="false" sortable="false" label="Categories" displaytype="ARRAY" required="false" filterable="false" mininputlength="1" rel="Categories" type="array" relationshipname="Categories" uniqueId="sk-1Pbm-11792"/>
+				<field id="Categories.Name" accessible="true" createable="true" editable="true" sortable="true" label="Name" displaytype="STRING" required="false" filterable="true" mininputlength="1" uniqueId="sk-1Pbm-11861"/>
 			</fields>
 			<conditions uniqueId="sk-1Pbm-11968">
 				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Supplier.Name" operator="=" clientorserver="server" state="filterableoff" inactive="true" name="Supplier.Name" uniqueId="sk-1Pbm-11999"/>
-				<condition type="modelmerge" value="" field="Categories" fieldtargetobjects="ODataDemo.Category" clientorserver="server" state="filterableoff" inactive="true" name="Categories.Name" operator="in" model="Categories" enclosevalueinquotes="true" mergefield="Name" novaluebehavior="noquery" uniqueId="sk-1Pbm-12068"/>
+				<condition type="modelmerge" value="" field="Categories" clientorserver="server" state="filterableoff" inactive="true" name="Categories.Name" operator="in" model="Categories" enclosevalueinquotes="true" mergefield="Name" novaluebehavior="noquery" uniqueId="sk-1Pbm-12068"/>
 			</conditions>
 			<actions uniqueId="sk-1Pbm-12175">
 				<action>
@@ -241,7 +241,7 @@
 																						</views>
 																						<renderconditions logictype="and"/>
 																						<conditions>
-																							<condition type="contextrows" field="Supplier.Name" mergefield="Supplier.Name" operator="in" fieldtargetobjects="ODataDemo.Supplier"/>
+																							<condition type="contextrows" field="Supplier.Name" mergefield="Supplier.Name" operator="in"/>
 																						</conditions>
 																						<searchfields/>
 																					</skootable>
@@ -464,8 +464,8 @@ let steps = [
     },
     {
         title: "Product ratings",
-        text: `&lt;p&gt;This graph displays product ratings as horizontal bars. This allows you to quickly parse how different products stack up against each other. You can also hover over each bar for more details.&lt;/p&gt; 
- 
+        text: `&lt;p&gt;This graph displays product ratings as horizontal bars. This allows you to quickly parse how different products stack up against each other. You can also hover over each bar for more details.&lt;/p&gt;
+
             &lt;p&gt;This graph is also &lt;b&gt;responsive to data changes on this page&lt;/b&gt;. If you edit a product's rating in the table below, this graph will automatically update to reflect the new rating.&lt;/p&gt;`,
         attachTo: {
             element: productsByRating,
