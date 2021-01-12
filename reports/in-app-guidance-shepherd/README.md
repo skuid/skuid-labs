@@ -240,7 +240,7 @@ Time to jump into your browser's Inspector tool and use a nested query selector.
 Let's break down what's going on in that screenshot:
 
 - I'm using the Inspector tool to target a segment of the donut chart.
-- Since I'm inspecting a segment, I can see its element type (`path`) and its CSS classes in the **Elements** section. With these two things, I can write a decent selector: `path.highcarts-point`
+- Since I'm inspecting a segment, I can see its element type (`path`) and its CSS classes in the **Elements** section. With these two things, I can write a decent selector: `path.highcharts-point`
 - However, that's not specific since there are multiple Chart components. So, in the Console, I'm writing a query selector statement that's nested within my declared `productsBySupplier `element—that way I only get segments within the component I want.
 
 With all of that, I can create a reference to these specific segments!
@@ -486,7 +486,7 @@ And with that, your tour can be activated with the click of a button! I recommen
 
 All right, so those are the basics of turning your written script into a coded script. I've covered the biggest things, so I won't go through that translation process for each step. However, I'll give one last piece of advice: **test early and often.**
 
-I often have the App Composer open in one window with a page preview open in another, splitting screen real estate between the two. Then it's just a matter of _make a tweak, save, refresh, repeat ad nauseum_. You'll find yourself making a lot of little UX choices while doing this, because it helps keep you focused on the viewpoint of the user—and the whole point is to make their lives easier, right?
+I often have the App Composer open in one window *and* a page preview open in another, splitting screen real estate between the two. Then it's just a matter of _make a tweak, save, refresh, repeat ad nauseum_. You'll find yourself making a lot of little UX choices while doing this, because it helps keep you focused on the viewpoint of the user—and the whole point is to make their lives easier, right?
 
 ## User testing
 
