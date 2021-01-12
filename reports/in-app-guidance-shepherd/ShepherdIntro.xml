@@ -520,7 +520,10 @@ let steps = [
     },
     {
         title: "Updating data from the drilldown list",
-        text: `Since this list is connected to the same data as the larger product list below, changing it here will update the table outside this drilldown. &lt;br/&gt; &lt;br/&gt; Try updating some data here and saving it. Close the drilldown modal when you're done.`,
+				// As a sidenote, due to how we're using UI-only models, changes from the drilldown won't affect the product list.
+				// However, changes from the product list do affect the drilldown. Obviously this wouldn't be ideal in the real world,
+				// and if this were important to describing this script, I'd fix it. Alas! Let's pretend the data works perfectly.
+        text: `Since this list is connected to the same data as the larger product list below, changing data will update it here. &lt;br/&gt; &lt;br/&gt; Close the drilldown modal when you're done.`,
         attachTo: {
             element: supplierDrilldown,
             on: "top"
