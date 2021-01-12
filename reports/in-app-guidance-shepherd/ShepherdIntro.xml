@@ -522,7 +522,7 @@ let steps = [
 
     {
         title: "Product List",
-        text: `Finally, this is the full list of individual products. If you updated data within the chart drilldown, it'll be reflected here also. &lt;br/&gt;&lt;br/&gt; This table is the best way to view and update the details of all of your products.`,
+        text: `Finally, this is the full list of individual products. &lt;br/&gt;&lt;br/&gt; This table is the best way to view and update the details of all of your products.`,
         attachTo: {
             element: productList,
             on: "top"
