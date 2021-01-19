@@ -8,8 +8,11 @@
 		"skuid": false,
 		"arguments": false
 	},
-	"parserOptions": {  
-		"ecmaVersion": 7
+	"parserOptions": {
+		"ecmaVersion": 7,
+    "ecmaFeatures": {
+      "globalReturn": true
+    }
 	},
 	"plugins": [
 		"json"
@@ -32,8 +35,8 @@
 			"always"
 		],
 		"no-eval": [
-			"error"    
-		], 
+			"error"
+		],
 		"no-new-func": [
 			"error"
 		]
