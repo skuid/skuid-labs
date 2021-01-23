@@ -11,6 +11,11 @@ iteration number (starting at 1).
 You can use this to conditionally update all rows based on their own context, conditionally create new rows in other
 models, conditionally trigger actions on rows (in conjunction with model actions), and even save the world.
 
+It should be noted that this has the potential to be VERY expensive, performance wise. If you are working with larger
+sets of data, it may be helpful to set up rendering conditions where you can 'hide' any components that are related to
+the data you're modifying/adding while the iterator is working, in order to prevent render event spam and other possible
+slowdowns.
+
 ## iterator.js
 Paste this into a snippet called 'iterator'. If you would like to call it something else, the action sequence XML will
 need to be adjusted appropriately.
