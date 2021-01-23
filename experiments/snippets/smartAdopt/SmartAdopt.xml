@@ -9,7 +9,7 @@
 	</actions>
 	<inputs>
 		<input type="model" name="SourceModel"/>
-		<input type="model-field" name="SourceModelIDField"/>
+        <input type="model-field" name="SourceModelIDField" model-source="SourceModel"/>
 		<input type="model" name="DestinationModel"/>
 		<input type="model-field" name="DestinationModelIDField" model-source="DestinationModel"/>
 		<input type="value" name="Create"/>
