@@ -1,0 +1,23 @@
+<actionsequence id="d5c09672-4ea1-4a61-8af7-acd5a620fb1b" label="SmartAdopt" type="reusable">
+	<description/>
+	<actions>
+		<action type="custom" snippet="SmartAdopt">
+			<onerroractions>
+				<action type="blockUI" message="Smart Adopt Error" timeout="3000"/>
+			</onerroractions>
+		</action>
+	</actions>
+	<inputs>
+		<input type="model" name="SourceModel"/>
+        <input type="model-field" name="SourceModelIDField" model-source="SourceModel"/>
+		<input type="model" name="DestinationModel"/>
+		<input type="model-field" name="DestinationModelIDField" model-source="DestinationModel"/>
+		<input type="value" name="Create"/>
+		<input type="value" name="Update"/>
+		<input type="value" name="Delete"/>
+		<input type="value" name="IDOnly"/>
+		<input type="value" name="Append"/>
+		<input type="value" name="IncludeFields"/>
+		<input type="value" name="ExcludeFields"/>
+	</inputs>
+</actionsequence>
