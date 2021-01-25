@@ -2,7 +2,7 @@
 Smart adopt is a library capable of intelligently adopting records and field values between different models on the same or different data source objects/tables.
 
 ## Use Cases
-Some of the primary use cases involve mass-creating junction objects and simplifying multi-select experiences. For example... TODO
+Some of the primary use cases involve mass-creating junction objects and simplifying multi-select experiences.
 
 ## Features
 - Updating existing records which match between 2 models
