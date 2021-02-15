@@ -1,7 +1,7 @@
 <actionsequence id="eeb9bad2-3470-4241-8b78-f5882b5404ce" label="Iterate Model" type="reusable">
 	<description/>
 	<actions>
-		<action type="custom" snippet="iterate"/>
+		<action type="custom" snippet="iterator"/>
 	</actions>
 	<inputs>
 		<input type="model" name="Model"/>

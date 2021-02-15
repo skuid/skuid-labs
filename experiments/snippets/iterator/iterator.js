@@ -1,3 +1,4 @@
+//Paste this code into a new javascript snippet titled "iterator"
 const params = arguments[0],
 	model = skuid.$M(params.$Input.Model),
 	actionSequence = skuid.actionSequences.getByName(params.$Input.ActionSequence),
