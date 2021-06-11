@@ -87,7 +87,7 @@
 			<components>
 				<skuid__grid uniqueid="sk-3Hhf-18748" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="5">
 					<divisions>
-						<division minWidth="100px" ratio="1" alignSelf="center">
+						<division minWidth="200px" ratio="1" alignSelf="center">
 							<components>
 								<skuid__header model="Revisions" title="{{skuid__Page__c}}" uniqueid="sk-3HgQ-6609" subtitle=" Viewing revisions for">
 									<styles>
@@ -101,7 +101,7 @@
 								<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
 							</renderConditions>
 						</division>
-						<division alignSelf="center" minWidth="100px" ratio="1.5">
+						<division alignSelf="center" minWidth="200px" ratio="1">
 							<components>
 								<skuid__search uniqueid="sk-3Hct-10577" tokenizeSearch="false" placeholder="Select a page to view its revision history">
 									<objects>
@@ -126,10 +126,10 @@
 									</styles>
 								</skuid__search>
 							</components>
-						</division>
-						<division alignSelf="center" minWidth="100px" ratio="3">
-							<components/>
 							<renderConditions logictype="and"/>
+						</division>
+						<division alignSelf="auto" minWidth="10px" ratio="1">
+							<components/>
 						</division>
 					</divisions>
 					<background/>
@@ -175,11 +175,12 @@
 									</columns>
 									<renderConditions logictype="and"/>
 									<styleVariantConditions/>
+									<styles>
+										<spacing/>
+									</styles>
 								</skuid__form>
 							</components>
-							<renderConditions logictype="and">
-								<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
-							</renderConditions>
+							<renderConditions logictype="and"/>
 						</division>
 						<division minWidth="85px" ratio="1" alignSelf="center">
 							<components>
@@ -248,6 +249,21 @@
 					<styles>
 						<spacing/>
 					</styles>
+					<conditions/>
+					<renderConditions logictype="and">
+						<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="skuid__Description__c" fieldtargetobjects="skuid__Page_Version__c" value="AUTO-SAVE"/>
+					</renderConditions>
+					<styleVariantConditions/>
+				</skuid__text>
+				<skuid__text contents="&lt;p&gt;&lt;span style=&quot;font-size:20px;&quot;&gt;&amp;nbsp;&lt;span style=&quot;background-color:#ffff00;&quot;&gt;{{skuid__Description__c}}&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;&#10;" uniqueid="sk-3xBR-32737" model="Revisions">
+					<styles>
+						<spacing/>
+					</styles>
+					<conditions/>
+					<renderConditions logictype="and">
+						<renderCondition type="fieldvalue" operator="!=" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="skuid__Description__c" fieldtargetobjects="skuid__Page_Version__c" value="AUTO-SAVE"/>
+					</renderConditions>
+					<styleVariantConditions/>
 				</skuid__text>
 				<skuid__buttonSet model="Revisions" uniqueid="sk-3wSg-33461" position="left">
 					<groups>
@@ -433,7 +449,7 @@
 						<condition type="contextrow" field="Id" mergefield="Id" operator="="/>
 					</conditions>
 				</skuid__buttonSet>
-				<skuid__text contents="&lt;h1&gt;{{CreatedDate}} by {{{CreatedBy.Name}}}&lt;/h1&gt;&#10;" uniqueid="sk-3wXQ-47682" model="Revisions"/>
+				<skuid__text contents="&lt;p&gt;&lt;span style=&quot;font-size:20px;&quot;&gt;{{CreatedDate}} by {{{CreatedBy.Name}}}&lt;/span&gt;&lt;/p&gt;&#10;" uniqueid="sk-3wXQ-47682" model="Revisions"/>
 				<skuid__text contents="{{skuid__Layout__c}}{{skuid__Layout2__c}}{{skuid__Layout3__c}}{{skuid__Layout4__c}}{{skuid__Layout5__c}}" uniqueid="XML" model="Revisions">
 					<conditions>
 						<condition type="contextrow" field="Id" mergefield="Id" operator="="/>
