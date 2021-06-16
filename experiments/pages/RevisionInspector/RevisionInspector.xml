@@ -19,7 +19,7 @@
 				<field id="Id"/>
 			</fields>
 			<conditions>
-				<condition type="param" value="id" field="skuid__Page__c" fieldtargetobjects="skuid__Page__c" clientorserver="server" state="filterableon" inactive="false" name="skuid__Page__c" operator="=" mergefield="Id" novaluebehavior="noquery" enclosevalueinquotes="true"/>
+				<condition type="param" value="id" field="skuid__Page__c" fieldtargetobjects="skuid__Page__c" clientorserver="server" state="filterableoff" inactive="true" name="skuid__Page__c" operator="=" mergefield="Id" novaluebehavior="noquery" enclosevalueinquotes="true"/>
 				<condition type="fieldvalue" value="false" enclosevalueinquotes="false" field="skuid__IsAutoSave__c" clientorserver="server" state="filterableoff" inactive="true" name="skuid__IsAutoSave__c"/>
 				<condition type="fieldvalue" field="CreatedDate" operator="gte" inactive="true" enclosevalueinquotes="false" name="__autofilter__start__CreatedDate" clientorserver="server" state="filterableoff" value=""/>
 				<condition type="fieldvalue" field="CreatedDate" operator="lte" inactive="true" enclosevalueinquotes="false" name="__autofilter__end__CreatedDate" clientorserver="server" state="filterableoff" value=""/>
