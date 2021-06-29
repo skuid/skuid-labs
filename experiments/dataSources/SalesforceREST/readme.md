@@ -9,6 +9,13 @@ Examples of this data include:
 * Access to the [interface API](https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi/ui_api_get_started.htm)-  like creating a model of field picklist values. 
 * Access to many [setup objects](https://developer.salesforce.com/docs/atlas.en-us.220.0.object_reference.meta/object_reference/sforce_api_objects_concepts.htm) not exposed as objects to Skuid.  
 
+## Exploring availalbe data - use Postman collection
+
+Salesforce has published a Postman collection of all its API's. This is a very powerful tool for exploring the API's and understanding how they need to be configured in Skuid.
+
+* [Blog Post introducing the collection](https://developer.salesforce.com/blogs/2020/03/explore-the-salesforce-apis-with-a-postman-collection.html)
+* [Instructions on installation and setup](https://developer.salesforce.com/blogs/2020/03/explore-the-salesforce-apis-with-a-postman-collection.html)
+
 
 ## How to use this data source
 
@@ -41,6 +48,12 @@ First you'll need to create a new REST data source that connects to the  **the c
 
  Look at the folder below for specific instructions and page examples using this data source.   
 
+#### Retrieve list of sObjects:      
+
+* Query method with this URL:   ``/services/data/v46/sobjects/``
+* Use "Path to contents" to access folders within this response. 
+* Build a Skuid page with a better list of sObjects than you can see in Setup.
+    
 #### Retrieve all metadata related to contact object:      
 
 * Query method with this URL:   ``/services/data/v46.0/sobjects/Contact/describe``
