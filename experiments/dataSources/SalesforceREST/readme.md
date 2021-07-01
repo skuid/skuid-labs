@@ -11,7 +11,7 @@ Examples of this data include:
 
 ## Exploring available data - use Postman collection
 
-Salesforce has published a Postman collection of all its API's. This is a very powerful tool for exploring the API's and understanding how they need to be configured in Skuid.
+Salesforce has published a Postman collection of all its APIs. This is a very powerful tool for exploring the APIs and understanding how they need to be configured in Skuid.
 
 * [Blog Post introducing the collection](https://developer.salesforce.com/blogs/2020/03/explore-the-salesforce-apis-with-a-postman-collection.html)
 * [Instructions on installation and setup](https://developer.salesforce.com/blogs/2020/03/explore-the-salesforce-apis-with-a-postman-collection.html)
