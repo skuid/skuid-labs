@@ -9,7 +9,7 @@ Examples of this data include:
 * Access to the [interface API](https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi/ui_api_get_started.htm)-  like creating a model of field picklist values. 
 * Access to many [setup objects](https://developer.salesforce.com/docs/atlas.en-us.220.0.object_reference.meta/object_reference/sforce_api_objects_concepts.htm) not exposed as objects to Skuid.  
 
-## Exploring availalbe data - use Postman collection
+## Exploring available data - use Postman collection
 
 Salesforce has published a Postman collection of all its API's. This is a very powerful tool for exploring the API's and understanding how they need to be configured in Skuid.
 
