@@ -1,0 +1,202 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true" theme="Lightning">
+	<models>
+		<model id="Contact" limit="1" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Contact">
+			<fields>
+				<field id="Id"/>
+				<field id="Name"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="FlowParams" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="name" displaytype="TEXT" length="255"/>
+				<field id="type" displaytype="TEXT" length="255"/>
+				<field id="value" displaytype="TEXT" length="255"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Flow" limit="20" query="true" datasource="salesforce" sobject="FlowInterview">
+			<fields>
+				<field id="Name"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Name" operator="=" clientorserver="server" state="filterableon" inactive="false" name="Name"/>
+			</conditions>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__buttonSet uniqueid="sk-1c1D-18257" position="center" model="Contact">
+			<groups>
+				<skuid__buttonGroup displayType="detached">
+					<buttons>
+						<skuid__button label="Launch Lightning Modal" uniqueId="civilianTrainingButton">
+							<actions>
+								<action type="emptyModelData">
+									<models>
+										<model>FlowParams</model>
+									</models>
+								</action>
+								<action type="createRow" model="FlowParams" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context" enabled="false">
+									<defaults>
+										<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="cid"/>
+										<default valuesource="fieldvalue" field="type" enclosevalueinquotes="true" value="String"/>
+										<default valuesource="modelmerge" field="value" enclosevalueinquotes="true" sourcemodel="Contact" sourcefield="Id"/>
+									</defaults>
+								</action>
+								<action type="action-sequence" action-sequence-id="29f52636-5af5-49b1-8550-54170e17e336">
+									<inputs>
+										<input name="model" value="FlowParams"/>
+										<input name="flowName" value="HelloWorldFlow"/>
+									</inputs>
+								</action>
+							</actions>
+							<tooltip position="top"/>
+							<renderConditions logictype="or"/>
+							<enableConditions logictype="and"/>
+							<styleVariantConditions/>
+						</skuid__button>
+					</buttons>
+				</skuid__buttonGroup>
+			</groups>
+			<styles>
+				<spacing bottom="2"/>
+			</styles>
+			<renderConditions logictype="and"/>
+			<styleVariantConditions/>
+		</skuid__buttonSet>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="inline" name="EventHotFix" cachelocation="false" url="">((skuid) =&gt; {
+    window.skuid.model = {};
+	window.skuid.component = {};
+    window.skuid.model.Model = Object;
+    window.skuid.component.Component = Object;
+    console.log(8);
+})(skuid)</jsitem>
+			<jsitem location="inlinesnippet" name="callFlow" cachelocation="false">const params = arguments[0],
+    eventName = "showModalFlow",
+    flowName = params.$Input.flowName,
+    model = skuid.$M(params.$Input.model);
+console.log(this, skuid, params);
+
+// See if there is a global application event with this name
+let auraEvt = window.$A.get("e." + eventName),
+    skuidAuraEvt = window.$A.get("e.skuid:event"),
+    paramsObject = {
+        flowName: flowName,
+        params: model.getRows()
+    };
+
+// If there is a matching global application event with this name,
+// then fire that event, with each Skuid Event parameter
+// being mapped directly to that Event parameter.
+if (auraEvt) {
+    if (paramsObject) {
+        auraEvt.setParams(paramsObject);
+    }
+    auraEvt.fire();
+}
+
+skuidAuraEvt.setParams({
+    "name": eventName,
+    "source": "skuid",
+});
+
+// ALSO fire a generic "Skuid Event",
+// where all of the parameters are serialized to JSON
+if (paramsObject) {
+    skuidAuraEvt.setParam("data", paramsObject);
+}
+
+skuidAuraEvt.fire();</jsitem>
+			<jsitem location="inlinesnippet" name="showVariable" cachelocation="false">const params = arguments[0];
+const eventName = "showModalFlow";
+console.log(this, skuid, params);
+
+// See if there is a global application event with this name
+let auraEvt = window.$A.get("e." + eventName),
+    skuidAuraEvt = window.$A.get("e.skuid:event"),
+    paramsObject = {
+        flowName: "Civilian_Training_Form",
+        params:[{name:"cid",type:"String",value:params.row.Id}]
+    };
+
+// If there is a matching global application event with this name,
+// then fire that event, with each Skuid Event parameter
+// being mapped directly to that Event parameter.
+if (auraEvt) {
+    if (paramsObject) {
+        auraEvt.setParams(paramsObject);
+    }
+    auraEvt.fire();
+}
+
+skuidAuraEvt.setParams({
+    "name": eventName,
+    "source": "skuid",
+});
+
+// ALSO fire a generic "Skuid Event",
+// where all of the parameters are serialized to JSON
+if (paramsObject) {
+    skuidAuraEvt.setParam("data", paramsObject);
+}
+
+skuidAuraEvt.fire();</jsitem>
+		</javascript>
+		<css/>
+		<actionsequences>
+			<actionsequence id="5c35d805-abbb-4f15-bfc0-e02b9d68268d" label="test" type="event-triggered" event-scope="global" event-name="civilianTrainingFlowModalEvent">
+				<description/>
+				<actions>
+					<action type="showToast" duration="4" position="bl" message="woohooo!&#10;{{$Input.cid}}" enabled="false"/>
+				</actions>
+				<inputs>
+					<input type="value" name="cid"/>
+				</inputs>
+			</actionsequence>
+			<actionsequence id="29f52636-5af5-49b1-8550-54170e17e336" label="CallFlow" type="reusable">
+				<description/>
+				<actions>
+					<action type="custom" snippet="callFlow"/>
+				</actions>
+				<inputs>
+					<input type="value" name="flowName"/>
+					<input type="model" name="model"/>
+				</inputs>
+			</actionsequence>
+			<actionsequence id="bc602b89-5c69-4b6e-aaee-8012a420a264" label="TestFlow" type="reusable">
+				<description/>
+				<actions>
+					<action type="emptyModelData">
+						<models>
+							<model>FlowParams</model>
+						</models>
+					</action>
+					<action type="createRow" model="FlowParams" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+						<defaults>
+							<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="cid"/>
+							<default valuesource="fieldvalue" field="type" enclosevalueinquotes="true" value="String"/>
+							<default valuesource="modelmerge" field="value" enclosevalueinquotes="true" sourcemodel="personnel" sourcefield="Id"/>
+						</defaults>
+					</action>
+					<action type="action-sequence" action-sequence-id="29f52636-5af5-49b1-8550-54170e17e336">
+						<inputs>
+							<input name="model" value="FlowParams"/>
+							<input name="flowName" value="Civilian_Training_Form"/>
+						</inputs>
+					</action>
+				</actions>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+	<background/>
+</skuid__page>
