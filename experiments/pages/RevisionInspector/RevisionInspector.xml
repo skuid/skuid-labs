@@ -1,0 +1,546 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false">
+	<models>
+		<model id="Revisions" limit="7" query="true" createrowifnonefound="false" datasource="salesforce" sobject="skuid__Page_Version__c" orderby="LastModifiedDate DESC">
+			<fields>
+				<field id="Name"/>
+				<field id="skuid__Layout__c"/>
+				<field id="skuid__Layout2__c"/>
+				<field id="skuid__Layout3__c"/>
+				<field id="skuid__Layout4__c"/>
+				<field id="skuid__Layout5__c"/>
+				<field id="CreatedById"/>
+				<field id="CreatedBy.Name"/>
+				<field id="CreatedDate"/>
+				<field id="skuid__Page__c"/>
+				<field id="skuid__Page__r.Name"/>
+				<field id="skuid__IsAutoSave__c"/>
+				<field id="LastModifiedDate"/>
+				<field id="skuid__Description__c"/>
+				<field id="Id"/>
+			</fields>
+			<conditions>
+				<condition type="param" value="id" field="skuid__Page__c" fieldtargetobjects="skuid__Page__c" clientorserver="server" state="filterableoff" inactive="true" name="skuid__Page__c" operator="=" mergefield="Id" novaluebehavior="noquery" enclosevalueinquotes="true"/>
+				<condition type="fieldvalue" value="false" enclosevalueinquotes="false" field="skuid__IsAutoSave__c" clientorserver="server" state="filterableoff" inactive="true" name="skuid__IsAutoSave__c"/>
+				<condition type="fieldvalue" field="CreatedDate" operator="gte" inactive="true" enclosevalueinquotes="false" name="__autofilter__start__CreatedDate" clientorserver="server" state="filterableoff" value=""/>
+				<condition type="fieldvalue" field="CreatedDate" operator="lte" inactive="true" enclosevalueinquotes="false" name="__autofilter__end__CreatedDate" clientorserver="server" state="filterableoff" value=""/>
+				<condition type="search" fieldfunction="All Fields" value="" enclosevalueinquotes="true" field="Id" clientorserver="server" state="filterableoff" inactive="true" name="Search"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="UiModel" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="ShowFullXML" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="SearchXML" displaytype="TEXT" length="255" label="Search XML"/>
+				<field id="Afull" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Bfull" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="RevisionA" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="skuid__Page_Version__c">
+			<fields>
+				<field id="Name"/>
+				<field id="skuid__Layout__c"/>
+				<field id="skuid__Layout2__c"/>
+				<field id="skuid__Layout3__c"/>
+				<field id="skuid__Layout4__c"/>
+				<field id="skuid__Layout5__c"/>
+				<field id="CreatedById"/>
+				<field id="CreatedBy.Name"/>
+				<field id="CreatedDate"/>
+				<field id="skuid__Page__c"/>
+				<field id="skuid__Page__r.Name"/>
+				<field id="skuid__IsAutoSave__c"/>
+				<field id="LastModifiedDate"/>
+				<field id="skuid__Description__c"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" field="Id" fieldtargetobjects="skuid__Page__c" clientorserver="server" state="filterableon" inactive="false" name="skuid__Page__c" operator="=" mergefield="Id" novaluebehavior="noquery" enclosevalueinquotes="true"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="RevisionB" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="skuid__Page_Version__c">
+			<fields>
+				<field id="Name"/>
+				<field id="skuid__Layout__c"/>
+				<field id="skuid__Layout2__c"/>
+				<field id="skuid__Layout3__c"/>
+				<field id="skuid__Layout4__c"/>
+				<field id="skuid__Layout5__c"/>
+				<field id="CreatedById"/>
+				<field id="CreatedBy.Name"/>
+				<field id="CreatedDate"/>
+				<field id="skuid__Page__c"/>
+				<field id="skuid__Page__r.Name"/>
+				<field id="skuid__IsAutoSave__c"/>
+				<field id="LastModifiedDate"/>
+				<field id="skuid__Description__c"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" field="Id" fieldtargetobjects="skuid__Page__c" clientorserver="server" state="filterableon" inactive="false" name="skuid__Page__c" operator="=" mergefield="Id" novaluebehavior="noquery" enclosevalueinquotes="true"/>
+			</conditions>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__wrapper uniqueid="sk-3HgL-5758">
+			<components>
+				<skuid__grid uniqueid="sk-3Hhf-18748" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="5">
+					<divisions>
+						<division minWidth="200px" ratio="1" alignSelf="center">
+							<components>
+								<skuid__header model="Revisions" title="{{skuid__Page__c}}" uniqueid="sk-3HgQ-6609" subtitle=" Viewing revisions for">
+									<styles>
+										<spacing bottom="3"/>
+									</styles>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
+								</skuid__header>
+							</components>
+							<renderConditions logictype="and">
+								<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+							</renderConditions>
+						</division>
+						<division alignSelf="center" minWidth="200px" ratio="1">
+							<components>
+								<skuid__search uniqueid="sk-3Hct-10577" tokenizeSearch="false" placeholder="Select a page to view its revision history">
+									<objects>
+										<object datasource="salesforce" id="skuid__Page__c" displayTemplate="{{Name}}" fields="LastModifiedDate">
+											<resultActions/>
+											<fields>
+												<field id="Name"/>
+											</fields>
+										</object>
+									</objects>
+									<resultActions>
+										<action label="Go">
+											<actions>
+												<action type="showToast" duration="2" position="bl" message="Fetching revisions"/>
+												<action type="setCondition" model="Revisions" valuesource="fieldvalue" condition="skuid__Page__c" value="{{Id}}"/>
+												<action type="requeryModel" model="Revisions" behavior="standard"/>
+											</actions>
+										</action>
+									</resultActions>
+									<styles>
+										<spacing bottom="3"/>
+									</styles>
+								</skuid__search>
+							</components>
+							<renderConditions logictype="and"/>
+						</division>
+						<division alignSelf="auto" minWidth="10px" ratio="1">
+							<components/>
+						</division>
+					</divisions>
+					<background/>
+				</skuid__grid>
+				<skuid__grid uniqueid="sk-3cRB-76695" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="2">
+					<divisions>
+						<division alignSelf="center" minWidth="233px" ratio="2">
+							<components>
+								<skuid__form showErrorsInline="true" model="UiModel" uniqueid="sk-3c5u-33951" mode="edit">
+									<columns>
+										<column behavior="flex" verticalAlign="bottom" ratio="1" minWidth="100px">
+											<sections>
+												<section title="New Section" showHeading="false">
+													<fields>
+														<skuid__field id="SearchXML" label=" " placeholder="Search Page XML"/>
+													</fields>
+												</section>
+											</sections>
+											<renderConditions logictype="and"/>
+										</column>
+										<column behavior="flex" verticalAlign="center" ratio="1" minWidth="100px">
+											<sections>
+												<section title=" " showHeading="false">
+													<fields>
+														<skuid__field type="CUSTOM_BUTTON_GROUP" uniqueId="sk-3cPc-46580" label=" ">
+															<skuid__buttonGroup uniqueId="sk-3cPc-46630" displayType="detached">
+																<buttons>
+																	<skuid__button uniqueId="sk-3cPc-46631" icon="sk-webicon-ink:fallback" label="Search">
+																		<actions>
+																			<action type="action-sequence" action-sequence-id="0ffbcce5-091a-4712-85b1-812e08088d1e"/>
+																		</actions>
+																		<renderConditions logictype="and"/>
+																		<enableConditions/>
+																		<styleVariantConditions/>
+																	</skuid__button>
+																</buttons>
+															</skuid__buttonGroup>
+														</skuid__field>
+													</fields>
+												</section>
+											</sections>
+										</column>
+									</columns>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__form>
+							</components>
+							<renderConditions logictype="and"/>
+						</division>
+						<division minWidth="85px" ratio="1" alignSelf="center">
+							<components>
+								<skuid__form showErrorsInline="true" model="UiModel" uniqueid="sk-3cRD-77929" mode="edit">
+									<columns>
+										<column behavior="flex" verticalAlign="top" ratio="1" minWidth="100px">
+											<sections>
+												<section title="New Section" showHeading="false">
+													<fields>
+														<skuid__field id="ShowFullXML" uniqueId="sk-3cRD-77930" displayAs="SWITCH" label="Show XML">
+															<renderConditions logictype="and" onhidedatabehavior="keep"/>
+															<enableConditions/>
+															<styleVariantConditions/>
+														</skuid__field>
+													</fields>
+												</section>
+											</sections>
+										</column>
+									</columns>
+									<styles>
+										<spacing left="2"/>
+									</styles>
+								</skuid__form>
+							</components>
+						</division>
+						<division alignSelf="auto" minWidth="420px" ratio="2">
+							<components>
+								<skuid__filterSet model="Revisions" uniqueid="sk-3Hh7-11851" instantFilters="true" instantSearch="false" resetButtonBehavior="hide">
+									<filters>
+										<skuid__filter uniqueId="sk-3HhG-14416" type="toggle" conditionSource="manual" filterMethod="server" labelMode="manual" label="Hide AutoSaves">
+											<effects>
+												<effect action="activate" value="" condition="skuid__IsAutoSave__c"/>
+											</effects>
+										</skuid__filter>
+										<skuid__filter uniqueId="sk-3HhJ-15606" type="daterange" conditionSource="auto" filterMethod="server" labelMode="manual" conditionField="CreatedDate" startConditionName="__autofilter__start__CreatedDate" endConditionName="__autofilter__end__CreatedDate" label="Created Date"/>
+									</filters>
+									<filtering enableSearch="false" instantSearch="false" instantFilters="true" searchMethod="server" emptySearchBehavior="query" useSOSL="true" soslFields="All Fields" tokenizeSearch="false"/>
+									<styles>
+										<spacing/>
+									</styles>
+									<positioning justifyContent="space-between" alignItems="flex-end"/>
+									<sorting enable="false"/>
+								</skuid__filterSet>
+							</components>
+						</division>
+						<division alignSelf="auto" minWidth="100px" ratio="6">
+							<components/>
+						</division>
+					</divisions>
+					<background/>
+					<styles>
+						<spacing bottom="5"/>
+					</styles>
+				</skuid__grid>
+			</components>
+			<styles>
+				<spacing top="3" left="6" right="3"/>
+			</styles>
+			<background/>
+			<renderConditions logictype="and"/>
+			<styleVariantConditions/>
+		</skuid__wrapper>
+		<skuid__deck columnGutter=".75em" rowGutter=".75em" model="Revisions" showSaveCancel="false" verticalAlign="top" minWidth="47vw" uniqueid="sk-3HfB-16667" setMaxWidth="auto">
+			<components>
+				<skuid__text contents="&lt;p&gt;&lt;span style=&quot;font-size:16px;&quot;&gt;{{skuid__Description__c}}&lt;/span&gt;&lt;/p&gt;&#10;" uniqueid="sk-3HfH-18293" model="Revisions">
+					<styles>
+						<spacing/>
+					</styles>
+					<conditions/>
+					<renderConditions logictype="and">
+						<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="skuid__Description__c" fieldtargetobjects="skuid__Page_Version__c" value="AUTO-SAVE"/>
+					</renderConditions>
+					<styleVariantConditions/>
+				</skuid__text>
+				<skuid__text contents="&lt;p&gt;&lt;span style=&quot;font-size:20px;&quot;&gt;&amp;nbsp;&lt;span style=&quot;background-color:#ffff00;&quot;&gt;{{skuid__Description__c}}&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;&#10;" uniqueid="sk-3xBR-32737" model="Revisions">
+					<styles>
+						<spacing/>
+					</styles>
+					<conditions/>
+					<renderConditions logictype="and">
+						<renderCondition type="fieldvalue" operator="!=" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="skuid__Description__c" fieldtargetobjects="skuid__Page_Version__c" value="AUTO-SAVE"/>
+					</renderConditions>
+					<styleVariantConditions/>
+				</skuid__text>
+				<skuid__buttonSet model="Revisions" uniqueid="sk-3wSg-33461" position="left">
+					<groups>
+						<skuid__buttonGroup uniqueId="sk-3wSl-35500" displayType="detached">
+							<buttons>
+								<skuid__button label="Open XML Left" uniqueId="sk-3wSg-33460" icon="sk-webicon-ink:arrow-left">
+									<actions>
+										<action type="updateCondition" model="RevisionA" behavior="set" condition="skuid__Page__c" valuesource="fieldvalue" value="{{Id}}"/>
+										<action type="requeryModels" behavior="standard">
+											<models>
+												<model>RevisionA</model>
+											</models>
+										</action>
+										<action type="openSlidingPanel" openbehavior="open">
+											<skuid__slidingPanel uniqueid="sk-3wTd-53515" size="47vw" origin="left" closeOnPageClick="true" behavior="overlay">
+												<components>
+													<skuid__wrapper uniqueid="sk-3wTw-59873">
+														<components>
+															<skuid__text contents="&lt;p&gt;&lt;span style=&quot;font-size:16px;&quot;&gt;{{skuid__Description__c}}&lt;/span&gt;&lt;/p&gt;&#10;&#10;&lt;h1&gt;{{CreatedDate}} by {{{CreatedBy.Name}}}&lt;/h1&gt;&#10;" uniqueid="sk-3wTw-59875" model="RevisionA">
+																<conditions/>
+																<renderConditions logictype="and"/>
+																<styleVariantConditions/>
+																<styles>
+																	<spacing/>
+																</styles>
+															</skuid__text>
+															<skuid__buttonSet model="RevisionA" uniqueid="sk-3wTw-59876" position="left" expandToFill="false">
+																<groups>
+																	<skuid__buttonGroup uniqueId="sk-3wTw-59881" displayType="detached">
+																		<buttons>
+																			<skuid__button label="Copy XML" uniqueId="sk-3wTw-59882" icon="sk-webicon-ink:copy" styleSettingsVariant="primary">
+																				<actions>
+																					<action type="action-sequence" action-sequence-id="058bc7f1-18bb-43ed-a336-3a6ad6e87dc6">
+																						<inputs>
+																							<input name="ElementId" value="XMLA"/>
+																						</inputs>
+																					</action>
+																				</actions>
+																				<renderConditions logictype="and"/>
+																				<enableConditions logictype="and"/>
+																				<styleVariantConditions/>
+																			</skuid__button>
+																			<skuid__button label="Diffchecker" uniqueId="sk-3wbm-58551" icon="sk-webicon-ink:ext-link">
+																				<actions>
+																					<action type="redirect" window="blank" url="https://www.diffchecker.com"/>
+																				</actions>
+																			</skuid__button>
+																			<skuid__button label="Close and Clear Panels" uniqueId="sk-3wU7-65110" icon="sk-webicon-ink:close" iconPosition="right">
+																				<actions>
+																					<action type="closeSlidingPanel" closebehavior="close"/>
+																					<action type="emptyModelData">
+																						<models>
+																							<model>RevisionA</model>
+																							<model>RevisionB</model>
+																						</models>
+																					</action>
+																				</actions>
+																				<tooltip position="top"/>
+																			</skuid__button>
+																		</buttons>
+																	</skuid__buttonGroup>
+																</groups>
+																<conditions/>
+																<styles>
+																	<spacing top="2" bottom="2"/>
+																</styles>
+															</skuid__buttonSet>
+															<skuid__text contents="{{skuid__Layout__c}}{{skuid__Layout2__c}}{{skuid__Layout3__c}}{{skuid__Layout4__c}}{{skuid__Layout5__c}}" uniqueid="XMLA" model="RevisionA" allowHtmlInBuilder="false">
+																<conditions/>
+																<renderConditions logictype="and"/>
+																<styleVariantConditions/>
+																<styles>
+																	<spacing/>
+																</styles>
+															</skuid__text>
+														</components>
+														<styles>
+															<spacing/>
+														</styles>
+														<background/>
+													</skuid__wrapper>
+												</components>
+											</skuid__slidingPanel>
+										</action>
+										<action type="updateRow" fieldmodel="UiModel" affectedrows="context">
+											<updates/>
+										</action>
+									</actions>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiModel" sourcetype="fieldvalue" field="Afull" value="false"/>
+									</renderConditions>
+									<enableConditions/>
+									<styleVariantConditions/>
+								</skuid__button>
+								<skuid__button label="Open XML Right" uniqueId="sk-3wWl-16460" icon="sk-webicon-ink:arrow-right" iconPosition="right">
+									<actions>
+										<action type="updateCondition" model="RevisionB" behavior="set" condition="skuid__Page__c" valuesource="fieldvalue" value="{{Id}}"/>
+										<action type="requeryModels" behavior="standard">
+											<models>
+												<model>RevisionB</model>
+											</models>
+										</action>
+										<action type="openSlidingPanel" openbehavior="open">
+											<skuid__slidingPanel uniqueid="sk-3wWl-16449" size="47vw" origin="right" closeOnPageClick="true" behavior="overlay">
+												<components>
+													<skuid__wrapper uniqueid="sk-3wWl-16450">
+														<components>
+															<skuid__text contents="&lt;p&gt;&lt;span style=&quot;font-size:16px;&quot;&gt;{{skuid__Description__c}}&lt;/span&gt;&lt;/p&gt;&#10;&#10;&lt;h1&gt;{{CreatedDate}} by {{{CreatedBy.Name}}}&lt;/h1&gt;&#10;" uniqueid="sk-3wWl-16452" model="RevisionB">
+																<conditions/>
+															</skuid__text>
+															<skuid__buttonSet model="RevisionB" uniqueid="sk-3wTw-59876" position="left" expandToFill="false">
+																<groups>
+																	<skuid__buttonGroup uniqueId="sk-3wTw-59881" displayType="detached">
+																		<buttons>
+																			<skuid__button label="Copy XML" uniqueId="sk-3wTw-59882" icon="sk-webicon-ink:copy" styleSettingsVariant="primary">
+																				<actions>
+																					<action type="action-sequence" action-sequence-id="058bc7f1-18bb-43ed-a336-3a6ad6e87dc6">
+																						<inputs>
+																							<input name="ElementId" value="XMLB"/>
+																						</inputs>
+																					</action>
+																				</actions>
+																				<renderConditions logictype="and"/>
+																				<enableConditions logictype="and"/>
+																				<styleVariantConditions/>
+																			</skuid__button>
+																			<skuid__button label="Diffchecker" uniqueId="sk-3wbm-58551" icon="sk-webicon-ink:ext-link">
+																				<actions>
+																					<action type="redirect" window="blank" url="https://www.diffchecker.com"/>
+																				</actions>
+																			</skuid__button>
+																			<skuid__button label="Close and Clear Panels" uniqueId="sk-3wU7-65110" icon="sk-webicon-ink:close" iconPosition="right">
+																				<actions>
+																					<action type="closeSlidingPanel" closebehavior="close"/>
+																					<action type="emptyModelData">
+																						<models>
+																							<model>RevisionA</model>
+																							<model>RevisionB</model>
+																						</models>
+																					</action>
+																				</actions>
+																				<tooltip position="top"/>
+																			</skuid__button>
+																		</buttons>
+																	</skuid__buttonGroup>
+																</groups>
+																<conditions/>
+																<styles>
+																	<spacing top="2" bottom="2"/>
+																</styles>
+															</skuid__buttonSet>
+															<skuid__text contents="{{skuid__Layout__c}}{{skuid__Layout2__c}}{{skuid__Layout3__c}}{{skuid__Layout4__c}}{{skuid__Layout5__c}}" uniqueid="XMLB" model="RevisionB" allowHtmlInBuilder="false">
+																<conditions/>
+																<renderConditions logictype="and"/>
+																<styleVariantConditions/>
+																<styles>
+																	<spacing/>
+																</styles>
+															</skuid__text>
+														</components>
+														<styles>
+															<spacing/>
+														</styles>
+														<background/>
+													</skuid__wrapper>
+												</components>
+											</skuid__slidingPanel>
+										</action>
+									</actions>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiModel" sourcetype="fieldvalue" field="Bfull" value="false"/>
+									</renderConditions>
+									<enableConditions logictype="and"/>
+									<styleVariantConditions/>
+								</skuid__button>
+							</buttons>
+						</skuid__buttonGroup>
+					</groups>
+					<styles>
+						<spacing bottom="1.5"/>
+					</styles>
+					<conditions>
+						<condition type="contextrow" field="Id" mergefield="Id" operator="="/>
+					</conditions>
+				</skuid__buttonSet>
+				<skuid__text contents="&lt;p&gt;&lt;span style=&quot;font-size:20px;&quot;&gt;{{CreatedDate}} by {{{CreatedBy.Name}}}&lt;/span&gt;&lt;/p&gt;&#10;" uniqueid="sk-3wXQ-47682" model="Revisions"/>
+				<skuid__text contents="{{skuid__Layout__c}}{{skuid__Layout2__c}}{{skuid__Layout3__c}}{{skuid__Layout4__c}}{{skuid__Layout5__c}}" uniqueid="XML" model="Revisions">
+					<conditions>
+						<condition type="contextrow" field="Id" mergefield="Id" operator="="/>
+					</conditions>
+					<renderConditions logictype="and">
+						<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiModel" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="ShowFullXML" value="true"/>
+					</renderConditions>
+					<styleVariantConditions/>
+					<styles>
+						<spacing/>
+					</styles>
+				</skuid__text>
+			</components>
+			<filtering enableSearch="false"/>
+			<filters/>
+			<sorting enable="false"/>
+			<styles>
+				<spacing left="2" right="2"/>
+			</styles>
+			<renderConditions logictype="and">
+				<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+			</renderConditions>
+			<styleVariantConditions/>
+		</skuid__deck>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="inlinesnippet" name="CopytoClipboard" cachelocation="false">const params = arguments[0],
+   targetElementId = params.$Input.ElementId;
+  console.log("params", params);
+  console.log("targetElementId", targetElementId);
+   str = document.getElementById(targetElementId).innerHTML;
+
+function listener(e) {
+    e.clipboardData.setData("text/html", str);
+    e.clipboardData.setData("text/plain", str);
+    e.preventDefault();
+}
+document.addEventListener("copy", listener);
+document.execCommand("copy");
+document.removeEventListener("copy", listener);</jsitem>
+		</javascript>
+		<css/>
+		<actionsequences>
+			<actionsequence id="0ffbcce5-091a-4712-85b1-812e08088d1e" label="SearchRevisions" type="reusable">
+				<actions>
+					<action type="showToast" duration="2" position="bl" message="Searching XML..."/>
+					<action type="branch" whenfinished="stop" model="UiModel">
+						<formula>NOT(ISBLANK({{SearchXML}}))
+</formula>
+						<iftrueactions>
+							<action type="updateCondition" model="Revisions" behavior="set" condition="Search" valuesource="modelmerge" value="{{{SearchXML}}}" sourcemodel="UiModel" sourcefield="SearchXML"/>
+							<action type="requeryModels" behavior="standard">
+								<models>
+									<model>Revisions</model>
+								</models>
+							</action>
+						</iftrueactions>
+					</action>
+					<action type="branch" whenfinished="continue" model="UiModel">
+						<formula>ISBLANK({{SearchXML}})</formula>
+						<iftrueactions>
+							<action type="deactivateCondition" model="Revisions" condition="Search"/>
+							<action type="requeryModels" behavior="standard">
+								<models>
+									<model>Revisions</model>
+								</models>
+							</action>
+						</iftrueactions>
+					</action>
+					<action type="unblockUI"/>
+				</actions>
+				<description/>
+				<inputs>
+					<input type="value" name="value"/>
+				</inputs>
+			</actionsequence>
+			<actionsequence id="058bc7f1-18bb-43ed-a336-3a6ad6e87dc6" label="copyXML" type="reusable">
+				<description/>
+				<actions>
+					<action type="custom" snippet="CopytoClipboard"/>
+					<action type="showToast" duration="2" position="bl" message="XML copied"/>
+				</actions>
+				<inputs>
+					<input type="value" name="ElementId"/>
+				</inputs>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+</skuid__page>
