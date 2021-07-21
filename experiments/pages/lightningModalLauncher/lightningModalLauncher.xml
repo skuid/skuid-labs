@@ -32,7 +32,7 @@
 			<groups>
 				<skuid__buttonGroup displayType="detached">
 					<buttons>
-						<skuid__button label="Launch Lightning Modal" uniqueId="civilianTrainingButton">
+						<skuid__button label="Launch Lightning Modal" uniqueId="launchLightningModalButton">
 							<actions>
 								<action type="emptyModelData">
 									<models>
@@ -71,18 +71,10 @@
 	<resources>
 		<labels/>
 		<javascript>
-			<jsitem location="inline" name="EventHotFix" cachelocation="false" url="">((skuid) =&gt; {
-    window.skuid.model = {};
-	window.skuid.component = {};
-    window.skuid.model.Model = Object;
-    window.skuid.component.Component = Object;
-    console.log(8);
-})(skuid)</jsitem>
 			<jsitem location="inlinesnippet" name="callFlow" cachelocation="false">const params = arguments[0],
     eventName = "showModalFlow",
     flowName = params.$Input.flowName,
     model = skuid.$M(params.$Input.model);
-console.log(this, skuid, params);
 
 // See if there is a global application event with this name
 let auraEvt = window.$A.get("e." + eventName),
@@ -116,7 +108,6 @@ if (paramsObject) {
 skuidAuraEvt.fire();</jsitem>
 			<jsitem location="inlinesnippet" name="showVariable" cachelocation="false">const params = arguments[0];
 const eventName = "showModalFlow";
-console.log(this, skuid, params);
 
 // See if there is a global application event with this name
 let auraEvt = window.$A.get("e." + eventName),
