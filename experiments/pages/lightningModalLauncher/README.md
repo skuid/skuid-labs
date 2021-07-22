@@ -1,24 +1,24 @@
 # Lightning Modal 
 
 ## Description:
-This page contains a skuid page with a button and a lightning component. The skuid page publishes an event that the lightning component listens for. When the event is published a lightning component is called and it launches a lightning modal where you could put just about anything from lightning.
+This page contains a Skuid page with a button and a Lightning component. The Skuid page publishes an event that the Lightning component listens for. When the event is published a Lightning component is called and it launches a Lightning modal where you could put just about anything from Lightning.
 
 ## Note:
-It's important to note if you are trying to modify or access data then you will have to that that the lightning modal takes in an object and not a string so you will have to modify `auraEvt` var in `lightningModalLauncher.xml`  
+It's important to note that in this example the Lightning component is listening for an object to be passed in, (rather than a string), which is why we are using JS to publish an event rather than the declarative "Publish Event" action. If you need to modify the parameters being passed into the modal/flow it will need to be modified in the Javascript and the Lightning component.   
 
 ## Usage:
 Connecting the Skuid page to the button is comprised of a few parts: 
-* lightningModalLauncher.xml
+* LightningModalLauncher.xml
     * callflow  **Action sequence**
         *  Triggers the callFlow JS snippet 
     *  callFlow  **JS snippet**
         *   Checks to see if the name exists 
-        *   Execute the lightning event 
+        *   Execute the Lightning event 
         *   Execute generic Skuid event     
 *   Lightning Component Bundles
     *   Contains a generic showScreenFlowModal and showScreenFlowModalController
 
 **Note:  **
-You will have to create a custom lightning component to save the **showScreenFlowModal** and **showScreenFlowModalController**.
+You will have to create a custom Lightning component to save the **showScreenFlowModal** and **showScreenFlowModalController**.
     
-The **showScreenFlowModal** component picks up the event published by skuid for that modal based on the event params in the **callFlow.js** snippet.  
+The **showScreenFlowModal** component picks up the event published by Skuid for that modal based on the event params in the **callFlow.js** snippet.  

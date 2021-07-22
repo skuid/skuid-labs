@@ -1,13 +1,5 @@
 <skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true" theme="Lightning">
 	<models>
-		<model id="Contact" limit="1" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Contact">
-			<fields>
-				<field id="Id"/>
-				<field id="Name"/>
-			</fields>
-			<conditions/>
-			<actions/>
-		</model>
 		<model id="FlowParams" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
 			<fields>
 				<field id="name" displaytype="TEXT" length="255"/>
@@ -17,22 +9,13 @@
 			<conditions/>
 			<actions/>
 		</model>
-		<model id="Flow" limit="20" query="true" datasource="salesforce" sobject="FlowInterview">
-			<fields>
-				<field id="Name"/>
-			</fields>
-			<conditions>
-				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Name" operator="=" clientorserver="server" state="filterableon" inactive="false" name="Name"/>
-			</conditions>
-			<actions/>
-		</model>
 	</models>
 	<components>
-		<skuid__buttonSet uniqueid="sk-1c1D-18257" position="center" model="Contact">
+		<skuid__buttonSet uniqueid="sk-1c1D-18257" position="center" model="FlowParams">
 			<groups>
 				<skuid__buttonGroup displayType="detached">
 					<buttons>
-						<skuid__button label="Launch Lightning Modal" uniqueId="civilianTrainingButton">
+						<skuid__button label="Launch Lightning Modal" uniqueId="launchLightningModalButton">
 							<actions>
 								<action type="action-sequence" action-sequence-id="29f52636-5af5-49b1-8550-54170e17e336">
 									<inputs>
@@ -63,7 +46,6 @@
     eventName = "showModalFlow",
     flowName = params.$Input.flowName,
     model = skuid.$M(params.$Input.model);
-console.log(this, skuid, params);
 
 // See if there is a global application event with this name
 let auraEvt = window.$A.get("e." + eventName),

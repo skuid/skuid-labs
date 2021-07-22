@@ -12,9 +12,6 @@
         if (event.getParam('status') === 'FINISHED') {
             component.set("v.showModal", false);
         }
-//        if (event.getParam('currentStage') === 'Case_Created') {
-//            component.set("v.showCancel", false);
-//        }
     },
     handleClose: function (component, event, helper) {
         component.set("v.showModal", false);
