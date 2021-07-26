@@ -16,7 +16,9 @@
                     </aura:if>
                 </header>
                 <div class="slds-modal__content">
-                    <lightning:flow aura:id="flow" onstatuschange="{!c.handleFlowStatusChange}" />
+                    <br/>
+                    This is a Lightning Modal!  
+                    <br/>
                 </div>
                 <footer class="slds-modal__footer">
                     <div class="slds-align_absolute-center">
