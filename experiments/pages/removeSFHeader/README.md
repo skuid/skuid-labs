@@ -12,7 +12,7 @@ Create a new [VF page](https://developer.salesforce.com/docs/atlas.en-us.pages.m
  
 **Note: Make sure the users can access the page have the necessary permissions to view the "Skuid Page" as well as the VF page once deployed**
 
-# Lightning Setup
+### Lightning Setup
 In your lightning developer console, create a new component(ex: sfHeaderRemoval), and under Component Configuration, check the appropriate boxes you would like to make a bundle with(i.e., Lightning pages, lightning tab, etc.). 
 
 First, copy and paste the code in: `headerRemoval.cmp` into your newly created component. 
