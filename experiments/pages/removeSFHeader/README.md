@@ -1,7 +1,7 @@
 # Remove SF Header  
 
 ## Description:
-This folder contains the custom lightning component, controller, and VF sample code necessary to redirect your lightning tab to a VF page with no SalesForce header. 
+This folder contains the custom lightning component, controller, and Visualforce (VF) sample code necessary to redirect your Lightning tab to a VF page with no Salesforce header. 
 
 
 
