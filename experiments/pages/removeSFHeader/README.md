@@ -8,7 +8,9 @@ This folder contains the custom lightning component, controller, and Visualforce
 ## Setup Instructions
 
 ### Visualforce Setup
-Create a new [VF page](https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_quick_start_hello_world.html) and copy the snippet in vForceSkuidPage and add the name of the Skuid page in the SkuidPage tag. 
+Create a new [VF page](https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_quick_start_hello_world.html) and copy the code from the vForceSkuidPage file, adding the name of your Skuid page in the ``page`` attribute of the ``skuid:page`` component.
+
+For more information about this Visualforce component, [see the skuid:page Skuid docs](https://docs.skuid.com/latest/en/skuid/deploy/salesforce/visualforce/skuid-page-visualforce-component.html).
  
 **Note: Make sure the users can access the page have the necessary permissions to view the "Skuid Page" as well as the VF page once deployed**
 
