@@ -12,7 +12,7 @@ Create a new [VF page](https://developer.salesforce.com/docs/atlas.en-us.pages.m
 
 For more information about this Visualforce component, [see the skuid:page Skuid docs](https://docs.skuid.com/latest/en/skuid/deploy/salesforce/visualforce/skuid-page-visualforce-component.html).
  
-**Note**: Make sure end users have the necessary permissions to view your Skuid page **and** the VF page once deployed.
+**Note**: Make sure end users have the necessary permissions to view your Skuid page **and** the VF page once deployed. For more information, **see Are the Skuid pages public?** section under [troubleshooting](https://docs.skuid.com/latest/v2/en/skuid/deploy/salesforce/user-access/#troubleshooting) 
 
 ### Lightning Setup
 In the [Salesforce Developer Console](https://help.salesforce.com/s/articleView?id=sf.code_dev_console_opening.htm&type=5), create a new Lightning component (for example: sfHeaderRemoval)
