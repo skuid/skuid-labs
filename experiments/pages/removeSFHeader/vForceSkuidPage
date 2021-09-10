@@ -1,0 +1,5 @@
+<apex:page readonly="true" showheader="false" doctype="html-5.0">
+
+ <skuid:page page="name_of_your_skuid_page"/>
+ 
+</apex:page>
