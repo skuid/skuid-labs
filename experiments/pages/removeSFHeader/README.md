@@ -21,11 +21,12 @@ Then, under Component Configuration, check the appropriate boxes you would like 
 
 With the component editor open, copy and paste the code in: `headerRemoval.cmp` into your newly created component. 
 
-Next, copy the code in `headerRemovalController.js` into the controller and replace the URL with the VF page URL
+Next, copy the code in `headerRemovalController.js` into the controller and replace the URL with the VF page URL.
+
+Finally, save the component.
  
-## Usage:
-In the custom Lightning tab
-* Add the custom component on the top of the page and save. 
+## Usage
+In the custom Lightning tab, add the custom component on the top of the page and save. 
 
 When you click on the new tab, it will redirect you to the VF page without the SF header. 
 
