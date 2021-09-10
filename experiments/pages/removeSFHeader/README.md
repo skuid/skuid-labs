@@ -19,7 +19,7 @@ In the [Salesforce Developer Console](https://help.salesforce.com/s/articleView?
 
 Then, under Component Configuration, check the appropriate boxes you would like to make a bundle with (i.e., Lightning pages, lightning tab, etc.) and click Submit. 
 
-First, copy and paste the code in: `headerRemoval.cmp` into your newly created component. 
+With the component editor open, copy and paste the code in: `headerRemoval.cmp` into your newly created component. 
 
 Next, copy the code in `headerRemovalController.js` into the controller and replace the URL with the VF page URL
  
