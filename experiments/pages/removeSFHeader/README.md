@@ -15,7 +15,9 @@ For more information about this Visualforce component, [see the skuid:page Skuid
 **Note**: Make sure end users have the necessary permissions to view your Skuid page **and** the VF page once deployed.
 
 ### Lightning Setup
-In your lightning developer console, create a new component(ex: sfHeaderRemoval), and under Component Configuration, check the appropriate boxes you would like to make a bundle with(i.e., Lightning pages, lightning tab, etc.). 
+In the [Salesforce Developer Console](https://help.salesforce.com/s/articleView?id=sf.code_dev_console_opening.htm&type=5), create a new Lightning component (for example: sfHeaderRemoval)
+
+Then, under Component Configuration, check the appropriate boxes you would like to make a bundle with (i.e., Lightning pages, lightning tab, etc.) and click Submit. 
 
 First, copy and paste the code in: `headerRemoval.cmp` into your newly created component. 
 
