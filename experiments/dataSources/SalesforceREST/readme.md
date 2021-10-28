@@ -6,9 +6,9 @@ Don't worry! Salesforce provides a rich array of APIs that provide access to thi
 Examples of this data include: 
 
 * Access to [Data.com search](https://developer.salesforce.com/docs/atlas.en-us.datadotcom_api_dev_guide.meta/datadotcom_api_dev_guide/datadotcom_api_dev_guide_intro.htm).
-* Access to the [interface API](https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi/ui_api_get_started.htm)-  like creating a model of field picklist values. 
+* Access to the [interface API](https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi/ui_api_get_started.htm)-  like creating a model of field picklist values or retrieving the current user's Favorite records. 
 * Access to many [setup objects](https://developer.salesforce.com/docs/atlas.en-us.220.0.object_reference.meta/object_reference/sforce_api_objects_concepts.htm) not exposed as objects to Skuid.  
-* Access to [Salesforce Report metadata and data](https://developer.salesforce.com/docs/atlas.en-us.api_analytics.meta/api_analytics/sforce_analytics_rest_api_getreportrundata.htm).
+
 
 ## Exploring available data - use Postman collection
 
@@ -61,10 +61,6 @@ Note: You will need to replace `<latest API version>` in the URL examples below 
 * Query method with this URL:   ``/services/data/<latest API version>/sobjects/Contact/describe``
 * Use "Path to contents" to access folders within this response. 
     
-#### Execute a Salesforce Report and retrieve its results:      
-
-* Query method with this URL:   ``/services/data/<latest API version>/analytics/reports/<report ID>``
-* Use "Path to contents" to access folders within this response. 
     
 #### Add a contact
 
@@ -73,7 +69,12 @@ Note: You will need to replace `<latest API version>` in the URL examples below 
 
 ####  Query contacts   
 * Query method with this URL:  ``/services/data/<latest API version>/query/?q=SELECT+id,FullName,Email+from+Contact``
-* The query string accepts your full SOQL query.     
+* The query string accepts your full SOQL query.    
+
+#### Retrieve current user's Favorite records
+* Query method with this URL: `/services/data/<latest API version>/ui-api/favorites`
+* Note: Make sure you have at least one record marked as favorite before you set this up - or no data will be available for Skuid to interrogate field level metadata. 
+* Also:  This data is not available as an sObject.  There is no other way to retrieve favorites data in Skuid. 
 
 ## Deploy this data source in Lightning Experience
 
