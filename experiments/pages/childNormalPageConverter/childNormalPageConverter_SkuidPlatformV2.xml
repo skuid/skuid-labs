@@ -53,7 +53,7 @@
 			</conditions>
 			<actions uniqueId="sk-3dKp-1485"/>
 			<methods uniqueId="sk-3dKp-1467">
-				<method type="query" verb="GET" uniqueId="sk-3dKp-1468" payloadcontenttype="JSON" limitmethod="simple" simplerecordslimitparameter="limit" limit="20" paginationmethod="simple" offsetparameter="offset" endpoint="/objects/page?{{#search}}&amp;search={{.}}{{/search}}&amp;where={&quot;is_master_page&quot;:&quot;true&quot;{{#apiVersion}},&quot;api_version&quot;:&quot;{{apiVersion}}&quot;{{/apiVersion}}}"/>
+				<method type="query" verb="GET" uniqueId="sk-3dKp-1468" payloadcontenttype="JSON" limitmethod="simple" simplerecordslimitparameter="limit" limit="20" paginationmethod="simple" offsetparameter="offset" endpoint="/objects/page?where={&quot;is_master_page&quot;:&quot;true&quot;{{#apiVersion}},&quot;api_version&quot;:&quot;{{apiVersion}}&quot;{{/apiVersion}}}{{#search}}&amp;search={{.}}{{/search}}"/>
 			</methods>
 		</model>
 	</models>
@@ -285,7 +285,7 @@ if (pageRegionAreas.length === 0) {
 						<skuid__modal title="Master page" width="90%">
 							<components>
 								<skuid__text uniqueid="sk-3Us7-5276" contents="Which master page would you like to use?"/>
-								<skuid__table uniqueid="sk-3TiA-1666" allowColumnOrdering="true" resetPaginationOnQuery="false" showListHeader="true" showListFooter="true" mode="read" model="masterPages" pageSize="10" showSaveCancel="false" showErrorsInline="true" rowHeightStrategy="fit" allowColumnHiding="true" allowSortingByColumn="false">
+								<skuid__table uniqueid="sk-3TiA-1666" allowColumnOrdering="false" resetPaginationOnQuery="false" showListHeader="true" showListFooter="true" mode="read" model="masterPages" pageSize="10" showSaveCancel="false" showErrorsInline="true" rowHeightStrategy="fit" allowColumnHiding="false" allowSortingByColumn="false">
 									<fields>
 										<field uniqueid="fi-3TiC-1687" hideable="trueShowByDefault" id="name"/>
 									</fields>
@@ -317,7 +317,7 @@ if (pageRegionAreas.length === 0) {
 										</action>
 									</rowActions>
 									<sorting/>
-									<filtering enableSearch="true" searchMethod="server"/>
+									<filtering enableSearch="true" searchMethod="server" emptySearchBehavior="query" searchConditionName="search"/>
 									<exportProperties useTableColumns="true" enableExportOptionOnTable="false"/>
 								</skuid__table>
 							</components>
