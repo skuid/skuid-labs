@@ -1,24 +1,46 @@
 <skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true">
 	<background type="none"/>
 	<models>
+		<model id="masterPagesLookup" query="true" processonclient="true" type="readwrite" datasource="SkuidLocal" label="Page" labelplural="Pages" namefield="name" uniqueId="sk-3dKp-1466">
+			<fields uniqueId="sk-3dKp-1472">
+				<field id="id" label="Id" readonly="true" displaytype="TEXT" uniqueId="sk-3dKp-1474"/>
+				<field id="name" label="Name" displaytype="TEXT" length="255" required="true" uniqueId="sk-3dKp-1475"/>
+			</fields>
+			<idfields>
+				<field>id</field>
+			</idfields>
+			<conditions logic="" uniqueId="sk-3dKp-1484">
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="is_master_page" state="filterableoff" inactive="true" name="is_master_page"/>
+			</conditions>
+			<actions uniqueId="sk-3dKp-1485"/>
+			<methods uniqueId="sk-3dKp-1467">
+				<method type="query" verb="GET" uniqueId="sk-3dKp-1468" payloadcontenttype="JSON" limitmethod="simple" simplerecordslimitparameter="limit" limit="100" paginationmethod="simple" offsetparameter="offset" endpoint="/objects/page?where={&quot;is_master_page&quot;:&quot;true&quot;}"/>
+			</methods>
+		</model>
 		<model id="pages" query="true" processonclient="true" type="readwrite" datasource="SkuidLocal" label="Page" labelplural="Pages" namefield="name" uniqueId="sk-3dKp-1466">
 			<fields uniqueId="sk-3dKp-1472">
 				<field id="api_version" label="Skuid API Version" displaytype="TEXT" uniqueId="sk-3dKp-1473"/>
 				<field id="id" label="Id" readonly="true" displaytype="TEXT" uniqueId="sk-3dKp-1474"/>
 				<field id="name" label="Name" displaytype="TEXT" length="255" required="true" uniqueId="sk-3dKp-1475"/>
 				<field id="is_master_page" label="Is Master Page" displaytype="BOOLEAN" uniqueId="sk-3dKp-1476"/>
-				<field id="master_page_id" label="Master Page" displaytype="TEXT" accessible="true" filterable="true" digits="" uniqueId="sk-3dKp-1480"/>
+				<field id="master_page_id" label="Master Page" displaytype="TEXT" accessible="true" filterable="true" digits="" uniqueId="sk-3dKp-1480" uionly="false" ogdisplaytype="TEXT" datasource="SkuidLocal" keyfield="master_page_id">
+					<batchfields/>
+				</field>
 				<field id="content" label="Content" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="master_page_name" displaytype="FORMULA" uionly="true" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>MODEL_LOOKUP('masterPagesLookup', 'name', 'id', {{master_page_id}})</formula>
+				</field>
 			</fields>
 			<idfields>
 				<field>id</field>
 			</idfields>
 			<conditions logic="" uniqueId="sk-3dKp-1484">
 				<condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="search" state="filterableoff" inactive="true" name="search"/>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="apiVersion" state="filterableoff" inactive="true" name="apiVersion"/>
 			</conditions>
 			<actions uniqueId="sk-3dKp-1485"/>
 			<methods uniqueId="sk-3dKp-1467">
-				<method type="query" verb="GET" uniqueId="sk-3dKp-1468" payloadcontenttype="JSON" limitmethod="simple" simplerecordslimitparameter="limit" limit="20" paginationmethod="simple" offsetparameter="offset" endpoint="/objects/page?order=-updated_at{{#search}}&amp;search={{.}}{{/search}}&amp;where={&quot;is_master_page&quot;:&quot;false&quot;}"/>
+				<method type="query" verb="GET" uniqueId="sk-3dKp-1468" payloadcontenttype="JSON" limitmethod="simple" simplerecordslimitparameter="limit" limit="20" paginationmethod="simple" offsetparameter="offset" endpoint="/objects/page?order=-updated_at{{#search}}&amp;search={{.}}{{/search}}&amp;where={&quot;is_master_page&quot;:&quot;false&quot;{{#apiVersion}},&quot;api_version&quot;:&quot;{{apiVersion}}&quot;{{/apiVersion}}}"/>
 				<method type="insert" verb="POST" successif="requestsucceeds" sendchanges="asjsoninbody" insertresponse="recordinbody" endpoint="/objects/page" uniqueId="sk-3dKp-1469"/>
 				<method type="update" verb="PATCH" successif="requestsucceeds" sendchanges="asjsoninbody" endpoint="/objects/page/{{id}}" uniqueId="sk-3dKp-1470"/>
 				<method type="delete" verb="DELETE" endpoint="/objects/page/{{id}}" successif="requestsucceeds" uniqueId="sk-3dKp-1471"/>
@@ -58,29 +80,28 @@
 		</model>
 	</models>
 	<components>
-		<skuid__table uniqueid="sk-3PxA-602" allowColumnOrdering="false" resetPaginationOnQuery="false" showListHeader="true" showListFooter="true" mode="read" model="pages" pageSize="10" showSaveCancel="true" showErrorsInline="true" rowHeightStrategy="fit" allowColumnHiding="false" allowSortingByColumn="false">
+		<skuid__table uniqueid="sk-3PxA-602" allowColumnOrdering="false" resetPaginationOnQuery="false" showListHeader="true" showListFooter="true" mode="readonly" model="pages" pageSize="10" showSaveCancel="false" showErrorsInline="true" rowHeightStrategy="fit" allowColumnHiding="false" allowSortingByColumn="false">
 			<fields>
-				<field uniqueid="fi-3PxA-605" id="name" hideable="trueShowByDefault"/>
-				<field uniqueid="fi-3PxA-603" id="api_version"/>
-				<field uniqueid="fi-3PxA-607" id="master_page_id" hideable="trueShowByDefault">
-					<renderConditions logictype="and" onhidedatabehavior="keep"/>
-					<enableConditions/>
+				<field type="COMBO" label="Page Name" template="{{name}}" redirectType="customurl" window="blank" rootUrl="/ui/page/compose/{{id}}" uniqueid="fi-2WGq-27317">
+					<interactions/>
 				</field>
+				<field uniqueid="fi-3PxA-603" id="api_version"/>
+				<field type="COMBO" label="Master Page Name" uniqueid="fi-2WHB-30204" redirectType="customurl" window="blank" rootUrl="/ui/page/compose/{{master_page_id}}" template="{{master_page_name}}"/>
 			</fields>
-			<filters/>
+			<filters>
+				<skuid__filter uniqueId="sk-2WFs-14039" type="select" conditionSource="manual" labelMode="manual" label="API Version" conditionName="apiVersion" createFilterOffOption="true" filterOffOptionLabel="All" rememberInPersonalization="false">
+					<sources>
+						<source type="manual" effectsbehavior="justdefault">
+							<options>
+								<option label="v1" type="simple" value="v1"/>
+								<option label="v2" type="simple" value="v2"/>
+							</options>
+						</source>
+					</sources>
+				</skuid__filter>
+			</filters>
 			<actions/>
-			<massActions>
-				<action type="multi" label="{{$Label.Mass_Update_Selected_Rows}}" icon="sk-webicon-ink:edit-form">
-					<actions>
-						<action type="massUpdate"/>
-					</actions>
-				</action>
-				<action type="multi" label="{{$Label.Toggle_Selected_Rows_for_Deletion}}" icon="sk-webicon-ink:circle-close-outline">
-					<actions>
-						<action type="markRowsForDeletion" model="pages" affectedrows="context"/>
-					</actions>
-				</action>
-			</massActions>
+			<massActions></massActions>
 			<rowActions>
 				<action type="multi" label="Convert to normal page" icon="sk-webicon-font-awesome:chain-broken">
 					<actions>
@@ -287,7 +308,9 @@ if (pageRegionAreas.length === 0) {
 								<skuid__text uniqueid="sk-3Us7-5276" contents="Which master page would you like to use?"/>
 								<skuid__table uniqueid="sk-3TiA-1666" allowColumnOrdering="false" resetPaginationOnQuery="false" showListHeader="true" showListFooter="true" mode="read" model="masterPages" pageSize="10" showSaveCancel="false" showErrorsInline="true" rowHeightStrategy="fit" allowColumnHiding="false" allowSortingByColumn="false">
 									<fields>
-										<field uniqueid="fi-3TiC-1687" hideable="trueShowByDefault" id="name"/>
+										<field type="COMBO" label="Master Page Name" uniqueid="fi-2WHP-36264" template="{{name}}" redirectType="customurl" window="blank" rootUrl="/ui/page/compose/{{id}}">
+											<interactions/>
+										</field>
 									</fields>
 									<actions/>
 									<massActions/>

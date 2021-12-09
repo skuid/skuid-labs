@@ -22,7 +22,10 @@ To install, either copy and paste the XML for your platform of choice into your 
 - When converting from a _child page_ to a _normal page_, all components are placed into the page based on the order they appear. If you use page regions as grids, you'll need to recreate those.
 - When converting from a  _normal page_ to a _child page_, all components are placed into the **the first page region available**.
 - If you reference a master page's resources in a child page and convert that child page to a normal page, it'll mess up.
-
+- If you make edits to the Skuid Platform page, you will be prompted to enter sample metadata for the merge variables used in the model conditions. The following sample values will work:
+    - apiVersion:v2
+    - search: page
+    - .: test
 ## Future improvement ideas
 
 - Allow some form of import for reference master pages

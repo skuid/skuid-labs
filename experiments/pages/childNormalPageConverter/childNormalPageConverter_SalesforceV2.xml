@@ -10,13 +10,14 @@
 				<field id="skuid__IsMaster__c"/>
 				<field id="Name"/>
 				<field id="LastModifiedDate"/>
+				<field id="skuid__MasterPage__r.Id"/>
 			</fields>
 			<idfields>
 				<field>id</field>
 			</idfields>
 			<conditions logic="" uniqueId="sk-3dKp-1484">
 				<condition type="blank" value="null" field="skuid__MasterPage__c" fieldtargetobjects="skuid__Page__c" operator="=" enclosevalueinquotes="false" state="filterableoff" inactive="true" name="skuid__MasterPage__c"/>
-				<condition type="fieldvalue" value="v2" enclosevalueinquotes="true" field="skuid__API_Version__c" clientorserver="server" state="off" inactive="true"/>
+				<condition type="fieldvalue" enclosevalueinquotes="true" field="skuid__API_Version__c" clientorserver="server" state="filterableoff" inactive="true" name="skuid__API_Version__c"/>
 				<condition type="fieldvalue" value="false" enclosevalueinquotes="false" field="skuid__IsMaster__c"/>
 			</conditions>
 			<actions uniqueId="sk-3dKp-1485"/>
@@ -100,27 +101,26 @@
 		</model>
 	</models>
 	<components>
-		<skuid__table uniqueid="sk-NbK-453" allowColumnOrdering="false" resetPaginationOnQuery="false" showListHeader="true" showListFooter="true" mode="read" model="pages" pageSize="10" showSaveCancel="true" showErrorsInline="true" rowHeightStrategy="fit" allowColumnHiding="false" allowSortingByColumn="false">
+		<skuid__table uniqueid="sk-NbK-453" allowColumnOrdering="false" resetPaginationOnQuery="false" showListHeader="true" showListFooter="true" mode="readonly" model="pages" pageSize="10" showSaveCancel="false" showErrorsInline="true" rowHeightStrategy="fit" allowColumnHiding="false" allowSortingByColumn="false">
 			<fields>
-				<field uniqueid="fi-Neo-1934" hideable="trueShowByDefault" id="Name" redirectType="customurl" rootUrl="/apex/skuid__PageBuilder?id={{Id}}" window="self"/>
+				<field uniqueid="fi-Neo-1934" hideable="trueShowByDefault" id="Name" redirectType="customurl" rootUrl="/apex/skuid__PageBuilder?id={{Id}}" window="blank"/>
 				<field uniqueid="fi-NbK-454" id="skuid__API_Version__c" hideable="trueShowByDefault"/>
-				<field uniqueid="fi-NbK-462" id="Id"/>
-				<field uniqueid="fi-NbK-455" id="skuid__MasterPage__c" pageSize="5" tokenizeSearch="false" displayTemplate="{{Name}}"/>
+				<field uniqueid="fi-NbK-455" id="skuid__MasterPage__c" pageSize="5" tokenizeSearch="false" displayTemplate="{{Name}}" redirectType="customurl" window="blank" rootUrl="/apex/skuid__PageBuilder?id={{skuid__MasterPage__r.Id}}"/>
 			</fields>
-			<filters/>
+			<filters>
+				<skuid__filter uniqueId="sk-2WJv-17891" type="select" conditionSource="manual" filterMethod="server" labelMode="manual" label="API Version" conditionName="skuid__API_Version__c" createFilterOffOption="true" filterOffOptionLabel="All Versions">
+					<sources>
+						<source type="manual" effectsbehavior="justdefault">
+							<options>
+								<option label="v1" type="simple" value="v1"/>
+								<option label="v2" type="simple" value="v2"/>
+							</options>
+						</source>
+					</sources>
+				</skuid__filter>
+			</filters>
 			<actions/>
-			<massActions>
-				<action type="multi" label="{{$Label.Mass_Update_Selected_Rows}}" icon="sk-webicon-ink:edit-form">
-					<actions>
-						<action type="massUpdate"/>
-					</actions>
-				</action>
-				<action type="multi" label="{{$Label.Toggle_Selected_Rows_for_Deletion}}" icon="sk-webicon-ink:circle-close-outline">
-					<actions>
-						<action type="markRowsForDeletion" model="pages" affectedrows="context"/>
-					</actions>
-				</action>
-			</massActions>
+			<massActions/>
 			<rowActions>
 				<action type="multi" label="Convert to normal page" icon="sk-webicon-font-awesome:chain-broken">
 					<renderConditions logictype="and">
@@ -353,10 +353,10 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
 						<skuid__modal title="Master page" width="90%">
 							<components>
 								<skuid__text uniqueid="sk-3Us7-5276" contents="Which master page would you like to use?"/>
-								<skuid__table uniqueid="select-master-page" allowColumnOrdering="true" resetPaginationOnQuery="false" showListHeader="true" showListFooter="true" mode="read" model="masterPages" pageSize="10" showSaveCancel="false" showErrorsInline="true" rowHeightStrategy="fit" allowColumnHiding="true" allowSortingByColumn="false">
+								<skuid__table uniqueid="select-master-page" allowColumnOrdering="true" resetPaginationOnQuery="false" showListHeader="true" showListFooter="true" mode="readonly" model="masterPages" pageSize="10" showSaveCancel="false" showErrorsInline="true" rowHeightStrategy="fit" allowColumnHiding="true" allowSortingByColumn="false">
 									<fields>
-										<field uniqueid="fi-Nwy-1196" hideable="trueShowByDefault" id="Name"/>
-										<field id="skuid__API_Version__c"/>
+										<field uniqueid="fi-Nwy-1196" hideable="trueShowByDefault" id="Name" redirectType="customurl" window="blank" rootUrl="/apex/skuid__PageBuilder?id={{Id}}"/>
+										<field id="skuid__API_Version__c" uniqueid="fi-2WKC-25568"/>
 									</fields>
 									<actions/>
 									<massActions/>
@@ -406,6 +406,9 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
 										<searchFields/>
 									</filtering>
 									<exportProperties useTableColumns="true" enableExportOptionOnTable="false"/>
+									<styles>
+										<spacing/>
+									</styles>
 								</skuid__table>
 							</components>
 						</skuid__modal>
