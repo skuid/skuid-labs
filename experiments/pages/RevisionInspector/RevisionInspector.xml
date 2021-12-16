@@ -210,7 +210,7 @@
 							<components>
 								<skuid__filterSet model="Revisions" uniqueid="sk-3Hh7-11851" instantFilters="true" instantSearch="false" resetButtonBehavior="hide">
 									<filters>
-										<skuid__filter uniqueId="sk-3HhG-14416" type="toggle" conditionSource="manual" filterMethod="server" labelMode="manual" label="Hide AutoSaves">
+										<skuid__filter uniqueId="sk-3HhG-14416" type="toggle" conditionSource="manual" filterMethod="server" labelMode="manual" label="Hide Auto-saves">
 											<effects>
 												<effect action="activate" value="" condition="skuid__IsAutoSave__c"/>
 											</effects>
