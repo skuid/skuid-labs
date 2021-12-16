@@ -33,6 +33,7 @@
 				<field id="SearchXML" displaytype="TEXT" length="255" label="Search XML"/>
 				<field id="Afull" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
 				<field id="Bfull" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="XMLSearched?" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT"/>
 			</fields>
 			<conditions/>
 			<actions/>
@@ -55,7 +56,7 @@
 				<field id="skuid__Description__c"/>
 			</fields>
 			<conditions>
-				<condition type="fieldvalue" value="" field="Id" fieldtargetobjects="skuid__Page__c" clientorserver="server" state="filterableon" inactive="false" name="skuid__Page__c" operator="=" mergefield="Id" novaluebehavior="noquery" enclosevalueinquotes="true"/>
+				<condition type="fieldvalue" value="" field="Id" fieldtargetobjects="skuid__Page__c" clientorserver="server" state="filterableoff" inactive="true" name="skuid__Page__c" operator="=" mergefield="Id" novaluebehavior="noquery" enclosevalueinquotes="true"/>
 			</conditions>
 			<actions/>
 		</model>
@@ -77,7 +78,17 @@
 				<field id="skuid__Description__c"/>
 			</fields>
 			<conditions>
-				<condition type="fieldvalue" value="" field="Id" fieldtargetobjects="skuid__Page__c" clientorserver="server" state="filterableon" inactive="false" name="skuid__Page__c" operator="=" mergefield="Id" novaluebehavior="noquery" enclosevalueinquotes="true"/>
+				<condition type="fieldvalue" value="" field="Id" fieldtargetobjects="skuid__Page__c" clientorserver="server" state="filterableoff" inactive="true" name="skuid__Page__c" operator="=" mergefield="Id" novaluebehavior="noquery" enclosevalueinquotes="true"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="Page" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="skuid__Page__c">
+			<fields>
+				<field id="Name"/>
+				<field id="Id"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Id" clientorserver="server" state="filterableoff" inactive="true" name="Id"/>
 			</conditions>
 			<actions/>
 		</model>
@@ -85,23 +96,35 @@
 	<components>
 		<skuid__wrapper uniqueid="sk-3HgL-5758">
 			<components>
-				<skuid__grid uniqueid="sk-3Hhf-18748" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="5">
+				<skuid__grid uniqueid="sk-3Hhf-18748" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="2">
 					<divisions>
-						<division minWidth="200px" ratio="1" alignSelf="center">
+						<division ratio="2" alignSelf="center" minWidth="200px">
 							<components>
-								<skuid__header model="Revisions" title="{{skuid__Page__c}}" uniqueid="sk-3HgQ-6609" subtitle=" Viewing revisions for">
+								<skuid__wrapper uniqueid="sk-33o1-76089">
+									<components>
+										<skuid__text contents="&lt;p&gt;&lt;span style=&quot;font-size:18px;&quot;&gt;{{^Model.data.length}}0{{/Model.data.length}}{{#Model.data.length}}{{Model.data.length}}{{/Model.data.length}} revisions found {{#$Model.Page.data.length}}for page {{/$Model.Page.data.length}}&lt;/span&gt;&lt;/p&gt;&#10;" uniqueid="sk-33mZ-56912" model="Revisions">
+											<renderConditions logictype="and">
+												<renderCondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="Revisions" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="data.length" operator="!=" value="1"/>
+											</renderConditions>
+											<styleVariantConditions/>
+										</skuid__text>
+										<skuid__text contents="&lt;p&gt;&lt;span style=&quot;font-size:18px;&quot;&gt;1 revision&amp;nbsp;found&amp;nbsp;{{#$Model.Page.data.length}}for page {{/$Model.Page.data.length}}&lt;/span&gt;&lt;br /&gt;&#10;&amp;nbsp;&lt;/p&gt;&#10;" uniqueid="sk-33no-69383" model="Revisions">
+											<renderConditions logictype="and">
+												<renderCondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="Revisions" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="data.length" operator="=" value="1"/>
+											</renderConditions>
+											<styleVariantConditions/>
+										</skuid__text>
+										<skuid__text contents="&lt;span style=&quot;font-size:20px;&quot;&gt;{{Name}}&lt;/span&gt;" uniqueid="sk-33sN-113663" model="Page"/>
+									</components>
 									<styles>
-										<spacing bottom="3"/>
+										<spacing/>
 									</styles>
-									<renderConditions logictype="and"/>
-									<styleVariantConditions/>
-								</skuid__header>
+									<background/>
+								</skuid__wrapper>
 							</components>
-							<renderConditions logictype="and">
-								<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
-							</renderConditions>
+							<renderConditions logictype="and"/>
 						</division>
-						<division alignSelf="center" minWidth="200px" ratio="1">
+						<division alignSelf="flex-start" minWidth="200px" ratio="2">
 							<components>
 								<skuid__search uniqueid="sk-3Hct-10577" tokenizeSearch="false" placeholder="Select a page to view its revision history">
 									<objects>
@@ -116,19 +139,25 @@
 										<action label="Go">
 											<actions>
 												<action type="showToast" duration="2" position="bl" message="Fetching revisions"/>
-												<action type="setCondition" model="Revisions" valuesource="fieldvalue" condition="skuid__Page__c" value="{{Id}}"/>
-												<action type="requeryModel" model="Revisions" behavior="standard"/>
+												<action type="updateCondition" model="Page" behavior="set" condition="Id" valuesource="fieldvalue" value="{{Id}}"/>
+												<action type="updateCondition" model="Revisions" behavior="set" condition="skuid__Page__c" valuesource="fieldvalue" value="{{Id}}"/>
+												<action type="requeryModels" behavior="standard">
+													<models>
+														<model>Revisions</model>
+														<model>Page</model>
+													</models>
+												</action>
 											</actions>
 										</action>
 									</resultActions>
 									<styles>
-										<spacing bottom="3"/>
+										<spacing top="2" bottom="3"/>
 									</styles>
 								</skuid__search>
 							</components>
 							<renderConditions logictype="and"/>
 						</division>
-						<division alignSelf="auto" minWidth="10px" ratio="1">
+						<division alignSelf="auto" ratio="1">
 							<components/>
 						</division>
 					</divisions>
@@ -160,6 +189,11 @@
 																	<skuid__button uniqueId="sk-3cPc-46631" icon="sk-webicon-ink:fallback" label="Search">
 																		<actions>
 																			<action type="action-sequence" action-sequence-id="0ffbcce5-091a-4712-85b1-812e08088d1e"/>
+																			<action type="updateRow" fieldmodel="UiModel" affectedrows="context">
+																				<updates>
+																					<update valuesource="fieldvalue" field="XMLSearched?" enclosevalueinquotes="false" value="true"/>
+																				</updates>
+																			</action>
 																		</actions>
 																		<renderConditions logictype="and"/>
 																		<enableConditions/>
@@ -173,7 +207,9 @@
 											</sections>
 										</column>
 									</columns>
-									<renderConditions logictype="and"/>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+									</renderConditions>
 									<styleVariantConditions/>
 									<styles>
 										<spacing/>
@@ -181,6 +217,38 @@
 								</skuid__form>
 							</components>
 							<renderConditions logictype="and"/>
+						</division>
+						<division alignSelf="center" minWidth="100px" ratio="1">
+							<components>
+								<skuid__buttonSet model="UiModel" uniqueid="sk-33S0-62335" position="left">
+									<groups>
+										<skuid__buttonGroup uniqueId="sk-33S0-62333" displayType="detached">
+											<buttons>
+												<skuid__button label="Reset" uniqueId="sk-33S0-62334" icon="sk-webicon-ink:refresh">
+													<actions>
+														<action type="deactivateCondition" model="Revisions" condition="Search"/>
+														<action type="requeryModels" behavior="standard">
+															<models>
+																<model>Revisions</model>
+															</models>
+														</action>
+														<action type="updateRow" fieldmodel="UiModel" affectedrows="context">
+															<updates>
+																<update valuesource="fieldvalue" field="XMLSearched?" enclosevalueinquotes="false" value="false"/>
+															</updates>
+														</action>
+													</actions>
+												</skuid__button>
+											</buttons>
+										</skuid__buttonGroup>
+									</groups>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
+								</skuid__buttonSet>
+							</components>
+							<renderConditions logictype="and">
+								<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiModel" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="XMLSearched?" value="true"/>
+							</renderConditions>
 						</division>
 						<division minWidth="85px" ratio="1" alignSelf="center">
 							<components>
@@ -226,14 +294,13 @@
 								</skuid__filterSet>
 							</components>
 						</division>
-						<division alignSelf="auto" minWidth="100px" ratio="6">
-							<components/>
-						</division>
 					</divisions>
 					<background/>
 					<styles>
 						<spacing bottom="5"/>
 					</styles>
+					<renderConditions logictype="and"/>
+					<styleVariantConditions/>
 				</skuid__grid>
 			</components>
 			<styles>
@@ -305,11 +372,6 @@
 																				<renderConditions logictype="and"/>
 																				<enableConditions logictype="and"/>
 																				<styleVariantConditions/>
-																			</skuid__button>
-																			<skuid__button label="Diffchecker" uniqueId="sk-3wbm-58551" icon="sk-webicon-ink:ext-link">
-																				<actions>
-																					<action type="redirect" window="blank" url="https://www.diffchecker.com"/>
-																				</actions>
 																			</skuid__button>
 																			<skuid__button label="Close and Clear Panels" uniqueId="sk-3wU7-65110" icon="sk-webicon-ink:close" iconPosition="right">
 																				<actions>
@@ -389,11 +451,6 @@
 																				<renderConditions logictype="and"/>
 																				<enableConditions logictype="and"/>
 																				<styleVariantConditions/>
-																			</skuid__button>
-																			<skuid__button label="Diffchecker" uniqueId="sk-3wbm-58551" icon="sk-webicon-ink:ext-link">
-																				<actions>
-																					<action type="redirect" window="blank" url="https://www.diffchecker.com"/>
-																				</actions>
 																			</skuid__button>
 																			<skuid__button label="Close and Clear Panels" uniqueId="sk-3wU7-65110" icon="sk-webicon-ink:close" iconPosition="right">
 																				<actions>
