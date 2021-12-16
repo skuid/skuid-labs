@@ -1,0 +1,37 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" >
+    <aura:attribute name="showModal" type="Boolean" default="false" access="private" />
+    <aura:attribute name="showCancel" type="Boolean" default="true" access="private" />
+    <aura:handler event="skuid:event" action="{!c.handleShowModalFlowEvent}" />
+
+    <aura:if isTrue="{!v.showModal}">
+        <section tabindex="-1" role="dialog" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <aura:if isTrue="{!v.showCancel}">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.handleClose }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                    </aura:if>
+                </header>
+                <div class="slds-modal__content">
+                    <br/>
+                    This is a Lightning Modal!  
+                    <br/>
+                </div>
+                <footer class="slds-modal__footer">
+                    <div class="slds-align_absolute-center">
+                        <aura:if isTrue="{!v.showCancel}">
+                            <lightning:button variant="neutral"
+                                              label="Cancel"
+                                              title="Cancel"
+                                              onclick="{! c.handleClose }"/>
+                        </aura:if>
+                    </div>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>
