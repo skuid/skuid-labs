@@ -23,7 +23,7 @@
 				<condition type="fieldvalue" value="false" enclosevalueinquotes="false" field="skuid__IsAutoSave__c" clientorserver="server" state="filterableoff" inactive="true" name="skuid__IsAutoSave__c"/>
 				<condition type="fieldvalue" field="CreatedDate" operator="gte" inactive="true" enclosevalueinquotes="false" name="__autofilter__start__CreatedDate" clientorserver="server" state="filterableoff" value=""/>
 				<condition type="fieldvalue" field="CreatedDate" operator="lte" inactive="true" enclosevalueinquotes="false" name="__autofilter__end__CreatedDate" clientorserver="server" state="filterableoff" value=""/>
-				<condition type="search" fieldfunction="All Fields" value="" enclosevalueinquotes="true" field="Id" clientorserver="server" state="filterableoff" inactive="true" name="Search"/>
+				<!-- <condition type="search" fieldfunction="All Fields" value="" enclosevalueinquotes="true" field="Id" clientorserver="server" state="filterableoff" inactive="true" name="Search"/> -->
 			</conditions>
 			<actions/>
 		</model>
@@ -165,59 +165,7 @@
 				</skuid__grid>
 				<skuid__grid uniqueid="sk-3cRB-76695" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="2">
 					<divisions>
-						<division alignSelf="center" minWidth="233px" ratio="2">
-							<components>
-								<skuid__form showErrorsInline="true" model="UiModel" uniqueid="sk-3c5u-33951" mode="edit">
-									<columns>
-										<column behavior="flex" verticalAlign="bottom" ratio="1" minWidth="100px">
-											<sections>
-												<section title="New Section" showHeading="false">
-													<fields>
-														<skuid__field id="SearchXML" label=" " placeholder="Search Page XML"/>
-													</fields>
-												</section>
-											</sections>
-											<renderConditions logictype="and"/>
-										</column>
-										<column behavior="flex" verticalAlign="center" ratio="1" minWidth="100px">
-											<sections>
-												<section title=" " showHeading="false">
-													<fields>
-														<skuid__field type="CUSTOM_BUTTON_GROUP" uniqueId="sk-3cPc-46580" label=" ">
-															<skuid__buttonGroup uniqueId="sk-3cPc-46630" displayType="detached">
-																<buttons>
-																	<skuid__button uniqueId="sk-3cPc-46631" icon="sk-webicon-ink:fallback" label="Search">
-																		<actions>
-																			<action type="action-sequence" action-sequence-id="0ffbcce5-091a-4712-85b1-812e08088d1e"/>
-																			<action type="updateRow" fieldmodel="UiModel" affectedrows="context">
-																				<updates>
-																					<update valuesource="fieldvalue" field="XMLSearched?" enclosevalueinquotes="false" value="true"/>
-																				</updates>
-																			</action>
-																		</actions>
-																		<renderConditions logictype="and"/>
-																		<enableConditions/>
-																		<styleVariantConditions/>
-																	</skuid__button>
-																</buttons>
-															</skuid__buttonGroup>
-														</skuid__field>
-													</fields>
-												</section>
-											</sections>
-										</column>
-									</columns>
-									<renderConditions logictype="and">
-										<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
-									</renderConditions>
-									<styleVariantConditions/>
-									<styles>
-										<spacing/>
-									</styles>
-								</skuid__form>
-							</components>
-							<renderConditions logictype="and"/>
-						</division>
+						<!-- <division alignSelf="center" minWidth="233px" ratio="2"><components><skuid__form showErrorsInline="true" model="UiModel" uniqueid="sk-3c5u-33951" mode="edit"><columns><column behavior="flex" verticalAlign="bottom" ratio="1" minWidth="100px"><sections><section title="New Section" showHeading="false"><fields><skuid__field id="SearchXML" label=" " placeholder="Search Page XML"/></fields></section></sections><renderConditions logictype="and"/></column><column behavior="flex" verticalAlign="center" ratio="1" minWidth="100px"><sections><section title=" " showHeading="false"><fields><skuid__field type="CUSTOM_BUTTON_GROUP" uniqueId="sk-3cPc-46580" label=" "><skuid__buttonGroup uniqueId="sk-3cPc-46630" displayType="detached"><buttons><skuid__button uniqueId="sk-3cPc-46631" icon="sk-webicon-ink:fallback" label="Search"><actions><action type="action-sequence" action-sequence-id="0ffbcce5-091a-4712-85b1-812e08088d1e"/><action type="updateRow" fieldmodel="UiModel" affectedrows="context"><updates><update valuesource="fieldvalue" field="XMLSearched?" enclosevalueinquotes="false" value="true"/></updates></action></actions><renderConditions logictype="and"/><enableConditions/><styleVariantConditions/></skuid__button></buttons></skuid__buttonGroup></skuid__field></fields></section></sections></column></columns><renderConditions logictype="and"><renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/></renderConditions><styleVariantConditions/><styles><spacing/></styles></skuid__form></components><renderConditions logictype="and"/></division> -->
 						<division alignSelf="center" minWidth="100px" ratio="1">
 							<components>
 								<skuid__buttonSet model="UiModel" uniqueid="sk-33S0-62335" position="left">
