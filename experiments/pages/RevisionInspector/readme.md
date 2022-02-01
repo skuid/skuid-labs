@@ -14,7 +14,8 @@ This page is good for quickly inspecting page revisions in a single environment.
 This page works in the Skuid managed package on the Salesforce environment.
 
 ## Future Improvement
-- Add features to pretty print the XML, or improve the snippet to pretty print when it's copied
+- Add the ability to search the revision XML (must use SOSL Search)
+- Add features to pretty print the XML
 - Create a version of this page for the Skuid Platform
 
 ## Related Links
