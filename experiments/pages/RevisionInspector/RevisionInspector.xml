@@ -30,8 +30,6 @@
 		<model id="UiModel" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
 			<fields>
 				<field id="ShowFullXML" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
-				<field id="Afull" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
-				<field id="Bfull" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
 				<!-- <field id="SearchXML" displaytype="TEXT" length="255" label="Search XML"/><field id="XMLSearched?" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT"/> -->
 			</fields>
 			<conditions/>
@@ -270,7 +268,7 @@
 											</models>
 										</action>
 										<action type="openSlidingPanel" openbehavior="open">
-											<skuid__slidingPanel uniqueid="sk-3wTd-53515" size="47vw" origin="left" closeOnPageClick="true" behavior="overlay">
+											<skuid__slidingPanel uniqueid="sk-3wTd-53515" size="47vw" origin="left" closeOnPageClick="true" behavior="push">
 												<components>
 													<skuid__wrapper uniqueid="sk-3wTw-59873">
 														<components>
@@ -339,9 +337,7 @@
 											<updates/>
 										</action>
 									</actions>
-									<renderConditions logictype="and">
-										<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiModel" sourcetype="fieldvalue" field="Afull" value="false"/>
-									</renderConditions>
+									<renderConditions logictype="and"/>
 									<enableConditions/>
 									<styleVariantConditions/>
 								</skuid__button>
@@ -415,9 +411,7 @@
 											</skuid__slidingPanel>
 										</action>
 									</actions>
-									<renderConditions logictype="and">
-										<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiModel" sourcetype="fieldvalue" field="Bfull" value="false"/>
-									</renderConditions>
+									<renderConditions logictype="and"/>
 									<enableConditions logictype="and"/>
 									<styleVariantConditions/>
 								</skuid__button>
