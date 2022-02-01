@@ -4,7 +4,6 @@ Sometimes you need more information about previous page revisions than the App C
 
 This page allows you to
 - View revisions for any page in your org
-- Search through the revision XML
 - Compare the XML between revisions
 - Copy a revision's XML at the click of a button
 
