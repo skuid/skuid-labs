@@ -1,6 +1,6 @@
 <skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false">
 	<models>
-		<model id="Revisions" limit="7" query="true" createrowifnonefound="false" datasource="salesforce" sobject="skuid__Page_Version__c" orderby="LastModifiedDate DESC">
+		<model id="Revisions" limit="4" query="true" createrowifnonefound="false" datasource="salesforce" sobject="skuid__Page_Version__c" orderby="LastModifiedDate DESC">
 			<fields>
 				<field id="Name"/>
 				<field id="skuid__Layout__c"/>
@@ -30,10 +30,9 @@
 		<model id="UiModel" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
 			<fields>
 				<field id="ShowFullXML" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
-				<field id="SearchXML" displaytype="TEXT" length="255" label="Search XML"/>
 				<field id="Afull" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
 				<field id="Bfull" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
-				<field id="XMLSearched?" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT"/>
+				<!-- <field id="SearchXML" displaytype="TEXT" length="255" label="Search XML"/><field id="XMLSearched?" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT"/> -->
 			</fields>
 			<conditions/>
 			<actions/>
@@ -166,38 +165,7 @@
 				<skuid__grid uniqueid="sk-3cRB-76695" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="2">
 					<divisions>
 						<!-- <division alignSelf="center" minWidth="233px" ratio="2"><components><skuid__form showErrorsInline="true" model="UiModel" uniqueid="sk-3c5u-33951" mode="edit"><columns><column behavior="flex" verticalAlign="bottom" ratio="1" minWidth="100px"><sections><section title="New Section" showHeading="false"><fields><skuid__field id="SearchXML" label=" " placeholder="Search Page XML"/></fields></section></sections><renderConditions logictype="and"/></column><column behavior="flex" verticalAlign="center" ratio="1" minWidth="100px"><sections><section title=" " showHeading="false"><fields><skuid__field type="CUSTOM_BUTTON_GROUP" uniqueId="sk-3cPc-46580" label=" "><skuid__buttonGroup uniqueId="sk-3cPc-46630" displayType="detached"><buttons><skuid__button uniqueId="sk-3cPc-46631" icon="sk-webicon-ink:fallback" label="Search"><actions><action type="action-sequence" action-sequence-id="0ffbcce5-091a-4712-85b1-812e08088d1e"/><action type="updateRow" fieldmodel="UiModel" affectedrows="context"><updates><update valuesource="fieldvalue" field="XMLSearched?" enclosevalueinquotes="false" value="true"/></updates></action></actions><renderConditions logictype="and"/><enableConditions/><styleVariantConditions/></skuid__button></buttons></skuid__buttonGroup></skuid__field></fields></section></sections></column></columns><renderConditions logictype="and"><renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="Revisions" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/></renderConditions><styleVariantConditions/><styles><spacing/></styles></skuid__form></components><renderConditions logictype="and"/></division> -->
-						<division alignSelf="center" minWidth="100px" ratio="1">
-							<components>
-								<skuid__buttonSet model="UiModel" uniqueid="sk-33S0-62335" position="left">
-									<groups>
-										<skuid__buttonGroup uniqueId="sk-33S0-62333" displayType="detached">
-											<buttons>
-												<skuid__button label="Reset" uniqueId="sk-33S0-62334" icon="sk-webicon-ink:refresh">
-													<actions>
-														<action type="deactivateCondition" model="Revisions" condition="Search"/>
-														<action type="requeryModels" behavior="standard">
-															<models>
-																<model>Revisions</model>
-															</models>
-														</action>
-														<action type="updateRow" fieldmodel="UiModel" affectedrows="context">
-															<updates>
-																<update valuesource="fieldvalue" field="XMLSearched?" enclosevalueinquotes="false" value="false"/>
-															</updates>
-														</action>
-													</actions>
-												</skuid__button>
-											</buttons>
-										</skuid__buttonGroup>
-									</groups>
-									<renderConditions logictype="and"/>
-									<styleVariantConditions/>
-								</skuid__buttonSet>
-							</components>
-							<renderConditions logictype="and">
-								<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiModel" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="XMLSearched?" value="true"/>
-							</renderConditions>
-						</division>
+						<!-- <division alignSelf="center" minWidth="100px" ratio="1"><components><skuid__buttonSet model="UiModel" uniqueid="sk-33S0-62335" position="left"><groups><skuid__buttonGroup uniqueId="sk-33S0-62333" displayType="detached"><buttons><skuid__button label="Reset" uniqueId="sk-33S0-62334" icon="sk-webicon-ink:refresh"><actions><action type="deactivateCondition" model="Revisions" condition="Search"/><action type="requeryModels" behavior="standard"><models><model>Revisions</model></models></action><action type="updateRow" fieldmodel="UiModel" affectedrows="context"><updates><update valuesource="fieldvalue" field="XMLSearched?" enclosevalueinquotes="false" value="false"/></updates></action></actions><renderConditions logictype="and"/><enableConditions/><styleVariantConditions/><hotkeys/><tooltip position="top"/></skuid__button></buttons></skuid__buttonGroup></groups><renderConditions logictype="and"/><styleVariantConditions/><styles><spacing/></styles></skuid__buttonSet></components><renderConditions logictype="and"><renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UiModel" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="XMLSearched?" value="true"/></renderConditions></division> -->
 						<division minWidth="85px" ratio="1" alignSelf="center">
 							<components>
 								<skuid__form showErrorsInline="true" model="UiModel" uniqueid="sk-3cRD-77929" mode="edit">
@@ -219,6 +187,8 @@
 									<styles>
 										<spacing left="2"/>
 									</styles>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
 								</skuid__form>
 							</components>
 						</division>
@@ -230,8 +200,13 @@
 											<effects>
 												<effect action="activate" value="" condition="skuid__IsAutoSave__c"/>
 											</effects>
+											<renderConditions logictype="and"/>
+											<styleVariantConditions/>
 										</skuid__filter>
-										<skuid__filter uniqueId="sk-3HhJ-15606" type="daterange" conditionSource="auto" filterMethod="server" labelMode="manual" conditionField="CreatedDate" startConditionName="__autofilter__start__CreatedDate" endConditionName="__autofilter__end__CreatedDate" label="Created Date"/>
+										<skuid__filter uniqueId="sk-3HhJ-15606" type="daterange" conditionSource="auto" filterMethod="server" labelMode="manual" conditionField="CreatedDate" startConditionName="__autofilter__start__CreatedDate" endConditionName="__autofilter__end__CreatedDate" label="Created Date">
+											<renderConditions logictype="and"/>
+											<styleVariantConditions/>
+										</skuid__filter>
 									</filters>
 									<filtering enableSearch="false" instantSearch="false" instantFilters="true" searchMethod="server" emptySearchBehavior="query" useSOSL="true" soslFields="All Fields" tokenizeSearch="false"/>
 									<styles>
@@ -239,6 +214,8 @@
 									</styles>
 									<positioning justifyContent="space-between" alignItems="flex-end"/>
 									<sorting enable="false"/>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
 								</skuid__filterSet>
 							</components>
 						</division>
@@ -500,39 +477,8 @@ document.removeEventListener("copy", listener);</jsitem>
 		</javascript>
 		<css/>
 		<actionsequences>
-			<actionsequence id="0ffbcce5-091a-4712-85b1-812e08088d1e" label="SearchRevisions" type="reusable">
-				<actions>
-					<action type="showToast" duration="2" position="bl" message="Searching XML..."/>
-					<action type="branch" whenfinished="stop" model="UiModel">
-						<formula>NOT(ISBLANK({{SearchXML}}))
-</formula>
-						<iftrueactions>
-							<action type="updateCondition" model="Revisions" behavior="set" condition="Search" valuesource="modelmerge" value="{{{SearchXML}}}" sourcemodel="UiModel" sourcefield="SearchXML"/>
-							<action type="requeryModels" behavior="standard">
-								<models>
-									<model>Revisions</model>
-								</models>
-							</action>
-						</iftrueactions>
-					</action>
-					<action type="branch" whenfinished="continue" model="UiModel">
-						<formula>ISBLANK({{SearchXML}})</formula>
-						<iftrueactions>
-							<action type="deactivateCondition" model="Revisions" condition="Search"/>
-							<action type="requeryModels" behavior="standard">
-								<models>
-									<model>Revisions</model>
-								</models>
-							</action>
-						</iftrueactions>
-					</action>
-					<action type="unblockUI"/>
-				</actions>
-				<description/>
-				<inputs>
-					<input type="value" name="value"/>
-				</inputs>
-			</actionsequence>
+			<!-- <actionsequence id="0ffbcce5-091a-4712-85b1-812e08088d1e" label="SearchRevisions" type="reusable"><actions><action type="showToast" duration="2" position="bl" message="Searching XML..."/><action type="branch" whenfinished="stop" model="UiModel"><formula>NOT(ISBLANK({{SearchXML}}))
+</formula><iftrueactions><action type="updateCondition" model="Revisions" behavior="set" condition="Search" valuesource="modelmerge" value="{{{SearchXML}}}" sourcemodel="UiModel" sourcefield="SearchXML"/><action type="requeryModels" behavior="standard"><models><model>Revisions</model></models></action></iftrueactions></action><action type="branch" whenfinished="continue" model="UiModel"><formula>ISBLANK({{SearchXML}})</formula><iftrueactions><action type="deactivateCondition" model="Revisions" condition="Search"/><action type="requeryModels" behavior="standard"><models><model>Revisions</model></models></action></iftrueactions></action><action type="unblockUI"/></actions><description/><inputs><input type="value" name="value"/></inputs></actionsequence> -->
 			<actionsequence id="058bc7f1-18bb-43ed-a336-3a6ad6e87dc6" label="copyXML" type="reusable">
 				<description/>
 				<actions>
