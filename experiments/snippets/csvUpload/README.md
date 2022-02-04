@@ -3,16 +3,16 @@
 Adding data to your application is often best facilitated with some "data import" function.  Skuid does not include a solution for this problem "out of the box", but the functionality can be developed by extending Skuid with the [PapaParse javascript library](https://www.papaparse.com/).  
 
 The page below allows the following: 
-1. Using Skuid File Upload component - select a CSV file and brings it into client side memory  (As as field on a UI Only model)
-2. Use a snippet (that extends PapaParse) to attempt to move field data from the CSV into rows of a second model. 
+- Using Skuid File Upload component - select a CSV file and brings it into client side memory  (As as field on a UI Only model)
+- Use a snippet (that extends PapaParse) to move field data into new rows of a second model. 
 
-In the example page - the target model is a UI Only model, but it could be connected to any data source. And once the model rows have been created from the parsed CSV data - you could use normal Skuid actions to save them to your data source (depending on the volume limits for CRUD operations within the data source).
+    In the example page - the target model is a UI Only model, but it could be connected to any data source. And once the model rows have been created from the parsed CSV data - you could use normal Skuid actions to save them to your data source (depending on the volume limits for CRUD operations within the data source).
 
-Additional notes: 
+## Additional notes: 
 
 1. You will need to [download the PapaParse library](https://www.papaparse.com/) and host it as a static resource or file. And refer to that file as an external resource in the Javascript resources of your page.
 
-2. The sample uses a dataset retrieved from [Mockaroo](https://mockaroo.com/0c45cb80). This is a great sample data tool.
+2. The sample uses a dataset retrieved from [Mockaroo](https://mockaroo.com/0c45cb80). A great sample data generation tool.
 
 ## Instructions
 - V2 Page API Used
