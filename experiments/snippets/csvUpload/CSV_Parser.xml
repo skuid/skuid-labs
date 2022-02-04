@@ -1,0 +1,232 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true">
+	<background type="none"/>
+	<models>
+		<model id="Input" limit="20" query="true" createrowifnonefound="true" datasource="Ui-Only" processonclient="true">
+			<fields>
+				<field id="Data" displaytype="TEXT" label="Data"/>
+				<field id="ImportStatus" displaytype="PICKLIST" label="Import Status" ogdisplaytype="TEXT" picklistsource="manual" returntype="TEXT" defaultvaluetype="fieldvalue" defaultValue="ready" enclosevalueinquotes="true">
+					<picklistentries>
+						<entry value="inprogress" label="In Progress"/>
+						<entry value="ready" label="Ready"/>
+					</picklistentries>
+				</field>
+				<field id="NewField1" displaytype="TEXT"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Data" limit="20" query="true" createrowifnonefound="false" datasource="Ui-Only" processonclient="true">
+			<fields>
+				<field id="Checkbox" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" enclosevalueinquotes="false" label="Checkbox"/>
+				<field id="Currency" displaytype="CURRENCY" length="255" ogdisplaytype="TEXT" precision="9" scale="2" label="Currency"/>
+				<field id="Date" displaytype="DATE" length="255" ogdisplaytype="TEXT" label="Date"/>
+				<field id="DateTime" displaytype="DATETIME" length="255" ogdisplaytype="TEXT" label="DateTime"/>
+				<field id="Email" displaytype="EMAIL" length="255" ogdisplaytype="TEXT" enclosevalueinquotes="true" label="Email"/>
+				<field id="Multi_picklist" displaytype="MULTIPICKLIST" length="255" ogdisplaytype="TEXT" picklistsource="manual" returntype="TEXT" enclosevalueinquotes="true" label="Multi_picklist">
+					<picklistentries>
+						<entry value="Val1" label="Value 1"/>
+						<entry value="Val2" label="Value 2"/>
+						<entry value="Val3" label="Value 3"/>
+					</picklistentries>
+				</field>
+				<field id="Number" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" precision="9" scale="2" defaultvaluetype="fieldvalue" defaultValue="45" label="Number"/>
+				<field id="Percent" displaytype="PERCENT" length="255" ogdisplaytype="TEXT" readonly="false" returntype="TEXT" precision="9" scale="2" label="Percent"/>
+				<field id="Picklist" displaytype="PICKLIST" length="255" ogdisplaytype="TEXT" picklistsource="manual" returntype="TEXT" label="Picklist">
+					<picklistentries>
+						<entry value="Opt1" label="Option 1"/>
+						<entry value="Opt2" label="Option 2"/>
+						<entry value="Opt3" label="Option 3"/>
+					</picklistentries>
+				</field>
+				<field id="Text" displaytype="TEXT" length="255" label="Text"/>
+				<field id="Text_area" displaytype="TEXTAREA" length="255" ogdisplaytype="TEXT" label="Text_area"/>
+				<field id="URL" displaytype="URL" length="255" ogdisplaytype="TEXT" label="URL"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__wrapper uniqueid="sk-35GI-24481">
+			<components>
+				<skuid__file uniqueid="sk-pUP-226" datasource="SkuidLocal" displayAs="filename" field="Data" model="Input" saveTo="field" storeAs="uploadfile">
+					<uploadSuccessActions>
+						<action type="updateRow" fieldmodel="Input" affectedrows="context">
+							<updates>
+								<update valuesource="fieldvalue" field="ImportStatus" enclosevalueinquotes="true" value="inprogress"/>
+							</updates>
+						</action>
+						<action type="custom" snippet="parseCsvData">
+							<onerroractions>
+								<action type="blockUI" message="There was an error importing the CSV" timeout="3000" subtext="Check JavaScript console for error details."/>
+								<action type="updateRow" fieldmodel="Input" affectedrows="context">
+									<updates>
+										<update valuesource="fieldvalue" field="ImportStatus" enclosevalueinquotes="true" value="ready"/>
+									</updates>
+								</action>
+							</onerroractions>
+						</action>
+						<action type="updateRow" fieldmodel="Input" affectedrows="context">
+							<updates>
+								<update valuesource="fieldvalue" field="ImportStatus" enclosevalueinquotes="true" value="ready"/>
+							</updates>
+						</action>
+					</uploadSuccessActions>
+					<uploadFailureActions/>
+				</skuid__file>
+				<skuid__text uniqueid="ImportInProgress" contents="Import in progress...">
+					<renderConditions logictype="and">
+						<rendercondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="Input" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="ImportStatus" value="inprogress"/>
+					</renderConditions>
+				</skuid__text>
+				<skuid__table allowColumnFreezing="dragDrop" model="Data" uniqueid="sk-35B5-13428" mode="edit" showSaveCancel="true" title="{{Model.labelPlural}}" pageSize="50">
+					<fields>
+						<field id="Checkbox" uniqueid="fi-35BB-19150"/>
+						<field id="Currency" horizontalAlignment="right" uniqueid="fi-35BB-19151"/>
+						<field id="Date" uniqueid="fi-35BB-19152"/>
+						<field id="DateTime" uniqueid="fi-35BB-19153"/>
+						<field id="Email" uniqueid="fi-35BB-19154"/>
+						<field id="Multi_Picklist" uniqueid="fi-35BB-19155"/>
+						<field id="Number" horizontalAlignment="right" uniqueid="fi-35BB-19156"/>
+						<field id="Percent" horizontalAlignment="right" uniqueid="fi-35BB-19157"/>
+						<field id="Picklist" uniqueid="fi-35BB-19158"/>
+						<field id="Text" uniqueid="fi-35BB-19159"/>
+						<field id="TextArea" uniqueid="fi-35BB-19160"/>
+						<field id="URL" uniqueid="fi-35BB-19161"/>
+					</fields>
+					<filtering enableSearch="false"/>
+					<actions/>
+					<rowActions/>
+					<massActions/>
+					<exportProperties useTableColumns="true"/>
+					<sorting enable="false"/>
+				</skuid__table>
+			</components>
+			<styles>
+				<spacing top="4" bottom="4" left="4" right="4"/>
+			</styles>
+			<background/>
+		</skuid__wrapper>
+	</components>
+	<resources>
+		<javascript>
+			<jsitem location="inlinesnippet" name="parseCsvData" cachelocation="false">var $ = skuid.$;
+var inputData = skuid.$M("Input").getFirstRow().Data;
+var reject = function(err) {
+    console.error(err);
+    return Promise.reject(err);
+};
+
+if (!inputData) {
+    return reject("No CSV data provided.");
+}
+
+var result = Papa.parse(inputData);
+
+if (result.errors &amp;&amp; result.errors.length) {
+    return reject("Unable to parse CSV File: " + result.errors.join(", "));
+}
+
+if (!result.data.length) {
+    return reject("No data found in CSV file");
+}
+
+var dataModel = skuid.$M("Data");
+var rows = result.data;
+// Fuzzy-match the field names to data
+var columnNames = rows[0];
+var fieldNamesByColumnIndex = [];
+var modelFieldIdsByLabel = {};
+skuid.$.each(dataModel.fields, function(i, field) {
+   modelFieldIdsByLabel[field.label.toLowerCase()] = field.id; 
+});
+var mappedAllColumns = true;
+skuid.$.each(columnNames, function(columnIndex, columnName) {
+    var useFieldName;
+    // Ideal case -- column name matches field name exactly
+    if (dataModel.getField(columnName)) {
+        useFieldName = columnName;
+    } else {
+        // Try lower-cased column name label
+        var lowerCaseColumnName = columnName.toLowerCase();
+        if (modelFieldIdsByLabel[lowerCaseColumnName]) {
+            useFieldName = modelFieldIdsByLabel[lowerCaseColumnName];
+        }
+    }
+    if (!useFieldName) {
+        useFieldName = -1;
+    }
+    fieldNamesByColumnIndex.push(useFieldName);
+});
+
+// Now parse the data and create rows
+$.each(rows, function(i, sourceRow) {
+
+    // Skip first row, which is the column names
+    if (i === 0) return true;
+
+    dataModel.createRow({
+        doAppend: true,
+        additionalConditions: $.map(sourceRow, function(columnValue, columnIndex) {
+            var useFieldName = fieldNamesByColumnIndex[columnIndex];
+            if (useFieldName !== -1) {
+                return {
+                    field: useFieldName,
+                    value: columnValue,
+                };   
+            } else {
+                return null;
+            }
+        }),
+    });
+});
+</jsitem>
+			<jsitem location="staticresource" name="papaparse.min.js" cachelocation="false" url="" content_type="text/javascript">var params = arguments[0],
+	$ = skuid.$;
+</jsitem>
+		</javascript>
+		<actionsequences uniqueid="sk-pU4-134"/>
+		<labels/>
+	</resources>
+	<pageregioncontents>
+		<pageregioncontent uniqueid="__header">
+			<components>
+				<skuid__layoutRegion sticky="true">
+					<components>
+						<skuid__header uniqueid="sk-pUJ-218" model="Input" title="CSV Data Import" subtitle="">
+							<skuid__buttonSet>
+								<groups>
+									<skuid__buttonGroup>
+										<buttons>
+											<skuid__button uniqueid="sk-pUi-321" label="Remove imported data" styleSettingsVariant="default">
+												<actions>
+													<action type="cancel">
+														<models>
+															<model>Data</model>
+														</models>
+													</action>
+												</actions>
+											</skuid__button>
+											<skuid__button uniqueid="sk-ptT-156" label="Download Sample Data" styleSettingsVariant="default">
+												<actions>
+													<action type="redirect" window="blank" url="https://mockaroo.com/0c45cb80"/>
+												</actions>
+											</skuid__button>
+										</buttons>
+									</skuid__buttonGroup>
+								</groups>
+							</skuid__buttonSet>
+							<styles>
+								<spacing top="2" bottom="2" left="2" right="4"/>
+							</styles>
+						</skuid__header>
+					</components>
+					<background type="color" color="#c6d9f0"/>
+					<styles>
+						<spacing/>
+					</styles>
+				</skuid__layoutRegion>
+			</components>
+		</pageregioncontent>
+	</pageregioncontents>
+</skuid__page>
