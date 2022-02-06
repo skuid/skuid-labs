@@ -207,7 +207,7 @@ $.each(rows, function(i, sourceRow) {
 													</action>
 												</actions>
 											</skuid__button>
-											<skuid__button uniqueid="sk-ptT-156" label="Download Sample Data" styleSettingsVariant="default">
+											<skuid__button uniqueid="sk-ptT-156" label="Download sample CSV" styleSettingsVariant="default">
 												<actions>
 													<action type="redirect" window="blank" url="https://mockaroo.com/0c45cb80"/>
 												</actions>
