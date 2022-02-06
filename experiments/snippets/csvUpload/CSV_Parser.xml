@@ -181,7 +181,7 @@ $.each(rows, function(i, sourceRow) {
     });
 });
 </jsitem>
-			<jsitem location="staticresource" name="papaparse.min.js" cachelocation="false" url="" content_type="text/javascript">var params = arguments[0],
+			<jsitem location="external" name="papaparse.min.js" cachelocation="false" url="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js" content_type="text/javascript">var params = arguments[0],
 	$ = skuid.$;
 </jsitem>
 		</javascript>
