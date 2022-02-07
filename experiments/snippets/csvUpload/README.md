@@ -19,4 +19,3 @@ The page below allows the following:
 - Data source: Only Uses UI-Only Models   
 - Design system:  Uses default INK design system  
 - Page XML:  [Copy the XML from this page](CSV_Parser.xml), or save it as an XML file, and upload it as a new page in your Salesforce Org.
-- Javascript Resource:  Download [PapaParse](https://www.papaparse.com/) library and add it to your org as a Static Resource (if on Salesforce) or a FILE (if on Skuid Platform)  
