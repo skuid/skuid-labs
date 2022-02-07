@@ -10,9 +10,9 @@ The page below allows the following:
 
 ## Additional notes: 
 
-1. You will need to [download the PapaParse library](https://www.papaparse.com/) and host it as a static resource (salesforce) or file (skuid platform). Then refer to that file as an external resource in the Javascript resources of your page.
+- The [PapaParse library](https://www.papaparse.com/) is referenced as an external resource in the page
 
-2. The sample uses a dataset retrieved from [Mockaroo](https://mockaroo.com/0c45cb80). A great sample data generation tool.
+- The sample uses a dataset retrieved from [Mockaroo](https://mockaroo.com/0c45cb80), a great sample data generation tool.
 
 ## Instructions
 - V2 Page API Used
