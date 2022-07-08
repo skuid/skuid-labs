@@ -2,7 +2,7 @@
 
 ## Description
 
-Isn't it a huge pain to create a page and then realize you actually meant to have it nested in a master page? You can save it with XML surgery, but that's annoying and error-prone. And what if you have a page that no longer needs to be nested within a master page? Easier XML surgery, but still XML surgery.
+Isn't it a huge pain to create a page and then realize you actually meant to have it nested in a principal page? You can save it with XML surgery, but that's annoying and error-prone. And what if you have a page that no longer needs to be nested within a principal page? Easier XML surgery, but still XML surgery.
 
 Fret no more!
 
@@ -21,18 +21,18 @@ To install, either copy and paste the XML for your platform of choice into your 
 
 - When converting from a _child page_ to a _normal page_, all components are placed into the page based on the order they appear. If you use page regions as grids, you'll need to recreate those.
 - When converting from a  _normal page_ to a _child page_, all components are placed into the **the first page region available**.
-- If you reference a master page's resources in a child page and convert that child page to a normal page, it'll mess up.
+- If you reference a principal page's resources in a child page and convert that child page to a normal page, it'll mess up.
 - If you make edits to the Skuid Platform page, you will be prompted to enter sample metadata for the merge variables used in the model conditions. The following sample values will work:
     - apiVersion:v2
     - search: page
     - .: test
 ## Future improvement ideas
 
-- Allow some form of import for reference master pages
+- Allow some form of import for reference principal pages
 - _Child page_ to a _normal page_: Instead of dumping all components vertically into the XML, convert the each `pageregion` component into a Responsive Grid in order to maintain some visual similarity to the original page.
 - _Normal page_ to a _child page_: Allow users to select which page region they would like to place their components in. 
 
-## Sources
+## Sources and other notes
 
 Here are some sources I used while drafting this:
 
@@ -40,3 +40,4 @@ Here are some sources I used while drafting this:
 - HTMLcolleciton to array: https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
 - Stringify the XML: https://developer.mozilla.org/en-US/docs/Web/Guide/Parsing_and_serializing_XML
 
+**Note**: Principal and dependent pages were previously known as master and child pages, respectively. You may still see references to this terminology in older materials or Skuid metadata. 
