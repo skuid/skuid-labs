@@ -1,9 +1,0 @@
-{
-	"name": "childNormalPageConverter_SalesforceV2",
-	"apiVersion": "v2",
-	"isMasterPage": false,
-	"maxAutoSaves": 25,
-	"module": "",
-	"type": "Desktop",
-	"uniqueId": "_childNormalPageConverter_SalesforceV2"
-}
