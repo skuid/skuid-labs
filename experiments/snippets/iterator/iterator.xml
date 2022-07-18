@@ -1,0 +1,11 @@
+<actionsequence id="eeb9bad2-3470-4241-8b78-f5882b5404ce" label="Iterate Model" type="reusable">
+	<description/>
+	<actions>
+		<action type="custom" snippet="iterator"/>
+	</actions>
+	<inputs>
+		<input type="model" name="Model"/>
+		<input type="value" name="ActionSequence"/>
+		<input type="value" name="UseContext"/>
+	</inputs>
+</actionsequence>
