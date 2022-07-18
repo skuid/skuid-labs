@@ -9,7 +9,7 @@ Fret no more!
 This experiment aims to automate that hackery. It's a list of pages with two contextual row actions:
 
 - Convert to normal page
-- Convert to child page
+- Convert to dependent page
 
 The actions are pretty self explanatory. And I tried to uplevel most of the actions to action sequences with descriptions. The actual XML conversion is handled by two snippets. Those snippets are commented throughout to illustrate what they're doing. 
 
@@ -19,9 +19,9 @@ To install, either copy and paste the XML for your platform of choice into your 
 
 ## Caveats
 
-- When converting from a _child page_ to a _normal page_, all components are placed into the page based on the order they appear. If you use page regions as grids, you'll need to recreate those.
-- When converting from a  _normal page_ to a _child page_, all components are placed into the **the first page region available**.
-- If you reference a principal page's resources in a child page and convert that child page to a normal page, it'll mess up.
+- When converting from a _dependent page_ to a _normal page_, all components are placed into the page based on the order they appear. If you use page regions as grids, you'll need to recreate those.
+- When converting from a  _normal page_ to a _dependent page_, all components are placed into the **the first page region available**.
+- If you reference a principal page's resources in a dependent page and convert that dependent page to a normal page, it'll mess up.
 - If you make edits to the Skuid NLX page, you will be prompted to enter sample metadata for the merge variables used in the model conditions. The following sample values will work:
     - apiVersion:v2
     - search: page
@@ -29,8 +29,8 @@ To install, either copy and paste the XML for your platform of choice into your 
 ## Future improvement ideas
 
 - Allow some form of import for reference principal pages
-- _Child page_ to a _normal page_: Instead of dumping all components vertically into the XML, convert the each `pageregion` component into a Responsive Grid in order to maintain some visual similarity to the original page.
-- _Normal page_ to a _child page_: Allow users to select which page region they would like to place their components in. 
+- _Dependent page_ to a _normal page_: Instead of dumping all components vertically into the XML, convert the each `pageregion` component into a Responsive Grid in order to maintain some visual similarity to the original page.
+- _Normal page_ to a _dependent page_: Allow users to select which page region they would like to place their components in. 
 
 ## Sources and other notes
 
