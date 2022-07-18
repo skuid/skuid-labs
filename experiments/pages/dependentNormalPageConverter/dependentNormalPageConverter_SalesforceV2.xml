@@ -26,9 +26,9 @@
 			<fields>
 				<field id="oldContent" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="old" label="oldContent"/>
 				<field id="newContent" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="new" label="newContent"/>
-				<field id="masterPageId" displaytype="TEXT" length="255" label="masterPageId"/>
-				<field id="masterPageContent" displaytype="TEXT" length="255" label="masterPageContent" defaultvaluetype="fieldvalue"/>
-				<field id="masterPageName" displaytype="TEXT" length="255" label="masterPageName"/>
+				<field id="masterPageId" displaytype="TEXT" length="255" label="principalPageId"/>
+				<field id="masterPageContent" displaytype="TEXT" length="255" label="principalPageContent" defaultvaluetype="fieldvalue"/>
+				<field id="masterPageName" displaytype="TEXT" length="255" label="principalPageName"/>
 				<field id="newName" displaytype="TEXT" length="255" label="Name"/>
 				<field id="apiVersion" displaytype="TEXT" length="255"/>
 			</fields>
@@ -138,7 +138,7 @@
 						</action>
 					</actions>
 				</action>
-				<action type="multi" label="Convert to child page" icon="sk-webicon-font-awesome:sitemap">
+				<action type="multi" label="Convert to dependent page" icon="sk-webicon-font-awesome:sitemap">
 					<renderConditions logictype="and">
 						<rendercondition type="blank" operator="=" fieldmodel="pages" sourcetype="fieldvalue" field="skuid__MasterPage__c" fieldtargetobjects="skuid__Page__c" value="null" enclosevalueinquotes="false"/>
 					</renderConditions>
@@ -210,25 +210,25 @@ var pagesModel = skuid.$M('pages')
 var variableStore = skuid.$M('variableStore')
 var r = variableStore.getFirstRow()
 var oldContent = r.oldContent
-var masterPage = r.masterPageContent
+var principalPage = r.masterPageContent
 
 // Handle the XML
 var parser = new DOMParser();
-var masterPageXml = parser.parseFromString(masterPage, "text/xml");
+var principalPageXml = parser.parseFromString(principalPage, "text/xml");
 var xmlDoc = parser.parseFromString(oldContent, "text/xml");
 var skuidPage = (r.apiVersion=='v2') ? xmlDoc.getElementsByTagName('skuid__page')[0] : xmlDoc.getElementsByTagName('skuidpage')[0]
 
-// Get all page region areas in master page
-var pageRegionAreas = (r.apiVersion=='v2')? Array.prototype.slice.call(masterPageXml.getElementsByTagName('skuid__pageRegion')): Array.prototype.slice.call(masterPageXml.getElementsByTagName('pageregion'))
+// Get all page region areas in principal page
+var pageRegionAreas = (r.apiVersion=='v2')? Array.prototype.slice.call(principalPageXml.getElementsByTagName('skuid__pageRegion')): Array.prototype.slice.call(principalPageXml.getElementsByTagName('pageregion'))
 
 if (pageRegionAreas.length === 0) {
-  throw ("The chosen master page has no page regions. Please update the page and try again.")
+  throw ("The chosen principal page has no page regions. Please update the page and try again.")
 } else {
   // Create pageregionscontents node to nest all pageregioncontent nodes
   var pageregioncontents = xmlDoc.createElement("pageregioncontents");
   xmlDoc.getElementsByTagName('models')[0].after(pageregioncontents)
 
-  // Parse existing page regions, and create nodes for child page
+  // Parse existing page regions, and create nodes for dependent page
   pageRegionAreas.forEach(function (pra) {
     var regionid = pra.getAttribute('uniqueid')
     newPageRegion = xmlDoc.createElement("pageregioncontent");
@@ -339,7 +339,7 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
 						</models>
 					</action>
 				</actions>
-				<description>Uses the currently stored name and content variables to create a new row on the pages model and save it. If the variable store has a master page ID, we're trying to save a new child page, so there's a branch to account for that.</description>
+				<description>Uses the currently stored name and content variables to create a new row on the pages model and save it. If the variable store has a principal page ID, we're trying to save a new dependent page, so there's a branch to account for that.</description>
 				<inputs/>
 			</actionsequence>
 			<actionsequence id="3fd5a006-aecc-4f5a-88bc-0f21be565b1e" label="showMasterPageList" type="reusable" uniqueid="sk-3Tqu-4752">
@@ -350,9 +350,9 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
 						</models>
 					</action>
 					<action type="showModal">
-						<skuid__modal title="Master page" width="90%">
+						<skuid__modal title="Principal page" width="90%">
 							<components>
-								<skuid__text uniqueid="sk-3Us7-5276" contents="Which master page would you like to use?"/>
+								<skuid__text uniqueid="sk-3Us7-5276" contents="Which principal page would you like to use?"/>
 								<skuid__table uniqueid="select-master-page" allowColumnOrdering="true" resetPaginationOnQuery="false" showListHeader="true" showListFooter="true" mode="readonly" model="masterPages" pageSize="10" showSaveCancel="false" showErrorsInline="true" rowHeightStrategy="fit" allowColumnHiding="true" allowSortingByColumn="false">
 									<fields>
 										<field uniqueid="fi-Nwy-1196" hideable="trueShowByDefault" id="Name" redirectType="customurl" window="blank" rootUrl="/apex/skuid__PageBuilder?id={{Id}}"/>
@@ -361,7 +361,7 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
 									<actions/>
 									<massActions/>
 									<rowActions>
-										<action type="multi" label="Use as master page" icon="sk-webicon-font-awesome:magic">
+										<action type="multi" label="Use as principal page" icon="sk-webicon-font-awesome:magic">
 											<actions>
 												<action type="updateCondition" model="masterPages_retrieveXML" condition="Id" value="{{Id}}" behavior="set" valuesource="fieldvalue"/>
 												<action type="requeryModels" behavior="standard">
@@ -388,7 +388,7 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
 												<action type="closeModals" closebehavior="close"/>
 												<action type="custom" snippet="normalPageToChildPage">
 													<onerroractions>
-														<action type="blockUI" message="There was an error. Ensure that your chosen master page has page regions." timeout="2000"/>
+														<action type="blockUI" message="There was an error. Ensure that your chosen principal page has page regions." timeout="2000"/>
 													</onerroractions>
 												</action>
 												<action type="action-sequence" action-sequence-id="08bc0954-07ab-4042-93dd-f4b3266dbdf3">
@@ -414,7 +414,7 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
 						</skuid__modal>
 					</action>
 				</actions>
-				<description>This popup allows users to pick a master page for normal-page-to-child-page conversion. The selected page is sent to the variable store.</description>
+				<description>This popup allows users to pick a principal page for normal-page-to-child-page conversion. The selected page is sent to the variable store.</description>
 			</actionsequence>
 			<actionsequence id="25e9872b-0c61-4447-81f4-4325508f5578" label="clearVariableStore" type="reusable" uniqueid="sk-3Tqu-4753">
 				<actions>
@@ -431,7 +431,7 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
 					<action type="showModal">
 						<skuid__modal title="Page" width="90%">
 							<components>
-								<skuid__text uniqueid="sk-3Uno-3087" contents="What would you like to name the name page?"/>
+								<skuid__text uniqueid="sk-3Uno-3087" contents="What would you like to name the new page?"/>
 								<skuid__form uniqueid="sk-3Unk-3049" model="variableStore" mode="edit" labelPlacement="beside" showHeader="true" showSaveCancel="false" showErrorsInline="true">
 									<columns>
 										<column maxWidth="100%">
@@ -493,13 +493,13 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
 					</action>
 					<action type="action-sequence" action-sequence-id="08bc0954-07ab-4042-93dd-f4b3266dbdf3"/>
 				</actions>
-				<description>The row action to a convert a child page to a normal page</description>
+				<description>The row action to a convert a dependent page to a normal page</description>
 				<inputs>
 					<input type="value" name="Id"/>
 					<input type="value" name="apiVersion"/>
 				</inputs>
 			</actionsequence>
-			<actionsequence id="5471bffe-9f90-4148-a366-6236fd20f4f2" label="Convert to child page" uniqueid="sk-NdC-1617" type="reusable">
+			<actionsequence id="5471bffe-9f90-4148-a366-6236fd20f4f2" label="Convert to dependent page" uniqueid="sk-NdC-1617" type="reusable">
 				<actions>
 					<action type="action-sequence" action-sequence-id="25e9872b-0c61-4447-81f4-4325508f5578"/>
 					<action type="createRow" model="variableStore" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
@@ -515,7 +515,7 @@ skuid.utils.writeXmlToPageLayoutFields(r.newContent, pagesModel, pagesModel.getF
 					</action>
 					<action type="action-sequence" action-sequence-id="3fd5a006-aecc-4f5a-88bc-0f21be565b1e"/>
 				</actions>
-				<description>The row action to convert a normal page to a child page.</description>
+				<description>The row action to convert a normal page to a dependent page.</description>
 				<inputs>
 					<input type="value" name="Id"/>
 					<input type="value" name="apiVersion"/>
