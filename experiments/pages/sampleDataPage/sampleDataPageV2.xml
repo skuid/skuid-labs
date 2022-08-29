@@ -29,17 +29,6 @@
 	</models>
 	<components>
 		<skuid__header model="top50Companies" title="Top 50 Companies by Revenue" uniqueid="sk-3f8B-69465"/>
-		<skuid__geochart model="top50Companies" maptype="world-highres" height="600px" uniqueid="sk-3f3C-19415" mapgroup="global" maintitle="Total Companies by Country">
-			<colors/>
-			<legend/>
-			<serieslist>
-				<series joinBy="hc-key" valueField="Name" countryfield="CountryCode" modelId="top50Companies" aggFunction="count"/>
-			</serieslist>
-			<buckets/>
-			<styles>
-				<spacing/>
-			</styles>
-		</skuid__geochart>
 		<skuid__grid uniqueid="sk-3e_3-23106" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="2">
 			<divisions>
 				<division minWidth="100px" ratio="1" alignSelf="auto">
