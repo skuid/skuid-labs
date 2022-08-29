@@ -21,13 +21,106 @@
 				<field id="Revenue Growth" displaytype="PERCENT" label="Revenue Growth" ogdisplaytype="TEXT" precision="9" scale="0" defaultvaluetype="fieldvalue"/>
 				<field id="Employees" displaytype="DOUBLE" length="255" label="Employees" ogdisplaytype="TEXT" precision="10" scale="0"/>
 				<field id="Country" displaytype="TEXT" length="255" label="Country"/>
+				<field id="CountryCode" displaytype="TEXT" length="255" label="Country Code"/>
 			</fields>
 			<conditions/>
 			<actions/>
 		</model>
 	</models>
 	<components>
-		<skuid__table allowColumnFreezing="dragDrop" showSaveCancel="true" uniqueid="sk-1eXX-2106" title="Top 50 Companies by Revenue" model="top50Companies" pageSize="10" mode="read">
+		<skuid__header model="top50Companies" title="Top 50 Companies by Revenue" uniqueid="sk-3f8B-69465"/>
+		<skuid__grid uniqueid="sk-3e_3-23106" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="2">
+			<divisions>
+				<division minWidth="100px" ratio="1" alignSelf="auto">
+					<components>
+						<skuid__chartSet>
+							<charts>
+								<skuid__chart model="top50Companies" type="column" uniqueid="sk-3eyy-12700" maintitle="Revenue by Country">
+									<dataaxes>
+										<axis id="axis1" title="Revenue (Millions)" minvalue="100000"/>
+									</dataaxes>
+									<categoryaxes>
+										<axis id="categories" categorytype="template" field="Country" template="{{Country}}"/>
+									</categoryaxes>
+									<serieslist>
+										<series valuefield="Revenue" splittype="none" aggfunction="sum" splitfield="Country" splittemplate="{{Country}}">
+											<actions>
+												<action type="drilldown" chartid="sk-3f6y-55957">
+													<conditions>
+														<condition type="contextrows" field="Id" mergefield="Id" operator="in" autocreated="true"/>
+													</conditions>
+												</action>
+											</actions>
+										</series>
+									</serieslist>
+									<colors/>
+									<legend layout="off" halign="center" valign="bottom"/>
+									<allowedtypes>
+										<type>bar</type>
+									</allowedtypes>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__chart>
+								<skuid__chart model="top50Companies" maintitle="{{rows.0.Country}} Companies" type="bar" uniqueid="sk-3f6y-55957">
+									<dataaxes>
+										<axis id="axis1"/>
+									</dataaxes>
+									<categoryaxes>
+										<axis id="categories" categorytype="field" field="Name"/>
+									</categoryaxes>
+									<serieslist>
+										<series valuefield="Revenue" splittype="template" aggfunction="sum" splittemplate="{{Name}}"/>
+									</serieslist>
+									<colors/>
+									<legend layout="off" halign="center" valign="bottom"/>
+								</skuid__chart>
+							</charts>
+						</skuid__chartSet>
+						<skuid__chart model="top50Companies" maintitle="Average Revenue Growth by Country" type="column" uniqueid="sk-3f2y-17087">
+							<dataaxes>
+								<axis id="axis1" title="Average Revenue Growth (%)"/>
+							</dataaxes>
+							<categoryaxes>
+								<axis id="categories" categorytype="template" field="Country" template="{{Country}}"/>
+							</categoryaxes>
+							<serieslist>
+								<series valuefield="Revenue Growth" splittype="none" aggfunction="avg" splitfield="Country"/>
+							</serieslist>
+							<colors/>
+							<legend layout="off" halign="left" valign="bottom"/>
+							<styles>
+								<spacing/>
+							</styles>
+						</skuid__chart>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="100px" ratio="1">
+					<components>
+						<skuid__chart model="top50Companies" maintitle="Revenue By Industry" type="donut" uniqueid="sk-3ezw-20737">
+							<dataaxes>
+								<axis id="axis1" title="Revenue" minvalue="100000"/>
+							</dataaxes>
+							<categoryaxes>
+								<axis id="categories" categorytype="template" field="Country" template="{{Country}}"/>
+							</categoryaxes>
+							<serieslist>
+								<series valuefield="Revenue" splittype="template" categoryField="Revenue" aggfunction="sum" splitfield="Country" splittemplate="{{Industry}}"/>
+							</serieslist>
+							<colors/>
+							<legend halign="center" valign="bottom" showlabels="false" layout="horizontal"/>
+							<allowedtypes>
+								<type>pyramid</type>
+							</allowedtypes>
+							<styles>
+								<spacing/>
+							</styles>
+						</skuid__chart>
+					</components>
+				</division>
+			</divisions>
+		</skuid__grid>
+		<skuid__table allowColumnFreezing="dragDrop" showSaveCancel="false" uniqueid="sk-1eXX-2106" model="top50Companies" pageSize="10" mode="readonly">
 			<fields>
 				<field id="Name" uniqueid="fi-1eXh-5809"/>
 				<field id="Industry" uniqueid="fi-1eXh-5810"/>
@@ -35,10 +128,13 @@
 				<field id="Revenue Growth" uniqueid="fi-1eXh-5812"/>
 				<field id="Employees" uniqueid="fi-1eXh-5813"/>
 				<field id="Country" uniqueid="fi-1eXh-5814"/>
+				<field id="CountryCode" uniqueid="fi-3f4N-23066"/>
 			</fields>
 			<filtering enableSearch="true" searchMethod="client" emptySearchBehavior="query"/>
 			<rowActions/>
 			<massActions/>
+			<exportProperties useTableColumns="true"/>
+			<sorting enable="true" label="Sort"/>
 		</skuid__table>
 	</components>
 	<resources>
@@ -57,6 +153,7 @@
 							<default valuesource="fieldvalue" enclosevalueinquotes="true" field="Revenue Growth" value="{{$Input.RevenueGrowth}}"/>
 							<default valuesource="fieldvalue" enclosevalueinquotes="true" field="Employees" value="{{$Input.Employees}}"/>
 							<default valuesource="fieldvalue" enclosevalueinquotes="true" field="Country" value="{{$Input.Country}}"/>
+							<default valuesource="fieldvalue" field="CountryCode" enclosevalueinquotes="true" value="{{$Input.ISOCode}}"/>
 						</defaults>
 					</action>
 				</actions>
@@ -67,6 +164,7 @@
 					<input type="value" name="RevenueGrowth"/>
 					<input type="value" name="Employees"/>
 					<input type="value" name="Country"/>
+					<input type="value" name="ISOCode"/>
 				</inputs>
 			</actionsequence>
 			<actionsequence id="f3bc6722-f9a1-4c99-97a3-88f8b0118694" label="Create Dummy Model Data" type="reusable" uniqueid="sk-3h2H-2421">
@@ -81,6 +179,7 @@
 							<input name="RevenueGrowth" value="3"/>
 							<input name="Employees" value="2300000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -91,6 +190,7 @@
 							<input name="RevenueGrowth" value="10.7"/>
 							<input name="Employees" value="913546"/>
 							<input name="Country" value="China"/>
+							<input name="ISOCode" value="CN"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -101,6 +201,7 @@
 							<input name="RevenueGrowth" value="22.2"/>
 							<input name="Employees" value="667793"/>
 							<input name="Country" value="China"/>
+							<input name="ISOCode" value="CN"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -111,6 +212,7 @@
 							<input name="RevenueGrowth" value="24.2"/>
 							<input name="Employees" value="1636532"/>
 							<input name="Country" value="China"/>
+							<input name="ISOCode" value="CN"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -121,6 +223,7 @@
 							<input name="RevenueGrowth" value="29.9"/>
 							<input name="Employees" value="84000"/>
 							<input name="Country" value="Netherlands"/>
+							<input name="ISOCode" value="NL"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -131,6 +234,7 @@
 							<input name="RevenueGrowth" value="4.1"/>
 							<input name="Employees" value="369124"/>
 							<input name="Country" value="Japan"/>
+							<input name="ISOCode" value="JP"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -141,6 +245,7 @@
 							<input name="RevenueGrowth" value="8.2"/>
 							<input name="Employees" value="642292"/>
 							<input name="Country" value="Germany"/>
+							<input name="ISOCode" value="DE"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -151,6 +256,7 @@
 							<input name="RevenueGrowth" value="31.1"/>
 							<input name="Employees" value="74000"/>
 							<input name="Country" value="United Kingdom"/>
+							<input name="ISOCode" value="GB"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -161,6 +267,7 @@
 							<input name="RevenueGrowth" value="17.4"/>
 							<input name="Employees" value="71200"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -171,6 +278,7 @@
 							<input name="RevenueGrowth" value="8.3"/>
 							<input name="Employees" value="377000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -181,6 +289,7 @@
 							<input name="RevenueGrowth" value="6.3"/>
 							<input name="Employees" value="123000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -191,6 +300,7 @@
 							<input name="RevenueGrowth" value="21.8"/>
 							<input name="Employees" value="320671"/>
 							<input name="Country" value="South Korea"/>
+							<input name="ISOCode" value="KR"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -201,6 +311,7 @@
 							<input name="RevenueGrowth" value="4.9"/>
 							<input name="Employees" value="68000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -211,6 +322,7 @@
 							<input name="RevenueGrowth" value="18.2"/>
 							<input name="Employees" value="82681"/>
 							<input name="Country" value="Switzerland"/>
+							<input name="ISOCode" value="CH"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -221,6 +333,7 @@
 							<input name="RevenueGrowth" value="9.3"/>
 							<input name="Employees" value="260000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -231,6 +344,7 @@
 							<input name="RevenueGrowth" value="9.3"/>
 							<input name="Employees" value="289321"/>
 							<input name="Country" value="Germany"/>
+							<input name="ISOCode" value="DE"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -241,6 +355,7 @@
 							<input name="RevenueGrowth" value="4.1"/>
 							<input name="Employees" value="203000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -251,6 +366,7 @@
 							<input name="RevenueGrowth" value="30.8"/>
 							<input name="Employees" value="566000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -261,6 +377,7 @@
 							<input name="RevenueGrowth" value="4.4"/>
 							<input name="Employees" value="307637"/>
 							<input name="Country" value="Italy"/>
+							<input name="ISOCode" value="IT"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -271,6 +388,7 @@
 							<input name="RevenueGrowth" value="2"/>
 							<input name="Employees" value="254000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -281,6 +399,7 @@
 							<input name="RevenueGrowth" value="5.5"/>
 							<input name="Employees" value="180000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -291,6 +410,7 @@
 							<input name="RevenueGrowth" value="3.3"/>
 							<input name="Employees" value="202000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -301,6 +421,7 @@
 							<input name="RevenueGrowth" value="8"/>
 							<input name="Employees" value="270467"/>
 							<input name="Country" value="China"/>
+							<input name="ISOCode" value="CN"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -311,6 +432,7 @@
 							<input name="RevenueGrowth" value="14.5"/>
 							<input name="Employees" value="803126"/>
 							<input name="Country" value="Taiwan"/>
+							<input name="ISOCode" value="TW"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -321,6 +443,7 @@
 							<input name="RevenueGrowth" value="4.3"/>
 							<input name="Employees" value="19500"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -331,6 +454,7 @@
 							<input name="RevenueGrowth" value="3.6"/>
 							<input name="Employees" value="453048"/>
 							<input name="Country" value="China"/>
+							<input name="ISOCode" value="CN"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -341,6 +465,7 @@
 							<input name="RevenueGrowth" value="4"/>
 							<input name="Employees" value="95728"/>
 							<input name="Country" value="France"/>
+							<input name="ISOCode" value="FR"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -351,6 +476,7 @@
 							<input name="RevenueGrowth" value="16.6"/>
 							<input name="Employees" value="98277"/>
 							<input name="Country" value="France"/>
+							<input name="ISOCode" value="FR"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -361,6 +487,7 @@
 							<input name="RevenueGrowth" value="23.7"/>
 							<input name="Employees" value="342550"/>
 							<input name="Country" value="China"/>
+							<input name="ISOCode" value="CN"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -371,6 +498,7 @@
 							<input name="RevenueGrowth" value="7.3"/>
 							<input name="Employees" value="215638"/>
 							<input name="Country" value="Japan"/>
+							<input name="ISOCode" value="JP"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -381,6 +509,7 @@
 							<input name="RevenueGrowth" value="2.6"/>
 							<input name="Employees" value="370415"/>
 							<input name="Country" value="China"/>
+							<input name="ISOCode" value="CN"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -391,6 +520,7 @@
 							<input name="RevenueGrowth" value="39.1"/>
 							<input name="Employees" value="3935"/>
 							<input name="Country" value="Singapore"/>
+							<input name="ISOCode" value="SG"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -401,6 +531,7 @@
 							<input name="RevenueGrowth" value="25.1"/>
 							<input name="Employees" value="51900"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -411,6 +542,7 @@
 							<input name="RevenueGrowth" value="6.9"/>
 							<input name="Employees" value="40400"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -421,6 +553,7 @@
 							<input name="RevenueGrowth" value="8.7"/>
 							<input name="Employees" value="182000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -431,6 +564,7 @@
 							<input name="RevenueGrowth" value="13.1"/>
 							<input name="Employees" value="148767"/>
 							<input name="Country" value="China"/>
+							<input name="ISOCode" value="CN"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -441,6 +575,7 @@
 							<input name="RevenueGrowth" value="0"/>
 							<input name="Employees" value="155400"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -451,6 +586,7 @@
 							<input name="RevenueGrowth" value="1.1"/>
 							<input name="Employees" value="140553"/>
 							<input name="Country" value="Germany"/>
+							<input name="ISOCode" value="DE"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -461,6 +597,7 @@
 							<input name="RevenueGrowth" value="6.4"/>
 							<input name="Employees" value="449000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -471,6 +608,7 @@
 							<input name="RevenueGrowth" value="4.3"/>
 							<input name="Employees" value="491578"/>
 							<input name="Country" value="China"/>
+							<input name="ISOCode" value="CN"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -481,6 +619,7 @@
 							<input name="RevenueGrowth" value="3.5"/>
 							<input name="Employees" value="313000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -491,6 +630,7 @@
 							<input name="RevenueGrowth" value="14.7"/>
 							<input name="Employees" value="170517"/>
 							<input name="Country" value="China"/>
+							<input name="ISOCode" value="CN"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -501,6 +641,7 @@
 							<input name="RevenueGrowth" value="0.7"/>
 							<input name="Employees" value="290000"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -511,6 +652,7 @@
 							<input name="RevenueGrowth" value="7.7"/>
 							<input name="Employees" value="189509"/>
 							<input name="Country" value="France"/>
+							<input name="ISOCode" value="FR"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -521,6 +663,7 @@
 							<input name="RevenueGrowth" value="5.2"/>
 							<input name="Employees" value="245863"/>
 							<input name="Country" value="Japan"/>
+							<input name="ISOCode" value="JP"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -531,6 +674,7 @@
 							<input name="RevenueGrowth" value="1.5"/>
 							<input name="Employees" value="311133"/>
 							<input name="Country" value="China"/>
+							<input name="ISOCode" value="CN"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -541,6 +685,7 @@
 							<input name="RevenueGrowth" value="8"/>
 							<input name="Employees" value="252539"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -551,6 +696,7 @@
 							<input name="RevenueGrowth" value="4.9"/>
 							<input name="Employees" value="7200"/>
 							<input name="Country" value="United States"/>
+							<input name="ISOCode" value="US"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -561,6 +707,7 @@
 							<input name="RevenueGrowth" value="22.5"/>
 							<input name="Employees" value="469600"/>
 							<input name="Country" value="Russia"/>
+							<input name="ISOCode" value="RU"/>
 						</inputs>
 					</action>
 					<action type="action-sequence" action-sequence-id="d8ed4218-6160-4f39-a372-3044fcdec1a3">
@@ -571,6 +718,7 @@
 							<input name="RevenueGrowth" value="14.9"/>
 							<input name="Employees" value="24711"/>
 							<input name="Country" value="United Kingdom"/>
+							<input name="ISOCode" value="GB"/>
 						</inputs>
 					</action>
 					<action type="save">
