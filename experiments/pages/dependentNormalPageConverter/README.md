@@ -1,4 +1,4 @@
-# Child/Normal Page Converter
+# Dependent/Normal Page Converter
 
 ## Description
 
