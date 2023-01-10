@@ -1,5 +1,3 @@
-// this is the component controller code
-
 ({
 	handleShowModalFlowEvent: function(component, event, helper) {
         let name = event.getParam("name");
@@ -16,16 +14,13 @@
         	$A.enqueueAction(action);
             component.set("v.showModal", false);
         }
-//        if (event.getParam('currentStage') === 'Case_Created') {
-//            component.set("v.showCancel", false);
-//        }
     },
     handleClose: function (component, event, helper) {
         component.set("v.showModal", false);
     },
   	refreshPage: function(component, event, helper) {
       	var evt = $A.get("e.skuid:event");
-      	evt.setParams({"name": "flowModalClosed"});
+     	evt.setParams({"name": "flowModalClosed"});
       	evt.fire();
   	}
 })

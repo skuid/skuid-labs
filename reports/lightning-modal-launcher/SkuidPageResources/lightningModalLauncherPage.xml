@@ -1,0 +1,148 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="true" showheader="true">
+	<models>
+		<model id="runningUser" limit="1" query="true" createrowifnonefound="false" datasource="salesforce" sobject="User">
+			<fields>
+				<field id="FirstName"/>
+				<field id="LastName"/>
+				<field id="Id"/>
+			</fields>
+			<conditions>
+				<condition type="userinfo" value="" field="Id" operator="=" enclosevalueinquotes="true" userinfotype="userid"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="FlowParams" limit="20" query="true" createrowifnonefound="true" datasource="Ui-Only">
+			<fields>
+				<field id="name" displaytype="TEXT" length="255" label="Name"/>
+				<field id="type" displaytype="TEXT" length="255" label="Type"/>
+				<field id="value" displaytype="TEXT" length="255" label="Value"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Flow" limit="20" query="true" datasource="salesforce" sobject="FlowInterview">
+			<fields>
+				<field id="Name"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Name" operator="=" clientorserver="server" state="filterableon" inactive="false" name="Name"/>
+			</conditions>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__grid uniqueid="sk-2NCz-19678" flexDirection="row" justifyContent="center" alignItems="flex-start">
+			<divisions>
+				<division minWidth="100px" ratio="1" alignSelf="auto" maxWidth="80vw">
+					<components>
+						<skuid__header title="Lightning Modal Launcher" uniqueid="sk-2NBx-18290" subtitle="Skuid Labs">
+							<styles>
+								<spacing top="2"/>
+							</styles>
+						</skuid__header>
+						<skuid__buttonSet model="FlowParams" uniqueid="sk-2NCN-21916" position="center">
+							<groups>
+								<skuid__buttonGroup uniqueId="sk-2NCN-21914">
+									<buttons>
+										<skuid__button label="Launch Lightning Modal" uniqueId="sk-2NCN-21915">
+											<actions>
+												<action type="abandonRows" model="FlowParams" affectedrows="context"/>
+												<action type="createRow" model="FlowParams" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+													<defaults>
+														<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="firstName"/>
+														<default valuesource="fieldvalue" field="type" enclosevalueinquotes="true" value="String"/>
+														<default valuesource="modelmerge" field="value" enclosevalueinquotes="true" sourcemodel="runningUser" sourcefield="FirstName"/>
+													</defaults>
+												</action>
+												<action type="createRow" model="FlowParams" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+													<defaults>
+														<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="lastName"/>
+														<default valuesource="fieldvalue" field="type" enclosevalueinquotes="true" value="String"/>
+														<default valuesource="modelmerge" field="value" enclosevalueinquotes="true" sourcemodel="runningUser" sourcefield="LastName"/>
+													</defaults>
+												</action>
+												<action type="action-sequence" action-sequence-id="e643bc4b-738e-4285-912b-003f6f6cde1b">
+													<inputs>
+														<input name="model" value="FlowParams"/>
+														<input name="flowName" value="HelloWorldFlow"/>
+													</inputs>
+												</action>
+											</actions>
+										</skuid__button>
+									</buttons>
+								</skuid__buttonGroup>
+							</groups>
+							<styles>
+								<spacing top="2" bottom="2"/>
+							</styles>
+						</skuid__buttonSet>
+					</components>
+				</division>
+			</divisions>
+		</skuid__grid>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="inlinesnippet" name="callFlow" cachelocation="false">const params = arguments[0],
+   eventName = "showModalFlow",
+   flowName = params.$Input.flowName,
+   model = skuid.$M(params.$Input.model);
+console.log(this, skuid, params);
+ 
+// See if there is a global application event with this name
+let auraEvt = window.$A.get("e." + eventName),
+   skuidAuraEvt = window.$A.get("e.skuid:event"),
+   paramsObject = {
+       flowName: flowName,
+       params: model.getRows()
+   };
+ 
+// If there is a matching global application event with this name,
+// then fire that event, with each Skuid Event parameter
+// being mapped directly to that Event parameter.
+if (auraEvt) {
+   if (paramsObject) {
+       auraEvt.setParams(paramsObject);
+   }
+   auraEvt.fire();
+}
+ 
+skuidAuraEvt.setParams({
+   "name": eventName,
+   "source": "skuid",
+});
+ 
+// ALSO fire a generic "Skuid Event",
+// where all of the parameters are serialized to JSON
+if (paramsObject) {
+   skuidAuraEvt.setParam("data", paramsObject);
+}
+ 
+skuidAuraEvt.fire();</jsitem>
+		</javascript>
+		<css/>
+		<actionsequences>
+			<actionsequence id="a0c0e6d6-d637-483e-89e9-af549eff2494" type="event-triggered" event-scope="global" event-name="flowModalClosed" label="ReassignClosed">
+				<description/>
+				<actions>
+					<action type="showToast" duration="4" position="bl" message="Screen Flow Complete!"/>
+				</actions>
+			</actionsequence>
+			<actionsequence id="e643bc4b-738e-4285-912b-003f6f6cde1b" label="CallFlow" type="reusable">
+				<description/>
+				<actions>
+					<action type="custom" snippet="callFlow"/>
+				</actions>
+				<inputs>
+					<input type="value" name="flowName"/>
+					<input type="model" name="model"/>
+				</inputs>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+	<background/>
+</skuid__page>
