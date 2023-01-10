@@ -19,7 +19,7 @@ The fundamental approach is this:
 1. From the Skuid Pages list, click **Create new page**, select **Upload XML**, and then select the file you downloaded.
 1. In the actions on the button labeled "Launch Lightning Modal", select the action labeled "Run: CallFlow" to see a list of options/inputs. 
 1. Update the input titled "flowName" with the name of the Flow you would like to inlcude in the modal.
-- NOTE: This page is sending the running user's firstName and lastName , the flow should have input variables created in order to accept these.
+    - NOTE: This page is sending the running user's firstName and lastName , the flow should have input variables created in order to accept these.
 1. Save.
 
 ### Create Lightning Component
