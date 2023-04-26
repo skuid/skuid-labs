@@ -7,18 +7,30 @@ We’re exploring how to add “drag and drop” functionality to a Skuid page u
 
 Once the library is added, the Skuid builder can write JS to turn any data displaying components (table, deck, list) in Skuid into “drag and drop” mode. 
 
-## Approach
-- Create an “external” JS resource to reference the dragula library link 
+## Install this example
+- Page API:  V2
+- Data source: Uses default Salesforce data source  (Cases)
+- Design system: Download [ProductTour_Kanban](ProductTour_Kanban.designsystem?raw=true) and import it to Skuid's Design Systems.  
+- Page XML:  [Copy the XML from this page](kanban_dragula.xml?raw=true), or save it as an XML file, and upload it on the Skuid Pages page.  
 
-URL should be:  https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js
+
+## Approach
+
+### Step 1:  External JS Resource
+Create an “external” JS resource to reference the dragula library.  
+The URL should be:  https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js
 
 <img src="image1.png" width="300"></img>
 
 
-- Create a `Generic JS snippet` to handle “drag and drop” functionalities.
+### Step 2: Create a Generic JS snippet
+
+A second javascript resource of type `Generic JS snippet` will handle “drag and drop” functionalities in the page.
+
 In this snippet, you can:
-Select the component you want to add dragula to.  (we use a deck with Id: `outside_deck`) 
-Make changes when the item is “dropped” into a new position. In the example linked here, we’re changing the status of the case when dropping it to a new status column. 
+
+- Select the component you want to add dragula to.  (we use a deck with Id: `outside_deck`) 
+- Make changes when the item is “dropped” into a new position. In the example linked here, we’re changing the status of the case when dropping it to a new status column. 
 
 Below find the snippet code. 
 ```
@@ -63,10 +75,17 @@ setTimeout(() => {
 }, 50)
 ```
 
-- Add styling code as JSS to a component variant in the Design System Studio. 
+### Step 3: Add styling code as JSS in the Design System Studio. 
+
+There are some specific styling code needed to make Drag and Drop really look good. 
+These should be added as code to a variant of the deck component. 
+(Note - the ability to add code in a design system must be turned on by your Skuid account representative)
+After identifying the deck variant - go to the menu at top right of variant and select `Extend with Code`
 
 <img src="image5.png" width="300"></img>
 
+
+Below find the code that should be used. 
 ```
 	// Copy over class names from the left that you wish to modify
     "@global": {
@@ -109,13 +128,6 @@ setTimeout(() => {
 A `setTimeout` function is needed to wait for the components to load before initializing dragula  
 
 In this demo,  the position where the item is dropped is for runtime only and is not automatically preserved on refresh. If drag and drop is used for re-ordering, make sure the data updated on drop includes values that update model order - and the include a save action in your “Drop” sequence. 
-
-
-## Install this example in your org. 
-- Page API:  V2
-- Data source: Uses default Salesforce data source  (Cases)
-- Design system: Download [ProductTour_Kanban](ProductTour_Kanban.designsystem?raw=true) and import it to Skuid's Design Systems.  
-- Page XML:  [Copy the XML from this page](kanban_dragula.xml?raw=true), or save it as an XML file, and upload it on the Skuid Pages page.  
 
 
 
