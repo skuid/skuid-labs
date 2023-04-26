@@ -1,0 +1,249 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="ProductTour_Kanban">
+	<models>
+		<model id="Cases" limit="500" query="false" createrowifnonefound="false" datasource="Demo Org Salesforce" sobject="Case">
+			<fields>
+				<field id="Id"/>
+				<field id="CaseNumber"/>
+				<field id="Status"/>
+				<field id="Priority"/>
+				<field id="Subject"/>
+				<field id="Reason"/>
+				<field id="Description"/>
+				<field id="Type"/>
+				<field id="IsEscalated"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Cases_Agg_By_Status" limit="" query="false" createrowifnonefound="false" datasource="Demo Org Salesforce" sobject="Case" type="aggregate">
+			<fields>
+				<field id="Id" name="countId" function="COUNT"/>
+			</fields>
+			<conditions/>
+			<actions/>
+			<groupby method="simple">
+				<field id="Status" name="status"/>
+			</groupby>
+		</model>
+	</models>
+	<components>
+		<skuid__header title="Case Management" uniqueid="sk-2Esq-18989" separator="false">
+			<styles>
+				<spacing top="3" bottom="3" left="3" styleSettingsVariant="c5c3555b-b759-400f-9552-fa41d60d0be3"/>
+			</styles>
+			<skuid__buttonSet>
+				<groups/>
+			</skuid__buttonSet>
+		</skuid__header>
+		<skuid__deck columnGutter="24px" rowGutter="24px" model="Cases_Agg_By_Status" showSaveCancel="false" verticalAlign="top" minWidth="20%" uniqueid="outside_deck" styleSettingsVariant="b4c1949b-676c-4797-b296-eeaecf19241e" setMaxWidth="auto" pageSize="10" showLoadMore="false" showListHeader="false" showListFooter="false">
+			<components>
+				<skuid__header model="Cases_Agg_By_Status" uniqueid="sk-2BkO-31981" title="{{{status}}} " styleSettingsVariant="7a383dc8-ad4f-4b2e-ad8a-73eaec8669d5">
+					<skuid__buttonSet model="Cases">
+						<groups>
+							<skuid__buttonGroup uniqueId="sk-2Bka-33987">
+								<buttons>
+									<skuid__button uniqueId="sk-2Bka-33988" icon="sk-webicon-material-icons:add" styleSettingsVariant="3e924db3-8247-4f1e-9ef9-8a918fccec6f">
+										<actions/>
+									</skuid__button>
+								</buttons>
+							</skuid__buttonGroup>
+						</groups>
+					</skuid__buttonSet>
+				</skuid__header>
+				<skuid__deck columnGutter="0" model="Cases" showSaveCancel="false" verticalAlign="top" minWidth="100%" uniqueid="sk-2Bkf-42011" setMaxWidth="auto" pageSize="Infinity" rowGutter="8px" showLoadMore="false" showListHeader="false" showListFooter="false" styleSettingsVariant="65ab8428-c6c3-4b2a-914b-a18cd998b370">
+					<components>
+						<skuid__text contents="&lt;strong&gt;{{Subject}}&lt;/strong&gt;" uniqueid="sk-2Bkl-43626" model="Cases"/>
+						<skuid__text contents="{{Status}}" uniqueid="sk-2FOr-19040" model="Cases" styleSettingsVariant="945c3874-e5bf-4958-9d80-3ee6cc0dc004">
+							<styles>
+								<spacing top="0.5"/>
+							</styles>
+						</skuid__text>
+						<skuid__grid uniqueid="sk-2EuH-27127" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+							<divisions>
+								<division ratio="0" alignSelf="auto">
+									<components>
+										<skuid__wrapper uniqueid="sk-2EuG-26561" styleSettingsVariant="f83db214-0f88-4b42-be20-13004a55f6a4">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;{{Priority}}&lt;/div&gt;&#10;" uniqueid="sk-2Bko-44545" model="Cases" styleSettingsVariant="d45b6cc9-5604-4271-b595-787f84f088ba">
+													<renderConditions logictype="and"/>
+													<styleVariantConditions>
+														<rule logictype="and" styleSettingsVariantOverride="28e606fb-1ce7-43c3-855e-664766900b95">
+															<condition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="Cases" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Priority" fieldtargetobjects="Case" value="High"/>
+														</rule>
+														<rule logictype="and" styleSettingsVariantOverride="91698d50-acd6-4023-a6e9-3255b0356c0e">
+															<condition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="Cases" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="Priority" fieldtargetobjects="Case" value="Medium"/>
+														</rule>
+													</styleVariantConditions>
+												</skuid__text>
+											</components>
+											<background/>
+											<renderConditions logictype="and"/>
+											<styleVariantConditions>
+												<rule logictype="and" styleSettingsVariantOverride="a2773d14-2133-4f3c-9222-b8c2eeecb196">
+													<condition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="Cases" sourcetype="fieldvalue" field="Priority" fieldtargetobjects="Case" value="Medium"/>
+												</rule>
+												<rule logictype="and" styleSettingsVariantOverride="bd37855c-4515-4b08-864f-77b40481a757">
+													<condition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="Cases" sourcetype="fieldvalue" field="Priority" fieldtargetobjects="Case" value="High"/>
+												</rule>
+											</styleVariantConditions>
+											<styles>
+												<spacing/>
+											</styles>
+										</skuid__wrapper>
+									</components>
+								</division>
+							</divisions>
+							<styles>
+								<spacing top="1.5"/>
+							</styles>
+							<background/>
+						</skuid__grid>
+					</components>
+					<filtering enableSearch="false"/>
+					<sorting enable="false"/>
+					<conditions>
+						<condition type="contextrow" field="Status" mergefield="status" operator="="/>
+					</conditions>
+					<styles>
+						<spacing top="2"/>
+					</styles>
+					<interactions>
+						<interaction type="tap">
+							<action type="showModal">
+								<skuid__modal title="Case {{CaseNumber}}" width="540px" ariaRole="dialog">
+									<components>
+										<skuid__form showErrorsInline="true" model="Cases" uniqueid="sk-2FVU-21617" mode="edit">
+											<columns>
+												<column>
+													<sections>
+														<section title="New Section" showHeading="false">
+															<fields>
+																<skuid__field id="Subject" uniqueId="sk-2FVo-26659"/>
+																<skuid__field id="Type" uniqueId="sk-2FVf-23510"/>
+																<skuid__field id="Reason" uniqueId="sk-2FVo-26696"/>
+																<skuid__field id="Description" uniqueId="sk-2FVf-23540"/>
+																<skuid__field id="IsEscalated" uniqueId="sk-2FVf-23520"/>
+															</fields>
+														</section>
+													</sections>
+												</column>
+											</columns>
+										</skuid__form>
+									</components>
+									<buttons>
+										<skuid__button label="Save" uniqueId="sk-2FVg-24727" styleSettingsVariant="primary"/>
+										<skuid__button label="Cancel" uniqueId="sk-2FVg-25102"/>
+										<skuid__button label="Escalate" uniqueId="sk-2FVp-27262" styleSettingsVariant="destructive">
+											<actions/>
+										</skuid__button>
+									</buttons>
+								</skuid__modal>
+							</action>
+						</interaction>
+						<interaction type="rightclick">
+							<action type="toggleMenu" componentId="mouse">
+								<optionGroups>
+									<optionGroup>
+										<options>
+											<option label="Escalate">
+												<actions/>
+											</option>
+											<option label="Reassign"/>
+											<option label="Close with resolution"/>
+										</options>
+									</optionGroup>
+								</optionGroups>
+							</action>
+						</interaction>
+					</interactions>
+					<renderConditions logictype="and"/>
+					<styleVariantConditions/>
+				</skuid__deck>
+			</components>
+			<filtering enableSearch="false"/>
+			<sorting enable="false"/>
+			<styles>
+				<spacing left="3" right="3" bottom="6" top="3"/>
+			</styles>
+			<interactions/>
+			<renderConditions logictype="and"/>
+			<styleVariantConditions/>
+		</skuid__deck>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="external" name="dragula" cachelocation="false" url="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js">const params = arguments[0];</jsitem>
+			<jsitem location="inlinesnippet" name="draggablesnippet" cachelocation="false" url="">setTimeout(() =&gt; {
+    const topDeck = skuid.$C("outside_deck"),
+        childDecks = topDeck.getChildComponentsOfType("skuid__deck"),
+        childEls = childDecks.map(deck =&gt; deck.getElement().children[1]);
+    //console.log(childEls);
+    dragula(
+        childEls,
+        {}
+    )
+        .on('dragend', (el) =&gt; {
+            el.classList.remove('my-dragged-el', 'sk-page');
+            el.style.minWidth = '100%';
+        })
+        .on('drag', (el, source) =&gt; {
+            el.classList.add('my-dragged-el', 'sk-page');
+            el.style.minWidth = `${source.offsetWidth}px`;
+        })
+        .on('drop', (el, target) =&gt; {
+        //    console.log(el)
+        //    console.log(target)
+        //    console.log(target.closest('[data-key]'))
+            const id = el.dataset.key.replace('card-', '');
+        //    console.log(target.closest('[data-key]').dataset)
+            const status = JSON.parse(target.closest('[data-key]').dataset.key.replace('card-', '')).status;
+            const payload = {
+                status: status,
+                id: id,
+            }
+        //    console.log('publishing payload', payload, 'to update-status');
+            const casesModel = skuid.$M('Cases')
+            const row = casesModel.getRowById(id);
+            casesModel.updateRow(row, { Status: status });
+            // casesModel.save();
+
+        //    const casesAggModel = skuid.$M('Cases_Agg_By_Status');
+            // casesAggModel.load();
+        });
+    console.log('loaded draggable');
+}, 50)</jsitem>
+		</javascript>
+		<css/>
+		<actionsequences>
+			<actionsequence id="b7b31912-0074-4a1c-8ca5-101eb5774035" label="New sequence" type="event-triggered" event-scope="component" event-name="page.rendered">
+				<description/>
+				<actions>
+					<action type="requeryModels" behavior="standard">
+						<models>
+							<model>Cases</model>
+							<model>Cases_Agg_By_Status</model>
+						</models>
+					</action>
+					<action type="custom" snippet="draggablesnippet"/>
+				</actions>
+			</actionsequence>
+			<actionsequence id="11a90ed7-0896-4eae-9311-c7664fc0c25b" label="update status" type="event-triggered" event-scope="component" event-name="update-status">
+				<description/>
+				<actions>
+					<action type="updateRow" fieldmodel="Cases" affectedrows="context">
+						<updates>
+							<update valuesource="modelmerge" field="Status" enclosevalueinquotes="true" sourcemodel="Cases" sourcefield="Status"/>
+						</updates>
+					</action>
+				</actions>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+		<spacing/>
+	</styles>
+	<interactions/>
+	<background/>
+</skuid__page>
