@@ -1,0 +1,663 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" title="HubSpot Sample Page - Standard Objects">
+	<models>
+		<model id="HubSpot_Deal_List" query="true" datasource="HubSpotTestApp" payloadcontenttype="JSON" type="readwrite">
+			<fields>
+				<field id="properties.amount" label="Amount" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="3" scale="0" accessible="true" filterable="true"/>
+				<field id="properties.closedate" label="Close Date" ispolymorphic="false" isnamepointing="false" displaytype="DATETIME" accessible="true" filterable="true"/>
+				<field id="properties.createdate" label="Created Date" ispolymorphic="false" isnamepointing="false" displaytype="DATETIME" accessible="true" filterable="true"/>
+				<field id="properties.dealname" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="properties.dealstage" label="Stage" ispolymorphic="false" isnamepointing="false" displaytype="PICKLIST" accessible="true" filterable="true" ogdisplaytype="STRING" picklistsource="manual" returntype="TEXT">
+					<picklistentries>
+						<entry value="appointmentscheduled" label="Appointment Scheduled"/>
+						<entry value="qualifiedtobuy" label="Qualified To Buy"/>
+						<entry value="presentationscheduled" label="Presentation Scheduled"/>
+						<entry value="decisionmakerboughtin" label="Decision Maker Bought-In"/>
+						<entry value="contractsent" label="Contract Sent"/>
+						<entry value="closedwon" label="Closed Won"/>
+						<entry value="closedlost" label="Closed Lost"/>
+					</picklistentries>
+				</field>
+				<field id="properties.pipeline" label="Pipeline" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="UUID" precision="10" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+			</fields>
+			<conditions/>
+			<actions/>
+			<methods>
+				<method type="query" verb="GET" payloadcontenttype="JSON" endpoint="/crm/v3/objects/deals?{{limit}}" limitmethod="simple" limit="100" simplerecordslimitparameter="limit" pathtocontent="results" fieldtargetobjects="results"/>
+				<method type="update" verb="POST" payloadcontenttype="JSON" sendchanges="custompayloadinbody" successif="requestsucceeds" endpoint="/crm/v3/objects/deals/batch/update" batch="true" pathtocontent="inputs" contenttype="application/json" payloadsnippet="request body - batch - update deals">
+					<requestBodyFields>
+						<field>id</field>
+					</requestBodyFields>
+				</method>
+				<method type="delete" verb="DELETE" payloadcontenttype="JSON" endpoint="/crm/v3/objects/deals/{{id}}" successif="requestsucceeds"/>
+				<method type="insert" verb="POST" payloadcontenttype="JSON" successif="requestsucceeds" sendchanges="asjsoninbody" insertresponse="recordinbody" endpoint="/crm/v3/objects/deals"/>
+			</methods>
+			<idfields>
+				<field>id</field>
+			</idfields>
+		</model>
+		<model id="HubSpot_Deal_Detail" query="true" createrowifnonefound="false" datasource="HubSpotTestApp" payloadcontenttype="JSON" fieldtargetobjects="properties" useresponsesnippet="false" responsesnippet="populate CurrentLineItems model" type="readwrite">
+			<fields>
+				<field id="amount" label="Amount" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="4" scale="0" accessible="true" filterable="true"/>
+				<field id="closedate" label="Close Date" ispolymorphic="false" isnamepointing="false" displaytype="DATETIME" accessible="true" filterable="true"/>
+				<field id="createdate" label="Created Date" ispolymorphic="false" isnamepointing="false" displaytype="DATETIME" accessible="true" filterable="true" readonly="true"/>
+				<field id="dealname" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" accessible="true" filterable="true" ogdisplaytype="STRING"/>
+				<field id="dealstage" label="Deal Stage" ispolymorphic="false" isnamepointing="false" displaytype="PICKLIST" accessible="true" filterable="true" ogdisplaytype="STRING" picklistsource="manual" returntype="TEXT">
+					<picklistentries>
+						<entry value="appointmentscheduled" label="Appointment Scheduled"/>
+						<entry value="qualifiedtobuy" label="Qualified To Buy"/>
+						<entry value="presentationscheduled" label="Presentation Scheduled"/>
+						<entry value="decisionmakerboughtin" label="Decision Maker Bought-In"/>
+						<entry value="contractsent" label="Contract Sent"/>
+						<entry value="closedwon" label="Closed Won"/>
+						<entry value="closedlost" label="Closed Lost"/>
+					</picklistentries>
+				</field>
+				<field id="pipeline" label="Pipeline" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" accessible="true" filterable="true" ogdisplaytype="STRING"/>
+			</fields>
+			<conditions>
+				<condition type="modelmerge" value="" sourcetype="param" sourceparam="hs_object_id" state="filterableon" inactive="false" name="hs_object_id" operator="=" mergefield="id" novaluebehavior="deactivate" model="HubSpot_Deal_List" enclosevalueinquotes="true"/>
+			</conditions>
+			<actions/>
+			<methods>
+				<method type="query" verb="GET" endpoint="/crm/v3/objects/deals/{{hs_object_id}}?associations=line_items" pathtocontent="properties" payloadcontenttype="JSON"/>
+				<method type="update" verb="PATCH" payloadcontenttype="JSON" sendchanges="asjsoninbody" successif="requestsucceeds" endpoint="/crm/v3/objects/deals/{{hs_object_id}}"/>
+				<method type="delete" verb="DELETE" payloadcontenttype="JSON" endpoint="/crm/v3/objects/deals/{{hs_object_id}}" successif="requestsucceeds"/>
+			</methods>
+		</model>
+		<model id="HubSpot_CurrentLineItem_List" query="false" createrowifnonefound="false" datasource="HubSpotTestApp" verb="GET" payloadcontenttype="JSON" endpoint="/crm/v3/objects/deals/{{hs_object_id}}/associations/line_items" pathtocontent="results" fieldtargetobjects="results">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="10" scale="0" accessible="true" filterable="true"/>
+				<field id="type" label="Type" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+			</fields>
+			<conditions>
+				<condition type="modelmerge" value="" sourcetype="param" sourceparam="hs_object_id" state="filterableon" inactive="false" name="hs_object_id" operator="=" model="HubSpot_Deal_List" enclosevalueinquotes="true" mergefield="id" novaluebehavior="deactivate"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="HubSpot_Products" query="true" createrowifnonefound="false" datasource="HubSpotTestApp" verb="GET" payloadcontenttype="JSON" endpoint="/crm/v3/objects/products?{{limit}}" pathtocontent="results" fieldtargetobjects="results" limitmethod="simple" limit="50" simplerecordslimitparameter="limit">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="10" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="properties.name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="properties.price" label="Price" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="3" scale="0" accessible="true" filterable="true"/>
+				<field id="properties.hs_object_id" label="Hs Object Id" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="10" scale="0" accessible="true" filterable="true"/>
+				<field id="properties.description" label="Description" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="IsInQuote_UI" displaytype="BOOLEAN" uionly="true" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="UI_LineItems" query="true" datasource="Ui-Only" createrowifnonefound="false">
+			<fields>
+				<field id="name" displaytype="TEXT" length="255" label="Product Name"/>
+				<field id="quantity" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" precision="9" scale="0" label="Quantity" defaultvaluetype="fieldvalue" defaultValue="1"/>
+				<field id="price" displaytype="CURRENCY" length="255" label="Price" ogdisplaytype="TEXT" precision="9" scale="2"/>
+				<field id="discount" displaytype="DOUBLE" length="255" label="Discount %" ogdisplaytype="TEXT" precision="3" scale="2"/>
+				<field id="item_total" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="2" label="Item Total">
+					<formula>({{price}} - {{price}}*{{discount}}/100)*{{quantity}}</formula>
+				</field>
+				<field id="hubspot_id" displaytype="TEXT" length="255" label="HubSpot Id"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="HubSpot_LineItem_Create_Batch" query="false" createrowifnonefound="true" datasource="HubSpotTestApp" payloadcontenttype="JSON" fieldtargetobjects="results" type="readwrite">
+			<fields>
+				<field id="id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" precision="10" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="properties.quantity" label="Quantity" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+				<field id="properties.amount" label="Amount" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="7" scale="0" accessible="true" filterable="true"/>
+				<field id="properties.hs_object_id" label="Hs Object Id" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="10" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="properties.hs_product_id" label="Hs Product Id" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="10" scale="0" accessible="true" filterable="true"/>
+				<field id="name" displaytype="TEXT" length="255" label="Product Name"/>
+				<field id="quantity" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" precision="9" scale="0" label="Quantity"/>
+				<field id="price" displaytype="CURRENCY" length="255" label="Price" ogdisplaytype="TEXT" precision="9" scale="2"/>
+				<field id="discount" displaytype="DOUBLE" length="255" label="Discount %" ogdisplaytype="TEXT" precision="3" scale="2"/>
+				<field id="item_total" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="2" label="Item Total">
+					<formula>({{price}} - {{price}}*{{discount}}/100)*{{quantity}}</formula>
+				</field>
+			</fields>
+			<conditions/>
+			<actions/>
+			<idfields>
+				<field>id</field>
+			</idfields>
+			<methods>
+				<method type="query" verb="GET" endpoint="/crm/v3/objects/line_items" pathtocontent="results" payloadcontenttype="JSON"/>
+				<method type="insert" verb="POST" payloadcontenttype="JSON" successif="requestsucceeds" sendchanges="custompayloadinbody" endpoint="/crm/v3/objects/line_items/batch/create" batch="true" pathtocontent="inputs" contenttype="application/json" payloadsnippet="requestbody - batch - create new line items in HS"/>
+			</methods>
+		</model>
+	</models>
+	<components>
+		<skuid__header title="Sample Page 1" uniqueid="sk-3ilJ-17679" subtitle="Skuid NLX + HubSpot">
+			<skuid__buttonSet model="HubSpot_Deal_List">
+				<groups>
+					<skuid__buttonGroup uniqueId="sk-3ion-38128">
+						<buttons>
+							<skuid__button label="What's on this page?" uniqueId="sk-3ion-38129">
+								<actions>
+									<action type="showModal">
+										<skuid__modal title="Sample page 1: Work with standard objects" width="640px" ariaRole="dialog">
+											<components>
+												<skuid__text contents="Featuring:&#10;&lt;ol&gt;&#10;&#9;&lt;li&gt;Connect to standard objects like Deals and Line Items&lt;/li&gt;&#10;&#9;&lt;li&gt;List &amp;gt; Detail view layout.&amp;nbsp;&lt;/li&gt;&#10;&#9;&lt;li&gt;CRUD operations on Deals (both single and batch)&lt;/li&gt;&#10;&#9;&lt;li&gt;Send Batch request to HubSpot REST API to create multiple Line Items for a Deal&lt;/li&gt;&#10;&#9;&lt;li&gt;Wizard component: Step by step form to add items to quote&lt;/li&gt;&#10;&#9;&lt;li&gt;Override metadata for Deal Stage field to have a user friendly picklist dropdown&lt;/li&gt;&#10;&lt;/ol&gt;&#10;" uniqueid="sk-3yA4-89322"/>
+											</components>
+										</skuid__modal>
+									</action>
+								</actions>
+							</skuid__button>
+						</buttons>
+					</skuid__buttonGroup>
+				</groups>
+			</skuid__buttonSet>
+			<styles>
+				<spacing top="2" right="2" bottom="2" left="2"/>
+			</styles>
+		</skuid__header>
+		<skuid__grid uniqueid="sk-3ios-40103" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="3">
+			<divisions>
+				<division minWidth="100px" ratio="1">
+					<components>
+						<skuid__wrapper uniqueid="sk-3jK6-37030" heightStrategy="fixed" height="custom" heightCustom="90vh" overflowY="auto">
+							<components>
+								<skuid__buttonSet model="HubSpot_Deal_List" uniqueid="sk-5-I-40487" position="left">
+									<groups>
+										<skuid__buttonGroup uniqueId="sk-5-I-40485">
+											<buttons>
+												<skuid__button label="Edit deals" uniqueId="sk-5-I-40486" icon="sk-webicon-material-icons:edit">
+													<actions>
+														<action type="showModal">
+															<skuid__modal title="HubSpot Deals" width="90%" ariaRole="dialog">
+																<components>
+																	<skuid__text contents="Make changes to multiple rows and save to see batch update in action" uniqueid="sk-5-U-54530">
+																		<styles>
+																			<spacing bottom="1.5"/>
+																		</styles>
+																	</skuid__text>
+																	<skuid__table allowColumnFreezing="dragDrop" model="HubSpot_Deal_List" uniqueid="sk-5-P-48888" mode="read">
+																		<fields>
+																			<field id="id" horizontalAlignment="right" uniqueid="sk-5-P-48889" readOnly="true"/>
+																			<field id="properties.amount" horizontalAlignment="right" uniqueid="sk-5-P-48890"/>
+																			<field id="properties.closedate" uniqueid="sk-5-P-48891"/>
+																			<field id="properties.createdate" uniqueid="sk-5-P-48892"/>
+																			<field id="properties.dealname" uniqueid="sk-5-P-48893"/>
+																			<field id="properties.dealstage" uniqueid="sk-5-P-48894"/>
+																			<field id="properties.pipeline" uniqueid="sk-5-P-48895"/>
+																		</fields>
+																		<filtering enableSearch="false"/>
+																		<actions/>
+																		<rowActions>
+																			<action type="multi" label="Delete">
+																				<actions>
+																					<action type="markRowsForDeletion" model="HubSpot_Deal_List" affectedrows="context"/>
+																				</actions>
+																			</action>
+																		</rowActions>
+																		<massActions/>
+																		<exportProperties useTableColumns="true"/>
+																		<sorting enable="false"/>
+																	</skuid__table>
+																</components>
+															</skuid__modal>
+														</action>
+													</actions>
+												</skuid__button>
+												<skuid__button label="Create new deal" uniqueId="sk-6EF-64956">
+													<actions>
+														<action type="createRow" model="HubSpot_Deal_List" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context"/>
+														<action type="showModal">
+															<skuid__modal title="Create New Deal" width="640px" ariaRole="dialog">
+																<components>
+																	<skuid__form showErrorsInline="true" model="HubSpot_Deal_List" uniqueid="sk-6EP-77650" mode="edit">
+																		<columns>
+																			<column>
+																				<sections>
+																					<section title="New Section" showHeading="false">
+																						<fields>
+																							<skuid__field id="properties.dealname" uniqueId="sk-6ES-80686" showHelp="true"/>
+																							<skuid__field id="properties.amount" uniqueId="sk-6ES-80650"/>
+																							<skuid__field id="properties.closedate" uniqueId="sk-6ES-80668"/>
+																							<skuid__field id="properties.dealstage" uniqueId="sk-6ES-80704"/>
+																						</fields>
+																					</section>
+																				</sections>
+																			</column>
+																		</columns>
+																	</skuid__form>
+																</components>
+																<buttons>
+																	<skuid__button label="Save" uniqueId="sk-6ET-82182" styleSettingsVariant="primary">
+																		<actions>
+																			<action type="save">
+																				<models>
+																					<model>HubSpot_Deal_List</model>
+																				</models>
+																			</action>
+																			<action type="closeModals" closebehavior="close"/>
+																		</actions>
+																	</skuid__button>
+																	<skuid__button label="Run actions" uniqueId="sk-6EU-83469">
+																		<actions>
+																			<action type="cancel">
+																				<models>
+																					<model>HubSpot_Deal_List</model>
+																				</models>
+																			</action>
+																			<action type="closeModals" closebehavior="close"/>
+																		</actions>
+																	</skuid__button>
+																</buttons>
+																<afterCloseActions>
+																	<action type="cancel">
+																		<models>
+																			<model>HubSpot_Deal_List</model>
+																		</models>
+																	</action>
+																</afterCloseActions>
+															</skuid__modal>
+														</action>
+													</actions>
+												</skuid__button>
+											</buttons>
+										</skuid__buttonGroup>
+									</groups>
+									<styles>
+										<spacing bottom="1.5"/>
+									</styles>
+								</skuid__buttonSet>
+								<skuid__list model="HubSpot_Deal_List" uniqueid="sk-3iou-41639" title="Deal List" pageSize="Infinity" showPageSizeSelect="false" resetPaginationOnQuery="false" showLoadMore="false" showListHeader="true" showListFooter="false">
+									<columns>
+										<column fillRatio="1">
+											<items>
+												<item fieldId="properties.dealname"/>
+												<item fieldId="properties.amount" displayType="field" displayStyle="tertiary"/>
+												<item fieldId="properties.closedate" displayType="field"/>
+											</items>
+										</column>
+										<column fillRatio="1">
+											<items>
+												<item fieldId="properties.dealstage"/>
+											</items>
+										</column>
+									</columns>
+									<rowActions/>
+									<massActions/>
+									<filtering enableSearch="false"/>
+									<sorting enable="false"/>
+									<interactions>
+										<interaction type="tap" afterClickState="selected">
+											<action type="updateCondition" model="HubSpot_Deal_Detail" behavior="set" condition="hs_object_id" valuesource="fieldvalue" value="{{id}}"/>
+											<action type="updateCondition" model="HubSpot_CurrentLineItem_List" behavior="set" condition="hs_object_id" valuesource="fieldvalue" value="{{id}}"/>
+											<action type="requeryModels" behavior="standard">
+												<models>
+													<model>HubSpot_Deal_Detail</model>
+													<model>HubSpot_CurrentLineItem_List</model>
+												</models>
+											</action>
+										</interaction>
+									</interactions>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__list>
+							</components>
+							<styles>
+								<spacing/>
+							</styles>
+							<background/>
+						</skuid__wrapper>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="100px" ratio="4">
+					<components>
+						<skuid__wrapper uniqueid="sk-3y9T-61901">
+							<components>
+								<skuid__header model="HubSpot_Deal_Detail" uniqueid="sk-3ip4-53514" title="{{dealname}}">
+									<skuid__buttonSet model="HubSpot_Deal_List">
+										<groups>
+											<skuid__buttonGroup uniqueId="sk-3yS6-22093">
+												<buttons>
+													<skuid__button label="Save changes" uniqueId="sk-3yS6-22094" styleSettingsVariant="primary">
+														<renderConditions logictype="and"/>
+														<enableConditions logictype="and">
+															<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="HubSpot_Deal_Detail" sourcetype="modelproperty" sourceproperty="hasChanged" value="true" operator="="/>
+														</enableConditions>
+														<styleVariantConditions/>
+														<styles>
+															<spacing/>
+														</styles>
+													</skuid__button>
+													<skuid__button label="Delete deal" uniqueId="sk-3yS9-24938">
+														<styles>
+															<spacing/>
+														</styles>
+														<actions>
+															<action type="markRowsForDeletion" model="HubSpot_Deal_Detail" affectedrows="context"/>
+															<action type="showModal">
+																<skuid__modal title="Are you sure?" width="640px" ariaRole="dialog">
+																	<components>
+																		<skuid__text contents="Are you sure you want to delete this deal:&amp;nbsp;&#10;&lt;ul&gt;&#10;&#9;&lt;li&gt;Deal:&amp;nbsp;{{dealname}}&lt;/li&gt;&#10;&#9;&lt;li&gt;Stage: {{dealstage}}&lt;/li&gt;&#10;&#9;&lt;li&gt;Amount:&amp;nbsp;{{amount}}&lt;/li&gt;&#10;&#9;&lt;li&gt;Close Date:&amp;nbsp;{{closedate}}&lt;/li&gt;&#10;&lt;/ul&gt;&#10;" uniqueid="sk-3ySS-33750" model="HubSpot_Deal_Detail"/>
+																	</components>
+																	<buttons>
+																		<skuid__button label="Yes, delete" uniqueId="sk-3ySh-43759" styleSettingsVariant="destructive">
+																			<styles>
+																				<spacing/>
+																			</styles>
+																			<actions>
+																				<action type="save">
+																					<models>
+																						<model>HubSpot_Deal_Detail</model>
+																					</models>
+																				</action>
+																				<action type="closeModals" closebehavior="close"/>
+																			</actions>
+																		</skuid__button>
+																		<skuid__button label="No, go back" uniqueId="sk-3ySi-44382">
+																			<actions>
+																				<action type="cancel">
+																					<models>
+																						<model>HubSpot_Deal_Detail</model>
+																					</models>
+																				</action>
+																				<action type="closeModals" closebehavior="close"/>
+																			</actions>
+																		</skuid__button>
+																	</buttons>
+																	<afterCloseActions>
+																		<action type="cancel">
+																			<models>
+																				<model>HubSpot_Deal_Detail</model>
+																			</models>
+																		</action>
+																	</afterCloseActions>
+																</skuid__modal>
+															</action>
+														</actions>
+														<renderConditions logictype="and"/>
+														<enableConditions/>
+														<styleVariantConditions/>
+													</skuid__button>
+												</buttons>
+											</skuid__buttonGroup>
+										</groups>
+									</skuid__buttonSet>
+									<styles>
+										<spacing top="2" right="2" bottom="2" left="2"/>
+									</styles>
+								</skuid__header>
+								<skuid__form showErrorsInline="true" model="HubSpot_Deal_Detail" uniqueid="sk-3is2-82123" mode="read">
+									<columns>
+										<column behavior="flex">
+											<sections>
+												<section title="Deal Details" showHeading="false">
+													<fields>
+														<skuid__field id="dealname" uniqueId="sk-3is2-82127" showHelp="true"/>
+														<skuid__field id="amount" uniqueId="sk-3is2-82124" showHelp="true"/>
+														<skuid__field id="dealstage" uniqueId="sk-3is2-82128" showHelp="true"/>
+													</fields>
+												</section>
+											</sections>
+										</column>
+										<column behavior="flex" ratio="1" width="200px" verticalAlign="top" minWidth="100px">
+											<sections>
+												<section title="New Section" showHeading="false">
+													<fields>
+														<skuid__field id="closedate" uniqueId="sk-3is2-82125" showHelp="true"/>
+														<skuid__field id="createdate" uniqueId="sk-3is2-82126" showHelp="true"/>
+														<skuid__field id="pipeline" uniqueId="sk-3is2-82129" showHelp="true"/>
+													</fields>
+												</section>
+											</sections>
+										</column>
+									</columns>
+									<styles>
+										<spacing top="2" right="2" bottom="2" left="2"/>
+									</styles>
+								</skuid__form>
+								<skuid__wrapper uniqueid="sk-3y9V-64535">
+									<components>
+										<skuid__header title="Add new line items" uniqueid="sk-3jCq-30204">
+											<styles>
+												<spacing top="2" bottom="2" right="2" left="2"/>
+											</styles>
+										</skuid__header>
+										<skuid__wizard uniqueid="sk-3jCl-26818">
+											<steps>
+												<step stepLabel="Step 1: Select products">
+													<components>
+														<skuid__table allowColumnFreezing="dragDrop" model="HubSpot_Products" uniqueid="sk-3jCt-32130" mode="read" title="Select products" pageSize="5" rowActionsOnLeft="true" showSaveCancel="false">
+															<fields>
+																<field id="properties.name" uniqueid="fi-3jD8-47920"/>
+																<field id="properties.price" horizontalAlignment="right" uniqueid="fi-3jD8-47921" columnWidth="150px"/>
+																<field id="properties.description" uniqueid="fi-3jD8-47922"/>
+																<field id="properties.hs_object_id" horizontalAlignment="right"/>
+															</fields>
+															<filtering enableSearch="false"/>
+															<actions/>
+															<rowActions>
+																<action type="multi" label="Add">
+																	<actions>
+																		<action type="updateRow" fieldmodel="HubSpot_Products" affectedrows="context">
+																			<updates>
+																				<update valuesource="fieldvalue" field="IsInQuote_UI" enclosevalueinquotes="false" value="true"/>
+																			</updates>
+																		</action>
+																		<action type="createRow" model="UI_LineItems" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+																			<defaults>
+																				<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="{{properties.name}}"/>
+																				<default valuesource="fieldvalue" field="price" enclosevalueinquotes="false" value="{{properties.price}}"/>
+																				<default valuesource="fieldvalue" field="hubspot_id" enclosevalueinquotes="true" value="{{properties.hs_object_id}}"/>
+																			</defaults>
+																		</action>
+																	</actions>
+																	<renderConditions logictype="and"/>
+																	<enableconditions logictype="and">
+																		<condition type="fieldvalue" operator="!=" enclosevalueinquotes="false" fieldmodel="HubSpot_Products" sourcetype="fieldvalue" field="IsInQuote_UI" value="true"/>
+																	</enableconditions>
+																	<styleVariantConditions/>
+																</action>
+															</rowActions>
+															<massActions/>
+															<exportProperties useTableColumns="true"/>
+															<sorting enable="false"/>
+														</skuid__table>
+													</components>
+													<buttons>
+														<button label="Next" styleSettingsVariant="primary">
+															<actions>
+																<action type="navigateNext"/>
+															</actions>
+														</button>
+													</buttons>
+												</step>
+												<step stepId="step2" stepLabel="Step 2: Configure quote">
+													<components>
+														<skuid__table allowColumnFreezing="dragDrop" model="UI_LineItems" uniqueid="sk-3jDP-52687" mode="edit" showSaveCancel="false" title="Configure quote">
+															<fields>
+																<field id="hubspot_id" uniqueid="fi-3jDP-53432"/>
+																<field id="name" uniqueid="fi-3jDP-53427"/>
+																<field id="quantity" horizontalAlignment="right" uniqueid="fi-3jDP-53428"/>
+																<field id="price" horizontalAlignment="right" uniqueid="fi-3jDP-53429"/>
+																<field id="discount" horizontalAlignment="right" uniqueid="fi-3jDP-53430"/>
+																<field id="item_total" horizontalAlignment="right" uniqueid="fi-3jDP-53431"/>
+															</fields>
+															<filtering enableSearch="false"/>
+															<actions/>
+															<rowActions>
+																<action type="multi" label="Remove">
+																	<actions>
+																		<action type="abandonRows" model="UI_LineItems" affectedrows="context"/>
+																	</actions>
+																</action>
+															</rowActions>
+															<massActions/>
+															<exportProperties useTableColumns="true"/>
+															<sorting enable="false"/>
+														</skuid__table>
+													</components>
+													<buttons>
+														<button label="Back">
+															<actions>
+																<action type="navigatePrevious"/>
+															</actions>
+														</button>
+														<button label="Save line items to HubSpot" styleSettingsVariant="primary">
+															<actions>
+																<action type="save">
+																	<models>
+																		<model>UI_LineItems</model>
+																	</models>
+																</action>
+																<action type="custom" snippet="requestbody - batch - create new line items in HS"/>
+															</actions>
+														</button>
+													</buttons>
+												</step>
+											</steps>
+											<styles>
+												<spacing top="2" right="2" bottom="2" left="2"/>
+											</styles>
+										</skuid__wizard>
+									</components>
+									<styles>
+										<spacing top="2" right="2" bottom="2" left="2"/>
+									</styles>
+									<background type="color" color="white"/>
+								</skuid__wrapper>
+							</components>
+							<styles>
+								<spacing/>
+							</styles>
+							<background type="color" color="#f2f2f2"/>
+						</skuid__wrapper>
+					</components>
+				</division>
+			</divisions>
+			<styles>
+				<spacing top="2" right="2" bottom="2" left="2"/>
+			</styles>
+			<background/>
+		</skuid__grid>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="inlinesnippet" name="requestbody - batch - create new line items in HS" cachelocation="false">const   params = arguments[0],
+        $ = skuid.$,
+        hs_lineItemModel = skuid.$M('HubSpot_LineItem_Create_Batch'),
+        lineItems = skuid.$M('UI_LineItems').getRows();
+        dealModel = skuid.$M('HubSpot_Deal_Detail'),
+        dealId = dealModel.getFirstRow();
+console.log(lineItems);
+
+let inputs = [];
+$.each(lineItems, function(i, row) {
+    console.log(row);
+    inputs.push( 
+    // POST request to https://api.hubapi.com/crm/v3/objects/line_item
+        {
+        "properties": {
+            // "price": row.price,
+            "quantity": row.quantity,
+            // "name": row.name
+            "hs_product_id": row.hubspot_id,
+        },
+        "associations": [
+        {
+            "to": {
+                "id": dealId.hs_object_id
+                },
+            // Add association to product
+            "types": [
+                {
+                    "associationCategory": "HUBSPOT_DEFINED",
+                    "associationTypeId": 20
+                }
+            ]
+        }]
+    });
+    console.log(inputs);
+
+});
+
+let requestBody = {
+    inputs,
+};
+
+console.log(hs_lineItemModel.dataSource);
+
+return requestBody;
+</jsitem>
+			<jsitem location="inlinesnippet" name="request body - batch - update deals" cachelocation="false">const   params = arguments[0],
+        $ = skuid.$,
+        dealModel = skuid.$M('HubSpot_Deal_List'),
+        dealRows = dealModel.getRows(),
+        changedRowArray = dealModel.getChangedRecordIds();
+
+console.log(changedRowArray);
+
+const filteredDealRows = dealRows.filter(deal =&gt; changedRowArray.includes(deal.id));
+
+console.log(filteredDealRows)
+
+let inputs = [];
+$.each(filteredDealRows, function(i, row) {
+    console.log(row);
+    inputs.push( 
+    // POST request to https://api.hubapi.com/crm/v3/objects/line_item
+        {
+            "id": row.id,
+            "properties": {
+                "amount": row.properties.amount,
+                "closedate": row.properties.closedate,
+                "dealname": row.properties.dealname,
+                "dealstage": row.properties.dealstage,
+                "pipeline": row.properties.pipeline
+            }
+        }
+    );
+    console.log(inputs);
+
+});
+
+let requestBody = {
+    inputs,
+};
+
+console.log(dealModel.dataSource);
+
+return requestBody;
+</jsitem>
+		</javascript>
+		<css/>
+		<actionsequences>
+			<actionsequence id="d044f23d-44bf-4c46-8951-297abc819803" label="(Batch) Save new line items in HubSpot" type="reusable">
+				<description/>
+				<actions>
+					<action type="blockUI" styleSettingsVariant="dark" message="Save line items to deal" showPlaceholder="true"/>
+					<action type="custom" snippet="requestbody - batch - create new line items in HS"/>
+					<action type="createRow" model="HubSpot_LineItem_Create_Batch" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context"/>
+					<action type="save">
+						<models>
+							<model>HubSpot_LineItem_Create_Batch</model>
+						</models>
+						<onerroractions>
+							<action type="blockUI" message="There was an error" timeout="3000"/>
+						</onerroractions>
+					</action>
+					<action type="requeryModels" behavior="standard">
+						<models>
+							<model>HubSpot_CurrentLineItem_List</model>
+						</models>
+						<onerroractions>
+							<action type="blockUI" message="There was an error" timeout="3000"/>
+						</onerroractions>
+					</action>
+					<action type="unblockUI"/>
+				</actions>
+				<inputs/>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+</skuid__page>

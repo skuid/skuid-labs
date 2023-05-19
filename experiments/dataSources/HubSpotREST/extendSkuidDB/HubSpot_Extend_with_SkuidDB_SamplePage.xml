@@ -1,0 +1,2188 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="SPICED">
+	<models>
+		<model id="HubSpot_Deal_Detail" query="true" datasource="HubSpotTestApp" payloadcontenttype="JSON" fieldtargetobjects="properties" type="readwrite">
+			<fields>
+				<field id="amount" label="Amount" ispolymorphic="false" isnamepointing="false" displaytype="CURRENCY" precision="3" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="closedate" label="Close Date" ispolymorphic="false" isnamepointing="false" displaytype="DATE" accessible="true" filterable="true" ogdisplaytype="STRING"/>
+				<field id="createdate" label="Createdate" ispolymorphic="false" isnamepointing="false" displaytype="DATETIME" accessible="true" filterable="true"/>
+				<field id="dealname" label="Dealname" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="dealstage" label="Dealstage" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="hs_lastmodifieddate" label="Hs Lastmodifieddate" ispolymorphic="false" isnamepointing="false" displaytype="DATETIME" accessible="true" filterable="true"/>
+				<field id="hs_object_id" label="Hs Object Id" ispolymorphic="false" isnamepointing="false" displaytype="UUID" precision="10" scale="0" accessible="true" filterable="true" ogdisplaytype="DOUBLE"/>
+				<field id="pipeline" label="Pipeline" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+				<field id="spiced_score" label="Spiced Score" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+			</fields>
+			<conditions>
+				<condition type="param" value="hs_object_id" sourcetype="param" sourceparam="hs_object_id" operator="=" enclosevalueinquotes="true"/>
+			</conditions>
+			<actions>
+				<action>
+					<actions>
+						<action type="action-sequence" action-sequence-id="68b3adc5-2195-4b11-85ba-9bf36b1d91b1"/>
+					</actions>
+					<events>
+						<event>models.loaded</event>
+					</events>
+				</action>
+			</actions>
+			<idfields>
+				<field>hs_object_id</field>
+			</idfields>
+			<methods>
+				<method type="query" verb="GET" endpoint="/crm/v3/objects/deals/{{hs_object_id}}?properties=dealname,dealstage,closedate,createdate,amount,spiced_score" pathtocontent="properties" payloadcontenttype="JSON"/>
+				<method type="update" verb="PATCH" payloadcontenttype="JSON" sendchanges="asnestedjsoninbody" successif="requestsucceeds" endpoint="/crm/v3/objects/deals/{{hs_object_id}}" pathtocontent="properties"/>
+			</methods>
+		</model>
+		<model id="SPICED" limit="1" query="false" createrowifnonefound="false" datasource="Demos" sobject="HubSpot_SPICED_Score">
+			<fields>
+				<field id="related_hubspot_deal"/>
+				<field id="related_hubspot_deal_stage"/>
+				<field id="critical_event_qualification"/>
+				<field id="critical_event_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - The prospect is simply exploring the market"/>
+						<entry value="2" label="2 - A vague executive mandate without a clear target date"/>
+						<entry value="3" label="3 - A specific initiative within the business with a general timeframe"/>
+						<entry value="4" label="4 - A specific initiative within the business with a target date and consequences for missing the date"/>
+						<entry value="5" label="5 - A product or service that is critical to the business operations"/>
+					</picklistentries>
+				</field>
+				<field id="decision_qualification"/>
+				<field id="decision_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - It is not clear how the solution will be validated or purchased"/>
+						<entry value="2" label="2 - Quite a bit of ambiguity in the buying process and decision criteria are present"/>
+						<entry value="3" label="3 - The buying process and decision criteria are becoming clearer but ambiguity still is present"/>
+						<entry value="4" label="4 - The prospect has clearly articulated the buying process and decision criteria"/>
+						<entry value="5" label="5 - The prospect has clearly articulated the buying process, decision criteria, and a mutual action plan has been created"/>
+					</picklistentries>
+				</field>
+				<field id="impact_qualification"/>
+				<field id="impact_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - No identified impact that can be tied to revenue, cost or risk"/>
+						<entry value="2" label="2 - Slight cost savings possible"/>
+						<entry value="3" label="3 - Soft cost savings exist"/>
+						<entry value="4" label="4 - Marginal hard cost savings or revenue growth can be predicted"/>
+						<entry value="5" label="5 - Significant revenue growth or cost savings can be predicted"/>
+					</picklistentries>
+				</field>
+				<field id="pain_qualification"/>
+				<field id="pain_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - No identified pain"/>
+						<entry value="2" label="2 - Identified low-level latent pain, prospect works around the nuisance"/>
+						<entry value="3" label="3 - Identified latent pain, prospect works around the pain today"/>
+						<entry value="4" label="4 - Identified pain, prospect’s business is being impacted by the pain"/>
+						<entry value="5" label="5 - Identified acute pain, prospect’s business is being impacted by the pain"/>
+					</picklistentries>
+				</field>
+				<field id="id"/>
+				<field id="situation_qualification"/>
+				<field id="situation_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - Not in our ICP"/>
+						<entry value="2" label="2 - In our ICP"/>
+						<entry value="3" label="3 - In our ICP, right market conditions"/>
+						<entry value="4" label="4 - In our ICP, right market conditions, right timing"/>
+						<entry value="5" label="5 - In our ICP, right market conditions, exceptionally right timing"/>
+					</picklistentries>
+				</field>
+				<field id="spiced_total_score" overridemetadata="true" ogdisplaytype="DOUBLE" displaytype="FORMULA" readonly="true" returntype="DOUBLE" scale="0">
+					<formula>({{situation_score}} * 2)
++ ({{pain_score}} * 2)
++ ({{impact_score}} * 10)
++ ({{critical_event_score}} * 2) 
++ ({{decision_score}} * 4)</formula>
+				</field>
+				<field id="updated_at" overridemetadata="true" ogdisplaytype="DATETIME" displaytype="DATE"/>
+				<field id="is_active"/>
+			</fields>
+			<conditions>
+				<condition type="modelmerge" value="" field="related_hubspot_deal" fieldtargetobjects="Opportunity" operator="=" novaluebehavior="noquery" model="HubSpot_Deal_Detail" enclosevalueinquotes="false" mergefield="hs_object_id"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="SPICED_Current" limit="1" query="true" createrowifnonefound="false" datasource="Demos" sobject="HubSpot_SPICED_Score">
+			<fields>
+				<field id="related_hubspot_deal"/>
+				<field id="related_hubspot_deal_stage"/>
+				<field id="critical_event_qualification"/>
+				<field id="critical_event_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - The prospect is simply exploring the market"/>
+						<entry value="2" label="2 - A vague executive mandate without a clear target date"/>
+						<entry value="3" label="3 - A specific initiative within the business with a general timeframe"/>
+						<entry value="4" label="4 - A specific initiative within the business with a target date and consequences for missing the date"/>
+						<entry value="5" label="5 - A product or service that is critical to the business operations"/>
+					</picklistentries>
+				</field>
+				<field id="decision_qualification"/>
+				<field id="decision_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - It is not clear how the solution will be validated or purchased"/>
+						<entry value="2" label="2 - Quite a bit of ambiguity in the buying process and decision criteria are present"/>
+						<entry value="3" label="3 - The buying process and decision criteria are becoming clearer but ambiguity still is present"/>
+						<entry value="4" label="4 - The prospect has clearly articulated the buying process and decision criteria"/>
+						<entry value="5" label="5 - The prospect has clearly articulated the buying process, decision criteria, and a mutual action plan has been created"/>
+					</picklistentries>
+				</field>
+				<field id="impact_qualification"/>
+				<field id="impact_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - No identified impact that can be tied to revenue, cost or risk"/>
+						<entry value="2" label="2 - Slight cost savings possible"/>
+						<entry value="3" label="3 - Soft cost savings exist"/>
+						<entry value="4" label="4 - Marginal hard cost savings or revenue growth can be predicted"/>
+						<entry value="5" label="5 - Significant revenue growth or cost savings can be predicted"/>
+					</picklistentries>
+				</field>
+				<field id="pain_qualification"/>
+				<field id="pain_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - No identified pain"/>
+						<entry value="2" label="2 - Identified low-level latent pain, prospect works around the nuisance"/>
+						<entry value="3" label="3 - Identified latent pain, prospect works around the pain today"/>
+						<entry value="4" label="4 - Identified pain, prospect’s business is being impacted by the pain"/>
+						<entry value="5" label="5 - Identified acute pain, prospect’s business is being impacted by the pain"/>
+					</picklistentries>
+				</field>
+				<field id="id"/>
+				<field id="situation_qualification"/>
+				<field id="situation_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - Not in our ICP"/>
+						<entry value="2" label="2 - In our ICP"/>
+						<entry value="3" label="3 - In our ICP, right market conditions"/>
+						<entry value="4" label="4 - In our ICP, right market conditions, right timing"/>
+						<entry value="5" label="5 - In our ICP, right market conditions, exceptionally right timing"/>
+					</picklistentries>
+				</field>
+				<field id="spiced_total_score" overridemetadata="true" ogdisplaytype="DOUBLE" displaytype="FORMULA" readonly="true" returntype="DOUBLE">
+					<formula>({{situation_score}} * 2)
++ ({{pain_score}} * 2)
++ ({{impact_score}} * 10)
++ ({{critical_event_score}} * 2) 
++ ({{decision_score}} * 4)</formula>
+				</field>
+				<field id="updated_at" overridemetadata="true" ogdisplaytype="DATETIME" displaytype="DATETIME"/>
+				<field id="created_at" overridemetadata="true" ogdisplaytype="DATETIME" displaytype="DATE"/>
+				<field id="is_active"/>
+				<field uionly="true" displaytype="FORMULA" length="255" id="test_recently_updated" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="9" scale="2">
+					<formula>-(DATE_DIFF({{updated_at}},HOUR))</formula>
+				</field>
+			</fields>
+			<conditions>
+				<condition type="modelmerge" value="" field="related_hubspot_deal" fieldtargetobjects="Opportunity" operator="=" novaluebehavior="noquery" model="HubSpot_Deal_Detail" enclosevalueinquotes="false" mergefield="hs_object_id" clientorserver="server"/>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="id" clientorserver="server" state="filterableoff" inactive="true" name="id"/>
+				<condition type="fieldvalue" value="true" enclosevalueinquotes="false" field="is_active" clientorserver="server" state="filterableon" inactive="false" name="is_active"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="List_of_Existing" limit="6" query="false" createrowifnonefound="false" datasource="Demos" sobject="HubSpot_SPICED_Score" orderby="created_at DESC">
+			<fields>
+				<field id="related_hubspot_deal"/>
+				<field id="related_hubspot_deal_stage"/>
+				<field id="critical_event_qualification"/>
+				<field id="critical_event_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - The prospect is simply exploring the market"/>
+						<entry value="2" label="2 - A vague executive mandate without a clear target date"/>
+						<entry value="3" label="3 - A specific initiative within the business with a general timeframe"/>
+						<entry value="4" label="4 - A specific initiative within the business with a target date and consequences for missing the date"/>
+						<entry value="5" label="5 - A product or service that is critical to the business operations"/>
+					</picklistentries>
+				</field>
+				<field id="decision_qualification"/>
+				<field id="decision_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - It is not clear how the solution will be validated or purchased"/>
+						<entry value="2" label="2 - Quite a bit of ambiguity in the buying process and decision criteria are present"/>
+						<entry value="3" label="3 - The buying process and decision criteria are becoming clearer but ambiguity still is present"/>
+						<entry value="4" label="4 - The prospect has clearly articulated the buying process and decision criteria"/>
+						<entry value="5" label="5 - The prospect has clearly articulated the buying process, decision criteria, and a mutual action plan has been created"/>
+					</picklistentries>
+				</field>
+				<field id="impact_qualification"/>
+				<field id="impact_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - No identified impact that can be tied to revenue, cost or risk"/>
+						<entry value="2" label="2 - Slight cost savings possible"/>
+						<entry value="3" label="3 - Soft cost savings exist"/>
+						<entry value="4" label="4 - Marginal hard cost savings or revenue growth can be predicted"/>
+						<entry value="5" label="5 - Significant revenue growth or cost savings can be predicted"/>
+					</picklistentries>
+				</field>
+				<field id="pain_qualification"/>
+				<field id="pain_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - No identified pain"/>
+						<entry value="2" label="2 - Identified low-level latent pain, prospect works around the nuisance"/>
+						<entry value="3" label="3 - Identified latent pain, prospect works around the pain today"/>
+						<entry value="4" label="4 - Identified pain, prospect’s business is being impacted by the pain"/>
+						<entry value="5" label="5 - Identified acute pain, prospect’s business is being impacted by the pain"/>
+					</picklistentries>
+				</field>
+				<field id="id"/>
+				<field id="situation_qualification"/>
+				<field id="situation_score" overridemetadata="true" ogdisplaytype="PICKLIST" displaytype="PICKLIST" picklistsource="manual" returntype="DOUBLE" defaultvaluetype="fieldvalue" defaultValue="0">
+					<picklistentries>
+						<entry value="0" label="0 - Unknown"/>
+						<entry value="1" label="1 - Not in our ICP"/>
+						<entry value="2" label="2 - In our ICP"/>
+						<entry value="3" label="3 - In our ICP, right market conditions"/>
+						<entry value="4" label="4 - In our ICP, right market conditions, right timing"/>
+						<entry value="5" label="5 - In our ICP, right market conditions, exceptionally right timing"/>
+					</picklistentries>
+				</field>
+				<field id="spiced_total_score"/>
+				<field id="updated_at" overridemetadata="true" ogdisplaytype="DATETIME" displaytype="DATE"/>
+				<field id="created_at" overridemetadata="true" ogdisplaytype="DATETIME" displaytype="DATE"/>
+				<field id="IsSelected" uionly="true" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="indexCheck" uionly="true" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="BOOLEAN">
+					<formula>{{index}} == 1</formula>
+				</field>
+				<field id="is_active"/>
+			</fields>
+			<conditions>
+				<condition type="modelmerge" value="" field="related_hubspot_deal" fieldtargetobjects="Opportunity" operator="=" novaluebehavior="noquery" model="HubSpot_Deal_Detail" enclosevalueinquotes="false" mergefield="hs_object_id"/>
+			</conditions>
+			<actions/>
+		</model>
+		<model id="UI_controls" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="NewRecord" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Selected_Historical_Record" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="UI_Situation_Score" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" precision="9" scale="0" defaultvaluetype="fieldvalue"/>
+				<field id="UI_Pain_Score" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" precision="9" scale="0" defaultvaluetype="fieldvalue"/>
+				<field id="UI_Impact_Score" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" precision="9" scale="0"/>
+				<field id="UI_Critical_Event_Score" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" precision="9" scale="0"/>
+				<field id="UI_Decision_Score" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" precision="9" scale="0"/>
+				<field id="EditMode" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="ReadMode" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="true"/>
+				<field id="HistoricalMode" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="AdvancedCustomization" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false" readonly="false"/>
+			</fields>
+			<conditions/>
+			<actions>
+				<action>
+					<actions>
+						<action type="save">
+							<models>
+								<model>UI_controls</model>
+							</models>
+						</action>
+					</actions>
+					<events>
+						<event>models.loaded</event>
+					</events>
+				</action>
+			</actions>
+		</model>
+	</models>
+	<components>
+		<skuid__grid uniqueid="sk-s_j-49628" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1.5">
+			<divisions>
+				<division alignSelf="auto" minWidth="0px" ratio="1">
+					<components/>
+				</division>
+				<division alignSelf="auto" minWidth="100px" ratio="8" maxWidth="700px">
+					<components>
+						<skuid__wrapper uniqueid="sk-2Gtr-165502" styleSettingsVariant="d3b30da9-61fa-40f1-9fd8-7cfd8598c750">
+							<components>
+								<skuid__wrapper uniqueid="sk-3lKv-42575">
+									<components>
+										<skuid__grid uniqueid="sk-jc1-49661" flexDirection="row" justifyContent="flex-start" alignItems="center" columnGutter="1.5">
+											<divisions>
+												<division alignSelf="auto" minWidth="100px" ratio="1">
+													<components>
+														<skuid__header model="HubSpot_Deal_Detail" title="Deal: {{dealname}}" uniqueid="sk-vKt-115614" separator="false" subtitle="Amount: {{amount}} | Close Date: {{closedate}} | Stage: {{dealstage}} | Pipeline: {{pipeline}}">
+															<styles>
+																<spacing bottom="2" top="1.5" left="1.5"/>
+															</styles>
+														</skuid__header>
+													</components>
+												</division>
+												<division minWidth="0" ratio="0" alignSelf="auto">
+													<components>
+														<skuid__image source="resource" uniqueid="sk-sze-53166" datasource="SkuidLocal" resource="skuidext__WBD_logo.png" resourceContentType="image/png" imageWidth="90px">
+															<styles>
+																<spacing/>
+															</styles>
+														</skuid__image>
+													</components>
+												</division>
+											</divisions>
+											<styles>
+												<spacing bottom="1" right="1"/>
+											</styles>
+											<background/>
+										</skuid__grid>
+										<skuid__wizard uniqueid="sk-30NB-42825" disableStepButtons="true" progressIndication="none">
+											<steps>
+												<step stepId="ReadMode" stepLabel="Read Mode">
+													<components>
+														<skuid__wrapper uniqueid="sk-3Mx4-76322" styleSettingsVariant="21fee6b7-e7ba-4ed8-a390-b0fe1f5d759c" minHeight="custom" minHeightCustom="304px">
+															<components>
+																<skuid__grid uniqueid="sk-3MxA-79615" flexDirection="row" justifyContent="center" alignItems="center" columnGutter="2">
+																	<divisions>
+																		<division alignSelf="auto" minWidth="1px" ratio="0">
+																			<components>
+																				<skuid__wrapper uniqueid="sk-3M-V-152230" heightStrategy="fixed" height="custom" heightCustom="304px">
+																					<components/>
+																					<styles>
+																						<spacing/>
+																					</styles>
+																					<background/>
+																				</skuid__wrapper>
+																			</components>
+																		</division>
+																		<division minWidth="100px" ratio="1" alignSelf="center">
+																			<components>
+																				<skuid__wrapper uniqueid="sk-1Cuu-70640" heightStrategy="fixed" height="custom" heightCustom="100px">
+																					<components/>
+																					<styles>
+																						<spacing bottom="3"/>
+																					</styles>
+																					<background type="image" datasource="Ui-Only" source="url" size="cover" model="HubSpot_Deal_Detail" url="https://images.unsplash.com/photo-1518736114810-3f3bedfec66a?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2370&amp;q=80" position="center center"/>
+																				</skuid__wrapper>
+																				<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;Add Your SPICED Score&lt;/div&gt;&#10;" uniqueid="sk-3MxF-81346" styleSettingsVariant="17f83347-8bbe-4a3d-b72d-b727394ed352"/>
+																				<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;Click the button to add your SPICED score for this opportunity. Use this to evaluate the opportunity and quickly see where the gaps are.&lt;/div&gt;&#10;" uniqueid="sk-3MxM-85090" styleSettingsVariant="e13d8c9d-9690-4dcd-8bcb-a0c3d743eaf8">
+																					<styles>
+																						<spacing top="2"/>
+																					</styles>
+																				</skuid__text>
+																				<skuid__buttonSet model="List_of_Existing" uniqueid="sk-3Mxo-86838" position="center">
+																					<groups>
+																						<skuid__buttonGroup uniqueId="sk-3Mxo-86836" displayType="detached">
+																							<buttons>
+																								<skuid__button label="ADD A SCORE" uniqueId="sk-3Mxo-86837" styleSettingsVariant="6e48c959-cf52-473b-aa8d-261bcdf8eda4">
+																									<actions>
+																										<action type="blockUI" styleSettingsVariant="dark" message="Creating SPICED Record..." showPlaceholder="true"/>
+																										<action type="createRow" model="SPICED_Current" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+																											<defaults>
+																												<default valuesource="fieldvalue" field="is_active" enclosevalueinquotes="false" value="true"/>
+																												<default valuesource="modelmerge" field="related_hubspot_deal" enclosevalueinquotes="false" sourcemodel="HubSpot_Deal_Detail" sourcefield="hs_object_id"/>
+																											</defaults>
+																										</action>
+																										<action type="updateRow" fieldmodel="UI_controls" affectedrows="context">
+																											<updates>
+																												<update valuesource="fieldvalue" field="NewRecord" enclosevalueinquotes="false" value="true"/>
+																											</updates>
+																										</action>
+																										<action type="save">
+																											<models>
+																												<model>SPICED_Current</model>
+																											</models>
+																											<onerroractions>
+																												<action type="blockUI" message="There was an error" timeout="3000"/>
+																											</onerroractions>
+																										</action>
+																										<action type="requeryModels" behavior="standard">
+																											<models>
+																												<model>SPICED_Current</model>
+																											</models>
+																											<onerroractions>
+																												<action type="blockUI" message="There was an error" timeout="3000"/>
+																											</onerroractions>
+																										</action>
+																										<action type="unblockUI"/>
+																										<action type="updateRow" fieldmodel="UI_controls" affectedrows="context">
+																											<updates>
+																												<update valuesource="fieldvalue" field="EditMode" enclosevalueinquotes="false" value="true"/>
+																												<update valuesource="fieldvalue" field="ReadMode" enclosevalueinquotes="false" value="false"/>
+																											</updates>
+																										</action>
+																										<action type="runComponentAction" componentid="sk-30NB-42825" action="navigateToStep" stepId="EditMode"/>
+																									</actions>
+																								</skuid__button>
+																							</buttons>
+																						</skuid__buttonGroup>
+																					</groups>
+																					<styles>
+																						<spacing top="2"/>
+																					</styles>
+																				</skuid__buttonSet>
+																			</components>
+																		</division>
+																		<division alignSelf="auto" minWidth="1px" ratio="0">
+																			<components>
+																				<skuid__wrapper uniqueid="sk-3M-G-142422" heightStrategy="fixed" height="custom" heightCustom="304px">
+																					<components/>
+																					<styles>
+																						<spacing/>
+																					</styles>
+																					<background/>
+																				</skuid__wrapper>
+																			</components>
+																		</division>
+																	</divisions>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<background/>
+																</skuid__grid>
+															</components>
+															<background/>
+															<styles>
+																<spacing/>
+															</styles>
+															<renderConditions logictype="and">
+																<renderCondition fieldmodel="SPICED_Current" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasNoRows"/>
+																<renderCondition type="fieldvalue" operator="!=" enclosevalueinquotes="false" fieldmodel="UI_controls" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="ReadMode" value="false"/>
+															</renderConditions>
+															<styleVariantConditions/>
+														</skuid__wrapper>
+														<skuid__wrapper uniqueid="ReadMode">
+															<components>
+																<skuid__wrapper uniqueid="sk-31Ep-115790" styleSettingsVariant="49ac7050-cde9-4fb0-aa8b-51b3b0bd0c53">
+																	<components>
+																		<skuid__accordion uniqueid="sk-31Ep-115796" sectionsInitiallyOpen="none" iconStyle="separate" icon="sk-webicon-ink:chevron-up" iconClose="sk-webicon-ink:chevron-down" iconOnRight="true" allowHTML="true" onePanelAtATime="false">
+																			<sections>
+																				<section openState="conditional" title="View all historical SPICED records">
+																					<components>
+																						<skuid__deck columnGutter="0px" rowGutter="8px" model="List_of_Existing" showSaveCancel="false" verticalAlign="top" minWidth="100%" uniqueid="sk-31Ep-115797" setMaxWidth="auto" pageSize="5" showLoadMore="true" showPageSizeSelect="false" resetPaginationOnQuery="false" showListHeader="false">
+																							<components>
+																								<skuid__wrapper uniqueid="sk-31Ep-115798" styleSettingsVariant="88b4e8d6-2301-4b7d-bfc8-39f31bcb86a8">
+																									<components>
+																										<skuid__grid uniqueid="sk-31Ep-115799" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="0.5">
+																											<divisions>
+																												<division minWidth="50px" ratio="0" alignSelf="auto">
+																													<components>
+																														<skuid__text contents="{{#indexCheck}}Current (Updated: {{created_at}}){{/indexCheck}}{{^indexCheck}}{{created_at}}{{/indexCheck}}" uniqueid="sk-31Ep-115800" model="List_of_Existing" styleSettingsVariant="fe173a6a-ade7-4838-bb47-be8a6fcfcfb2">
+																															<renderConditions logictype="and"/>
+																															<styleVariantConditions>
+																																<rule logictype="or" styleSettingsVariantOverride="2e2d9d7b-cd81-4691-865d-bec7382c17d1">
+																																	<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="List_of_Existing" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="IsSelected" fieldtargetobjects="SPICED" value="true"/>
+																																	<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="List_of_Existing" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="indexCheck" fieldtargetobjects="SPICED" value="true"/>
+																																</rule>
+																															</styleVariantConditions>
+																															<conditions>
+																																<condition type="contextrow" field="id" mergefield="id" operator="="/>
+																															</conditions>
+																															<styles>
+																																<spacing/>
+																															</styles>
+																														</skuid__text>
+																													</components>
+																												</division>
+																												<division alignSelf="auto" minWidth="80px" ratio="1">
+																													<components>
+																														<skuid__text contents="&lt;div style=&quot;text-align: right;&quot;&gt;Score: &lt;strong&gt;{{spiced_total_score}}&lt;/strong&gt;&amp;nbsp;&lt;/div&gt;&#10;" uniqueid="sk-31Ep-115801" model="List_of_Existing" styleSettingsVariant="11cfd3ae-ac62-454a-baac-afa0c6b2358f">
+																															<renderConditions logictype="and"/>
+																															<styleVariantConditions>
+																																<rule logictype="or" styleSettingsVariantOverride="ee1a78cf-f49c-492d-8839-97f5130129cc">
+																																	<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="List_of_Existing" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="IsSelected" fieldtargetobjects="SPICED" value="true"/>
+																																	<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="List_of_Existing" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="indexCheck" fieldtargetobjects="SPICED" value="true"/>
+																																</rule>
+																															</styleVariantConditions>
+																															<conditions>
+																																<condition type="contextrow" field="id" mergefield="id" operator="="/>
+																															</conditions>
+																															<styles>
+																																<spacing/>
+																															</styles>
+																														</skuid__text>
+																													</components>
+																												</division>
+																											</divisions>
+																											<renderConditions logictype="and"/>
+																											<styleVariantConditions/>
+																											<styles>
+																												<spacing/>
+																											</styles>
+																											<background/>
+																										</skuid__grid>
+																									</components>
+																									<background/>
+																									<renderConditions logictype="and"/>
+																									<styleVariantConditions>
+																										<rule logictype="or" styleSettingsVariantOverride="1cf7d98f-f4d0-49ca-bc5e-68cdd9d6b578">
+																											<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="List_of_Existing" sourcetype="fieldvalue" field="IsSelected" fieldtargetobjects="SPICED" value="true"/>
+																											<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="List_of_Existing" sourcetype="fieldvalue" field="indexCheck" fieldtargetobjects="SPICED" value="true"/>
+																										</rule>
+																									</styleVariantConditions>
+																									<styles>
+																										<spacing/>
+																									</styles>
+																								</skuid__wrapper>
+																							</components>
+																							<filtering enableSearch="false"/>
+																							<sorting enable="false"/>
+																							<interactions>
+																								<interaction type="tap">
+																									<action type="branch" whenfinished="stop" model="List_of_Existing">
+																										<formula>{{indexCheck}}</formula>
+																										<iftrueactions>
+																											<action type="runComponentAction" componentid="sk-30NB-42825" action="navigateToStep" stepId="ReadMode"/>
+																										</iftrueactions>
+																									</action>
+																									<action type="updateRow" fieldmodel="List_of_Existing" affectedrows="all">
+																										<updates>
+																											<update valuesource="fieldvalue" field="IsSelected" enclosevalueinquotes="false" value="false"/>
+																										</updates>
+																									</action>
+																									<action type="updateRow" fieldmodel="List_of_Existing" affectedrows="context">
+																										<updates>
+																											<update valuesource="fieldvalue" field="IsSelected" enclosevalueinquotes="false" value="true"/>
+																										</updates>
+																									</action>
+																									<action type="updateRow" fieldmodel="UI_controls" affectedrows="context">
+																										<updates>
+																											<update valuesource="fieldvalue" field="HistoricalMode" enclosevalueinquotes="false" value="true"/>
+																										</updates>
+																									</action>
+																									<action type="updateCondition" model="SPICED_Current" behavior="set" condition="id" valuesource="fieldvalue" value="{{id}}"/>
+																									<action type="deactivateCondition" model="SPICED_Current" condition="is_active"/>
+																									<action type="requeryModels" behavior="standard">
+																										<models>
+																											<model>SPICED_Current</model>
+																										</models>
+																									</action>
+																									<action type="save">
+																										<models>
+																											<model>List_of_Existing</model>
+																										</models>
+																									</action>
+																									<action type="runComponentAction" componentid="sk-30NB-42825" action="navigateToStep" stepId="HistoricalMode"/>
+																								</interaction>
+																							</interactions>
+																							<styles>
+																								<spacing top="1"/>
+																							</styles>
+																							<renderConditions logictype="and"/>
+																							<styleVariantConditions/>
+																						</skuid__deck>
+																					</components>
+																					<renderConditions logictype="and"/>
+																					<openConditions logictype="and"/>
+																				</section>
+																			</sections>
+																			<renderConditions logictype="and"/>
+																			<styleVariantConditions/>
+																		</skuid__accordion>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																	<renderConditions logictype="and"/>
+																	<styleVariantConditions/>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-31Ep-115802" styleSettingsVariant="2275eae0-82cb-4421-9892-8c0311fa555c">
+																	<components>
+																		<skuid__text contents="Situation" uniqueid="sk-31Ep-115803" model="SPICED_Current" styleSettingsVariant="17f83347-8bbe-4a3d-b72d-b727394ed352">
+																			<styles>
+																				<spacing/>
+																			</styles>
+																		</skuid__text>
+																		<skuid__grid uniqueid="sk-31Ep-115804" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1">
+																			<divisions>
+																				<division minWidth="40px" ratio="1" alignSelf="center" maxWidth="40px">
+																					<components>
+																						<skuid__buttonSet uniqueid="sk-31Ep-115805" model="SPICED_Current" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-31Ep-115835" displayType="detached">
+																									<buttons>
+																										<skuid__button label="{{^situation_score}}0{{/situation_score}}{{{situation_score}}}" uniqueId="sk-31Ep-115836" styleSettingsVariant="8551e151-236b-43df-af5d-55560fb40fa2"/>
+																									</buttons>
+																								</skuid__buttonGroup>
+																							</groups>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																				<division alignSelf="center" minWidth="calc(100% - 60px)" ratio="0" maxWidth="calc(100% - 60px)">
+																					<components>
+																						<skuid__text contents="{{^situation_score}}0 - Unknown{{/situation_score}}{{situation_score}}" uniqueid="sk-31Ep-115806" model="SPICED_Current" styleSettingsVariant="ce6769a3-3346-4542-9092-ace4350c96ef">
+																							<styles>
+																								<spacing/>
+																							</styles>
+																						</skuid__text>
+																						<skuid__form showErrorsInline="true" model="UI_controls" uniqueid="sk-31Ep-115807" mode="edit" styleSettingsVariant="826543bc-270a-4440-bf01-2bfdbc9f4199">
+																							<columns>
+																								<column>
+																									<sections>
+																										<section title="New Section" showHeading="false">
+																											<fields>
+																												<skuid__field id="UI_Situation_Score" uniqueId="sk-31Ep-115837" displayAs="SLIDER" step="1" max="5" label=" " styleSettingsVariant="735cfc94-61b6-4dd3-990d-14d160a7d615"/>
+																											</fields>
+																										</section>
+																									</sections>
+																								</column>
+																							</columns>
+																							<styles>
+																								<spacing top="103c586c-5cc6-4d01-9a22-8c54dd9527ef"/>
+																							</styles>
+																						</skuid__form>
+																					</components>
+																					<renderConditions logictype="and"/>
+																				</division>
+																			</divisions>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<background/>
+																			<interactions/>
+																		</skuid__grid>
+																		<skuid__wrapper uniqueid="sk-4oN-84396" styleSettingsVariant="21fee6b7-e7ba-4ed8-a390-b0fe1f5d759c" height="custom" heightCustom="75px" overflowY="auto" maxHeight="custom" maxHeightCustom="144px">
+																			<components>
+																				<skuid__text contents="{{situation_qualification}}" uniqueid="sk-4oR-87291" model="SPICED_Current" styleSettingsVariant="ce6769a3-3346-4542-9092-ace4350c96ef"/>
+																			</components>
+																			<background/>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<renderConditions logictype="and">
+																				<renderCondition type="blank" operator="!=" fieldmodel="SPICED_Current" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="situation_qualification" fieldtargetobjects="SPICED" value="null" enclosevalueinquotes="false"/>
+																			</renderConditions>
+																			<styleVariantConditions/>
+																		</skuid__wrapper>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1"/>
+																	</styles>
+																	<renderConditions logictype="and"/>
+																	<styleVariantConditions/>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-31Ep-115808" styleSettingsVariant="2275eae0-82cb-4421-9892-8c0311fa555c">
+																	<components>
+																		<skuid__text contents="Pain" uniqueid="sk-31Ep-115809" model="SPICED_Current" styleSettingsVariant="17f83347-8bbe-4a3d-b72d-b727394ed352">
+																			<styles>
+																				<spacing/>
+																			</styles>
+																		</skuid__text>
+																		<skuid__grid uniqueid="sk-31Ep-115810" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1">
+																			<divisions>
+																				<division minWidth="40px" ratio="1" alignSelf="center" maxWidth="40px">
+																					<components>
+																						<skuid__buttonSet uniqueid="sk-31Ep-115811" model="SPICED_Current" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-31Ep-115838" displayType="detached">
+																									<buttons>
+																										<skuid__button uniqueId="sk-31Ep-115839" styleSettingsVariant="8551e151-236b-43df-af5d-55560fb40fa2" label="{{^pain_score}}0{{/pain_score}}{{{pain_score}}}"/>
+																									</buttons>
+																								</skuid__buttonGroup>
+																							</groups>
+																							<styles>
+																								<spacing/>
+																							</styles>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																				<division alignSelf="center" minWidth="calc(100% - 60px)" ratio="0" maxWidth="calc(100% - 60px)">
+																					<components>
+																						<skuid__text contents="{{^pain_score}}0 - Unknown{{/pain_score}}{{pain_score}}" uniqueid="sk-31Ep-115812" model="SPICED_Current" styleSettingsVariant="ce6769a3-3346-4542-9092-ace4350c96ef"/>
+																						<skuid__form showErrorsInline="true" model="UI_controls" uniqueid="sk-31Ep-115813" mode="edit">
+																							<columns>
+																								<column>
+																									<sections>
+																										<section title="New Section" showHeading="false">
+																											<fields>
+																												<skuid__field id="UI_Pain_Score" uniqueId="sk-31Ep-115840" displayAs="SLIDER" step="1" max="5" label=" " styleSettingsVariant="735cfc94-61b6-4dd3-990d-14d160a7d615"/>
+																											</fields>
+																										</section>
+																									</sections>
+																								</column>
+																							</columns>
+																							<styles>
+																								<spacing top="103c586c-5cc6-4d01-9a22-8c54dd9527ef"/>
+																							</styles>
+																						</skuid__form>
+																					</components>
+																				</division>
+																			</divisions>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<background/>
+																		</skuid__grid>
+																		<skuid__wrapper uniqueid="sk-4qw-52376" styleSettingsVariant="21fee6b7-e7ba-4ed8-a390-b0fe1f5d759c" height="custom" heightCustom="75px" overflowY="auto" maxHeight="custom" maxHeightCustom="144px">
+																			<components>
+																				<skuid__text contents="{{pain_qualification}}" uniqueid="sk-4qw-52377" model="SPICED_Current" styleSettingsVariant="ce6769a3-3346-4542-9092-ace4350c96ef"/>
+																			</components>
+																			<background/>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<renderConditions logictype="and">
+																				<renderCondition type="blank" operator="!=" fieldmodel="SPICED_Current" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="pain_qualification" fieldtargetobjects="SPICED" value="null" enclosevalueinquotes="false"/>
+																			</renderConditions>
+																			<styleVariantConditions/>
+																		</skuid__wrapper>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1"/>
+																	</styles>
+																	<interactions/>
+																	<renderConditions logictype="and"/>
+																	<styleVariantConditions/>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-31Ep-115814" styleSettingsVariant="2275eae0-82cb-4421-9892-8c0311fa555c">
+																	<components>
+																		<skuid__text contents="Impact" uniqueid="sk-31Ep-115815" model="SPICED_Current" styleSettingsVariant="17f83347-8bbe-4a3d-b72d-b727394ed352">
+																			<styles>
+																				<spacing/>
+																			</styles>
+																		</skuid__text>
+																		<skuid__grid uniqueid="sk-31Ep-115816" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1">
+																			<divisions>
+																				<division minWidth="40px" ratio="1" alignSelf="center" maxWidth="40px">
+																					<components>
+																						<skuid__buttonSet uniqueid="sk-31Ep-115817" model="SPICED_Current" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-31Ep-115841" displayType="detached">
+																									<buttons>
+																										<skuid__button uniqueId="sk-31Ep-115842" styleSettingsVariant="8551e151-236b-43df-af5d-55560fb40fa2" label="{{^impact_score}}0{{/impact_score}}{{{impact_score}}}"/>
+																									</buttons>
+																								</skuid__buttonGroup>
+																							</groups>
+																							<styles>
+																								<spacing/>
+																							</styles>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																				<division alignSelf="center" minWidth="calc(100% - 60px)" ratio="0" maxWidth="calc(100% - 60px)">
+																					<components>
+																						<skuid__text contents="{{^impact_score}}0 - Unknown{{/impact_score}}{{impact_score}}" uniqueid="sk-31Ep-115818" model="SPICED_Current" styleSettingsVariant="ce6769a3-3346-4542-9092-ace4350c96ef"/>
+																						<skuid__form showErrorsInline="true" model="UI_controls" uniqueid="sk-31Ep-115819" mode="edit">
+																							<columns>
+																								<column>
+																									<sections>
+																										<section title="New Section" showHeading="false">
+																											<fields>
+																												<skuid__field id="UI_Impact_Score" uniqueId="sk-31Ep-115843" displayAs="SLIDER" step="1" max="5" label=" " styleSettingsVariant="735cfc94-61b6-4dd3-990d-14d160a7d615"/>
+																											</fields>
+																										</section>
+																									</sections>
+																								</column>
+																							</columns>
+																							<styles>
+																								<spacing top="103c586c-5cc6-4d01-9a22-8c54dd9527ef"/>
+																							</styles>
+																						</skuid__form>
+																					</components>
+																				</division>
+																			</divisions>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<background/>
+																		</skuid__grid>
+																		<skuid__wrapper uniqueid="sk-4rB-57616" styleSettingsVariant="21fee6b7-e7ba-4ed8-a390-b0fe1f5d759c" height="custom" heightCustom="75px" overflowY="auto" maxHeight="custom" maxHeightCustom="144px">
+																			<components>
+																				<skuid__text contents="{{impact_qualification}}" uniqueid="sk-4rB-57617" model="SPICED_Current" styleSettingsVariant="ce6769a3-3346-4542-9092-ace4350c96ef"/>
+																			</components>
+																			<background/>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<renderConditions logictype="and">
+																				<renderCondition type="blank" operator="!=" fieldmodel="SPICED_Current" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="impact_qualification" fieldtargetobjects="SPICED" value="null" enclosevalueinquotes="false"/>
+																			</renderConditions>
+																			<styleVariantConditions/>
+																		</skuid__wrapper>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1"/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-31Ep-115820" styleSettingsVariant="2275eae0-82cb-4421-9892-8c0311fa555c">
+																	<components>
+																		<skuid__text contents="Critical Event" uniqueid="sk-31Ep-115821" model="SPICED_Current" styleSettingsVariant="17f83347-8bbe-4a3d-b72d-b727394ed352">
+																			<styles>
+																				<spacing/>
+																			</styles>
+																		</skuid__text>
+																		<skuid__grid uniqueid="sk-31Ep-115822" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1">
+																			<divisions>
+																				<division minWidth="40px" ratio="1" alignSelf="center" maxWidth="40px">
+																					<components>
+																						<skuid__buttonSet uniqueid="sk-31Ep-115823" model="SPICED_Current" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-31Ep-115844" displayType="detached">
+																									<buttons>
+																										<skuid__button uniqueId="sk-31Ep-115845" styleSettingsVariant="8551e151-236b-43df-af5d-55560fb40fa2" label="{{^critical_event_score}}0{{/critical_event_score}}{{{critical_event_score}}}"/>
+																									</buttons>
+																								</skuid__buttonGroup>
+																							</groups>
+																							<styles>
+																								<spacing/>
+																							</styles>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																				<division alignSelf="center" minWidth="calc(100% - 60px)" ratio="0" maxWidth="calc(100% - 60px)">
+																					<components>
+																						<skuid__text contents="{{critical_event_score}}" uniqueid="sk-31Ep-115824" model="SPICED_Current" styleSettingsVariant="ce6769a3-3346-4542-9092-ace4350c96ef"/>
+																						<skuid__form showErrorsInline="true" model="UI_controls" uniqueid="sk-31Ep-115825" mode="edit">
+																							<columns>
+																								<column>
+																									<sections>
+																										<section title="New Section" showHeading="false">
+																											<fields>
+																												<skuid__field id="UI_Critical_Event_Score" uniqueId="sk-31Ep-115846" displayAs="SLIDER" step="1" min="0" max="5" label=" " styleSettingsVariant="735cfc94-61b6-4dd3-990d-14d160a7d615"/>
+																											</fields>
+																										</section>
+																									</sections>
+																								</column>
+																							</columns>
+																							<styles>
+																								<spacing top="103c586c-5cc6-4d01-9a22-8c54dd9527ef"/>
+																							</styles>
+																						</skuid__form>
+																					</components>
+																				</division>
+																			</divisions>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<background/>
+																		</skuid__grid>
+																		<skuid__wrapper uniqueid="sk-4rX-63706" styleSettingsVariant="21fee6b7-e7ba-4ed8-a390-b0fe1f5d759c" height="custom" heightCustom="75px" overflowY="auto" maxHeight="custom" maxHeightCustom="144px">
+																			<components>
+																				<skuid__text contents="{{critical_event_qualification}}" uniqueid="sk-4rX-63707" model="SPICED_Current" styleSettingsVariant="ce6769a3-3346-4542-9092-ace4350c96ef"/>
+																			</components>
+																			<background/>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<renderConditions logictype="and">
+																				<renderCondition type="blank" operator="!=" fieldmodel="SPICED_Current" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="critical_event_qualification" fieldtargetobjects="SPICED" value="null" enclosevalueinquotes="false"/>
+																			</renderConditions>
+																			<styleVariantConditions/>
+																		</skuid__wrapper>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1"/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-31Ep-115826" styleSettingsVariant="2275eae0-82cb-4421-9892-8c0311fa555c">
+																	<components>
+																		<skuid__text contents="Decision" uniqueid="sk-31Ep-115827" model="SPICED_Current" styleSettingsVariant="17f83347-8bbe-4a3d-b72d-b727394ed352">
+																			<styles>
+																				<spacing/>
+																			</styles>
+																		</skuid__text>
+																		<skuid__grid uniqueid="sk-31Ep-115828" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1">
+																			<divisions>
+																				<division minWidth="40px" ratio="1" alignSelf="center" maxWidth="40px" uniqueid="sk-31Ep-115829">
+																					<components>
+																						<skuid__buttonSet uniqueid="sk-31Ep-115830" model="SPICED_Current" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-31Ep-115847" displayType="detached">
+																									<buttons>
+																										<skuid__button uniqueId="sk-31Ep-115848" styleSettingsVariant="8551e151-236b-43df-af5d-55560fb40fa2" label="{{^decision_score}}0{{/decision_score}}{{{decision_score}}}"/>
+																									</buttons>
+																								</skuid__buttonGroup>
+																							</groups>
+																							<styles>
+																								<spacing/>
+																							</styles>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																				<division alignSelf="center" minWidth="calc(100% - 60px)" ratio="0" maxWidth="calc(100% - 60px)">
+																					<components>
+																						<skuid__text contents="{{^decision_score}}0 - Unknown{{/decision_score}}{{decision_score}}" uniqueid="sk-31Ep-115831" model="SPICED_Current" styleSettingsVariant="ce6769a3-3346-4542-9092-ace4350c96ef">
+																							<renderConditions logictype="and"/>
+																							<styleVariantConditions/>
+																						</skuid__text>
+																						<skuid__form showErrorsInline="true" model="UI_controls" uniqueid="sk-31Ep-115832" mode="edit">
+																							<columns>
+																								<column>
+																									<sections>
+																										<section title="New Section" showHeading="false">
+																											<fields>
+																												<skuid__field id="UI_Decision_Score" uniqueId="sk-31Ep-115849" displayAs="SLIDER" step="1" max="5" min="0" label=" " styleSettingsVariant="735cfc94-61b6-4dd3-990d-14d160a7d615"/>
+																											</fields>
+																										</section>
+																									</sections>
+																								</column>
+																							</columns>
+																							<styles>
+																								<spacing top="103c586c-5cc6-4d01-9a22-8c54dd9527ef"/>
+																							</styles>
+																						</skuid__form>
+																					</components>
+																				</division>
+																			</divisions>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<background/>
+																		</skuid__grid>
+																		<skuid__wrapper uniqueid="sk-4rc-68387" styleSettingsVariant="21fee6b7-e7ba-4ed8-a390-b0fe1f5d759c" height="custom" heightCustom="75px" overflowY="auto" maxHeight="custom" maxHeightCustom="144px">
+																			<components>
+																				<skuid__text contents="{{decision_qualification}}" uniqueid="sk-4rc-68388" model="SPICED_Current" styleSettingsVariant="ce6769a3-3346-4542-9092-ace4350c96ef"/>
+																			</components>
+																			<background/>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<renderConditions logictype="and">
+																				<renderCondition type="blank" operator="!=" fieldmodel="SPICED_Current" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="decision_qualification" fieldtargetobjects="SPICED" value="null" enclosevalueinquotes="false"/>
+																			</renderConditions>
+																			<styleVariantConditions/>
+																		</skuid__wrapper>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1"/>
+																	</styles>
+																	<renderConditions logictype="and"/>
+																	<styleVariantConditions/>
+																</skuid__wrapper>
+															</components>
+															<styles>
+																<spacing/>
+															</styles>
+															<background/>
+															<renderConditions logictype="and">
+																<renderCondition type="fieldvalue" operator="!=" enclosevalueinquotes="false" fieldmodel="UI_controls" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="ReadMode" value="false"/>
+																<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="SPICED_Current" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+															</renderConditions>
+															<styleVariantConditions/>
+															<interactions/>
+														</skuid__wrapper>
+													</components>
+													<buttons/>
+												</step>
+												<step stepId="EditMode" stepLabel="Edit Mode">
+													<components>
+														<skuid__wrapper uniqueid="EditMode">
+															<components>
+																<skuid__wrapper uniqueid="sk-Ii7-44219" styleSettingsVariant="b328dd33-342a-43fe-9f99-94f55540098b" heightStrategy="fixed" height="custom" heightCustom="48px">
+																	<components>
+																		<skuid__grid uniqueid="sk-Ii7-44220" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+																			<divisions>
+																				<division minWidth="50px" ratio="1" alignSelf="center">
+																					<components>
+																						<skuid__buttonSet model="SPICED_Current" uniqueid="sk-Ii7-44221" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-Ii7-44223" displayType="detached">
+																									<buttons>
+																										<skuid__button label="Cancel" uniqueId="sk-Ii7-44224" styleSettingsVariant="99a4e470-d022-4c96-8052-d734b5f7d11b">
+																											<actions>
+																												<action type="cancel">
+																													<models>
+																														<model>SPICED_Current</model>
+																													</models>
+																												</action>
+																												<action type="updateRow" fieldmodel="UI_controls" affectedrows="context">
+																													<updates>
+																														<update valuesource="fieldvalue" field="EditMode" enclosevalueinquotes="false" value="false"/>
+																														<update valuesource="fieldvalue" field="ReadMode" enclosevalueinquotes="false" value="true"/>
+																													</updates>
+																												</action>
+																												<action type="requeryModels" behavior="standard">
+																													<models>
+																														<model>SPICED_Current</model>
+																														<model>List_of_Existing</model>
+																													</models>
+																												</action>
+																												<action type="action-sequence" action-sequence-id="228386d8-3b87-4dc7-ad36-efc4c97f5c97"/>
+																												<action type="runComponentAction" componentid="sk-30NB-42825" action="navigateToStep" stepId="ReadMode" scrollStepLabelIntoView="false"/>
+																											</actions>
+																											<renderConditions logictype="and"/>
+																											<enableConditions logictype="and"/>
+																											<styleVariantConditions/>
+																										</skuid__button>
+																									</buttons>
+																								</skuid__buttonGroup>
+																							</groups>
+																							<renderConditions logictype="and"/>
+																							<styleVariantConditions/>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																				<division alignSelf="center" minWidth="50px" ratio="1">
+																					<components>
+																						<skuid__buttonSet model="SPICED_Current" uniqueid="sk-Ii7-44222" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-Ii7-44225" displayType="detached">
+																									<buttons>
+																										<skuid__button label="Save" uniqueId="sk-Ii7-44226" styleSettingsVariant="6e48c959-cf52-473b-aa8d-261bcdf8eda4">
+																											<actions>
+																												<action type="action-sequence" action-sequence-id="049ed6c8-c1bb-421c-b5eb-2c5297504af2"/>
+																												<action type="updateRow" fieldmodel="UI_controls" affectedrows="context">
+																													<updates>
+																														<update valuesource="fieldvalue" field="EditMode" enclosevalueinquotes="false" value="false"/>
+																														<update valuesource="fieldvalue" field="ReadMode" enclosevalueinquotes="false" value="true"/>
+																														<update valuesource="fieldvalue" field="NewRecord" enclosevalueinquotes="false" value="false"/>
+																													</updates>
+																												</action>
+																												<action type="requeryModels" behavior="standard">
+																													<models>
+																														<model>SPICED_Current</model>
+																														<model>List_of_Existing</model>
+																													</models>
+																												</action>
+																												<action type="action-sequence" action-sequence-id="228386d8-3b87-4dc7-ad36-efc4c97f5c97"/>
+																												<action type="runComponentAction" componentid="sk-30NB-42825" action="navigateToStep" stepId="ReadMode"/>
+																											</actions>
+																											<renderConditions logictype="and"/>
+																											<enableConditions logictype="and"/>
+																											<styleVariantConditions/>
+																										</skuid__button>
+																									</buttons>
+																									<renderConditions logictype="and"/>
+																									<styleVariantConditions/>
+																								</skuid__buttonGroup>
+																							</groups>
+																							<renderConditions logictype="and"/>
+																							<styleVariantConditions/>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																			</divisions>
+																			<styles>
+																				<spacing/>
+																			</styles>
+																			<background/>
+																		</skuid__grid>
+																	</components>
+																	<background/>
+																	<renderConditions logictype="and">
+																		<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UI_controls" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="EditMode" value="true"/>
+																	</renderConditions>
+																	<styleVariantConditions/>
+																	<styles>
+																		<spacing top="1"/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-2jGy-100337" styleSettingsVariant="2275eae0-82cb-4421-9892-8c0311fa555c">
+																	<components>
+																		<skuid__form showErrorsInline="true" model="SPICED_Current" uniqueid="sk-2jJK-36434" mode="edit" styleSettingsVariant="16a0250c-cdbf-404c-a173-d031810ee5dd">
+																			<columns>
+																				<column>
+																					<sections>
+																						<section title="New Section" showHeading="false">
+																							<fields>
+																								<skuid__field id="situation_score" uniqueId="sk-2jJS-37850" styleSettingsVariant="ae152a72-ae75-4e04-b376-e6ba91d6d768" label="Situation" showHelp="true"/>
+																								<skuid__field id="situation_qualification" uniqueId="sk-2jJS-37863" label="Qualification" showHelp="true"/>
+																							</fields>
+																						</section>
+																					</sections>
+																				</column>
+																			</columns>
+																			<styles>
+																				<spacing/>
+																			</styles>
+																			<renderConditions logictype="and"/>
+																			<styleVariantConditions/>
+																		</skuid__form>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1"/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-2jNu-46804" styleSettingsVariant="2275eae0-82cb-4421-9892-8c0311fa555c">
+																	<components>
+																		<skuid__form showErrorsInline="true" model="SPICED_Current" uniqueid="sk-2jNu-46805" mode="edit" styleSettingsVariant="16a0250c-cdbf-404c-a173-d031810ee5dd">
+																			<columns>
+																				<column behavior="flex" verticalAlign="top">
+																					<sections>
+																						<section title="New Section" showHeading="false">
+																							<fields>
+																								<skuid__field id="pain_score" uniqueId="sk-2jOD-50881" styleSettingsVariant="ae152a72-ae75-4e04-b376-e6ba91d6d768" label="Pain" showHelp="true"/>
+																								<skuid__field id="pain_qualification" uniqueId="sk-2jOL-52860" label="Qualification"/>
+																							</fields>
+																						</section>
+																					</sections>
+																				</column>
+																			</columns>
+																			<styles>
+																				<spacing/>
+																			</styles>
+																			<renderConditions logictype="and"/>
+																			<styleVariantConditions/>
+																		</skuid__form>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1"/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-2jOY-60777" styleSettingsVariant="2275eae0-82cb-4421-9892-8c0311fa555c">
+																	<components>
+																		<skuid__form showErrorsInline="true" model="SPICED_Current" uniqueid="sk-2jOY-60778" mode="edit" styleSettingsVariant="16a0250c-cdbf-404c-a173-d031810ee5dd">
+																			<columns>
+																				<column behavior="flex" verticalAlign="top">
+																					<sections>
+																						<section title="New Section" showHeading="false">
+																							<fields>
+																								<skuid__field id="impact_score" uniqueId="sk-2jOY-60780" styleSettingsVariant="ae152a72-ae75-4e04-b376-e6ba91d6d768" label="Impact"/>
+																								<skuid__field id="impact_qualification" uniqueId="sk-2jOY-60785" label="Qualification"/>
+																							</fields>
+																						</section>
+																					</sections>
+																				</column>
+																			</columns>
+																			<styles>
+																				<spacing/>
+																			</styles>
+																			<renderConditions logictype="and"/>
+																			<styleVariantConditions/>
+																		</skuid__form>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1"/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-2jOf-64750" styleSettingsVariant="2275eae0-82cb-4421-9892-8c0311fa555c">
+																	<components>
+																		<skuid__form showErrorsInline="true" model="SPICED_Current" uniqueid="sk-2jOf-64751" mode="edit" styleSettingsVariant="16a0250c-cdbf-404c-a173-d031810ee5dd">
+																			<columns>
+																				<column behavior="flex" verticalAlign="top">
+																					<sections>
+																						<section title="New Section" showHeading="false">
+																							<fields>
+																								<skuid__field id="critical_event_score" uniqueId="sk-2jOf-64753" styleSettingsVariant="ae152a72-ae75-4e04-b376-e6ba91d6d768" label="Critical Event"/>
+																								<skuid__field id="critical_event_qualification" uniqueId="sk-2jOf-64757" label="Qualification"/>
+																							</fields>
+																						</section>
+																					</sections>
+																				</column>
+																			</columns>
+																			<styles>
+																				<spacing/>
+																			</styles>
+																			<renderConditions logictype="and"/>
+																			<styleVariantConditions/>
+																		</skuid__form>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1"/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-2jOo-70783" styleSettingsVariant="2275eae0-82cb-4421-9892-8c0311fa555c">
+																	<components>
+																		<skuid__form showErrorsInline="true" model="SPICED_Current" uniqueid="sk-2jOo-70784" mode="edit" styleSettingsVariant="16a0250c-cdbf-404c-a173-d031810ee5dd">
+																			<columns>
+																				<column behavior="flex" verticalAlign="top">
+																					<sections>
+																						<section title="New Section" showHeading="false">
+																							<fields>
+																								<skuid__field id="decision_score" uniqueId="sk-2jOo-70786" styleSettingsVariant="ae152a72-ae75-4e04-b376-e6ba91d6d768" label="Decision"/>
+																								<skuid__field id="decision_qualification" uniqueId="sk-2jOo-70788" label="Qualification"/>
+																							</fields>
+																						</section>
+																					</sections>
+																				</column>
+																			</columns>
+																			<styles>
+																				<spacing/>
+																			</styles>
+																			<renderConditions logictype="and"/>
+																			<styleVariantConditions/>
+																		</skuid__form>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1"/>
+																	</styles>
+																</skuid__wrapper>
+															</components>
+															<styles>
+																<spacing/>
+															</styles>
+															<background/>
+															<renderConditions logictype="and"/>
+															<styleVariantConditions/>
+														</skuid__wrapper>
+													</components>
+													<buttons/>
+												</step>
+												<step stepId="HistoricalMode" stepLabel="Historical Mode">
+													<components>
+														<skuid__wrapper uniqueid="HistoricalMode">
+															<components>
+																<skuid__wrapper uniqueid="sk-2i9c-53871" styleSettingsVariant="1ab2ebc4-65e5-4f8d-b08f-f6ac7d864e61">
+																	<components>
+																		<skuid__accordion uniqueid="sk-2i8t-38950" iconStyle="separate" icon="sk-webicon-ink:chevron-up" iconClose="sk-webicon-ink:chevron-down" iconOnRight="true" allowHTML="true" styleSettingsVariant="8afad3ff-9a41-4831-bb23-80ad8a4dfa42">
+																			<sections>
+																				<section title="View all related SPICED records">
+																					<components>
+																						<skuid__deck columnGutter="0px" rowGutter="8px" model="List_of_Existing" showSaveCancel="false" verticalAlign="top" minWidth="100%" uniqueid="sk-2czM-54279" setMaxWidth="auto" pageSize="5" showLoadMore="true" showPageSizeSelect="false" resetPaginationOnQuery="false" styleSettingsVariant="dfee0313-cdcf-4473-a2ff-a94ef372c773">
+																							<components>
+																								<skuid__wrapper uniqueid="sk-2i97-50394" styleSettingsVariant="c0b47484-449b-4a09-93d7-2b403138c73f">
+																									<components>
+																										<skuid__grid uniqueid="sk-2czT-56527" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+																											<divisions>
+																												<division minWidth="50px" ratio="1" alignSelf="auto">
+																													<components>
+																														<skuid__text contents="{{#indexCheck}}Current (Updated: {{created_at}}){{/indexCheck}}{{^indexCheck}}{{created_at}}{{/indexCheck}}" uniqueid="sk-2czW-57868" model="List_of_Existing" styleSettingsVariant="2036d44a-b3a0-498e-9b4e-8d19ff139884">
+																															<renderConditions logictype="and"/>
+																															<styleVariantConditions>
+																																<rule logictype="or" styleSettingsVariantOverride="2e2d9d7b-cd81-4691-865d-bec7382c17d1">
+																																	<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="List_of_Existing" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="IsSelected" fieldtargetobjects="SPICED" value="true"/>
+																																</rule>
+																															</styleVariantConditions>
+																															<conditions>
+																																<condition type="contextrow" field="id" mergefield="id" operator="="/>
+																															</conditions>
+																															<styles>
+																																<spacing/>
+																															</styles>
+																														</skuid__text>
+																													</components>
+																												</division>
+																												<division alignSelf="auto" minWidth="50px" ratio="1">
+																													<components>
+																														<skuid__text contents="&lt;div style=&quot;text-align: right;&quot;&gt;Score: &lt;strong&gt;{{spiced_total_score}}&lt;/strong&gt;&amp;nbsp;&lt;/div&gt;&#10;" uniqueid="sk-2czX-58687" model="List_of_Existing" styleSettingsVariant="fdcf023d-e017-495b-adb2-b49e2013d991">
+																															<renderConditions logictype="and"/>
+																															<styleVariantConditions>
+																																<rule logictype="or" styleSettingsVariantOverride="ee1a78cf-f49c-492d-8839-97f5130129cc">
+																																	<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="List_of_Existing" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="IsSelected" fieldtargetobjects="SPICED" value="true"/>
+																																</rule>
+																															</styleVariantConditions>
+																															<conditions>
+																																<condition type="contextrow" field="id" mergefield="id" operator="="/>
+																															</conditions>
+																															<styles>
+																																<spacing/>
+																															</styles>
+																														</skuid__text>
+																													</components>
+																												</division>
+																											</divisions>
+																											<styles>
+																												<spacing/>
+																											</styles>
+																											<background/>
+																										</skuid__grid>
+																									</components>
+																									<background/>
+																									<renderConditions logictype="and"/>
+																									<styleVariantConditions>
+																										<rule logictype="and" styleSettingsVariantOverride="1cf7d98f-f4d0-49ca-bc5e-68cdd9d6b578">
+																											<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="List_of_Existing" sourcetype="fieldvalue" field="IsSelected" fieldtargetobjects="SPICED" value="true"/>
+																										</rule>
+																									</styleVariantConditions>
+																									<interactions/>
+																									<styles>
+																										<spacing/>
+																									</styles>
+																								</skuid__wrapper>
+																							</components>
+																							<filtering enableSearch="false"/>
+																							<sorting enable="false"/>
+																							<interactions>
+																								<interaction type="tap">
+																									<action type="branch" whenfinished="stop" model="List_of_Existing">
+																										<iftrueactions>
+																											<action type="updateRow" fieldmodel="UI_controls" affectedrows="context">
+																												<updates>
+																													<update valuesource="fieldvalue" field="HistoricalMode" enclosevalueinquotes="false" value="false"/>
+																													<update valuesource="fieldvalue" field="ReadMode" enclosevalueinquotes="false" value="true"/>
+																												</updates>
+																											</action>
+																											<action type="updateRow" fieldmodel="List_of_Existing" affectedrows="all">
+																												<updates>
+																													<update valuesource="fieldvalue" field="IsSelected" enclosevalueinquotes="false" value="false"/>
+																												</updates>
+																											</action>
+																											<action type="save">
+																												<models>
+																													<model>List_of_Existing</model>
+																												</models>
+																											</action>
+																											<action type="action-sequence" action-sequence-id="228386d8-3b87-4dc7-ad36-efc4c97f5c97"/>
+																											<action type="updateCondition" model="SPICED_Current" behavior="set" condition="id" valuesource="fieldvalue" value="{{id}}"/>
+																											<action type="updateCondition" model="SPICED_Current" behavior="activate" condition="is_active"/>
+																											<action type="requeryModels" behavior="standard">
+																												<models>
+																													<model>SPICED_Current</model>
+																												</models>
+																											</action>
+																											<action type="runComponentAction" componentid="sk-30NB-42825" action="navigateToStep" stepId="ReadMode" scrollStepLabelIntoView="false"/>
+																										</iftrueactions>
+																										<formula>{{indexCheck}}</formula>
+																									</action>
+																									<action type="updateRow" fieldmodel="List_of_Existing" affectedrows="all">
+																										<updates>
+																											<update valuesource="fieldvalue" field="IsSelected" enclosevalueinquotes="false" value="false"/>
+																										</updates>
+																									</action>
+																									<action type="updateRow" fieldmodel="List_of_Existing" affectedrows="context">
+																										<updates>
+																											<update valuesource="fieldvalue" field="IsSelected" enclosevalueinquotes="false" value="true"/>
+																										</updates>
+																									</action>
+																									<action type="updateCondition" model="SPICED_Current" behavior="set" condition="id" valuesource="fieldvalue" value="{{id}}"/>
+																									<action type="deactivateCondition" model="SPICED_Current" condition="is_active"/>
+																									<action type="requeryModels" behavior="standard">
+																										<models>
+																											<model>SPICED_Current</model>
+																										</models>
+																									</action>
+																									<action type="save">
+																										<models>
+																											<model>List_of_Existing</model>
+																										</models>
+																									</action>
+																									<action type="action-sequence" action-sequence-id="228386d8-3b87-4dc7-ad36-efc4c97f5c97"/>
+																								</interaction>
+																							</interactions>
+																							<styles>
+																								<spacing top="1" styleSettingsVariant="dfee0313-cdcf-4473-a2ff-a94ef372c773"/>
+																							</styles>
+																							<renderConditions logictype="and"/>
+																							<styleVariantConditions/>
+																						</skuid__deck>
+																					</components>
+																				</section>
+																			</sections>
+																			<renderConditions logictype="and">
+																				<renderCondition type="fieldvalue" operator="!=" enclosevalueinquotes="false" fieldmodel="UI_controls" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="NewRecord" value="true"/>
+																			</renderConditions>
+																			<styleVariantConditions/>
+																		</skuid__accordion>
+																	</components>
+																	<background/>
+																	<renderConditions logictype="and"/>
+																	<styleVariantConditions/>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-2eKU-24157" styleSettingsVariant="aa3ef0b9-4b98-4e94-b93c-fab044132bbb">
+																	<components>
+																		<skuid__text contents="Situation" uniqueid="sk-2eKW-24707" model="SPICED_Current" styleSettingsVariant="6ac04b34-3379-4f14-9b1e-bf63cb86866b">
+																			<styles>
+																				<spacing/>
+																			</styles>
+																		</skuid__text>
+																		<skuid__grid uniqueid="sk-2eKe-26230" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1">
+																			<divisions>
+																				<division minWidth="40px" ratio="1" alignSelf="center" maxWidth="40px">
+																					<components>
+																						<skuid__buttonSet uniqueid="sk-2eNb-30474" model="SPICED_Current" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-2eNb-30472" displayType="detached">
+																									<buttons>
+																										<skuid__button label="{{^situation_score}}0{{/situation_score}}{{{situation_score}}}" uniqueId="sk-2eNb-30473" styleSettingsVariant="83f8e6a0-cb41-400b-b195-3119c534c4c8">
+																											<actions/>
+																										</skuid__button>
+																									</buttons>
+																								</skuid__buttonGroup>
+																							</groups>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																				<division alignSelf="center" minWidth="calc(100% - 60px)" ratio="0" maxWidth="calc(100% - 60px)">
+																					<components>
+																						<skuid__text contents="{{^situation_score}}0 - Unknown{{/situation_score}}{{situation_score}}" uniqueid="sk-2eKi-27621" model="SPICED_Current" styleSettingsVariant="6e96a462-021c-45d9-8c81-75c5470371b5"/>
+																						<skuid__form showErrorsInline="true" model="UI_controls" uniqueid="sk-31IA-44276" mode="edit" styleSettingsVariant="409591e0-0991-4f56-b086-4576705290d6">
+																							<columns>
+																								<column behavior="flex" verticalAlign="top">
+																									<sections>
+																										<section title="New Section" showHeading="false">
+																											<fields>
+																												<skuid__field id="UI_Situation_Score" uniqueId="sk-31IL-49973" label=" " displayAs="SLIDER" step="1" max="5" styleSettingsVariant="1447078b-36c9-413d-a0b3-7891a68a7208"/>
+																											</fields>
+																										</section>
+																									</sections>
+																								</column>
+																							</columns>
+																							<styles>
+																								<spacing top="103c586c-5cc6-4d01-9a22-8c54dd9527ef"/>
+																							</styles>
+																						</skuid__form>
+																					</components>
+																				</division>
+																			</divisions>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<background/>
+																		</skuid__grid>
+																		<skuid__wrapper uniqueid="sk-4sv-84834" styleSettingsVariant="d3b30da9-61fa-40f1-9fd8-7cfd8598c750">
+																			<components>
+																				<skuid__text contents="{{situation_qualification}}" uniqueid="sk-4sv-84835" model="SPICED_Current" styleSettingsVariant="ce6769a3-3346-4542-9092-ace4350c96ef">
+																					<styles>
+																						<spacing/>
+																					</styles>
+																				</skuid__text>
+																			</components>
+																			<background/>
+																			<styles>
+																				<spacing top="1" styleSettingsVariant="d3b30da9-61fa-40f1-9fd8-7cfd8598c750"/>
+																			</styles>
+																			<renderConditions logictype="and">
+																				<renderCondition type="blank" operator="!=" fieldmodel="SPICED_Current" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="situation_qualification" fieldtargetobjects="SPICED" value="null" enclosevalueinquotes="false"/>
+																			</renderConditions>
+																			<styleVariantConditions/>
+																		</skuid__wrapper>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1" styleSettingsVariant="aa3ef0b9-4b98-4e94-b93c-fab044132bbb"/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-2huK-45368" styleSettingsVariant="aa3ef0b9-4b98-4e94-b93c-fab044132bbb">
+																	<components>
+																		<skuid__text contents="Pain" uniqueid="sk-2huK-45369" model="SPICED_Current" styleSettingsVariant="6ac04b34-3379-4f14-9b1e-bf63cb86866b">
+																			<styles>
+																				<spacing/>
+																			</styles>
+																		</skuid__text>
+																		<skuid__grid uniqueid="sk-2huK-45370" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1">
+																			<divisions>
+																				<division minWidth="40px" ratio="1" alignSelf="center" maxWidth="40px">
+																					<components>
+																						<skuid__buttonSet uniqueid="sk-2huK-45371" model="SPICED_Current" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-2huK-45374" displayType="detached">
+																									<buttons>
+																										<skuid__button uniqueId="sk-2huK-45375" styleSettingsVariant="83f8e6a0-cb41-400b-b195-3119c534c4c8" label="{{^pain_score}}0{{/pain_score}}{{{pain_score}}}"/>
+																									</buttons>
+																								</skuid__buttonGroup>
+																							</groups>
+																							<styles>
+																								<spacing/>
+																							</styles>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																				<division alignSelf="center" minWidth="calc(100% - 60px)" ratio="0" maxWidth="calc(100% - 60px)">
+																					<components>
+																						<skuid__text contents="{{^pain_score}}0 - Unknown{{/pain_score}}{{pain_score}}" uniqueid="sk-2huK-45372" model="SPICED_Current" styleSettingsVariant="6e96a462-021c-45d9-8c81-75c5470371b5"/>
+																						<skuid__form showErrorsInline="true" model="UI_controls" uniqueid="sk-2huK-45373" mode="edit" styleSettingsVariant="409591e0-0991-4f56-b086-4576705290d6">
+																							<columns>
+																								<column>
+																									<sections>
+																										<section title="New Section" showHeading="false">
+																											<fields>
+																												<skuid__field id="UI_Pain_Score" uniqueId="sk-2huc-50394" displayAs="SLIDER" step="1" max="5" label=" " styleSettingsVariant="1447078b-36c9-413d-a0b3-7891a68a7208"/>
+																											</fields>
+																										</section>
+																									</sections>
+																								</column>
+																							</columns>
+																							<styles>
+																								<spacing top="103c586c-5cc6-4d01-9a22-8c54dd9527ef"/>
+																							</styles>
+																						</skuid__form>
+																					</components>
+																				</division>
+																			</divisions>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<background/>
+																		</skuid__grid>
+																		<skuid__wrapper uniqueid="sk-4s_-86691" styleSettingsVariant="d3b30da9-61fa-40f1-9fd8-7cfd8598c750">
+																			<components>
+																				<skuid__text contents="{{pain_qualification}}" uniqueid="sk-4s_-86692" model="SPICED_Current" styleSettingsVariant="6e96a462-021c-45d9-8c81-75c5470371b5"/>
+																			</components>
+																			<background/>
+																			<styles>
+																				<spacing top="1" styleSettingsVariant="d3b30da9-61fa-40f1-9fd8-7cfd8598c750"/>
+																			</styles>
+																			<renderConditions logictype="and">
+																				<renderCondition type="blank" operator="!=" fieldmodel="SPICED_Current" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="pain_qualification" fieldtargetobjects="SPICED" value="null" enclosevalueinquotes="false"/>
+																			</renderConditions>
+																			<styleVariantConditions/>
+																		</skuid__wrapper>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1" styleSettingsVariant="aa3ef0b9-4b98-4e94-b93c-fab044132bbb"/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-2hur-54178" styleSettingsVariant="aa3ef0b9-4b98-4e94-b93c-fab044132bbb">
+																	<components>
+																		<skuid__text contents="Impact" uniqueid="sk-2hur-54179" model="SPICED_Current" styleSettingsVariant="6ac04b34-3379-4f14-9b1e-bf63cb86866b"/>
+																		<skuid__grid uniqueid="sk-2hur-54180" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1">
+																			<divisions>
+																				<division minWidth="40px" ratio="1" alignSelf="center" maxWidth="40px">
+																					<components>
+																						<skuid__buttonSet uniqueid="sk-2hur-54181" model="SPICED_Current" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-2hur-54184" displayType="detached">
+																									<buttons>
+																										<skuid__button uniqueId="sk-2hur-54185" styleSettingsVariant="83f8e6a0-cb41-400b-b195-3119c534c4c8" label="{{^impact_score}}0{{/impact_score}}{{{impact_score}}}"/>
+																									</buttons>
+																								</skuid__buttonGroup>
+																							</groups>
+																							<styles>
+																								<spacing/>
+																							</styles>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																				<division alignSelf="center" minWidth="calc(100% - 60px)" ratio="0" maxWidth="calc(100% - 60px)">
+																					<components>
+																						<skuid__text contents="{{^impact_score}}0 - Unknown{{/impact_score}}{{impact_score}}" uniqueid="sk-2hur-54182" model="SPICED_Current" styleSettingsVariant="6e96a462-021c-45d9-8c81-75c5470371b5"/>
+																						<skuid__form showErrorsInline="true" model="UI_controls" uniqueid="sk-2hur-54183" mode="edit" styleSettingsVariant="409591e0-0991-4f56-b086-4576705290d6">
+																							<columns>
+																								<column>
+																									<sections>
+																										<section title="New Section" showHeading="false">
+																											<fields>
+																												<skuid__field id="UI_Impact_Score" uniqueId="sk-2hv6-59511" displayAs="SLIDER" step="1" max="5" label=" " styleSettingsVariant="1447078b-36c9-413d-a0b3-7891a68a7208"/>
+																											</fields>
+																										</section>
+																									</sections>
+																								</column>
+																							</columns>
+																							<styles>
+																								<spacing top="103c586c-5cc6-4d01-9a22-8c54dd9527ef"/>
+																							</styles>
+																						</skuid__form>
+																					</components>
+																				</division>
+																			</divisions>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<background/>
+																		</skuid__grid>
+																		<skuid__wrapper uniqueid="sk-4t3-88504" styleSettingsVariant="d3b30da9-61fa-40f1-9fd8-7cfd8598c750">
+																			<components>
+																				<skuid__text contents="{{impact_qualification}}" uniqueid="sk-4t3-88505" model="SPICED_Current" styleSettingsVariant="6e96a462-021c-45d9-8c81-75c5470371b5"/>
+																			</components>
+																			<background/>
+																			<styles>
+																				<spacing top="1" styleSettingsVariant="d3b30da9-61fa-40f1-9fd8-7cfd8598c750"/>
+																			</styles>
+																			<renderConditions logictype="and">
+																				<renderCondition type="blank" operator="!=" fieldmodel="SPICED_Current" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="impact_qualification" fieldtargetobjects="SPICED" value="null" enclosevalueinquotes="false"/>
+																			</renderConditions>
+																			<styleVariantConditions/>
+																		</skuid__wrapper>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1" styleSettingsVariant="aa3ef0b9-4b98-4e94-b93c-fab044132bbb"/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-2hvF-61709" styleSettingsVariant="aa3ef0b9-4b98-4e94-b93c-fab044132bbb">
+																	<components>
+																		<skuid__text contents="Critical Event" uniqueid="sk-2hvF-61710" model="SPICED_Current" styleSettingsVariant="6ac04b34-3379-4f14-9b1e-bf63cb86866b"/>
+																		<skuid__grid uniqueid="sk-2hvF-61711" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1">
+																			<divisions>
+																				<division minWidth="40px" ratio="1" alignSelf="center" maxWidth="40px">
+																					<components>
+																						<skuid__buttonSet uniqueid="sk-2hvF-61712" model="SPICED_Current" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-2hvF-61715" displayType="detached">
+																									<buttons>
+																										<skuid__button uniqueId="sk-2hvF-61716" styleSettingsVariant="83f8e6a0-cb41-400b-b195-3119c534c4c8" label="{{^critical_event_score}}0{{/critical_event_score}}{{{critical_event_score}}}"/>
+																									</buttons>
+																								</skuid__buttonGroup>
+																							</groups>
+																							<styles>
+																								<spacing/>
+																							</styles>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																				<division alignSelf="center" minWidth="calc(100% - 60px)" ratio="0" maxWidth="calc(100% - 60px)">
+																					<components>
+																						<skuid__text contents="{{critical_event_score}}" uniqueid="sk-2hvF-61713" model="SPICED_Current" styleSettingsVariant="6e96a462-021c-45d9-8c81-75c5470371b5"/>
+																						<skuid__form showErrorsInline="true" model="UI_controls" uniqueid="sk-2hvF-61714" mode="edit" styleSettingsVariant="409591e0-0991-4f56-b086-4576705290d6">
+																							<columns>
+																								<column>
+																									<sections>
+																										<section title="New Section" showHeading="false">
+																											<fields>
+																												<skuid__field id="UI_Critical_Event_Score" uniqueId="sk-2hvO-67420" displayAs="SLIDER" step="1" min="0" max="5" label=" " styleSettingsVariant="1447078b-36c9-413d-a0b3-7891a68a7208"/>
+																											</fields>
+																										</section>
+																									</sections>
+																								</column>
+																							</columns>
+																							<styles>
+																								<spacing top="103c586c-5cc6-4d01-9a22-8c54dd9527ef"/>
+																							</styles>
+																						</skuid__form>
+																					</components>
+																				</division>
+																			</divisions>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<background/>
+																		</skuid__grid>
+																		<skuid__wrapper uniqueid="sk-4wY-49761" styleSettingsVariant="d3b30da9-61fa-40f1-9fd8-7cfd8598c750">
+																			<components>
+																				<skuid__text contents="{{critical_event_qualification}}" uniqueid="sk-4wY-49762" model="SPICED_Current" styleSettingsVariant="6e96a462-021c-45d9-8c81-75c5470371b5"/>
+																			</components>
+																			<background/>
+																			<styles>
+																				<spacing top="1" styleSettingsVariant="d3b30da9-61fa-40f1-9fd8-7cfd8598c750"/>
+																			</styles>
+																			<renderConditions logictype="and">
+																				<renderCondition type="blank" operator="!=" fieldmodel="SPICED_Current" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="critical_event_qualification" fieldtargetobjects="SPICED" value="null" enclosevalueinquotes="false"/>
+																			</renderConditions>
+																			<styleVariantConditions/>
+																		</skuid__wrapper>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1" styleSettingsVariant="aa3ef0b9-4b98-4e94-b93c-fab044132bbb"/>
+																	</styles>
+																</skuid__wrapper>
+																<skuid__wrapper uniqueid="sk-2hvQ-68391" styleSettingsVariant="aa3ef0b9-4b98-4e94-b93c-fab044132bbb">
+																	<components>
+																		<skuid__text contents="Decision" uniqueid="sk-2hvQ-68392" model="SPICED_Current" styleSettingsVariant="6ac04b34-3379-4f14-9b1e-bf63cb86866b">
+																			<styles>
+																				<spacing/>
+																			</styles>
+																		</skuid__text>
+																		<skuid__grid uniqueid="sk-2hvQ-68393" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1">
+																			<divisions>
+																				<division minWidth="40px" ratio="1" alignSelf="center" maxWidth="40px" uniqueid="d">
+																					<components>
+																						<skuid__buttonSet uniqueid="sk-2hvQ-68394" model="SPICED_Current" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																							<groups>
+																								<skuid__buttonGroup uniqueId="sk-2hvQ-68397" displayType="detached">
+																									<buttons>
+																										<skuid__button uniqueId="sk-2hvQ-68398" styleSettingsVariant="83f8e6a0-cb41-400b-b195-3119c534c4c8" label="{{^decision_score}}0{{/decision_score}}{{{decision_score}}}"/>
+																									</buttons>
+																								</skuid__buttonGroup>
+																							</groups>
+																							<styles>
+																								<spacing/>
+																							</styles>
+																						</skuid__buttonSet>
+																					</components>
+																				</division>
+																				<division alignSelf="center" minWidth="calc(100% - 60px)" ratio="0" maxWidth="calc(100% - 60px)">
+																					<components>
+																						<skuid__text contents="{{^decision_score}}0 - Unknown{{/decision_score}}{{decision_score}}" uniqueid="sk-2hvQ-68395" model="SPICED_Current" styleSettingsVariant="6e96a462-021c-45d9-8c81-75c5470371b5"/>
+																						<skuid__form showErrorsInline="true" model="UI_controls" uniqueid="sk-2hvQ-68396" mode="edit" styleSettingsVariant="409591e0-0991-4f56-b086-4576705290d6">
+																							<columns>
+																								<column>
+																									<sections>
+																										<section title="New Section" showHeading="false">
+																											<fields>
+																												<skuid__field id="UI_Decision_Score" uniqueId="sk-2hvY-73457" displayAs="SLIDER" step="1" max="5" min="0" styleSettingsVariant="1447078b-36c9-413d-a0b3-7891a68a7208" label="   "/>
+																											</fields>
+																										</section>
+																									</sections>
+																								</column>
+																							</columns>
+																							<styles>
+																								<spacing top="103c586c-5cc6-4d01-9a22-8c54dd9527ef"/>
+																							</styles>
+																						</skuid__form>
+																					</components>
+																				</division>
+																			</divisions>
+																			<styles>
+																				<spacing top="1"/>
+																			</styles>
+																			<background/>
+																		</skuid__grid>
+																		<skuid__wrapper uniqueid="sk-4tA-92012" styleSettingsVariant="d3b30da9-61fa-40f1-9fd8-7cfd8598c750">
+																			<components>
+																				<skuid__text contents="{{decision_qualification}}" uniqueid="sk-4tA-92013" model="SPICED_Current" styleSettingsVariant="6e96a462-021c-45d9-8c81-75c5470371b5"/>
+																			</components>
+																			<background/>
+																			<styles>
+																				<spacing top="1" styleSettingsVariant="d3b30da9-61fa-40f1-9fd8-7cfd8598c750"/>
+																			</styles>
+																			<renderConditions logictype="and">
+																				<renderCondition type="blank" operator="!=" fieldmodel="SPICED_Current" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="decision_qualification" fieldtargetobjects="SPICED" value="null" enclosevalueinquotes="false"/>
+																			</renderConditions>
+																			<styleVariantConditions/>
+																		</skuid__wrapper>
+																	</components>
+																	<background/>
+																	<styles>
+																		<spacing top="1" styleSettingsVariant="aa3ef0b9-4b98-4e94-b93c-fab044132bbb"/>
+																	</styles>
+																	<renderConditions logictype="and"/>
+																	<styleVariantConditions/>
+																</skuid__wrapper>
+															</components>
+															<background/>
+															<renderConditions logictype="and">
+																<renderCondition type="fieldvalue" operator="!=" enclosevalueinquotes="false" fieldmodel="UI_controls" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="ReadMode" value="false"/>
+															</renderConditions>
+															<styleVariantConditions/>
+															<interactions/>
+															<styles>
+																<spacing/>
+															</styles>
+														</skuid__wrapper>
+													</components>
+													<buttons/>
+													<tooltip position="top"/>
+													<enableConditions logictype="and"/>
+												</step>
+											</steps>
+											<renderConditions logictype="and"/>
+											<styleVariantConditions/>
+											<styles>
+												<spacing top="2" right="2" bottom="2" left="2"/>
+											</styles>
+										</skuid__wizard>
+										<skuid__wrapper uniqueid="AppControls">
+											<components>
+												<skuid__grid uniqueid="sk-2iwt-48831" flexDirection="row" justifyContent="flex-start" alignItems="center" columnGutter="2">
+													<divisions>
+														<division minWidth="50px" ratio="1" alignSelf="center">
+															<components>
+																<skuid__text contents="&lt;div&gt;Qualification Score: {{spiced_total_score}}&lt;/div&gt;&#10;" uniqueid="sk-34Pa-43887" model="SPICED_Current" styleSettingsVariant="5107c74d-d1e5-491d-88ab-7caf50addbff">
+																	<renderConditions logictype="and"/>
+																	<styleVariantConditions>
+																		<rule logictype="and" styleSettingsVariantOverride="980d82f1-c939-4a08-8cb9-bca9e8b7903c">
+																			<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UI_controls" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="HistoricalMode" value="true"/>
+																		</rule>
+																	</styleVariantConditions>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																</skuid__text>
+															</components>
+														</division>
+														<division alignSelf="center" minWidth="20px" ratio="0">
+															<components>
+																<skuid__buttonSet uniqueid="sk-2ix8-54629" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																	<groups>
+																		<skuid__buttonGroup uniqueId="sk-3ysK-276018">
+																			<buttons>
+																				<skuid__button uniqueId="sk-3ysK-276019" icon="sk-webicon-lightning-icons:edit" styleSettingsVariant="f0c55068-0fc5-4392-9ded-bb9c49473665">
+																					<actions>
+																						<action type="updateRow" fieldmodel="UI_controls" affectedrows="context">
+																							<updates>
+																								<update valuesource="fieldvalue" field="EditMode" enclosevalueinquotes="false" value="true"/>
+																								<update valuesource="fieldvalue" field="ReadMode" enclosevalueinquotes="false" value="false"/>
+																							</updates>
+																						</action>
+																						<action type="runComponentAction" componentid="sk-30NB-42825" action="navigateToStep" stepId="EditMode" scrollStepLabelIntoView="false"/>
+																					</actions>
+																					<renderConditions logictype="and"/>
+																					<enableConditions logictype="and">
+																						<condition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="SPICED_Current" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+																					</enableConditions>
+																					<styleVariantConditions>
+																						<rule logictype="and" styleSettingsVariantOverride="a08619e7-0dfa-4062-b5a1-92156057af0a">
+																							<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UI_controls" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="EditMode" value="true"/>
+																						</rule>
+																					</styleVariantConditions>
+																					<styles>
+																						<spacing/>
+																					</styles>
+																				</skuid__button>
+																			</buttons>
+																		</skuid__buttonGroup>
+																	</groups>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																</skuid__buttonSet>
+															</components>
+														</division>
+														<division alignSelf="auto" minWidth="20px" ratio="0">
+															<components>
+																<skuid__buttonSet uniqueid="sk-3ysm-66282" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																	<groups>
+																		<skuid__buttonGroup uniqueId="sk-3ysm-66287">
+																			<buttons>
+																				<skuid__button uniqueId="sk-3ysm-66288" styleSettingsVariant="60a83566-5622-44d2-b2aa-be46319f609b" label="i">
+																					<actions>
+																						<action type="showModal">
+																							<skuid__modal title="SPICED Overview" width="640px" showFooter="false" ariaRole="dialog">
+																								<components>
+																									<skuid__text contents="&lt;strong&gt;SPICED&lt;/strong&gt; is a Winning by Design framework that helps diagnose customers. It organizes information to make sure you know why and when a customer will commit to your solution and achieve impact. Use SPICED for handoffs between teams (e.g., prospecting to sales or sales to customer success) or to summarize a deal during forecasting or cross-functional meetings." uniqueid="sk-3ysm-66283" styleSettingsVariant="e13d8c9d-9690-4dcd-8bcb-a0c3d743eaf8">
+																										<styles>
+																											<spacing/>
+																										</styles>
+																									</skuid__text>
+																									<skuid__text contents="&lt;p dir=&quot;ltr&quot;&gt;&lt;strong&gt;S (Situation):&lt;/strong&gt; Facts or circumstances relevant to customer&amp;rsquo;s world. Defines tools, people, industry, and company landscape to understand opportunity size and customer fit&lt;br /&gt;&#10;&lt;br /&gt;&#10;&lt;strong&gt;P (Pain):&lt;/strong&gt; Problems customer wants solution to solve. Defines acute challenges and frustrations, such as issues with process or desired improvements in workflow&lt;br /&gt;&#10;&lt;br /&gt;&#10;&lt;strong&gt;I (Impact):&lt;/strong&gt; Results produced by solving pain. Impact reveals business goals you could address, e.g., increase revenue, decrease cost, improve customer experience; impact can be emotional (individual level) or rational (company level)&lt;br /&gt;&#10;&lt;br /&gt;&#10;&lt;strong&gt;CE (Critical Event):&lt;/strong&gt; Any deadline by which customer must achieve impact or suffer consequences. Critical Events drive timeline for purchase.&lt;br /&gt;&#10;&lt;br /&gt;&#10;&lt;strong&gt;D (Decision):&lt;/strong&gt; Customer&amp;#39;s decision process and criteria. Map the buying committee decision process based on who needs to be involved by stage, who will sign, who needs to approve, etc.&lt;/p&gt;&#10;" uniqueid="sk-3ysm-66284" styleSettingsVariant="e13d8c9d-9690-4dcd-8bcb-a0c3d743eaf8">
+																										<styles>
+																											<spacing/>
+																										</styles>
+																									</skuid__text>
+																									<skuid__text contents="Qualification Score Formula" uniqueid="sk-3ysm-66285" styleSettingsVariant="2d16fd9b-e5bb-4fde-a36d-26adfcb010a8">
+																										<styles>
+																											<spacing top="4" styleSettingsVariant="2d16fd9b-e5bb-4fde-a36d-26adfcb010a8"/>
+																										</styles>
+																									</skuid__text>
+																									<skuid__text contents="(Situation x 2) + (Pain x 2) + (Impact x 10) + (Critical Event x 2) + (Decision x 4)" uniqueid="sk-3ysm-66286" styleSettingsVariant="e13d8c9d-9690-4dcd-8bcb-a0c3d743eaf8">
+																										<styles>
+																											<spacing top="1" styleSettingsVariant="e13d8c9d-9690-4dcd-8bcb-a0c3d743eaf8"/>
+																										</styles>
+																									</skuid__text>
+																								</components>
+																							</skuid__modal>
+																						</action>
+																					</actions>
+																					<renderConditions logictype="and"/>
+																					<enableConditions logictype="and" message="Please save or cancel changes first">
+																						<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="SPICED_Current" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasChanged" value="true" operator="!="/>
+																					</enableConditions>
+																					<styleVariantConditions>
+																						<rule logictype="and" styleSettingsVariantOverride="05985053-fed5-4497-9545-c62a4c6c0b6e">
+																							<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UI_controls" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="HistoricalMode" value="true"/>
+																						</rule>
+																					</styleVariantConditions>
+																				</skuid__button>
+																			</buttons>
+																		</skuid__buttonGroup>
+																	</groups>
+																	<styles>
+																		<spacing/>
+																	</styles>
+																</skuid__buttonSet>
+															</components>
+														</division>
+													</divisions>
+													<styles>
+														<spacing top="1"/>
+													</styles>
+													<background/>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" operator="!=" enclosevalueinquotes="false" fieldmodel="UI_controls" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="EditMode" value="true"/>
+														<renderCondition type="fieldvalue" enclosevalueinquotes="true" fieldmodel="SPICED_Current" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="hasRows"/>
+													</renderConditions>
+													<styleVariantConditions/>
+												</skuid__grid>
+												<skuid__wrapper uniqueid="sk-2jSo-40095" styleSettingsVariant="b328dd33-342a-43fe-9f99-94f55540098b" heightStrategy="fixed" height="custom" heightCustom="48px">
+													<components>
+														<skuid__grid uniqueid="sk-2jQL-103437" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+															<divisions>
+																<division minWidth="50px" ratio="1" alignSelf="center">
+																	<components>
+																		<skuid__buttonSet model="SPICED_Current" uniqueid="sk-3FSz-55756" position="left" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																			<groups>
+																				<skuid__buttonGroup uniqueId="sk-3FSz-55754" displayType="detached">
+																					<buttons>
+																						<skuid__button label="Cancel" uniqueId="sk-3FSz-55755" styleSettingsVariant="99a4e470-d022-4c96-8052-d734b5f7d11b">
+																							<actions>
+																								<action type="cancel">
+																									<models>
+																										<model>SPICED_Current</model>
+																									</models>
+																								</action>
+																								<action type="updateRow" fieldmodel="UI_controls" affectedrows="context">
+																									<updates>
+																										<update valuesource="fieldvalue" field="EditMode" enclosevalueinquotes="false" value="false"/>
+																										<update valuesource="fieldvalue" field="ReadMode" enclosevalueinquotes="false" value="true"/>
+																									</updates>
+																								</action>
+																								<action type="requeryModels" behavior="standard">
+																									<models>
+																										<model>SPICED_Current</model>
+																										<model>List_of_Existing</model>
+																									</models>
+																								</action>
+																								<action type="action-sequence" action-sequence-id="228386d8-3b87-4dc7-ad36-efc4c97f5c97"/>
+																								<action type="runComponentAction" componentid="sk-30NB-42825" action="navigateToStep" stepId="ReadMode" scrollStepLabelIntoView="false"/>
+																							</actions>
+																							<renderConditions logictype="and"/>
+																							<enableConditions logictype="and"/>
+																							<styleVariantConditions/>
+																						</skuid__button>
+																					</buttons>
+																				</skuid__buttonGroup>
+																			</groups>
+																			<renderConditions logictype="and"/>
+																			<styleVariantConditions/>
+																		</skuid__buttonSet>
+																	</components>
+																</division>
+																<division alignSelf="center" minWidth="50px" ratio="1">
+																	<components>
+																		<skuid__buttonSet model="SPICED_Current" uniqueid="sk-2jQX-111109" styleSettingsVariant="5c4c0631-1ae7-4b2d-ae8d-a74d1dcf5aa9">
+																			<groups>
+																				<skuid__buttonGroup uniqueId="sk-2jQX-111110" displayType="detached">
+																					<buttons>
+																						<skuid__button label="Save" uniqueId="sk-2jQX-111112" styleSettingsVariant="6e48c959-cf52-473b-aa8d-261bcdf8eda4">
+																							<actions>
+																								<action type="action-sequence" action-sequence-id="049ed6c8-c1bb-421c-b5eb-2c5297504af2"/>
+																								<action type="updateRow" fieldmodel="UI_controls" affectedrows="context">
+																									<updates>
+																										<update valuesource="fieldvalue" field="EditMode" enclosevalueinquotes="false" value="false"/>
+																										<update valuesource="fieldvalue" field="ReadMode" enclosevalueinquotes="false" value="true"/>
+																										<update valuesource="fieldvalue" field="NewRecord" enclosevalueinquotes="false" value="false"/>
+																									</updates>
+																								</action>
+																								<action type="requeryModels" behavior="standard">
+																									<models>
+																										<model>SPICED_Current</model>
+																										<model>List_of_Existing</model>
+																									</models>
+																								</action>
+																								<action type="action-sequence" action-sequence-id="228386d8-3b87-4dc7-ad36-efc4c97f5c97"/>
+																								<action type="runComponentAction" componentid="sk-30NB-42825" action="navigateToStep" stepId="ReadMode"/>
+																							</actions>
+																							<renderConditions logictype="and"/>
+																							<enableConditions logictype="and"/>
+																							<styleVariantConditions/>
+																						</skuid__button>
+																					</buttons>
+																					<renderConditions logictype="and"/>
+																					<styleVariantConditions/>
+																				</skuid__buttonGroup>
+																			</groups>
+																			<renderConditions logictype="and"/>
+																			<styleVariantConditions/>
+																		</skuid__buttonSet>
+																	</components>
+																</division>
+															</divisions>
+															<styles>
+																<spacing/>
+															</styles>
+															<background/>
+														</skuid__grid>
+													</components>
+													<background/>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UI_controls" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="EditMode" value="true"/>
+													</renderConditions>
+													<styleVariantConditions/>
+													<styles>
+														<spacing top="1"/>
+													</styles>
+												</skuid__wrapper>
+											</components>
+											<styles>
+												<spacing top="2" right="2" bottom="2" left="2"/>
+											</styles>
+											<background/>
+											<renderConditions logictype="and"/>
+											<styleVariantConditions/>
+										</skuid__wrapper>
+									</components>
+									<background/>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions>
+										<rule logictype="and" styleSettingsVariantOverride="e7a0d43e-ed0e-4f6b-a11c-380879cf067b">
+											<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="UI_controls" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="EditMode" value="true"/>
+										</rule>
+									</styleVariantConditions>
+									<interactions/>
+									<styles>
+										<spacing top="2" right="2" bottom="2" left="2"/>
+									</styles>
+								</skuid__wrapper>
+							</components>
+							<background/>
+							<styles>
+								<spacing/>
+							</styles>
+						</skuid__wrapper>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="0px" ratio="1">
+					<components/>
+				</division>
+			</divisions>
+			<styles>
+				<spacing left="3" right="3" top="3"/>
+			</styles>
+			<background/>
+		</skuid__grid>
+	</components>
+	<resources>
+		<labels/>
+		<javascript/>
+		<css/>
+		<actionsequences>
+			<actionsequence id="68b3adc5-2195-4b11-85ba-9bf36b1d91b1" label="checkForExistingRecord" type="reusable" event-scope="component" event-name="page.rendered">
+				<description/>
+				<actions>
+					<action type="requeryModels" behavior="standard">
+						<models>
+							<model>SPICED_Current</model>
+						</models>
+					</action>
+					<action type="branch" whenfinished="stop" label="If there are existing records..." model="SPICED_Current">
+						<formula>{{$Model.SPICED_Current.data.length}}</formula>
+						<iftrueactions>
+							<action type="action-sequence" action-sequence-id="228386d8-3b87-4dc7-ad36-efc4c97f5c97"/>
+							<action type="requeryModels" behavior="standard">
+								<models>
+									<model>List_of_Existing</model>
+								</models>
+							</action>
+						</iftrueactions>
+					</action>
+				</actions>
+				<inputs/>
+			</actionsequence>
+			<actionsequence id="dee3ebbb-e496-4f5c-9885-1534a73db81b" label="Update Sliders with Score Values and reset pagination" type="reusable" event-scope="component" event-name="page.rendered">
+				<description/>
+				<actions>
+					<action type="action-sequence" action-sequence-id="228386d8-3b87-4dc7-ad36-efc4c97f5c97"/>
+					<action type="runComponentAction" componentid="sk-2czM-54279" action="goToPage" targetPage="first"/>
+				</actions>
+				<inputs/>
+			</actionsequence>
+			<actionsequence id="049ed6c8-c1bb-421c-b5eb-2c5297504af2" type="reusable" label="Update or create new record on Save">
+				<description>This checks to see if the record has been modified today. If it has been modified today, the changes will update the record. If the record has been modified before today, a new record will be created and the existing record will be captured for historical reporting/analytics purposes.</description>
+				<actions>
+					<action type="blockUI" message="Saving..."/>
+					<action type="branch" whenfinished="stop" model="SPICED_Current">
+						<formula>-(DATE_DIFF({{updated_at}},HOUR)) &lt; 12</formula>
+						<iftrueactions>
+							<action type="updateRow" fieldmodel="SPICED_Current" affectedrows="context">
+								<updates>
+									<update valuesource="fieldvalue" field="is_active" enclosevalueinquotes="false" value="false"/>
+								</updates>
+							</action>
+							<action type="updateRow" fieldmodel="SPICED_Current" affectedrows="context">
+								<updates>
+									<update valuesource="modelmerge" field="related_hubspot_deal_stage" enclosevalueinquotes="true" sourcemodel="HubSpot_Deal_Detail" sourcefield="dealstage"/>
+									<update valuesource="fieldvalue" field="is_active" enclosevalueinquotes="false" value="true"/>
+								</updates>
+							</action>
+							<action type="save">
+								<models>
+									<model>SPICED_Current</model>
+								</models>
+							</action>
+							<action type="updateRow" fieldmodel="HubSpot_Deal_Detail" affectedrows="context">
+								<updates>
+									<update valuesource="modelmerge" field="spiced_score" enclosevalueinquotes="true" sourcemodel="SPICED_Current" sourcefield="spiced_total_score"/>
+								</updates>
+							</action>
+							<action type="save">
+								<models>
+									<model>HubSpot_Deal_Detail</model>
+								</models>
+								<onerroractions>
+									<action type="blockUI" message="There was an error" timeout="3000"/>
+								</onerroractions>
+							</action>
+							<action type="unblockUI"/>
+						</iftrueactions>
+					</action>
+					<action type="createRow" model="SPICED" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+						<defaults>
+							<default valuesource="fieldvalue" field="situation_qualification" enclosevalueinquotes="true" value="{{situation_qualification}}"/>
+							<default valuesource="fieldvalue" field="situation_score" enclosevalueinquotes="true" value="{{situation_score}}"/>
+							<default valuesource="fieldvalue" field="pain_qualification" enclosevalueinquotes="true" value="{{pain_qualification}}"/>
+							<default valuesource="fieldvalue" field="pain_score" enclosevalueinquotes="true" value="{{pain_score}}"/>
+							<default valuesource="fieldvalue" field="impact_qualification" enclosevalueinquotes="true" value="{{impact_qualification}}"/>
+							<default valuesource="fieldvalue" field="impact_score" enclosevalueinquotes="true" value="{{impact_score}}"/>
+							<default valuesource="fieldvalue" field="critical_event_qualification" enclosevalueinquotes="true" value="{{critical_event_qualification}}"/>
+							<default valuesource="fieldvalue" field="critical_event_score" enclosevalueinquotes="true" value="{{critical_event_score}}"/>
+							<default valuesource="fieldvalue" field="decision_qualification" enclosevalueinquotes="true" value="{{decision_qualification}}"/>
+							<default valuesource="fieldvalue" field="decision_score" enclosevalueinquotes="true" value="{{decision_score}}"/>
+							<default valuesource="modelmerge" field="related_hubspot_deal_stage" enclosevalueinquotes="true" value="{{skuidext__Opportunity__r.StageName}}" sourcemodel="HubSpot_Deal_Detail" sourcefield="dealstage"/>
+						</defaults>
+					</action>
+					<action type="cancel">
+						<models>
+							<model>SPICED_Current</model>
+						</models>
+					</action>
+					<action type="updateRow" fieldmodel="SPICED_Current" affectedrows="all">
+						<updates>
+							<update valuesource="fieldvalue" field="is_active" enclosevalueinquotes="false" value="false"/>
+						</updates>
+					</action>
+					<action type="save">
+						<models>
+							<model>SPICED_Current</model>
+						</models>
+					</action>
+					<action type="updateRow" fieldmodel="SPICED" affectedrows="context">
+						<updates>
+							<update valuesource="fieldvalue" field="is_active" enclosevalueinquotes="false" value="true"/>
+						</updates>
+					</action>
+					<action type="save">
+						<models>
+							<model>SPICED</model>
+						</models>
+					</action>
+					<action type="updateRow" fieldmodel="HubSpot_Deal_Detail" affectedrows="context">
+						<updates>
+							<update valuesource="modelmerge" field="spiced_score" enclosevalueinquotes="true" sourcemodel="SPICED" sourcefield="spiced_total_score"/>
+						</updates>
+					</action>
+					<action type="save">
+						<models>
+							<model>HubSpot_Deal_Detail</model>
+						</models>
+					</action>
+					<action type="abandonRows" model="SPICED" affectedrows="context"/>
+					<action type="requeryModels" behavior="standard">
+						<models>
+							<model>SPICED_Current</model>
+							<model>List_of_Existing</model>
+						</models>
+					</action>
+					<action type="updateRow" fieldmodel="List_of_Existing" affectedrows="context">
+						<updates>
+							<update valuesource="fieldvalue" field="IsSelected" enclosevalueinquotes="false" value="true"/>
+						</updates>
+					</action>
+					<action type="unblockUI"/>
+				</actions>
+				<inputs/>
+			</actionsequence>
+			<actionsequence id="228386d8-3b87-4dc7-ad36-efc4c97f5c97" label="Update Score Progress Indicator" type="reusable">
+				<description>Takes the score for each SPICED value and then updates a UI Only field with the corresponding number. This allows the "slider" to reflect the appropriate score at all time. This is built due to the fact that you can't have a Formula field in edit mode and therefore, you couldn't have a slider.</description>
+				<actions>
+					<action type="updateRow" fieldmodel="UI_controls" affectedrows="context">
+						<updates>
+							<update valuesource="modelmerge" field="UI_Situation_Score" enclosevalueinquotes="false" sourcemodel="SPICED_Current" sourcefield="situation_score"/>
+							<update valuesource="modelmerge" field="UI_Impact_Score" enclosevalueinquotes="false" sourcemodel="SPICED_Current" sourcefield="impact_score"/>
+							<update valuesource="modelmerge" field="UI_Pain_Score" enclosevalueinquotes="false" sourcemodel="SPICED_Current" sourcefield="pain_score"/>
+							<update valuesource="modelmerge" field="UI_Critical_Event_Score" enclosevalueinquotes="false" sourcemodel="SPICED_Current" sourcefield="critical_event_score"/>
+							<update valuesource="modelmerge" field="UI_Decision_Score" enclosevalueinquotes="false" sourcemodel="SPICED_Current" sourcefield="decision_score"/>
+						</updates>
+					</action>
+				</actions>
+			</actionsequence>
+			<actionsequence id="c6722eaf-6469-4c44-8a18-8986ecb613a5" label="Check for deal in page param" type="event-triggered" event-scope="component" event-name="page.rendered">
+				<description/>
+				<actions>
+					<action type="branch" whenfinished="stop" label="If there's deal id in the page param">
+						<formula>{{$Param.dealId}}</formula>
+						<iftrueactions>
+							<action type="updateCondition" model="HubSpot_Deal_Detail" behavior="set" condition="dealId" valuesource="param" value="dealId"/>
+							<action type="requeryModels" behavior="standard">
+								<models>
+									<model>HubSpot_Deal_Detail</model>
+								</models>
+							</action>
+							<action type="requeryModels" behavior="standard">
+								<models>
+									<model>SPICED</model>
+									<model>SPICED_Current</model>
+									<model>List_of_Existing</model>
+								</models>
+							</action>
+						</iftrueactions>
+					</action>
+				</actions>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+</skuid__page>
