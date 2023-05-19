@@ -1,4 +1,4 @@
-# HubSpot Sample Page 1: Work with HubSpot standard objects 
+# Work with HubSpot standard objects 
 This sample page provides examples of working with 2 standard objects in HubSpot, Deals and Line Items. 
 Some functionalities include:
 * Query, insert, update, and delete Deals
