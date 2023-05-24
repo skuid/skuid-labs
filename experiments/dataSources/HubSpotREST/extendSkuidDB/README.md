@@ -11,12 +11,15 @@ This is only available when using Skuid NLX. This sample page shows how you can 
 - Data source: 
 1. REST data source named "HubSpotTestApp" connecting to your HubSpot instance per [instruction](HubSpotREST)
 2. Skuid database named "Demos", with a table named "HubSpot_SPICED_Score"
-- Design system: None 
+- Design system: SPICED 
 - Page XML:  [Copy the XML from this page](HubSpot_Extend_with_SkuidDB_SamplePage.xml?raw=true), or save it as an XML file, and upload it as a new page in Skuid's Pages.
+
+## Instructions for design system 
+Download [SPICED Design System](SPICED.designsystem?raw=true) and import it to Skuid's Design Systems.
 
 ## Instructions for data source setup
 1. In HubSpot CRM, create a custom property for Deals with API name of `spiced_score` 
-2. In Skuid, create a Skuid database named "Demos" and a table within that database named "HubSpot_SPICED_Score", with these following fields:
+2. In Skuid, go to Data Sources and create a Skuid database named "Hubspot_AddOns". Within that database, create a table named "HubSpot_SPICED_Score" with these following fields:
 - critical_event_qualification (textarea)
 - critical_event_score (double)
 - decision_qualification (textarea)

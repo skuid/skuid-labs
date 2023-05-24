@@ -1,4 +1,4 @@
-<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="SPICED">
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="SPICED" title="HubSpot Sample Page - Extend with SkuidDB">
 	<models>
 		<model id="HubSpot_Deal_Detail" query="true" datasource="HubSpotTestApp" payloadcontenttype="JSON" fieldtargetobjects="properties" type="readwrite">
 			<fields>
@@ -33,7 +33,7 @@
 				<method type="update" verb="PATCH" payloadcontenttype="JSON" sendchanges="asnestedjsoninbody" successif="requestsucceeds" endpoint="/crm/v3/objects/deals/{{hs_object_id}}" pathtocontent="properties"/>
 			</methods>
 		</model>
-		<model id="SPICED" limit="1" query="false" createrowifnonefound="false" datasource="Demos" sobject="HubSpot_SPICED_Score">
+		<model id="SPICED" limit="1" query="false" createrowifnonefound="false" datasource="Hubspot_AddOns" sobject="HubSpot_SPICED_Score">
 			<fields>
 				<field id="related_hubspot_deal"/>
 				<field id="related_hubspot_deal_stage"/>
@@ -108,7 +108,7 @@
 			</conditions>
 			<actions/>
 		</model>
-		<model id="SPICED_Current" limit="1" query="true" createrowifnonefound="false" datasource="Demos" sobject="HubSpot_SPICED_Score">
+		<model id="SPICED_Current" limit="1" query="true" createrowifnonefound="false" datasource="Hubspot_AddOns" sobject="HubSpot_SPICED_Score">
 			<fields>
 				<field id="related_hubspot_deal"/>
 				<field id="related_hubspot_deal_stage"/>
@@ -189,7 +189,7 @@
 			</conditions>
 			<actions/>
 		</model>
-		<model id="List_of_Existing" limit="6" query="false" createrowifnonefound="false" datasource="Demos" sobject="HubSpot_SPICED_Score" orderby="created_at DESC">
+		<model id="List_of_Existing" limit="6" query="false" createrowifnonefound="false" datasource="Hubspot_AddOns" sobject="HubSpot_SPICED_Score" orderby="created_at DESC">
 			<fields>
 				<field id="related_hubspot_deal"/>
 				<field id="related_hubspot_deal_stage"/>
@@ -295,6 +295,45 @@
 		</model>
 	</models>
 	<components>
+		<skuid__wrapper uniqueid="sk-1F0n-22320">
+			<components>
+				<skuid__header title="HubSpot Sample Page - Extend with SkuidDB" uniqueid="sk-3ilJ-17679" subtitle="Skuid NLX + HubSpot">
+					<skuid__buttonSet model="HubSpot_Deal_Detail">
+						<groups>
+							<skuid__buttonGroup uniqueId="sk-3ion-38128">
+								<buttons>
+									<skuid__button label="What's on this page?" uniqueId="sk-3ion-38129">
+										<actions>
+											<action type="showModal">
+												<skuid__modal title="Sample page 3: Extend HubSpot with SkuidDB" width="640px" ariaRole="dialog">
+													<components>
+														<skuid__text contents="Featuring:&#10;&lt;ol&gt;&#10;&#9;&lt;li&gt;Query single Deal record using URL parameter&lt;/li&gt;&#10;&#9;&lt;li&gt;Connect to a table in SkuidDB to store deal scoring based on SPICED methodology&lt;/li&gt;&#10;&#9;&lt;li&gt;Save the deal score back to HubSpot CRM as a custom field on the Deal object&lt;/li&gt;&#10;&lt;/ol&gt;&#10;" uniqueid="sk-3yA4-89322"/>
+													</components>
+													<buttons>
+														<skuid__button label="Close" uniqueId="sk-1F1I-34542" styleSettingsVariant="primary">
+															<actions>
+																<action type="closeModals" closebehavior="close"/>
+															</actions>
+														</skuid__button>
+													</buttons>
+												</skuid__modal>
+											</action>
+										</actions>
+									</skuid__button>
+								</buttons>
+							</skuid__buttonGroup>
+						</groups>
+					</skuid__buttonSet>
+					<styles>
+						<spacing top="2" right="2" bottom="2" left="2"/>
+					</styles>
+				</skuid__header>
+			</components>
+			<styles>
+				<spacing/>
+			</styles>
+			<background type="color" color="#f2f2f2"/>
+		</skuid__wrapper>
 		<skuid__grid uniqueid="sk-s_j-49628" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1.5">
 			<divisions>
 				<division alignSelf="auto" minWidth="0px" ratio="1">
@@ -315,15 +354,6 @@
 																<spacing bottom="2" top="1.5" left="1.5"/>
 															</styles>
 														</skuid__header>
-													</components>
-												</division>
-												<division minWidth="0" ratio="0" alignSelf="auto">
-													<components>
-														<skuid__image source="resource" uniqueid="sk-sze-53166" datasource="SkuidLocal" resource="skuidext__WBD_logo.png" resourceContentType="image/png" imageWidth="90px">
-															<styles>
-																<spacing/>
-															</styles>
-														</skuid__image>
 													</components>
 												</division>
 											</divisions>

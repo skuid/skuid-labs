@@ -1,5 +1,5 @@
 # Skuid + HubSpot REST API
-HubSpot CRM platform helps businesses organize and manage their interactions with customers and prospects. It provides features such as contact management, sales pipeline tracking, email integration, and task management. HubSpot API supports both read and write operations, allowing developers to retrieve data from HubSpot, as well as create, update, and delete data within the platform. It provides access to various endpoints that represent different entities in HubSpot, such as contacts, companies, deals, tasks, and marketing campaigns. For more info, see [HubSpot REST API documentation](https://developers.hubspot.com/docs/api/overview)
+HubSpot CRM platform helps businesses organize and manage their interactions with customers and prospects. It provides features such as contact management, sales pipeline tracking, email integration, and task management. HubSpot API supports both read and write operations, allowing developers to retrieve data from HubSpot, as well as create, update, and delete data within the platform. It provides access to various endpoints that represent different entities in HubSpot, such as contacts, companies, deals, tasks, and marketing campaigns. For more info, see [HubSpot REST API documentation](https://developers.hubspot.com/docs/api/overview).
 
 ## HubSpot prerequisites
 

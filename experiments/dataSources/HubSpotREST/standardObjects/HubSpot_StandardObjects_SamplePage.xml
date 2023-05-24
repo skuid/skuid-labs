@@ -128,30 +128,38 @@
 		</model>
 	</models>
 	<components>
-		<skuid__header title="Sample Page 1" uniqueid="sk-3ilJ-17679" subtitle="Skuid NLX + HubSpot">
-			<skuid__buttonSet model="HubSpot_Deal_List">
-				<groups>
-					<skuid__buttonGroup uniqueId="sk-3ion-38128">
-						<buttons>
-							<skuid__button label="What's on this page?" uniqueId="sk-3ion-38129">
-								<actions>
-									<action type="showModal">
-										<skuid__modal title="Sample page 1: Work with standard objects" width="640px" ariaRole="dialog">
-											<components>
-												<skuid__text contents="Featuring:&#10;&lt;ol&gt;&#10;&#9;&lt;li&gt;Connect to standard objects like Deals and Line Items&lt;/li&gt;&#10;&#9;&lt;li&gt;List &amp;gt; Detail view layout.&amp;nbsp;&lt;/li&gt;&#10;&#9;&lt;li&gt;CRUD operations on Deals (both single and batch)&lt;/li&gt;&#10;&#9;&lt;li&gt;Send Batch request to HubSpot REST API to create multiple Line Items for a Deal&lt;/li&gt;&#10;&#9;&lt;li&gt;Wizard component: Step by step form to add items to quote&lt;/li&gt;&#10;&#9;&lt;li&gt;Override metadata for Deal Stage field to have a user friendly picklist dropdown&lt;/li&gt;&#10;&lt;/ol&gt;&#10;" uniqueid="sk-3yA4-89322"/>
-											</components>
-										</skuid__modal>
-									</action>
-								</actions>
-							</skuid__button>
-						</buttons>
-					</skuid__buttonGroup>
-				</groups>
-			</skuid__buttonSet>
+		<skuid__wrapper uniqueid="sk-1E_p-29506">
+			<components>
+				<skuid__header title="HubSpot Sample Page - Standard Objects" uniqueid="sk-3ilJ-17679" subtitle="Skuid NLX + HubSpot">
+					<skuid__buttonSet model="HubSpot_Deal_List">
+						<groups>
+							<skuid__buttonGroup uniqueId="sk-3ion-38128">
+								<buttons>
+									<skuid__button label="What's on this page?" uniqueId="sk-3ion-38129">
+										<actions>
+											<action type="showModal">
+												<skuid__modal title="Sample page 1: Work with standard objects" width="640px" ariaRole="dialog">
+													<components>
+														<skuid__text contents="Featuring:&#10;&lt;ol&gt;&#10;&#9;&lt;li&gt;Connect to standard objects like Deals and Line Items&lt;/li&gt;&#10;&#9;&lt;li&gt;List &amp;gt; Detail view layout.&amp;nbsp;&lt;/li&gt;&#10;&#9;&lt;li&gt;CRUD operations on Deals (both single and batch)&lt;/li&gt;&#10;&#9;&lt;li&gt;Send Batch request to HubSpot REST API to create multiple Line Items for a Deal&lt;/li&gt;&#10;&#9;&lt;li&gt;Wizard component: Step by step form to add items to quote&lt;/li&gt;&#10;&#9;&lt;li&gt;Override metadata for Deal Stage field to have a user friendly picklist dropdown&lt;/li&gt;&#10;&lt;/ol&gt;&#10;" uniqueid="sk-3yA4-89322"/>
+													</components>
+												</skuid__modal>
+											</action>
+										</actions>
+									</skuid__button>
+								</buttons>
+							</skuid__buttonGroup>
+						</groups>
+					</skuid__buttonSet>
+					<styles>
+						<spacing top="2" right="2" bottom="2" left="2"/>
+					</styles>
+				</skuid__header>
+			</components>
 			<styles>
-				<spacing top="2" right="2" bottom="2" left="2"/>
+				<spacing/>
 			</styles>
-		</skuid__header>
+			<background type="color" color="#f2f2f2"/>
+		</skuid__wrapper>
 		<skuid__grid uniqueid="sk-3ios-40103" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="3">
 			<divisions>
 				<division minWidth="100px" ratio="1">
@@ -172,7 +180,7 @@
 																			<spacing bottom="1.5"/>
 																		</styles>
 																	</skuid__text>
-																	<skuid__table allowColumnFreezing="dragDrop" model="HubSpot_Deal_List" uniqueid="sk-5-P-48888" mode="read">
+																	<skuid__table allowColumnFreezing="dragDrop" model="HubSpot_Deal_List" uniqueid="sk-5-P-48888" mode="dataGrid">
 																		<fields>
 																			<field id="id" horizontalAlignment="right" uniqueid="sk-5-P-48889" readOnly="true"/>
 																			<field id="properties.amount" horizontalAlignment="right" uniqueid="sk-5-P-48890"/>
@@ -284,6 +292,7 @@
 									<sorting enable="false"/>
 									<interactions>
 										<interaction type="tap" afterClickState="selected">
+											<action type="blockUI" styleSettingsVariant="dark" message="Getting deal details"/>
 											<action type="updateCondition" model="HubSpot_Deal_Detail" behavior="set" condition="hs_object_id" valuesource="fieldvalue" value="{{id}}"/>
 											<action type="updateCondition" model="HubSpot_CurrentLineItem_List" behavior="set" condition="hs_object_id" valuesource="fieldvalue" value="{{id}}"/>
 											<action type="requeryModels" behavior="standard">
@@ -291,7 +300,22 @@
 													<model>HubSpot_Deal_Detail</model>
 													<model>HubSpot_CurrentLineItem_List</model>
 												</models>
+												<onerroractions>
+													<action type="blockUI" message="There was an error" timeout="3000"/>
+												</onerroractions>
 											</action>
+											<action type="emptyModelData">
+												<models>
+													<model>UI_LineItems</model>
+												</models>
+											</action>
+											<action type="runComponentAction" componentid="sk-3jCl-26818" action="navigateToStep" stepId="step1" scrollStepLabelIntoView="true"/>
+											<action type="updateRow" fieldmodel="HubSpot_Products" affectedrows="all">
+												<updates>
+													<update valuesource="fieldvalue" field="IsInQuote_UI" enclosevalueinquotes="false" value="false"/>
+												</updates>
+											</action>
+											<action type="unblockUI"/>
 										</interaction>
 									</interactions>
 									<styles>
@@ -421,7 +445,7 @@
 										</skuid__header>
 										<skuid__wizard uniqueid="sk-3jCl-26818">
 											<steps>
-												<step stepLabel="Step 1: Select products">
+												<step stepLabel="Step 1: Select products" stepId="step1">
 													<components>
 														<skuid__table allowColumnFreezing="dragDrop" model="HubSpot_Products" uniqueid="sk-3jCt-32130" mode="read" title="Select products" pageSize="5" rowActionsOnLeft="true" showSaveCancel="false">
 															<fields>
@@ -526,7 +550,7 @@
 							<styles>
 								<spacing/>
 							</styles>
-							<background type="color" color="#f2f2f2"/>
+							<background color="#dbeef3" type="color"/>
 						</skuid__wrapper>
 					</components>
 				</division>
