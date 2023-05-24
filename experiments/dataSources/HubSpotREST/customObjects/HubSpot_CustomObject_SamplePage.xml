@@ -159,7 +159,7 @@
 			<divisions>
 				<division minWidth="100px" ratio="1">
 					<components>
-						<skuid__form showErrorsInline="true" model="HubSpot_Deal_Detail" uniqueid="sk-3yEb-21051" mode="read">
+						<skuid__form showErrorsInline="true" model="HubSpot_Deal_Detail" uniqueid="sk-3yEb-21051" mode="edit">
 							<columns>
 								<column>
 									<sections>
