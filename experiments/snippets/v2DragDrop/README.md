@@ -5,7 +5,7 @@
 
 We’re exploring how to add “drag and drop” functionality to a Skuid page using a popular third-party JS library, [Dragula](https://bevacqua.github.io/dragula/). This light weight JS library has over 21k stars on Github and doesn’t use jQuery or other bloated frameworks. 
 
-Once the library is added, the Skuid builder can write JS to turn any data displaying components (table, deck, list) in Skuid into “drag and drop” mode. 
+Once the library is added, the Skuid builder can write JS to turn any data displaying components (Table, Deck, List) in Skuid into “drag and drop” mode. 
 
 ## Install this example
 - Page API:  V2
