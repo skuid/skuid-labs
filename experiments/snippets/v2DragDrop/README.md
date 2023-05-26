@@ -25,7 +25,7 @@ The URL should be:  https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula
 
 ### Step 2: Create a Generic JS snippet
 
-A second javascript resource of type `Generic JS snippet` will handle “drag and drop” functionalities in the page.
+Create a `Generic JS snippet` resource, which will handle the “drag and drop” functionalities in the page.
 
 In this snippet, you can:
 
