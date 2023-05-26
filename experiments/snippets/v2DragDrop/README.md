@@ -77,10 +77,13 @@ setTimeout(() => {
 
 ### Step 3: Add styling code as JSS in the Design System Studio. 
 
-There are some specific styling code needed to make Drag and Drop really look good. 
-These should be added as code to a variant of the deck component. 
+There is some specific styling code needed to make drag and drop really look good. 
+
+These should be added as code to a variant of the Deck component. 
+
 (Note - the ability to add code in a design system must be turned on by your Skuid account representative)
-After identifying the deck variant - go to the menu at top right of variant and select `Extend with Code`
+
+After identifying the Deck variant - go to the menu at top right of variant and select `Extend with Code`
 
 <img src="image5.png" width="300"></img>
 
