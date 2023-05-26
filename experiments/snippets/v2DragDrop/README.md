@@ -17,7 +17,7 @@ Once the library is added, the Skuid builder can write JS to turn any data displ
 ## Approach
 
 ### Step 1:  External JS Resource
-Create an `external` JS resource to reference the dragula library.  
+Create a `URL` JS resource to reference the dragula library.  
 The URL should be:  https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js
 
 <img src="image1.png" width="300"></img>
