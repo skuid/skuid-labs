@@ -10,7 +10,7 @@ Once the library is added, the Skuid builder can write JS to turn any data displ
 ## Install this example
 - Page API:  V2
 - Data source: Uses default Salesforce data source  (Cases)
-- Design system: Download [ProductTour_Kanban](ProductTour_Kanban.designsystem?raw=true) and import it to Skuid's Design Systems.  
+- Design system: Download and import [ProductTour_Kanban](ProductTour_Kanban.designsystem?raw=true)
 - Page XML:  [Copy the XML from this page](kanban_dragula.xml?raw=true), or save it as an XML file, and upload it on the Skuid Pages page.  
 
 
