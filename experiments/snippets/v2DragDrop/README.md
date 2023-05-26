@@ -29,7 +29,7 @@ Create a `Generic JS snippet` resource, which will handle the “drag and drop�
 
 In this snippet, you can:
 
-- Select the component you want to add dragula to.  (we use a deck with Id: `outside_deck`) 
+- Select the component you want to add dragula to.  (we use a Deck with Id: `outside_deck`) 
 - Make changes when the item is “dropped” into a new position. In the example linked here, we’re changing the status of the case when dropping it to a new status column. 
 
 Below find the snippet code. 
