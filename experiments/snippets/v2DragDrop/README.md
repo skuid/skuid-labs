@@ -13,6 +13,7 @@ Once the library is added, the Skuid builder can write JS to turn any data displ
 - Design system: Download and import [ProductTour_Kanban](ProductTour_Kanban.designsystem?raw=true)
 - Page XML:  [Copy the XML from this page](kanban_dragula.xml?raw=true), or save it as an XML file, and upload it.
 
+The instructions below provide details about how the example was built.
 
 ## Approach
 
@@ -130,7 +131,11 @@ Below find the code that should be used.
 
 - A `setTimeout` function is needed to wait for the components to load before initializing dragula.
 
-- In this demo, the position where the item is dropped is for runtime only and is not automatically preserved on refresh. If drag and drop is used for re-ordering, make sure the data updated on drop includes values that update model order - and the include a save action in your “Drop” sequence. 
+- In the example, the position where the item is dropped is for runtime only and is not automatically preserved on refresh. If drag and drop is used for re-ordering (maybe in a table), make sure the data updated on drop includes values that update model order. 
+
+- The example above does not include a "save action" - in order for changes to persist you will need to include a save action in your “Drop” sequence. 
+
+
 
 
 
