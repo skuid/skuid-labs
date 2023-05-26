@@ -128,9 +128,9 @@ Below find the code that should be used.
 
 ## Considerations
 
-A `setTimeout` function is needed to wait for the components to load before initializing dragula  
+- A `setTimeout` function is needed to wait for the components to load before initializing dragula.
 
-In this demo,  the position where the item is dropped is for runtime only and is not automatically preserved on refresh. If drag and drop is used for re-ordering, make sure the data updated on drop includes values that update model order - and the include a save action in your “Drop” sequence. 
+- In this demo, the position where the item is dropped is for runtime only and is not automatically preserved on refresh. If drag and drop is used for re-ordering, make sure the data updated on drop includes values that update model order - and the include a save action in your “Drop” sequence. 
 
 
 
