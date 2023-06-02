@@ -50,4 +50,4 @@ Follow instructions in each sample page directory to import pages and/or design 
 ## Directory
 * [Add an Image to your Account](imageAdd)
 * [Ask ChatGPT to draft field data](draftAnswers)
-* [Create sample data](sampleData)
+* [Create sample data](Create%20sample%20data)

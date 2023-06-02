@@ -1,6 +1,6 @@
 <skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false">
 	<models>
-		<model id="Accounts" limit="20" query="true" createrowifnonefound="false" datasource="Demo Org Salesforce" sobject="Account">
+		<model id="Accounts" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Account">
 			<fields>
 				<field id="RecordTypeId"/>
 				<field id="RecordType.Name"/>
@@ -45,21 +45,21 @@
 			<conditions/>
 			<actions/>
 		</model>
-		<model id="ImageRequest" query="false" datasource="OpenAI_Sam" payloadcontenttype="JSON" sendchanges="usetemplaterequest" customrequesttemplate="{&#10;  &quot;prompt&quot;: &quot;{{#urlEncode}}{{$Model.UIO.data.0.Prompt}}{{/urlEncode}}&quot;,&#10;  &quot;n&quot;: 4,&#10;  &quot;size&quot;: &quot;256x256&quot;,&#10;  &quot;response_format&quot;: &quot;b64_json&quot;&#10;}" contenttype="application/json" createrowifnonefound="false" verb="POST" endpoint="/images/generations" pathtocontent="data">
+		<model id="ImageRequest" query="false" datasource="OpenAI" payloadcontenttype="JSON" sendchanges="usetemplaterequest" customrequesttemplate="{&#10;  &quot;prompt&quot;: &quot;{{#urlEncode}}{{$Model.UIO.data.0.Prompt}}{{/urlEncode}}&quot;,&#10;  &quot;n&quot;: 4,&#10;  &quot;size&quot;: &quot;256x256&quot;,&#10;  &quot;response_format&quot;: &quot;b64_json&quot;&#10;}" contenttype="application/json" createrowifnonefound="false" verb="POST" endpoint="/images/generations" pathtocontent="data">
 			<fields>
 				<field id="b64_json" displaytype="TEXT"/>
 			</fields>
 			<conditions/>
 			<actions/>
 		</model>
-		<model id="ImageSave_SkuidFile" limit="1" query="false" createrowifnonefound="false" datasource="Demo Org Salesforce" sobject="skuid__Image__c">
+		<model id="ImageSave_SkuidFile" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="skuid__Image__c">
 			<fields/>
 			<conditions>
 				<condition type="fieldvalue" value="" enclosevalueinquotes="true"/>
 			</conditions>
 			<actions/>
 		</model>
-		<model id="ImageSave_Attachment" limit="1" query="false" datasource="Demo Org Salesforce" sobject="Attachment" createrowifnonefound="false">
+		<model id="ImageSave_Attachment" limit="1" query="false" datasource="salesforce" sobject="Attachment" createrowifnonefound="false">
 			<fields>
 				<field id="Body"/>
 				<field id="Name"/>
@@ -69,7 +69,7 @@
 			<conditions/>
 			<actions/>
 		</model>
-		<model id="ImageSave_Account" limit="1" query="false" createrowifnonefound="false" datasource="Demo Org Salesforce" sobject="Account">
+		<model id="ImageSave_Account" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Account">
 			<fields>
 				<field id="RecordTypeId"/>
 				<field id="RecordType.Name"/>
