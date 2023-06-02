@@ -12,37 +12,23 @@
 
 ### Models:  
 
-The application uses 2 models. 
+The application uses 2 sets of models. 
+
+The first three models represent Business Object you might find in your CRM.  For the sake of this demo they are UI Only models,  but you might be creating new Salesforce records, or new survey questions in a Postgres table etc.  
+
+The second set of models are used for the Chat function. 
 
 1.  UI Only “Chat Thread Display” model. 
 This model will show the output from the ChatGPT interaction and hold the full thread of the discussion. 
-- Name: Enter a name related to the model's purpose, something like “Chat_Thread”
-- Data Source Type: UI-Only
-- Create default row if model has none:  True
-
-Create Ui-Only field: 
-- Id:  content
-- Type:  text area
-- Length:  4000 characters
-
 
 2. REST model for interacting with ChatGPT. 
 This model will handle the communication with the Chat Engine. 
-- Name: Enter a name related to the model's purpose, something like “chat_completion”
-- Data Source Type: REST
-- Data Source: The OpenAI data source you created above
-- Model Behavior: Read-Only
-- Data Source URL: /chat/completions
-- Data Source HTTP Verb: POST
-- Intercept response payload: True
-- Response body contents:  As custom payload form in request body
 
 <img src="Chat_Completion_Model.png" width="500"></img>
 
 
 ### Snippets: 
 Two snippets are required for interacting with this data source. 
-
 
 1. Request body construction snippet. 
 
@@ -123,38 +109,6 @@ var newChatRow = chat.createRow({
 
 
 
-### Action Sequence. 
+### Generic Action Sequences. 
 
-The generic function is contained in an action sequence.  
-
-- Type:  Reusable action sequence
-- Name:   Common ChatGPT generator
-
-- Inputs: 
-
-1.   Name:  Prompt.   Type:  Value
-2.   Name:   Model.   Type:  Model
-3.   Name:  Field.  Type:  Model-field.  Input Model-Source:   Model
-
-
-Actions for this sequence: 
-
-- Create a new row in the UI Only Chat Thread model,  
-- Pass the prompt data collected as input into the new row  
-- Open a modal where the Chat interaction can occur. 
-
-
-
-In the modal, add buttons to the bottom that do the following. 
-
-Cancel:  Runs the following actions: 
-- Cancel model changes on the 2 models above
-- Close modal. 
-
-
-Apply:  Runs the following actions: 
-- Update row action using the model and field input provided for the action sequence. 
-- Cancel model changes on the 2 models above. 
-- Close modal. 
-
-
+Note that the button on each form calls the same Action sequence.  But different inputs are passed into the action sequence to indicate what Model and field is to be updated,  and what the initial prompt should be.   These inputs are carried through into a second action sequence that returns the Chat Response into the appropriate field. 
