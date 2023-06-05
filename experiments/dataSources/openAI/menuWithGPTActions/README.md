@@ -8,7 +8,7 @@ The sample page uses Task object from Salesforce but that's more of example. You
 
 ## Instructions
 - Page API:  V2
-- Data source: REST data source named "OpenAi" connecting to your HubSpot instance per [instruction](openAI)
+- Data source: REST data source named "OpenAi" connecting to your OpenAI instance per [instruction](openAI)
 - Design system: ChatGPT_Demo 
 - Page XML:  [Copy the XML from this page](MenuWithGPTActions.xml?raw=true), or save it as an XML file, and upload it as a new page in Skuid's Pages.
 - Design system: Download [ChatGPT_Demo Design System](ChatGPT_Demo.designsystem?raw=true) and import it to Skuid's Design Systems.

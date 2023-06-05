@@ -4,7 +4,7 @@
 
 ## Instructions
 - Page API:  V2
-- Data source: REST data source named "OpenAi" connecting to your HubSpot instance per [instruction](openAI)
+- Data source: REST data source named "OpenAi" connecting to your OpenAI instance per [instruction](openAI)
 - Design system: None 
 - Page XML:  [Copy the XML from this page](UpdateAnyField_w_ChatGPT.xml?raw=true), or save it as an XML file, and upload it as a new page in Skuid's Pages.
 
