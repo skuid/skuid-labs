@@ -4,13 +4,11 @@ This sample page shows how you can provide a list of actions for your users in t
 
 The sample page uses Task object from Salesforce but that's more of example. You can configure the Action Sequence to be connected to any object or data source. 
 
-<img src="gpt-menu-actions.png" width="500"></img>
+<img src="gpt-menu-actions.png" width="700"></img>
 
 ## Instructions
 - Page API:  V2
 - Data source: REST data source named "OpenAi" connecting to your HubSpot instance per [instruction](openAI)
 - Design system: ChatGPT_Demo 
-- Page XML:  [Copy the XML from this page](UpdateAnyField_w_ChatGPT.xml?raw=true), or save it as an XML file, and upload it as a new page in Skuid's Pages.
+- Page XML:  [Copy the XML from this page](MenuWithGPTActions.xml?raw=true), or save it as an XML file, and upload it as a new page in Skuid's Pages.
 - Design system: Download [ChatGPT_Demo Design System](ChatGPT_Demo.designsystem?raw=true) and import it to Skuid's Design Systems.
-
-
