@@ -2,7 +2,7 @@
  
 <img src="ImageSelection.png" width="500"></img>
 
- This sample page shows how the Dall-e API can be used to create images that are associated with data from your business records. The application allows the user to create a prompt that includes data from an account record. The prompt can be adjusted and then submitted to the image generation API.  4 images are returned.  The user may select one, and it will be saved as a Salesforce Attachment,  connected to the account record using Skuid's "File" component.  
+This sample page shows how the Dall-e API can be used to create images that are associated with data from your business records. The application allows the user to create a prompt that includes data from an account record. The prompt can be adjusted and then submitted to the image generation API.  4 images are returned.  The user may select one, and it will be saved to a Salesforce attachment record,  connected to the account record using Skuid's "File" custom sObject.  
 
 ## Instructions
 - Page API:  V2
@@ -24,7 +24,6 @@ This model shows a list of Salesforce Accounts.  It also uses the Skuid File obj
 2.  UI Only “Prompt Generation” model. 
 This model is used to hold the Prompt,  and has a number of additional fields with pick lists and text entry to enrich the prompt (style, image category,  year created). 
 
-
 3. REST model for performing "Image Request". 
 This model handles the communication with the API. 
 The core of the interaction is handled in a POST Body that is created as a template. 
@@ -34,10 +33,9 @@ NOTE: You will get errors in the builder because Skuid will attempt to execute t
 4. Several models for handling the "Image Save" process.
 Three final models handle the process of saving an image to a new Salesforce Attachment record,  creating a new "Skuid_Image__c" record (which is a junction object) and updating the Account in context.  
 
-
 ### Miscellaneous
 
-1. The prompt is constructed in an `Update Row` action that uses a `JOIN TEXT` formula function to pull together field values from the UI model, and from the account model and update the `Prompt` field.  This allows the prompt field to still be editable after this initial update in case the user wants to add more detail to thier prompt. 
+1. The prompt is constructed in an `Update Row` action that uses a `JOIN TEXT` formula function to pull together field values from the UI model, and from the account model and update the `Prompt` field.  This allows the prompt field to still be editable after this initial update in case the user wants to add more detail to their prompt. 
 
 2. The Image API returns the images as a `base64 object`.  This type of image can be displayed using the following HTML syntax `<img src="data:image/jpeg;base64,{{{b64_json}}}" style="height: 256px;" />`   
 
