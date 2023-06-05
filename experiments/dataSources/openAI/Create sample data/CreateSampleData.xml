@@ -44,7 +44,7 @@
 				</action>
 			</actions>
 		</model>
-		<model id="config_Create_Chat_Completion" query="false" datasource="OpenAI_Sam" payloadcontenttype="JSON" sendchanges="custompayloadinbody" customrequesttemplate="{&#10;    &quot;model&quot;: &quot;gpt-3.5-turbo-0301&quot;,&#10;    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello!&quot;}]&#10;}" contenttype="application/json" createrowifnonefound="false" verb="POST" endpoint="/completions" payloadsnippet="requestBody" useresponsesnippet="true" responsesnippet="responseHandler">
+		<model id="config_openAi" query="false" datasource="OpenAI_Sam" payloadcontenttype="JSON" sendchanges="custompayloadinbody" customrequesttemplate="{&#10;    &quot;model&quot;: &quot;gpt-3.5-turbo-0301&quot;,&#10;    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello!&quot;}]&#10;}" contenttype="application/json" createrowifnonefound="false" verb="POST" endpoint="/completions" payloadsnippet="requestBody" useresponsesnippet="true" responsesnippet="responseHandler">
 			<fields>
 				<field id="choices.message.role" displaytype="TEXT"/>
 				<field id="choices.message.content" displaytype="TEXTAREA" ogdisplaytype="TEXT"/>
@@ -148,35 +148,6 @@
 			<renderConditions logictype="and"/>
 			<styleVariantConditions/>
 		</skuid__wrapper>
-		<skuid__wrapper uniqueid="sk-2aXM-16490" styleSettingsVariant="2796b69f-7f78-4a4b-9274-643e35e39b6e" heightStrategy="fixed" height="custom" heightCustom="calc(100vh - 172px)" overflowY="auto">
-			<components>
-				<skuid__form showErrorsInline="false" model="config_UIOnly" uniqueid="sk-2Z-p-37168" mode="edit" styleSettingsVariant="2d325ebe-543f-41b2-b0da-210be549e41f">
-					<columns>
-						<column>
-							<sections>
-								<section title="New Section" showHeading="false">
-									<fields>
-										<skuid__field id="content" showHelp="true" hideLabel="true" placeholder="Type here..." label="{{role}}"/>
-									</fields>
-								</section>
-							</sections>
-						</column>
-					</columns>
-					<conditions/>
-					<styles>
-						<spacing/>
-					</styles>
-				</skuid__form>
-			</components>
-			<styles>
-				<spacing top="3" right="3" bottom="3" left="3"/>
-			</styles>
-			<background/>
-			<renderConditions logictype="and">
-				<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="config_UIOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate"/>
-			</renderConditions>
-			<styleVariantConditions/>
-		</skuid__wrapper>
 	</components>
 	<resources>
 		<labels/>
@@ -272,7 +243,7 @@ return modelArray</jsitem>
 					<action type="blockUI" message="Creating {{$Model.config_UIOnly.data.0.rows}}" showPlaceholder="true" subtext="This will take a few moments"/>
 					<action type="requeryModels" behavior="standard">
 						<models>
-							<model>config_Create_Chat_Completion</model>
+							<model>config_openAi</model>
 						</models>
 					</action>
 				</actions>
@@ -342,7 +313,7 @@ return modelArray</jsitem>
 					<action type="blockUI" message="Invalid response from GPT. Trying again." showPlaceholder="true" subtext="This will take a few moments"/>
 					<action type="requeryModels" behavior="standard">
 						<models>
-							<model>config_Create_Chat_Completion</model>
+							<model>config_openAi</model>
 						</models>
 					</action>
 				</actions>
