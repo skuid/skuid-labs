@@ -47,7 +47,8 @@ If you are using Skuid SFX - our Salesforce Managed Package - you will be prompt
 Follow instructions in each sample page directory to import pages and/or design system. 
 
 
-## Directory
-* [Add an Image to your Account](imageAdd)
+## Directory of examples
 * [Ask ChatGPT to draft field data](draftAnswers)
+* [Menu of actions powered by GPT](menuWithGPTActions)
 * [Create sample data](Create%20sample%20data)
+* [Add an Image to your Account](imageAdd)
