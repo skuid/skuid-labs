@@ -41,7 +41,7 @@ And within *Headers to send with every request*, append the following values in 
 
 - Authorization: ``Bearer <paste your API key here>``
 
-If you are using Skuid SFX - our Salesforce Managed Package - you will be prompted to create a Remote Site Setting, accept the prompt. Otherwise, you'll need to create one manually.
+If you are using Skuid SFX - our Salesforce managed package - you will be prompted to create a Remote Site Setting. Accept the prompt, or you'll need to create one manually.
 
 ### Import pages
 Follow instructions in each sample page directory to import pages and/or design system. 
