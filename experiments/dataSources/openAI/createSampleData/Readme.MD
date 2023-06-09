@@ -1,6 +1,6 @@
 # Ask OpenAI to generate sample data for your business database 
 
- This sample page shows how the OpenAI API can be used to create sample/test data for your database. The application allows the user to dynamically create a specified number of rows for a model. The application passes all field names and data types from the selected model into a prompt using javascript to generate relevant data.
+This sample page shows how the OpenAI API can be used to create sample/test data for your database. The application allows the user to dynamically create a specified number of rows for a model. The application passes all field names and data types from the selected model into a prompt using javascript to generate relevant data.
 
  If the response from OpenAI isnt in the correct format, the application will automatically request a new response.
 
