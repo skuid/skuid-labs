@@ -13,9 +13,7 @@ This sample page shows how the OpenAI API can be used to create sample/test data
 
 ## Notes
 
-### Models:  
-
-What are the models in this demo doing? 
+### Models
 
 1.  UI Only "config_UIOnly". 
 This model is used to hold the a few different page variable as well as the prompt and JSON response from OpenAI.
