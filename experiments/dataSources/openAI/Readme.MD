@@ -50,5 +50,5 @@ Follow instructions in each sample page directory to import pages and/or design 
 ## Directory of examples
 * [Ask ChatGPT to draft field data](draftAnswers)
 * [Menu of actions powered by GPT](menuWithGPTActions)
-* [Create sample data](Create%20sample%20data)
+* [Create sample data](createSampleData)
 * [Add an Image to your Account](imageAdd)
