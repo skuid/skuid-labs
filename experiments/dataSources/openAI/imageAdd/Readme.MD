@@ -2,7 +2,7 @@
  
 <img src="ImageSelection.png" width="500"></img>
 
-This sample page shows how the Dall-e API can be used to create images that are associated with data from your business records. The application allows the user to create a prompt that includes data from an account record. The prompt can be adjusted and then submitted to the image generation API.  4 images are returned.  The user may select one, and it will be saved to a Salesforce attachment record,  connected to the account record using Skuid's "File" custom sObject.  
+This sample page shows how the DALL-E API can be used to create images based on data from your business records. The application allows the user to create a prompt that includes data from an account record. The prompt can be adjusted and then submitted to the image generation API.  4 images are returned.  The user may select one, and it will be saved to a Salesforce attachment record, connected to the account record using Skuid's "File" custom sObject.  
 
 ## Instructions
 - Page API:  V2
