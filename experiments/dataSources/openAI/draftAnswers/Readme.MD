@@ -1,4 +1,4 @@
-# Ask ChatGPT to draft answers in your forms. 
+# Ask ChatGPT to draft answers in your forms
  
  This sample page shows how the ChatGPT API can help draft field values for any data you manage with Skuid. The application uses a Skuid action sequence that uses information from a record to create a prompt that is sent to ChatGPT.  The user can review the resulting response and iterate on the responses provided by the AI Engine. Finally the output  is copied into the specified field in your application.  The generic nature of the application means it can be bound to any field in your application and will return the output to the correct place. 
 
