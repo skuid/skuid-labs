@@ -109,6 +109,6 @@ var newChatRow = chat.createRow({
 
 
 
-### Generic Action Sequences. 
+### Generic action Sequences
 
-Note that the button on each form calls the same Action sequence.  But different inputs are passed into the action sequence to indicate what Model and field is to be updated,  and what the initial prompt should be.   These inputs are carried through into a second action sequence that returns the Chat Response into the appropriate field. 
+Note that the button on each Form calls the same action sequence.  But different inputs are passed into the action sequence to indicate what Model and field is to be updated,  and what the initial prompt should be.   These inputs are carried through into a second action sequence that returns the Chat Response into the appropriate field. 
