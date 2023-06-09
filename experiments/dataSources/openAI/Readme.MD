@@ -21,7 +21,7 @@ While the initial buzz around the ChatGPT API has been its conversational thread
 ## Getting Started
 Before you attempt to install any of the examples in the directory below,  you will need to set up the following: 
 
-#### Get an Open AI Account: 
+### Get an OpenAI Account
 
 If you haven't signed up for an account yet, go ahead and do so!
 
