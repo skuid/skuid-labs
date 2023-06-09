@@ -43,7 +43,7 @@ And within *Headers to send with every request*, append the following values in 
 
 If you are using Skuid SFX - our Salesforce Managed Package - you will be prompted to create a Remote Site Setting, accept the prompt. Otherwise, you'll need to create one manually.
 
-#### Import pages
+### Import pages
 Follow instructions in each sample page directory to import pages and/or design system. 
 
 
