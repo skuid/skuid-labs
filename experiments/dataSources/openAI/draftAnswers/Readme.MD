@@ -10,7 +10,7 @@ This sample page shows how the ChatGPT API can help draft field values for any d
 
 ## Notes
 
-### Models:  
+### Models
 
 The application uses 2 sets of models. 
 
