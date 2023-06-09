@@ -8,7 +8,7 @@ We don’t need to add hype to AI. It’s been everywhere recently. Powerful new
 
 At Skuid, we have been exploring the use of AI tools to more rapidly complete business tasks. Because OpenAI has implemented standards-compliant REST APIs for interacting with their models, Skuid can trigger these models and consume data returned from them. 
 
-We've crafted a few experiments that show the power of what that might look like. 
+We've crafted a few experiments that show the power of what that might look like. We've primarily focused on the large language model (LLM) GPT APIs, though we've also included an experiment in image generation using DALL-E.
 
 ## Business Data Ideas
 
