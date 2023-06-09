@@ -28,7 +28,7 @@ If you haven't signed up for an account yet, go ahead and do so!
 Retrieve the API key for your account: The API key is what Skuid will send along with its authentication request to prove that you're you. We'll use this in the data source configuration step.
 
 
-#### Create a Skuid data source
+### Create a Skuid data source
 In the Data Sources page, configure a new data source with these properties:
 
 - **Name**: OpenAI
