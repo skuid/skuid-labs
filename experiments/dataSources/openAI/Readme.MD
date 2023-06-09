@@ -37,7 +37,7 @@ In the Data Sources page, configure a new data source with these properties:
 - **Authentication Method**: No Authentication
 - **Use (Apex) Proxy**: Checked
 
-And within *Headers to send with every request*, append the following values in the **Common Request Parameters**:
+Append the following key-value pair in the **Common Request Parameters** section:
 
 - Authorization: ``Bearer <paste your API key here>``
 
