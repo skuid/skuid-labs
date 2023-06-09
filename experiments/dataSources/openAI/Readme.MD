@@ -6,7 +6,7 @@
 ## Adding OpenAI functions to a Skuid page
 We don’t need to add hype to AI. It’s been everywhere recently. Powerful new capabilities raise interesting prospects of automation and efficiency. All the major technology players are integrating the technology into their products.  
 
-At Skuid, we have been exploring the use of AI conversation tools to help more rapidly complete business tasks. Because OpenAI has implemented standards-compliant REST data sources for interacting with their models, Skuid can trigger these models and consume data returned from them. 
+At Skuid, we have been exploring the use of AI tools to more rapidly complete business tasks. Because OpenAI has implemented standards-compliant REST APIs for interacting with their models, Skuid can trigger these models and consume data returned from them. 
 
 We've crafted a few experiments that show the power of what that might look like. 
 
