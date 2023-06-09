@@ -1,4 +1,4 @@
-# Open AI data sources
+# OpenAI data sources
 
 <img src="OpenAI_Introduction.png" width="500"></img>
 
