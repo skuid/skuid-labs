@@ -14,9 +14,7 @@ This sample page shows how the Dall-e API can be used to create images that are 
 
 ## Notes
 
-### Models:  
-
-What are the models in this demo doing? 
+### Models
 
 1.  Salesforce Accounts. 
 This model shows a list of Salesforce Accounts.  It also uses the Skuid File object to create a lookup from the account record to an Attachment record.  For more information about that feature - [see this tutorial](https://docs.skuid.com/latest/en/tutorials/salesforce/add-images.html).
