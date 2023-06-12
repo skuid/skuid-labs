@@ -44,7 +44,7 @@
 				</action>
 			</actions>
 		</model>
-		<model id="config_openAi" query="false" datasource="OpenAI_Sam" payloadcontenttype="JSON" sendchanges="custompayloadinbody" customrequesttemplate="{&#10;    &quot;model&quot;: &quot;gpt-3.5-turbo-0301&quot;,&#10;    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello!&quot;}]&#10;}" contenttype="application/json" createrowifnonefound="false" verb="POST" endpoint="/completions" payloadsnippet="requestBody" useresponsesnippet="true" responsesnippet="responseHandler">
+		<model id="config_openAi" query="false" datasource="OpenAI" payloadcontenttype="JSON" sendchanges="custompayloadinbody" customrequesttemplate="{&#10;    &quot;model&quot;: &quot;gpt-3.5-turbo-0301&quot;,&#10;    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello!&quot;}]&#10;}" contenttype="application/json" createrowifnonefound="false" verb="POST" endpoint="/completions" payloadsnippet="requestBody" useresponsesnippet="true" responsesnippet="responseHandler">
 			<fields>
 				<field id="choices.message.role" displaytype="TEXT"/>
 				<field id="choices.message.content" displaytype="TEXTAREA" ogdisplaytype="TEXT"/>
@@ -52,24 +52,24 @@
 			<conditions/>
 			<actions/>
 		</model>
-		<model id="Accounts" limit="20" query="false" datasource="Demos" sobject="DummyData" batchable="true" label="DummyData" labelplural="DummyData">
+		<model id="Accounts" limit="20" query="false" datasource="Ui-Only" createrowifnonefound="false">
 			<fields>
-				<field id="billing_city"/>
-				<field id="billing_country"/>
-				<field id="billing_state"/>
-				<field id="billing_street"/>
-				<field id="billing_zip"/>
-				<field id="name"/>
-				<field id="website"/>
+				<field id="billing_city" displaytype="TEXT" length="100" label="City"/>
+				<field id="billing_country" displaytype="TEXT" length="10" label="Country"/>
+				<field id="billing_state" displaytype="TEXT" length="10" label="State"/>
+				<field id="billing_street" displaytype="TEXT" length="255" label="Street"/>
+				<field id="billing_zip" displaytype="INTEGER" length="9" label="ZipCode"/>
+				<field id="name" displaytype="TEXT" length="50" label="Name"/>
+				<field id="website" displaytype="URL" length="255" label="Website URL"/>
 			</fields>
 			<conditions/>
 			<actions/>
 		</model>
-		<model id="Contact" limit="20" query="false" createrowifnonefound="false" datasource="Demos" sobject="DumberData" batchable="true" label="App Hub Demo Department App" labelplural="App Hub Demo Department Apps">
+		<model id="Contact" limit="20" query="false" datasource="Ui-Only" createrowifnonefound="false">
 			<fields>
-				<field id="name"/>
-				<field id="phone"/>
-				<field id="email"/>
+				<field id="name" displaytype="TEXT" length="255" label="Name"/>
+				<field id="email" displaytype="TEXT" length="255" label="Email"/>
+				<field id="phone" displaytype="TEXT" length="255" label="Phone"/>
 			</fields>
 			<conditions/>
 			<actions/>

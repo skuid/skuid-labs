@@ -1,6 +1,6 @@
 <skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="ChatGPT_Demo" title="GPT Action Menu">
 	<models>
-		<model id="Create_Chat_Completion" query="false" datasource="OpenAi" payloadcontenttype="JSON" sendchanges="custompayloadinbody" customrequesttemplate="{&#10;    &quot;model&quot;: &quot;gpt-3.5-turbo-0301&quot;,&#10;    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello!&quot;}]&#10;}" contenttype="application/json" createrowifnonefound="false" verb="POST" endpoint="/chat/completions" payloadsnippet="requestBody" useresponsesnippet="true" responsesnippet="responseHandler">
+		<model id="Create_Chat_Completion" query="false" datasource="OpenAI" payloadcontenttype="JSON" sendchanges="custompayloadinbody" customrequesttemplate="{&#10;    &quot;model&quot;: &quot;gpt-3.5-turbo-0301&quot;,&#10;    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello!&quot;}]&#10;}" contenttype="application/json" createrowifnonefound="false" verb="POST" endpoint="/chat/completions" payloadsnippet="requestBody" useresponsesnippet="true" responsesnippet="responseHandler">
 			<fields>
 				<field id="choices.message.role" displaytype="TEXT"/>
 				<field id="choices.message.content" displaytype="TEXTAREA" ogdisplaytype="TEXT"/>
@@ -28,7 +28,7 @@
 				</action>
 			</actions>
 		</model>
-		<model id="Tasks" limit="20" query="true" datasource="Demo Org Salesforce" sobject="Task" orderby="CreatedDate DESC">
+		<model id="Tasks" limit="20" query="true" datasource="salesforce" sobject="Task" orderby="CreatedDate DESC">
 			<fields>
 				<field id="AccountId"/>
 				<field id="Account.Name"/>
@@ -51,7 +51,7 @@
 			<conditions/>
 			<actions/>
 		</model>
-		<model id="Task_SelectedRecord" limit="1" query="false" datasource="Demo Org Salesforce" sobject="Task">
+		<model id="Task_SelectedRecord" limit="1" query="false" datasource="salesforce" sobject="Task">
 			<fields>
 				<field id="AccountId"/>
 				<field id="Account.Name"/>

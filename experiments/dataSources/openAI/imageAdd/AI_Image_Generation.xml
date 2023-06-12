@@ -2,8 +2,6 @@
 	<models>
 		<model id="Accounts" limit="20" query="true" createrowifnonefound="false" datasource="salesforce" sobject="Account">
 			<fields>
-				<field id="RecordTypeId"/>
-				<field id="RecordType.Name"/>
 				<field id="Name"/>
 				<field id="Description"/>
 				<field id="BillingCity"/>
@@ -71,8 +69,6 @@
 		</model>
 		<model id="ImageSave_Account" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Account">
 			<fields>
-				<field id="RecordTypeId"/>
-				<field id="RecordType.Name"/>
 				<field id="Id"/>
 				<field id="Image__c"/>
 				<field id="Image__r.Name"/>

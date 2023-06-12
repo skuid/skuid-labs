@@ -43,6 +43,11 @@ Append the following key-value pair in the **Common Request Parameters** section
 
 If you are using Skuid SFX - our Salesforce managed package - you will be prompted to create a Remote Site Setting. Accept the prompt, or you'll need to create one manually.
 
+### Import Design System
+Several of these demos use a custom Design System.
+- [Download this Design System file](ChatGPT_Demo.designsystem?raw=true) and use the Import function on the Design System page to add this system to your org. 
+
+
 ### Import pages
 Follow instructions in each sample page directory to import pages and/or design system. 
 
