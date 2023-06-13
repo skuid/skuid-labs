@@ -8,9 +8,9 @@
 				<field id="BillingState"/>
 				<field id="BillingCountry"/>
 				<field id="Industry"/>
-				<field id="Image__c"/>
-				<field id="Image__r.Name"/>
-				<field id="Image__r.skuid__AttachmentId__c"/>
+				<field id="skuid__Image__c"/>
+				<field id="skuid__Image__r.Name"/>
+				<field id="skuid__Image__r.skuid__AttachmentId__c"/>
 			</fields>
 			<conditions/>
 			<actions/>
@@ -70,10 +70,10 @@
 		<model id="ImageSave_Account" limit="1" query="false" createrowifnonefound="false" datasource="salesforce" sobject="Account">
 			<fields>
 				<field id="Id"/>
-				<field id="Image__c"/>
-				<field id="Image__r.Name"/>
-				<field id="Image__r.skuid__AttachmentId__c"/>
 				<field id="Name"/>
+				<field id="skuid__Image__c"/>
+				<field id="skuid__Image__r.Name"/>
+				<field id="skuid__Image__r.skuid__AttachmentId__c"/>
 			</fields>
 			<conditions>
 				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Id" clientorserver="server" state="filterableoff" inactive="true" name="Id"/>
@@ -90,7 +90,7 @@
 							<columns>
 								<column fillRatio="1" widthBehavior="fixed">
 									<items>
-										<item displayType="avatar" size="large" url="https://skuid-demo.file.force.com/servlet/servlet.FileDownload?file={{Image__r.skuid__AttachmentId__c}}" fallbackType="icon" fallback="sk-webicon-ink:company"/>
+										<item displayType="avatar" size="large" url="https://skuid-demo.file.force.com/servlet/servlet.FileDownload?file={{skuid__Image__r.skuid__AttachmentId__c}}" fallbackType="icon" fallback="sk-webicon-ink:company"/>
 									</items>
 								</column>
 								<column fillRatio="2">
@@ -341,7 +341,7 @@
 					</action>
 					<action type="updateRow" fieldmodel="ImageSave_Account" affectedrows="context">
 						<updates>
-							<update valuesource="fieldvalue" field="Image__c" fieldtargetobjects="skuid__Image__c" enclosevalueinquotes="true" value="{{Id}}"/>
+							<update valuesource="fieldvalue" field="skuid__Image__c" fieldtargetobjects="skuid__Image__c" enclosevalueinquotes="true" value="{{Id}}"/>
 						</updates>
 					</action>
 					<action type="save">
