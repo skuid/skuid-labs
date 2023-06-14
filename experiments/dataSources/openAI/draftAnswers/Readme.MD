@@ -18,7 +18,7 @@ The first three models represent Business Object you might find in your CRM.  Fo
 
 The second set of models are used for the Chat function. 
 
-1.  UI Only “Chat Thread Display” model. 
+1.  UI-Only “Chat Thread Display” model. 
 This model will show the output from the ChatGPT interaction and hold the full thread of the discussion. 
 
 2. REST model for interacting with ChatGPT. 

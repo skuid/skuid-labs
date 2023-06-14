@@ -15,7 +15,7 @@ This sample page shows how the OpenAI API can be used to create sample/test data
 
 ### Models
 
-1.  UI Only "config_UIOnly"
+1.  UI-Only "config_UIOnly"
 This model is used to hold the a few different page variable as well as the prompt and JSON response from OpenAI.
 
 2.  REST model "config_openAi"
