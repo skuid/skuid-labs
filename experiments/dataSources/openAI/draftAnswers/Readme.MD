@@ -27,7 +27,7 @@ This model will handle the communication with the Chat engine.
 <img src="Chat_Completion_Model.png" width="500"></img>
 
 
-### Snippets: 
+### Snippets
 Two snippets are required for interacting with this data source. 
 
 1. requestBody
@@ -37,6 +37,6 @@ This snippet creates the request body in the format necessary for submitting to 
 This snippet intercepts the return from ChatGPT and adds it as a new row to the Thread Display model. 
 
 
-### Generic action Sequences
+### Generic action sequences
 
 The button on each Form calls the same action sequence.  But different inputs are passed into the action sequence to indicate what model and field is to be updated,  and what the initial prompt should be.   These inputs are carried through into a second action sequence that returns the response from ChatGPT into the appropriate field. 

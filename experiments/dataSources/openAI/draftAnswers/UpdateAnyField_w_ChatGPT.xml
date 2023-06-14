@@ -275,7 +275,7 @@ var newChatRow = chat.createRow({
 						</defaults>
 					</action>
 					<action type="showModal">
-						<skuid__modal title="Use Chat GPT to draft the {{$Input.Field}} field in the {{$Input.Model}} model. " width="640px" ariaRole="dialog" enforceActionables="true" showCloseIcon="false">
+						<skuid__modal title="Use ChatGPT to draft the {{$Input.Field}} field in the {{$Input.Model}} model. " width="640px" ariaRole="dialog" enforceActionables="true" showCloseIcon="false">
 							<components>
 								<skuid__wrapper uniqueid="sk-2aXM-16490" styleSettingsVariant="2796b69f-7f78-4a4b-9274-643e35e39b6e" heightStrategy="fixed" height="90" heightCustom="calc(100vh - 172px)" overflowY="auto">
 									<components>
