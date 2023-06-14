@@ -19,7 +19,7 @@ While the initial buzz around the ChatGPT API has been its conversational thread
 - In description fields, email text, action plans, and other longer elements — use ChatGPT to edit the tone and voice of what you have written or provide an initial draft or outline. 
 
 ## Getting Started
-Before you attempt to install any of the examples in the directory below,  you will need to set up the following: 
+Before you attempt to install any of the examples in the directory below, you will need to set up the following: 
 
 ### Get an OpenAI Account
 
