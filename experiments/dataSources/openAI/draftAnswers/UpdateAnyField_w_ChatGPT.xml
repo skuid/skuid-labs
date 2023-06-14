@@ -1,0 +1,435 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false">
+	<models>
+		<model id="Account" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="Name" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="Test Account"/>
+				<field displaytype="TEXT" length="255" id="City" defaultvaluetype="fieldvalue" defaultValue="Chattanooga"/>
+				<field id="State" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="Tennessee"/>
+				<field id="Industry" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="Manufacturing"/>
+				<field id="Description" displaytype="TEXTAREA" length="5000" ogdisplaytype="TEXT"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Contact" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="FirstName" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="Steve" label="First Name"/>
+				<field displaytype="TEXT" length="255" id="Title" defaultvaluetype="fieldvalue" defaultValue="Grand Master"/>
+				<field id="Company" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="Great Burgers Emporium"/>
+				<field id="Email" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="Manufacturing"/>
+				<field id="Description" displaytype="TEXTAREA" length="5000" ogdisplaytype="TEXT"/>
+				<field id="LastName" displaytype="TEXT" length="255" label="Last Name" defaultvaluetype="fieldvalue" defaultValue="Jones"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="SurveyQuestions" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="Topic" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="World Series heroes of the 1960's"/>
+				<field id="SurveyQuestion" displaytype="TEXTAREA" length="5000" ogdisplaytype="TEXT" label="Survey Question"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Create_Chat_Completion" query="false" datasource="OpenAI" payloadcontenttype="JSON" sendchanges="custompayloadinbody" customrequesttemplate="{&#10;    &quot;model&quot;: &quot;gpt-3.5-turbo-0301&quot;,&#10;    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello!&quot;}]&#10;}" contenttype="application/json" createrowifnonefound="false" verb="POST" endpoint="/chat/completions" payloadsnippet="requestBody" useresponsesnippet="true" responsesnippet="responseHandler">
+			<fields>
+				<field id="choices.message.role" displaytype="TEXT"/>
+				<field id="choices.message.content" displaytype="TEXTAREA" ogdisplaytype="TEXT"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Chat_Thread" query="true" datasource="Ui-Only" createrowifnonefound="false">
+			<fields>
+				<field id="content" displaytype="TEXTAREA" length="4000" ogdisplaytype="TEXT" required="false" displayasrichtext="false"/>
+				<field id="role" displaytype="TEXT" length="255" readonly="false" required="true" defaultvaluetype="fieldvalue" defaultValue="user"/>
+				<field id="role_display" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>IF({{$Model.Chat_Thread.data.length}} == 1, " ", IF({{role}} == "user", "You", "Assistant"))</formula>
+				</field>
+			</fields>
+			<conditions/>
+			<actions>
+				<action>
+					<actions>
+						<action type="unblockUI"/>
+					</actions>
+					<events>
+						<event>row.created</event>
+					</events>
+				</action>
+			</actions>
+		</model>
+	</models>
+	<components>
+		<skuid__grid uniqueid="sk-2pvx-20701" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="4">
+			<divisions>
+				<division minWidth="300px" ratio="1" alignSelf="auto">
+					<components>
+						<skuid__form showErrorsInline="true" model="Account" uniqueid="sk-2pw9-24991" mode="edit" showSaveCancel="false">
+							<columns>
+								<column behavior="flex">
+									<sections>
+										<section showHeading="true" title="Account">
+											<fields>
+												<skuid__field id="Name" uniqueId="sk-2pwD-27183" showHelp="true"/>
+												<skuid__field id="City" showHelp="true"/>
+												<skuid__field id="State" showHelp="true"/>
+												<skuid__field id="Industry" uniqueId="sk-3Yr3-62279" showHelp="true"/>
+												<skuid__field id="Description" uniqueId="sk-2pwD-27201" showHelp="true"/>
+												<skuid__field type="CUSTOM_BUTTON_GROUP" label=" " uniqueId="sk-3ZKZ-104064">
+													<skuid__buttonGroup uniqueId="sk-3ZKZ-104122">
+														<buttons>
+															<skuid__button label="Draft with AI" uniqueId="sk-3ZKZ-104123" styleSettingsVariant="borderlessSlim">
+																<actions>
+																	<action type="action-sequence" action-sequence-id="a9131561-316d-4e0d-8814-15dad479b7c5" input-Field="Description">
+																		<inputs>
+																			<input name="Model" value="Account"/>
+																			<input name="Field" value="Description"/>
+																			<input name="Prompt" value="Please write a description for the company {{Name}} from {{City}} {{State}}.  They work in the {{Industry}} sector. "/>
+																		</inputs>
+																	</action>
+																</actions>
+																<styles>
+																	<spacing/>
+																</styles>
+															</skuid__button>
+														</buttons>
+														<renderConditions logictype="and"/>
+														<styleVariantConditions/>
+													</skuid__buttonGroup>
+												</skuid__field>
+											</fields>
+										</section>
+									</sections>
+								</column>
+							</columns>
+						</skuid__form>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="300px" ratio="1">
+					<components>
+						<skuid__form showErrorsInline="true" model="Contact" uniqueid="sk-2pwJ-28529" mode="edit" showSaveCancel="false">
+							<columns>
+								<column>
+									<sections>
+										<section title="Contact">
+											<fields>
+												<skuid__field id="FirstName" uniqueId="sk-2pwR-32980"/>
+												<skuid__field id="LastName" uniqueId="sk-2pwR-32998"/>
+												<skuid__field id="Title" uniqueId="sk-3YoW-38064" showHelp="true"/>
+												<skuid__field id="Company" uniqueId="sk-1ucv-70214" showHelp="true"/>
+												<skuid__field id="Description" uniqueId="sk-2pwR-33016" showHelp="true"/>
+												<skuid__field type="CUSTOM_BUTTON_GROUP" uniqueId="sk-2pwU-34235" label=" ">
+													<skuid__buttonGroup uniqueId="sk-2pwU-34293">
+														<buttons>
+															<skuid__button label="Draft with AI" uniqueId="sk-2pwU-34294" styleSettingsVariant="borderlessSlim">
+																<actions>
+																	<action type="action-sequence" action-sequence-id="a9131561-316d-4e0d-8814-15dad479b7c5" input-Field="Description">
+																		<inputs>
+																			<input name="Model" value="Contact"/>
+																			<input name="Field" value="Description"/>
+																			<input name="Prompt" value="Please help me with a description of {{FirstName}} {{LastName}}.  Who is the {{Title}} at {{Company}}"/>
+																		</inputs>
+																	</action>
+																</actions>
+																<styles>
+																	<spacing/>
+																</styles>
+															</skuid__button>
+														</buttons>
+													</skuid__buttonGroup>
+												</skuid__field>
+											</fields>
+										</section>
+									</sections>
+								</column>
+							</columns>
+						</skuid__form>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="300px" ratio="1">
+					<components>
+						<skuid__form showErrorsInline="true" model="SurveyQuestions" uniqueid="sk-2pwd-40117" mode="edit" showSaveCancel="false">
+							<columns>
+								<column>
+									<sections>
+										<section title="Generate Questions">
+											<fields>
+												<skuid__field id="Topic" uniqueId="sk-1ud0-75823" showHelp="true"/>
+												<skuid__field id="SurveyQuestion" uniqueId="sk-1ud0-75841" showHelp="true"/>
+												<skuid__field type="CUSTOM_BUTTON_GROUP" label=" " uniqueId="sk-2pyO-95301">
+													<skuid__buttonGroup uniqueId="sk-2pyO-95359">
+														<buttons>
+															<skuid__button label="Draft with AI" uniqueId="sk-2pyO-95360" styleSettingsVariant="borderlessSlim">
+																<actions>
+																	<action type="action-sequence" action-sequence-id="a9131561-316d-4e0d-8814-15dad479b7c5" input-Field="SurveyQuestion">
+																		<inputs>
+																			<input name="Model" value="SurveyQuestions"/>
+																			<input name="Field" value="SurveyQuestion"/>
+																			<input name="Prompt" value="Please help me draft a trivia question on the topic &quot;{{Topic}}&quot;"/>
+																		</inputs>
+																	</action>
+																</actions>
+																<styles>
+																	<spacing/>
+																</styles>
+															</skuid__button>
+														</buttons>
+													</skuid__buttonGroup>
+												</skuid__field>
+											</fields>
+										</section>
+									</sections>
+								</column>
+							</columns>
+						</skuid__form>
+					</components>
+				</division>
+			</divisions>
+			<styles>
+				<spacing top="4" right="4" bottom="4" left="4"/>
+			</styles>
+			<background/>
+		</skuid__grid>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="inlinesnippet" name="requestBody" cachelocation="false">const params = arguments[0];
+
+// Store chat thread UI only model in a variable
+var chat = skuid.$M('Chat_Thread').dataMap;
+
+// Create array to store values
+var messages = [];
+
+// Loop through each row in the chat thread model
+Object.entries(chat).forEach(([key, value]) =&gt; {
+
+    // Push object into the array
+    messages.push({content:value.content, role:value.role});
+    
+}); 
+
+//Create response body
+let body = {
+  model: 'gpt-3.5-turbo',
+  messages: messages
+};
+
+return body</jsitem>
+			<jsitem location="inlinesnippet" name="responseHandler" cachelocation="false">const params = arguments[0],
+    message = arguments[0].response.body.choices[0].message;
+
+//Store chat thread UI only model in a variable
+var chat = skuid.$M('Chat_Thread');
+
+//Take the returned message and append it to the chat thread
+var addResponse = chat.createRow({
+    doAppend: true,
+    additionalConditions: [
+        { field: 'content', value: message.content },
+        { field: 'role', value: message.role }
+    ]
+});
+
+//Append an additional blank row to the chat thread
+var newChatRow = chat.createRow({
+    doAppend: true,
+    editModeForNewItems: true
+});</jsitem>
+		</javascript>
+		<css/>
+		<actionsequences>
+			<actionsequence id="aee32a79-2709-4838-bc13-946d116bad4c" label="Hotkey Submit" type="hotkey-triggered">
+				<description/>
+				<actions>
+					<action type="action-sequence" action-sequence-id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb"/>
+				</actions>
+				<hotkeys>
+					<hotkey modifiers="meta" key="enter"/>
+				</hotkeys>
+			</actionsequence>
+			<actionsequence id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb" label="Submit" type="reusable">
+				<actions>
+					<action type="blockUI" message="Generating response" showPlaceholder="true"/>
+					<action type="save">
+						<models>
+							<model>Chat_Thread</model>
+						</models>
+					</action>
+					<action type="requeryModels" behavior="standard">
+						<models>
+							<model>Create_Chat_Completion</model>
+						</models>
+					</action>
+				</actions>
+				<description/>
+			</actionsequence>
+			<actionsequence id="a9131561-316d-4e0d-8814-15dad479b7c5" label="AI Description Generator" type="reusable">
+				<description/>
+				<actions>
+					<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+						<defaults>
+							<default valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="{{$Input.Prompt}}"/>
+						</defaults>
+					</action>
+					<action type="showModal">
+						<skuid__modal title="Use ChatGPT to draft the {{$Input.Field}} field in the {{$Input.Model}} model. " width="640px" ariaRole="dialog" enforceActionables="true" showCloseIcon="false">
+							<components>
+								<skuid__wrapper uniqueid="sk-2aXM-16490" styleSettingsVariant="2796b69f-7f78-4a4b-9274-643e35e39b6e" heightStrategy="fixed" height="90" heightCustom="calc(100vh - 172px)" overflowY="auto">
+									<components>
+										<skuid__deck columnGutter="0px" rowGutter="8px" model="Chat_Thread" showSaveCancel="false" verticalAlign="top" uniqueid="sk-2a4p-69511" pageSize="10" showListFooter="false" setMaxWidth="auto" minWidth="100%" styleSettingsVariant="cd2b1594-2370-4117-bec5-38349d1cfead">
+											<components>
+												<skuid__grid uniqueid="sk-beW-26498" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+													<divisions>
+														<division minWidth="100px" ratio="1" alignSelf="auto">
+															<components>
+																<skuid__text contents="{{role_display}}" uniqueid="sk-beZ-29871" model="Chat_Thread" styleSettingsVariant="medium">
+																	<styles>
+																		<spacing/>
+																	</styles>
+																</skuid__text>
+															</components>
+														</division>
+														<division alignSelf="auto" minWidth="100px" ratio="1">
+															<components>
+																<skuid__buttonSet uniqueid="sk-beX-28305" model="Chat_Thread">
+																	<groups>
+																		<skuid__buttonGroup uniqueId="sk-beX-28303">
+																			<buttons>
+																				<skuid__button uniqueId="sk-beX-28304" styleSettingsVariant="borderlessSlim" label="Export to CRM">
+																					<styles>
+																						<spacing/>
+																					</styles>
+																					<actions>
+																						<action type="action-sequence" action-sequence-id="3539268e-7b5a-448f-a830-4dc9c7cda220" input-SubmitField="{{$Input.Field}}">
+																							<inputs>
+																								<input name="SubmitModel" value="{{$Input.Model}}"/>
+																								<input name="SubmitField" value="{{$Input.Field}}"/>
+																							</inputs>
+																						</action>
+																					</actions>
+																				</skuid__button>
+																			</buttons>
+																		</skuid__buttonGroup>
+																	</groups>
+																	<renderConditions logictype="and">
+																		<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="Chat_Thread" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="role_display" value="Assistant"/>
+																	</renderConditions>
+																	<styleVariantConditions/>
+																</skuid__buttonSet>
+															</components>
+														</division>
+													</divisions>
+												</skuid__grid>
+												<skuid__form showErrorsInline="false" model="Chat_Thread" uniqueid="sk-2Z-p-37168" mode="edit" styleSettingsVariant="2d325ebe-543f-41b2-b0da-210be549e41f">
+													<columns>
+														<column>
+															<sections>
+																<section title="New Section" showHeading="false">
+																	<fields>
+																		<skuid__field id="content" showHelp="true" hideLabel="true" placeholder="Write prompt here..." label=" "/>
+																	</fields>
+																</section>
+															</sections>
+														</column>
+													</columns>
+													<conditions/>
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__form>
+											</components>
+											<filtering enableSearch="false"/>
+											<sorting enable="false"/>
+											<styles>
+												<spacing/>
+											</styles>
+										</skuid__deck>
+									</components>
+									<styles>
+										<spacing top="3" right="3" bottom="3" left="3"/>
+									</styles>
+									<background/>
+								</skuid__wrapper>
+							</components>
+							<buttons>
+								<skuid__button label="Submit" uniqueId="sk-2a0f-41100" styleSettingsVariant="primary">
+									<actions>
+										<action type="action-sequence" action-sequence-id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb"/>
+									</actions>
+									<styles>
+										<spacing/>
+									</styles>
+									<renderConditions logictype="and"/>
+									<enableConditions logictype="and">
+										<condition type="blank" operator="!=" fieldmodel="Chat_Thread" sourcetype="fieldvalue" field="content" value="null" enclosevalueinquotes="false"/>
+									</enableConditions>
+									<styleVariantConditions/>
+									<hotkeys>
+										<hotkey key="enter " ignoretextinputs="false" modifiers="meta"/>
+									</hotkeys>
+								</skuid__button>
+								<skuid__button label="Cancel" uniqueId="sk-2pxj-72449">
+									<actions>
+										<action type="abandonRows" model="Chat_Thread" affectedrows="all"/>
+										<action type="closeModals" closebehavior="close"/>
+									</actions>
+								</skuid__button>
+							</buttons>
+						</skuid__modal>
+					</action>
+				</actions>
+				<inputs>
+					<input type="model" name="Model"/>
+					<input type="model-field" name="Field" model-source="Model"/>
+					<input type="value" name="Prompt"/>
+				</inputs>
+			</actionsequence>
+			<actionsequence id="3539268e-7b5a-448f-a830-4dc9c7cda220" label="Submit Response" type="reusable">
+				<actions>
+					<action type="updateRow" fieldmodel="{{$Input.Model}}" affectedrows="context">
+						<updates>
+							<update valuesource="fieldvalue" field="{{$Input.Field}}" enclosevalueinquotes="true" value="{{content}}"/>
+						</updates>
+					</action>
+					<action type="closeModals" closebehavior="close"/>
+					<action type="emptyModelData">
+						<models>
+							<model>Chat_Thread</model>
+						</models>
+					</action>
+				</actions>
+				<description/>
+				<inputs>
+					<input type="model" name="SubmitModel"/>
+					<input type="model-field" name="SubmitField" model-source="SubmitModel"/>
+				</inputs>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+	<pageregioncontents>
+		<pageregioncontent uniqueid="__header">
+			<components>
+				<skuid__layoutRegion sticky="true">
+					<components>
+						<skuid__text contents="Update Any Field with ChatGPT" uniqueid="sk-2pv--22466" styleSettingsVariant="increased">
+							<styles>
+								<spacing top="2" right="2" bottom="2" left="2"/>
+							</styles>
+						</skuid__text>
+					</components>
+					<styles>
+						<spacing/>
+					</styles>
+					<background type="color" color="#dbe5f1"/>
+				</skuid__layoutRegion>
+			</components>
+		</pageregioncontent>
+	</pageregioncontents>
+	<background type="color" color="#f2f2f2"/>
+</skuid__page>
