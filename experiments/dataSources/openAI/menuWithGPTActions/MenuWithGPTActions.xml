@@ -315,7 +315,7 @@ console.log(params);</jsitem>
 										<skuid__search uniqueid="sk-1yks-88239" tokenizeSearch="any" placeholder="Search accounts, contacts, opportunities" minWidth="100%" limit="5">
 											<resultActions/>
 											<objects>
-												<object datasource="Demo Org Salesforce" id="Account" headerIcon="sk-webicon-lightning-icons:company" headerName="Account" displayTemplate="{{Name}} - {{Industry}}" fields="Industry" orderBy="Name">
+												<object datasource="salesforce" id="Account" headerIcon="sk-webicon-lightning-icons:company" headerName="Account" displayTemplate="{{Name}} - {{Industry}}" fields="Industry" orderBy="Name">
 													<resultActions>
 														<action label="Add to prompt">
 															<actions>
@@ -335,7 +335,7 @@ console.log(params);</jsitem>
 														<field id="Industry"/>
 													</fields>
 												</object>
-												<object datasource="Demo Org Salesforce" id="Contact" headerIcon="sk-webicon-lightning-icons:user" displayTemplate="{{Name}} - {{Title}} - {{Account.Name}}" headerName="Contact" fields="Title" fieldtargetobjects="Account">
+												<object datasource="salesforce" id="Contact" headerIcon="sk-webicon-lightning-icons:user" displayTemplate="{{Name}} - {{Title}} - {{Account.Name}}" headerName="Contact" fields="Title" fieldtargetobjects="Account">
 													<fields>
 														<field id="Account.Name"/>
 														<field id="AccountId"/>

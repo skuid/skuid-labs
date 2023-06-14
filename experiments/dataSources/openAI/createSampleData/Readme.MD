@@ -22,8 +22,8 @@ This model is used to hold the a few different page variable as well as the prom
 This model handles the communication with the API. 
 The core of the interaction is handled in a POST Body that is created through a snippet.
 
-3. Skuid DB Account and contact models 
-These models are sample models that can be replaced with whatever model you wish to have sample data created for.
+3. Account and contact models 
+These UI-only models are sample models that can be replaced with whatever model you wish to have sample data created for.
 
 NOTE: The "config_" prefix is used to filter out builder models in the runtime pick-list that is displayed on the "create sample data" modal.
 
