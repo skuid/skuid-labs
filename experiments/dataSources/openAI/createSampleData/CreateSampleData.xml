@@ -81,7 +81,7 @@
 				<spacing top="3" right="3" left="3" bottom="3"/>
 			</styles>
 		</skuid__header>
-		<skuid__text contents="This page dynamically creates sample data for models added to the page using OpenAI&amp;#39;s text-davinci-001 completion model. Any fields added to the model will be used for data creation. NOTE: some metadata types may not be supported.&lt;br /&gt;&#10;&lt;br /&gt;&#10;To begin creating data, press &amp;quot;Create Sample Data&amp;quot;." uniqueid="sk-1ySn-28262">
+		<skuid__text contents="This page dynamically creates sample data for models added to the page using OpenAI&amp;#39;s text-davinci-001 completion model. Any fields added to the model will be used for data creation. Note: Some metadata types may not be supported.&lt;br /&gt;&#10;&lt;br /&gt;&#10;To begin creating data, press &amp;quot;Create Sample Data&amp;quot;." uniqueid="sk-1ySn-28262">
 			<styles>
 				<spacing right="3" left="3"/>
 			</styles>
