@@ -15,7 +15,7 @@ In your Skuid site, configure a data source with these properties:
 
 Append the following key-value pair in the **Common Request Parameters** section:
 
-- Authorization: ``Bearer <paste your API key here>``
+- x-api-key: ``<paste your API key here>``
 
 If you are using Skuid SFX (our Salesforce managed package), you will be prompted to create a Remote Site Setting. Accept the prompt, or you'll need to create one manually.
 
