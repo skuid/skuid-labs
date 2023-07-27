@@ -1,0 +1,326 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="ChatGPT_Demo">
+	<models>
+		<model id="config_UIOnly" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="JSON" displaytype="TEXTAREA" length="" defaultvaluetype="fieldvalue" ogdisplaytype="TEXT"/>
+				<field id="contextModel" displaytype="PICKLIST" length="255" defaultvaluetype="fieldvalue" ogdisplaytype="TEXT" picklistsource="snippet" returntype="TEXT" snippet="getModelList">
+					<picklistentries/>
+				</field>
+				<field displaytype="TEXTAREA" length="10000" id="content" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue"/>
+				<field id="role" displaytype="TEXT" length="255" defaultvaluetype="fieldvalue" defaultValue="user"/>
+				<field id="rows" displaytype="PICKLIST" length="255" ogdisplaytype="TEXT" picklistsource="manual" returntype="TEXT" defaultvaluetype="fieldvalue">
+					<picklistentries>
+						<entry value="1" label="1 row"/>
+						<entry value="5" label="5 rows"/>
+						<entry value="10" label="10 rows"/>
+					</picklistentries>
+				</field>
+				<field id="objectType" displaytype="TEXT" length="255" helptext="In a few words, what kind of data is this?" label="Data type" placeholder="e.g. law firms"/>
+			</fields>
+			<conditions/>
+			<actions>
+				<action>
+					<actions>
+						<action type="unblockUI"/>
+						<action type="custom" snippet="createDummyRows"/>
+					</actions>
+					<events>
+						<event>row.updated</event>
+					</events>
+					<fields>
+						<field>JSON</field>
+					</fields>
+				</action>
+				<action>
+					<actions>
+						<action type="action-sequence" action-sequence-id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb"/>
+					</actions>
+					<events>
+						<event>row.updated</event>
+					</events>
+					<fields>
+						<field>content</field>
+					</fields>
+				</action>
+			</actions>
+		</model>
+		<model id="config_openAi" query="false" datasource="OpenAI" payloadcontenttype="JSON" sendchanges="custompayloadinbody" customrequesttemplate="{&#10;    &quot;model&quot;: &quot;gpt-3.5-turbo-0301&quot;,&#10;    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello!&quot;}]&#10;}" contenttype="application/json" createrowifnonefound="false" verb="POST" endpoint="/completions" payloadsnippet="requestBody" useresponsesnippet="true" responsesnippet="responseHandler">
+			<fields>
+				<field id="choices.message.role" displaytype="TEXT"/>
+				<field id="choices.message.content" displaytype="TEXTAREA" ogdisplaytype="TEXT"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Accounts" limit="20" query="false" datasource="Ui-Only" createrowifnonefound="false">
+			<fields>
+				<field id="billing_city" displaytype="TEXT" length="100" label="City"/>
+				<field id="billing_country" displaytype="TEXT" length="10" label="Country"/>
+				<field id="billing_state" displaytype="TEXT" length="10" label="State"/>
+				<field id="billing_street" displaytype="TEXT" length="255" label="Street"/>
+				<field id="billing_zip" displaytype="INTEGER" length="9" label="ZipCode"/>
+				<field id="name" displaytype="TEXT" length="50" label="Name"/>
+				<field id="website" displaytype="URL" length="255" label="Website URL"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Contact" limit="20" query="false" datasource="Ui-Only" createrowifnonefound="false">
+			<fields>
+				<field id="name" displaytype="TEXT" length="255" label="Name"/>
+				<field id="email" displaytype="TEXT" length="255" label="Email"/>
+				<field id="phone" displaytype="TEXT" length="255" label="Phone"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__header title="AI Sample Data Creation" uniqueid="sk-1ySa-22167">
+			<styles>
+				<spacing top="3" right="3" left="3" bottom="3"/>
+			</styles>
+		</skuid__header>
+		<skuid__text contents="This page dynamically creates sample data for models added to the page using OpenAI&amp;#39;s text-davinci-001 completion model. Any fields added to the model will be used for data creation. Note: Some metadata types may not be supported.&lt;br /&gt;&#10;&lt;br /&gt;&#10;To begin creating data, press &amp;quot;Create Sample Data&amp;quot;." uniqueid="sk-1ySn-28262">
+			<styles>
+				<spacing right="3" left="3"/>
+			</styles>
+		</skuid__text>
+		<skuid__buttonSet model="Contact" uniqueid="sk-1pDg-359047">
+			<groups>
+				<skuid__buttonGroup uniqueId="sk-1pDg-359045">
+					<buttons>
+						<skuid__button label="Create Sample Data" uniqueId="sk-1pDg-359046">
+							<actions>
+								<action type="action-sequence" action-sequence-id="ad077aeb-72eb-432d-be11-d8129e1b01bc"/>
+							</actions>
+						</skuid__button>
+					</buttons>
+				</skuid__buttonGroup>
+			</groups>
+			<styles>
+				<spacing top="3" right="3" bottom="3" left="3"/>
+			</styles>
+		</skuid__buttonSet>
+		<skuid__wrapper uniqueid="sk-1yTm-47220" styleSettingsVariant="2796b69f-7f78-4a4b-9274-643e35e39b6e">
+			<components>
+				<skuid__table allowColumnFreezing="dragDrop" model="Accounts" uniqueid="sk-1ofs-101399" mode="read" showSaveCancel="false" pageSize="10" title="Accounts">
+					<fields>
+						<field id="name" uniqueid="fi-1ofs-102412"/>
+						<field id="billing_city" uniqueid="fi-1ofs-102403"/>
+						<field id="billing_country" uniqueid="fi-1ofs-102404"/>
+						<field id="billing_state" uniqueid="fi-1ofs-102405"/>
+						<field id="billing_street" uniqueid="fi-1ofs-102406"/>
+						<field id="billing_zip" uniqueid="fi-1ofs-102407"/>
+						<field id="website" uniqueid="fi-1t3p-26988"/>
+					</fields>
+					<filtering enableSearch="false"/>
+					<actions/>
+					<rowActions/>
+					<massActions/>
+					<exportProperties useTableColumns="true" enableExportOptionOnTable="true"/>
+					<sorting enable="false"/>
+					<styles>
+						<spacing top="3" right="3" bottom="3" left="3"/>
+					</styles>
+				</skuid__table>
+				<skuid__table allowColumnFreezing="dragDrop" model="Contact" uniqueid="sk-1pDc-356503" mode="read" title="Contacts" showSaveCancel="false">
+					<fields>
+						<field id="name" uniqueid="fi-1pDr-365468"/>
+						<field id="email" uniqueid="fi-1pDr-365469"/>
+						<field id="phone" uniqueid="fi-1pDr-365470"/>
+					</fields>
+					<filtering enableSearch="false"/>
+					<actions/>
+					<rowActions/>
+					<massActions/>
+					<exportProperties useTableColumns="true" enableExportOptionOnTable="true"/>
+					<sorting enable="false"/>
+					<styles>
+						<spacing top="3" right="3" bottom="3" left="3"/>
+					</styles>
+				</skuid__table>
+			</components>
+			<styles>
+				<spacing top="3" right="3" bottom="3" left="3"/>
+			</styles>
+			<background/>
+			<renderConditions logictype="and"/>
+			<styleVariantConditions/>
+		</skuid__wrapper>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="inlinesnippet" name="requestBody" cachelocation="false">var prompt = skuid.$M('config_UIOnly').data[0].content;
+
+//Create response body
+let body = {
+  model: 'text-davinci-001',
+  prompt: prompt,
+  best_of: 5,
+  max_tokens: 1850,
+  temperature: 1,
+};
+
+return body</jsitem>
+			<jsitem location="inlinesnippet" name="responseHandler" cachelocation="false">const params = arguments[0],
+    text = arguments[0].response.body.choices[0].text;
+
+//Store chat thread UI only model in a variable
+var model = skuid.$M('config_UIOnly');
+
+//Take the returned message and append it to the chat thread
+var addResponse = model.updateRow(model.getFirstRow(),{
+    'JSON': text 
+});</jsitem>
+			<jsitem location="inlinesnippet" cachelocation="false" name="generatePrompt">const params = arguments[0];
+
+var uiModel = skuid.$M('config_UIOnly'),
+    contextModel = uiModel.data[0].contextModel,
+    fieldsArray = skuid.$M(contextModel).fields,
+    objectType = uiModel.data[0].objectType,
+    numberOfRows = uiModel.data[0].rows,
+    fieldsString = 'Generate a list of ' + numberOfRows + ' ' + objectType + ' with mock data. Provide them in a JSON array format with the following fields.';
+
+// console.log(fieldsArray);
+
+fieldsArray.forEach(function (item, index) {
+    fieldsString = fieldsString + ' Field ' + (index + 1) + ' is named ' + item.id + ' with a data type of ' + item.displaytype;
+    if (fieldsArray.length != index + 1) {
+        fieldsString = fieldsString + ', '
+    } else {
+        fieldsString = fieldsString + '. Do not adjust the prompt.'
+    }
+})
+
+//Take the returned message and append it to the chat thread
+var addPrompt = uiModel.updateRow(uiModel.getFirstRow(), {
+    'content': fieldsString
+});</jsitem>
+			<jsitem location="inlinesnippet" name="createDummyRows" cachelocation="false">let myJSON = skuid.$M('config_UIOnly').data[0].JSON,
+    contextModel = skuid.$M('config_UIOnly').data[0].contextModel,
+    model = skuid.$M(contextModel);
+
+try {
+    var objArray = skuid.$.parseJSON(myJSON);
+} catch(err) {
+    console.log(err, "trying again")
+    skuid.actionSequences.getByName("Retry Generate Rows").run()
+};
+
+objArray.forEach(function (row) {
+    const conditionArray = [];
+    Object.entries(row).forEach(([key, value]) =&gt; {
+            // Push object into the array
+            conditionArray.push({ field: key, value: value });  
+    });
+
+    //Create new rows on the target model
+    model.createRow({
+        additionalConditions: conditionArray
+    });
+})
+
+//Save the new records
+model.save();</jsitem>
+			<jsitem location="inlinesnippet" name="getModelList" cachelocation="false">const modelArray = [],
+    modelsObject = skuid.model.map();
+
+ Object.entries(modelsObject).forEach(([key, value]) =&gt; {
+        // Push object into the array
+        if (!key.includes('config')) {
+            modelArray.push({value:key, label:key});
+        }
+    });
+
+return modelArray</jsitem>
+		</javascript>
+		<css/>
+		<actionsequences>
+			<actionsequence id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb" label="Generate Rows" type="reusable">
+				<actions>
+					<action type="blockUI" message="Creating {{$Model.config_UIOnly.data.0.rows}}" showPlaceholder="true" subtext="This will take a few moments"/>
+					<action type="requeryModels" behavior="standard">
+						<models>
+							<model>config_openAi</model>
+						</models>
+					</action>
+				</actions>
+				<description/>
+				<inputs/>
+			</actionsequence>
+			<actionsequence id="ad077aeb-72eb-432d-be11-d8129e1b01bc" type="reusable" label="Row Selection">
+				<description/>
+				<actions>
+					<action type="showModal">
+						<skuid__modal width="376px" ariaRole="dialog" title="Data generation settings">
+							<components>
+								<skuid__form showErrorsInline="true" model="config_UIOnly" uniqueid="sk-1p5F-198174" mode="edit">
+									<columns>
+										<column behavior="flex">
+											<sections>
+												<section title="New Section" showHeading="false">
+													<fields>
+														<skuid__field id="contextModel" uniqueId="sk-1pBj-320315" showHelp="true" label="Model to update"/>
+														<skuid__field id="objectType" uniqueId="sk-1tNW-58999" showHelp="belowlabel"/>
+														<skuid__field id="rows" uniqueId="sk-1p5H-199797" showHelp="true" label="Number of rows"/>
+													</fields>
+												</section>
+											</sections>
+										</column>
+									</columns>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
+									<styles>
+										<spacing bottom="3"/>
+									</styles>
+								</skuid__form>
+							</components>
+							<buttons>
+								<skuid__button label="Create" uniqueId="sk-1p5L-201273" styleSettingsVariant="primary">
+									<actions>
+										<action type="action-sequence" action-sequence-id="82b3f915-d594-4fe6-9688-f413bd5a91e7"/>
+									</actions>
+									<renderConditions logictype="and"/>
+									<enableConditions logictype="and">
+										<condition type="blank" operator="!=" fieldmodel="config_UIOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="objectType" value="null" enclosevalueinquotes="false"/>
+										<condition type="blank" operator="!=" fieldmodel="config_UIOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="rows" value="null" enclosevalueinquotes="false"/>
+										<condition type="blank" operator="!=" fieldmodel="config_UIOnly" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="contextModel" value="null" enclosevalueinquotes="false"/>
+									</enableConditions>
+									<styleVariantConditions/>
+								</skuid__button>
+								<skuid__button label="Cancel" uniqueId="sk-1p5N-202245">
+									<actions>
+										<action type="closeModals" closebehavior="close"/>
+									</actions>
+								</skuid__button>
+							</buttons>
+						</skuid__modal>
+					</action>
+				</actions>
+				<inputs/>
+			</actionsequence>
+			<actionsequence id="82b3f915-d594-4fe6-9688-f413bd5a91e7" label="Generate Prompt" type="reusable">
+				<description/>
+				<actions>
+					<action type="closeModals" closebehavior="close"/>
+					<action type="custom" snippet="generatePrompt"/>
+				</actions>
+			</actionsequence>
+			<actionsequence id="e193ef84-4686-45ce-a0fb-5df1fd31ffa9" label="Retry Generate Rows" type="reusable">
+				<actions>
+					<action type="blockUI" message="Invalid response from GPT. Trying again." showPlaceholder="true" subtext="This will take a few moments"/>
+					<action type="requeryModels" behavior="standard">
+						<models>
+							<model>config_openAi</model>
+						</models>
+					</action>
+				</actions>
+				<description/>
+				<inputs/>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<interactions/>
+</skuid__page>

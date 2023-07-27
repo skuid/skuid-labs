@@ -1,0 +1,654 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="ChatGPT_Demo" title="GPT Action Menu">
+	<models>
+		<model id="Create_Chat_Completion" query="false" datasource="OpenAI" payloadcontenttype="JSON" sendchanges="custompayloadinbody" customrequesttemplate="{&#10;    &quot;model&quot;: &quot;gpt-3.5-turbo-0301&quot;,&#10;    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello!&quot;}]&#10;}" contenttype="application/json" createrowifnonefound="false" verb="POST" endpoint="/chat/completions" payloadsnippet="requestBody" useresponsesnippet="true" responsesnippet="responseHandler">
+			<fields>
+				<field id="choices.message.role" displaytype="TEXT"/>
+				<field id="choices.message.content" displaytype="TEXTAREA" ogdisplaytype="TEXT"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Chat_Thread" query="true" datasource="Ui-Only" createrowifnonefound="false">
+			<fields>
+				<field id="content" displaytype="TEXTAREA" length="4000" ogdisplaytype="TEXT" required="false" displayasrichtext="false"/>
+				<field id="role" displaytype="TEXT" length="255" readonly="false" required="true" defaultvaluetype="fieldvalue" defaultValue="user"/>
+				<field id="role_display" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="TEXT">
+					<formula>IF({{$Model.Chat_Thread.data.length}} == 1, " ", IF({{role}} == "user", "You", "Assistant"))</formula>
+				</field>
+			</fields>
+			<conditions/>
+			<actions>
+				<action>
+					<actions>
+						<action type="unblockUI"/>
+					</actions>
+					<events>
+						<event>row.created</event>
+					</events>
+				</action>
+			</actions>
+		</model>
+		<model id="Tasks" limit="20" query="true" datasource="salesforce" sobject="Task" orderby="CreatedDate DESC">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Subject"/>
+				<field id="OwnerId"/>
+				<field id="Owner.Name"/>
+				<field id="Description"/>
+				<field id="WhatId"/>
+				<field id="What.Name"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="UIOnly" limit="20" query="true" createrowifnonefound="true" datasource="Ui-Only">
+			<fields>
+				<field id="input_fieldValue" displaytype="TEXT" length="255"/>
+				<field id="input_sentenceCount" displaytype="TEXT" length="255"/>
+				<field id="output_latestResult" displaytype="TEXTAREA" length="10000" ogdisplaytype="TEXT"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+		<model id="Task_SelectedRecord" limit="1" query="false" datasource="salesforce" sobject="Task">
+			<fields>
+				<field id="AccountId"/>
+				<field id="Account.Name"/>
+				<field id="Subject"/>
+				<field id="OwnerId"/>
+				<field id="Owner.Name"/>
+				<field id="Description"/>
+				<field id="WhatId"/>
+				<field id="What.Name"/>
+			</fields>
+			<conditions>
+				<condition type="fieldvalue" value="" enclosevalueinquotes="true" field="Id" operator="=" clientorserver="server" state="filterableoff" inactive="true" name="Id"/>
+			</conditions>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__wrapper uniqueid="sk-1zUB-35948">
+			<components>
+				<skuid__header model="Tasks" title="GPT Action Menu" uniqueid="sk-1yg8-66005" subtitle="Right click menu with GPT actions  for your CRM"/>
+				<skuid__table allowColumnFreezing="dragDrop" model="Tasks" uniqueid="sk-1pHP-40054" mode="read" showSaveCancel="true" pageSize="10" cellOverflow="scroll" rowHeight="custom" rowHeightCustom="80px">
+					<fields>
+						<field id="Subject" uniqueid="fi-1pHP-40790"/>
+						<field type="COMBO" label="Description (generated)" template="{{Description}}" redirectType="datasourcedefault" uniqueid="fi-1pIC-54772">
+							<interactions>
+								<interaction type="rightclick">
+									<action type="action-sequence" action-sequence-id="d67abeac-4979-481c-a697-b5de3aaff045" input-TaskField="Description" input-Field_In_Context="Description">
+										<inputs>
+											<input name="fieldValue" value="{{Description}}"/>
+											<input name="Task_SelectedRecord" value="Task_SelectedRecord"/>
+											<input name="TaskField" value="Description"/>
+											<input name="Model_In_Context" value="Task_SelectedRecord"/>
+											<input name="Field_In_Context" value="Description"/>
+										</inputs>
+									</action>
+								</interaction>
+							</interactions>
+						</field>
+					</fields>
+					<filtering enableSearch="false"/>
+					<actions/>
+					<rowActions/>
+					<massActions/>
+					<exportProperties useTableColumns="true"/>
+					<sorting enable="false"/>
+					<interactions/>
+					<styles>
+						<spacing/>
+					</styles>
+					<renderConditions logictype="and"/>
+					<styleVariantConditions/>
+				</skuid__table>
+			</components>
+			<styles>
+				<spacing top="2" right="2" bottom="2" left="2"/>
+			</styles>
+			<background/>
+		</skuid__wrapper>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="inlinesnippet" name="copy email to clipboard" cachelocation="false">const params = arguments[0];
+const chatThread = skuid.$M('Chat_Thread').getRows();
+
+function getSecondToLastRow(array) {
+  return array[array.length - 2];
+}
+
+const latestResult = getSecondToLastRow(chatThread);
+console.log(latestResult);
+const textToCopy = latestResult.content;
+console.log(textToCopy);
+
+function fallbackCopyTextToClipboard(text) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  let success = false;
+  try {
+    success = document.execCommand('copy');
+    const msg = success ? 'successful' : 'unsuccessful';
+    console.log(`Fallback: Copying text command was ${msg}`);
+  } catch (err) {
+    console.error('Fallback: Oops, unable to copy', err);
+  }
+
+  document.body.removeChild(textArea);
+  return success;
+}
+
+async function copyTextToClipboard(text) {
+  let success = false;
+  if (!navigator.clipboard) {
+    success = fallbackCopyTextToClipboard(text);
+  } else {
+    try {
+      await navigator.clipboard.writeText(text);
+      success = true;
+      console.log('Async: Copying to clipboard was successful!');
+    } catch (e) {
+      console.error('Async: Could not copy text: ', e);
+    }
+  }
+  return success;
+}
+
+copyTextToClipboard(textToCopy);</jsitem>
+			<jsitem location="inlinesnippet" name="requestBody" cachelocation="false">const params = arguments[0];
+
+// Store chat thread UI only model in a variable
+var chat = skuid.$M('Chat_Thread').dataMap;
+
+// Create array to store values
+var messages = [];
+
+// Loop through each row in the chat thread model
+Object.entries(chat).forEach(([key, value]) =&gt; {
+
+    // Push object into the array
+    messages.push({content:value.content, role:value.role});
+    
+}); 
+
+//Create response body
+let body = {
+  model: 'gpt-3.5-turbo',
+  messages: messages
+};
+
+return body</jsitem>
+			<jsitem location="inlinesnippet" name="responseHandler" cachelocation="false">const params = arguments[0],
+    message = arguments[0].response.body.choices[0].message;
+
+//Store chat thread UI only model in a variable
+var chat = skuid.$M('Chat_Thread');
+
+//Take the returned message and append it to the chat thread
+var addResponse = chat.createRow({
+    doAppend: true,
+    additionalConditions: [
+        { field: 'content', value: message.content },
+        { field: 'role', value: message.role }
+    ]
+});
+
+//Append an additional blank row to the chat thread
+var newChatRow = chat.createRow({
+    doAppend: true,
+    editModeForNewItems: true
+});</jsitem>
+			<jsitem location="inlinesnippet" name="log stuff" cachelocation="false">const params = arguments[0];
+console.log(params);</jsitem>
+		</javascript>
+		<css/>
+		<actionsequences>
+			<actionsequence id="aee32a79-2709-4838-bc13-946d116bad4c" label="Hotkey Submit" type="hotkey-triggered">
+				<description/>
+				<actions>
+					<action type="action-sequence" action-sequence-id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb"/>
+				</actions>
+				<hotkeys>
+					<hotkey modifiers="meta" key="enter"/>
+				</hotkeys>
+			</actionsequence>
+			<actionsequence id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb" label="Submit" type="reusable">
+				<actions>
+					<action type="blockUI" message="Generating response" showPlaceholder="true"/>
+					<action type="save">
+						<models>
+							<model>Chat_Thread</model>
+						</models>
+					</action>
+					<action type="requeryModels" behavior="standard">
+						<models>
+							<model>Create_Chat_Completion</model>
+						</models>
+					</action>
+				</actions>
+				<description/>
+			</actionsequence>
+			<actionsequence id="150525e3-d26d-4fe2-9266-6df782ae6547" label="Open GPT panel" type="reusable">
+				<description/>
+				<actions>
+					<action type="openSlidingPanel" openbehavior="open">
+						<skuid__slidingPanel uniqueid="sk-1pH2-24676" size="570px" origin="right" behavior="overlay">
+							<components>
+								<skuid__wrapper uniqueid="sk-1pH6-26721" styleSettingsVariant="2796b69f-7f78-4a4b-9274-643e35e39b6e" height="custom" heightCustom="calc(100vh - 172px)" overflowY="auto">
+									<components>
+										<skuid__header model="Tasks" title="GPT Workspace" uniqueid="sk-1ymP-123361" styleSettingsVariant="body">
+											<styles>
+												<spacing bottom="1.5"/>
+											</styles>
+										</skuid__header>
+										<skuid__deck columnGutter="0px" rowGutter="8px" model="Chat_Thread" showSaveCancel="false" verticalAlign="top" uniqueid="sk-1pH6-26722" pageSize="10" showListFooter="false" setMaxWidth="auto" minWidth="100%" styleSettingsVariant="cd2b1594-2370-4117-bec5-38349d1cfead">
+											<components>
+												<skuid__form showErrorsInline="false" model="Chat_Thread" uniqueid="sk-1pH6-26723" mode="edit" styleSettingsVariant="2d325ebe-543f-41b2-b0da-210be549e41f">
+													<columns>
+														<column>
+															<sections>
+																<section title="New Section" showHeading="false">
+																	<fields>
+																		<skuid__field id="content" showHelp="true" hideLabel="true" placeholder="Type here..." label="{{role_display}}"/>
+																	</fields>
+																</section>
+															</sections>
+														</column>
+													</columns>
+													<conditions/>
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__form>
+											</components>
+											<filtering enableSearch="false"/>
+											<sorting enable="false"/>
+											<styles>
+												<spacing/>
+											</styles>
+										</skuid__deck>
+									</components>
+									<styles>
+										<spacing/>
+									</styles>
+									<background/>
+								</skuid__wrapper>
+								<skuid__buttonSet model="Chat_Thread" uniqueid="sk-1pH9-28597" expandToFill="false" position="left">
+									<groups>
+										<skuid__buttonGroup uniqueId="sk-1pH9-28600">
+											<buttons>
+												<skuid__button label="Clear thread" uniqueId="sk-1pH9-28601" styleSettingsVariant="borderlessSlim">
+													<actions>
+														<action type="emptyModelData">
+															<models>
+																<model>Chat_Thread</model>
+															</models>
+														</action>
+														<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context"/>
+													</actions>
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__button>
+											</buttons>
+										</skuid__buttonGroup>
+									</groups>
+									<styles>
+										<spacing top="1.5"/>
+									</styles>
+								</skuid__buttonSet>
+								<skuid__wrapper uniqueid="sk-1ykZ-83586" styleSettingsVariant="2796b69f-7f78-4a4b-9274-643e35e39b6e">
+									<components>
+										<skuid__header model="Tasks" title="Context" uniqueid="sk-1yko-86615" styleSettingsVariant="body">
+											<styles>
+												<spacing bottom="1.5"/>
+											</styles>
+										</skuid__header>
+										<skuid__search uniqueid="sk-1yks-88239" tokenizeSearch="any" placeholder="Search accounts, contacts, opportunities" minWidth="100%" limit="5">
+											<resultActions/>
+											<objects>
+												<object datasource="salesforce" id="Account" headerIcon="sk-webicon-lightning-icons:company" headerName="Account" displayTemplate="{{Name}} - {{Industry}}" fields="Industry" orderBy="Name">
+													<resultActions>
+														<action label="Add to prompt">
+															<actions>
+																<action type="updateRow" fieldmodel="Chat_Thread" affectedrows="context">
+																	<updates>
+																		<update valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="{{$Model.Chat_Thread.data.0.content}} - {{Name}} in industry {{Industry}} with account description of {{Description}}"/>
+																	</updates>
+																</action>
+															</actions>
+														</action>
+													</resultActions>
+													<fields>
+														<field id="Description"/>
+														<field id="Type"/>
+														<field id="BillingAddress"/>
+														<field id="Name"/>
+														<field id="Industry"/>
+													</fields>
+												</object>
+												<object datasource="salesforce" id="Contact" headerIcon="sk-webicon-lightning-icons:user" displayTemplate="{{Name}} - {{Title}} - {{Account.Name}}" headerName="Contact" fields="Title" fieldtargetobjects="Account">
+													<fields>
+														<field id="Account.Name"/>
+														<field id="AccountId"/>
+														<field id="Name"/>
+														<field id="Title"/>
+													</fields>
+													<resultActions>
+														<action label="Add to prompt">
+															<actions>
+																<action type="updateRow" fieldmodel="Chat_Thread" affectedrows="context">
+																	<updates>
+																		<update valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="{{$Model.Chat_Thread.data.0.content}} - {{Name}}, {{Title}}, from company {{Account.Name}}"/>
+																	</updates>
+																</action>
+															</actions>
+														</action>
+													</resultActions>
+												</object>
+											</objects>
+										</skuid__search>
+									</components>
+									<styles>
+										<spacing top="1.5"/>
+									</styles>
+									<background/>
+								</skuid__wrapper>
+								<skuid__buttonSet model="Chat_Thread" uniqueid="sk-1zZD-51583" expandToFill="false" position="left">
+									<groups>
+										<skuid__buttonGroup uniqueId="sk-1zZD-51584" iconPosition="left">
+											<buttons>
+												<skuid__button label="Use result" uniqueId="sk-1zZD-51585" styleSettingsVariant="primary" icon="sk-webicon-material-icons:content_copy">
+													<actions>
+														<action type="custom" snippet="copy email to clipboard"/>
+													</actions>
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and"/>
+													<enableConditions logictype="and">
+														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="Chat_Thread" sourcetype="modelproperty" sourceproperty="data.length" operator="gt" value="1"/>
+													</enableConditions>
+													<styleVariantConditions/>
+												</skuid__button>
+											</buttons>
+										</skuid__buttonGroup>
+										<skuid__buttonGroup uniqueId="sk-1zZD-51586">
+											<buttons>
+												<skuid__button label="Re-generate response" uniqueId="sk-1zZD-51587">
+													<actions>
+														<action type="blockUI" message="Re-generating response" showPlaceholder="true"/>
+														<action type="cancel">
+															<models>
+																<model>Chat_Thread</model>
+															</models>
+														</action>
+														<action type="requeryModels" behavior="standard">
+															<models>
+																<model>Create_Chat_Completion</model>
+															</models>
+														</action>
+													</actions>
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and"/>
+													<enableConditions logictype="and">
+														<condition type="blank" operator="!=" fieldmodel="Chat_Thread" sourcetype="fieldvalue" field="content" value="null" enclosevalueinquotes="false"/>
+													</enableConditions>
+													<styleVariantConditions/>
+													<hotkeys>
+														<hotkey key="enter " ignoretextinputs="false" modifiers="meta"/>
+													</hotkeys>
+												</skuid__button>
+											</buttons>
+										</skuid__buttonGroup>
+										<skuid__buttonGroup uniqueId="sk-1zZf-57555">
+											<buttons>
+												<skuid__button label="Add to Knowledge" uniqueId="sk-1zZf-57556"/>
+											</buttons>
+										</skuid__buttonGroup>
+									</groups>
+									<styles>
+										<spacing top="1.5"/>
+									</styles>
+								</skuid__buttonSet>
+							</components>
+						</skuid__slidingPanel>
+					</action>
+				</actions>
+			</actionsequence>
+			<actionsequence id="d67abeac-4979-481c-a697-b5de3aaff045" label="GPT Action Menu" type="reusable">
+				<actions>
+					<action type="updateRow" fieldmodel="UIOnly" affectedrows="context">
+						<updates>
+							<update valuesource="fieldvalue" field="input_fieldValue" enclosevalueinquotes="true" value="{{$Input.fieldValue}}"/>
+						</updates>
+					</action>
+					<action type="toggleMenu" componentId="mouse">
+						<optionGroups>
+							<optionGroup label="Generate">
+								<options>
+									<option label="Email response" icon="sk-webicon-material-icons:flash_on">
+										<actions>
+											<action type="emptyModelData">
+												<models>
+													<model>Chat_Thread</model>
+												</models>
+											</action>
+											<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+												<defaults>
+													<default valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="Generate a short email response to this email: {{$Model.UIOnly.data.0.input_fieldValue}}"/>
+												</defaults>
+											</action>
+											<action type="action-sequence" action-sequence-id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb"/>
+											<action type="action-sequence" action-sequence-id="150525e3-d26d-4fe2-9266-6df782ae6547"/>
+										</actions>
+									</option>
+									<option label="Counter offer" icon="sk-webicon-material-icons:flash_on">
+										<actions>
+											<action type="emptyModelData">
+												<models>
+													<model>Chat_Thread</model>
+												</models>
+											</action>
+											<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+												<defaults>
+													<default valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="Create a counter offer for this email: {{$Model.UIOnly.data.0.input_fieldValue}}"/>
+												</defaults>
+											</action>
+											<action type="action-sequence" action-sequence-id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb"/>
+											<action type="action-sequence" action-sequence-id="150525e3-d26d-4fe2-9266-6df782ae6547"/>
+										</actions>
+									</option>
+									<option label="Follow up" icon="sk-webicon-material-icons:flash_on">
+										<actions>
+											<action type="emptyModelData">
+												<models>
+													<model>Chat_Thread</model>
+												</models>
+											</action>
+											<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+												<defaults>
+													<default valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="Write a brief follow up email in response to: {{$Model.UIOnly.data.0.input_fieldValue}}"/>
+												</defaults>
+											</action>
+											<action type="action-sequence" action-sequence-id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb"/>
+											<action type="action-sequence" action-sequence-id="150525e3-d26d-4fe2-9266-6df782ae6547"/>
+										</actions>
+									</option>
+									<option label="Agenda outline" icon="sk-webicon-material-icons:flash_on">
+										<actions>
+											<action type="emptyModelData">
+												<models>
+													<model>Chat_Thread</model>
+												</models>
+											</action>
+											<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+												<defaults>
+													<default valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="Create a brief agenda outline for this topic: {{$Model.UIOnly.data.0.input_fieldValue}}"/>
+												</defaults>
+											</action>
+											<action type="action-sequence" action-sequence-id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb"/>
+											<action type="action-sequence" action-sequence-id="150525e3-d26d-4fe2-9266-6df782ae6547"/>
+										</actions>
+									</option>
+								</options>
+							</optionGroup>
+							<optionGroup label="Edit">
+								<options>
+									<option label="Make corrections" icon="sk-webicon-material-icons:flash_on">
+										<actions>
+											<action type="emptyModelData">
+												<models>
+													<model>Chat_Thread</model>
+												</models>
+											</action>
+											<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+												<defaults>
+													<default valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="Correct this to standard English: {{$Model.UIOnly.data.0.input_fieldValue}}"/>
+												</defaults>
+											</action>
+											<action type="blockUI" styleSettingsVariant="dark" message="Generating response" showPlaceholder="true"/>
+											<action type="save">
+												<models>
+													<model>Chat_Thread</model>
+												</models>
+											</action>
+											<action type="requeryModels" behavior="standard">
+												<models>
+													<model>Create_Chat_Completion</model>
+												</models>
+											</action>
+											<action type="blockUI" styleSettingsVariant="dark" message="Done, now fixing your typos.." showPlaceholder="true"/>
+											<action type="updateRow" fieldmodel="Task_SelectedRecord" affectedrows="all">
+												<updates>
+													<update valuesource="fieldvalue" field="Description" enclosevalueinquotes="true" value="{{$Model.Chat_Thread.data.1.content}}"/>
+												</updates>
+											</action>
+											<action type="save">
+												<models>
+													<model>Task_SelectedRecord</model>
+												</models>
+											</action>
+											<action type="requeryModels" behavior="standard">
+												<models>
+													<model>Tasks</model>
+												</models>
+											</action>
+											<action type="unblockUI"/>
+										</actions>
+									</option>
+									<option label="Increase urgency" icon="sk-webicon-material-icons:flash_on">
+										<actions>
+											<action type="emptyModelData">
+												<models>
+													<model>Chat_Thread</model>
+												</models>
+											</action>
+											<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+												<defaults>
+													<default valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="Help me increase the urgency for this email to motivate recipient to act on it: {{$Model.UIOnly.data.0.input_fieldValue}}"/>
+												</defaults>
+											</action>
+											<action type="action-sequence" action-sequence-id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb"/>
+											<action type="action-sequence" action-sequence-id="150525e3-d26d-4fe2-9266-6df782ae6547"/>
+										</actions>
+									</option>
+									<option label="Personalize message" icon="sk-webicon-material-icons:more_horiz">
+										<actions>
+											<action type="emptyModelData">
+												<models>
+													<model>Chat_Thread</model>
+												</models>
+											</action>
+											<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+												<defaults>
+													<default valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="Personalize this message: {{$Model.UIOnly.data.0.input_fieldValue}} -- for this person with the follow info: "/>
+												</defaults>
+											</action>
+											<action type="action-sequence" action-sequence-id="150525e3-d26d-4fe2-9266-6df782ae6547"/>
+										</actions>
+									</option>
+								</options>
+							</optionGroup>
+							<optionGroup label="Analyze">
+								<options>
+									<option label="Sentiment Analysis" icon="sk-webicon-material-icons:flash_on">
+										<actions>
+											<action type="emptyModelData">
+												<models>
+													<model>Chat_Thread</model>
+												</models>
+											</action>
+											<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+												<defaults>
+													<default valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="Classify the sentiment in this text: {{$Model.UIOnly.data.0.input_fieldValue}}"/>
+												</defaults>
+											</action>
+											<action type="action-sequence" action-sequence-id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb"/>
+											<action type="action-sequence" action-sequence-id="150525e3-d26d-4fe2-9266-6df782ae6547"/>
+										</actions>
+									</option>
+									<option label="Summarize into X sentences" icon="sk-webicon-material-icons:more_horiz">
+										<actions>
+											<action type="emptyModelData">
+												<models>
+													<model>Chat_Thread</model>
+												</models>
+											</action>
+											<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+												<defaults>
+													<default valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="Summarize this text into &lt;number&gt; sentences: {{$Model.UIOnly.data.0.input_fieldValue}}"/>
+												</defaults>
+											</action>
+											<action type="action-sequence" action-sequence-id="150525e3-d26d-4fe2-9266-6df782ae6547"/>
+										</actions>
+									</option>
+									<option label="Extract" icon="sk-webicon-material-icons:flash_on">
+										<actions>
+											<action type="emptyModelData">
+												<models>
+													<model>Chat_Thread</model>
+												</models>
+											</action>
+											<action type="createRow" model="Chat_Thread" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+												<defaults>
+													<default valuesource="fieldvalue" field="content" enclosevalueinquotes="true" value="Extract any contact or company info from this text: {{$Model.UIOnly.data.0.input_fieldValue}}"/>
+												</defaults>
+											</action>
+											<action type="action-sequence" action-sequence-id="e82d4e26-d651-4b6e-84ec-c6f5fc137edb"/>
+											<action type="action-sequence" action-sequence-id="150525e3-d26d-4fe2-9266-6df782ae6547"/>
+										</actions>
+									</option>
+								</options>
+							</optionGroup>
+						</optionGroups>
+					</action>
+					<action type="updateCondition" model="Task_SelectedRecord" behavior="set" condition="Id" valuesource="fieldvalue" value="{{Id}}"/>
+					<action type="requeryModels" behavior="standard">
+						<models>
+							<model>Task_SelectedRecord</model>
+						</models>
+					</action>
+				</actions>
+				<description/>
+				<inputs>
+					<input type="value" name="fieldValue"/>
+					<input type="value" name="sentenceCount"/>
+					<input type="model" name="Model_In_Context"/>
+					<input type="model-field" name="Field_In_Context" model-source="Model_In_Context"/>
+				</inputs>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<interactions/>
+</skuid__page>
