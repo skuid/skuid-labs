@@ -30,7 +30,7 @@ Download this [Design System file](../openAI/ChatGPT_Demo.designsystem?raw=true)
 In the Skuid page, after user submits a URL, it'll send the URL to ChatPDF API which then returns an id to reference for the chat session. See [this doc](../openAI/draftAnswers/Readme.MD) that explains the configuration for chatGPT interface in Skuid.
 
 ## Notes
-In the page composer, if you see this error "Error retrieving metadata for model(s) associated with data source 'ChatPDF'. Please check models' properties to ensure they are set correctly. Error connecting to REST data source at URL "https://api.chatpdf.com/v1/sources/add-url": Could not read PDF", you can safely dismiss it as it's related to the metadata call we make automatically on REST models.
+In the page composer, if you see this error `Error retrieving metadata for model(s) associated with data source 'ChatPDF'. Please check models' properties to ensure they are set correctly. Error connecting to REST data source at URL "https://api.chatpdf.com/v1/sources/add-url": Could not read PDF`, you can safely dismiss it as it's related to the metadata call we make automatically on REST models.
 
 ChatPDF has a few limitations: 
 - Only supports chat with one PDF at a time. However - Skuid could potentially provide a single frontend experience that submits a request to multiple PDF chat bots.
