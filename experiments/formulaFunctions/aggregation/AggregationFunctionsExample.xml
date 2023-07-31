@@ -65,7 +65,7 @@
 		<skuid__wrapper uniqueid="sk-1q8W-33550">
 			<components>
 				<skuid__header model="uiKPIs" title="KPIs" uniqueid="sk-1q8b-36123"/>
-				<skuid__text contents="&lt;span style=&quot;font-size:16px;&quot;&gt;These KPIs are generated from the data in the table below using custom aggregate functions .&lt;/span&gt;" uniqueid="sk-1q8X-34573"/>
+				<skuid__text contents="&lt;span style=&quot;font-size:16px;&quot;&gt;These KPIs are generated from the data in the table below using custom aggregate functions.&lt;/span&gt;" uniqueid="sk-1q8X-34573"/>
 			</components>
 			<styles>
 				<spacing top="2" right="2" bottom="2" left="1.5"/>
