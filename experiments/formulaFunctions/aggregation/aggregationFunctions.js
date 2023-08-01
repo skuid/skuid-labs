@@ -1,6 +1,5 @@
-// This was written for Skuid 11.X, and has not been tested in other version
 // Only tested in Chrome on Win & Mac
-// Uses 2 unsupported Skuid APIs (skuid.aggregations and skuid.utils.getObjectProperty)
+// Uses 1 unsupported Skuid API (skuid.aggregations)
 
 // general function that does the "if" in mathif to filter model to records where iffield=ifvalue
 function mathAggIf(mathtype, modelname, fieldname, iffield, ifvalue, blanks) {
