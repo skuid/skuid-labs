@@ -77,7 +77,7 @@
 						<field id="Subject" uniqueid="fi-1pHP-40790"/>
 						<field type="COMBO" label="Description (generated)" template="{{Description}}" redirectType="datasourcedefault" uniqueid="fi-1pIC-54772">
 							<interactions>
-								<interaction type="rightclick">
+								<interaction type="rightclick" suppressContextMenu="true">
 									<action type="action-sequence" action-sequence-id="d67abeac-4979-481c-a697-b5de3aaff045" input-TaskField="Description" input-Field_In_Context="Description">
 										<inputs>
 											<input name="fieldValue" value="{{Description}}"/>
@@ -258,6 +258,30 @@ console.log(params);</jsitem>
 																<section title="New Section" showHeading="false">
 																	<fields>
 																		<skuid__field id="content" showHelp="true" hideLabel="true" placeholder="Type here..." label="{{role_display}}"/>
+																		<skuid__field type="CUSTOM_BUTTON_GROUP" label="Buttons" uniqueId="sk-1211-33689" hideLabel="true">
+																			<skuid__buttonGroup uniqueId="sk-1211-33798">
+																				<buttons>
+																					<skuid__button label="Use Response" uniqueId="sk-1211-33799" icon="sk-webicon-ink:copy" styleSettingsVariant="primary">
+																						<actions/>
+																						<styles>
+																							<spacing/>
+																						</styles>
+																						<renderConditions logictype="and"/>
+																						<enableConditions/>
+																						<styleVariantConditions/>
+																						<hotkeys/>
+																					</skuid__button>
+																				</buttons>
+																			</skuid__buttonGroup>
+																			<validations>
+																				<requiredValidation type="required" enable="true"/>
+																			</validations>
+																			<renderConditions logictype="and" onhidedatabehavior="keep">
+																				<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="true" fieldmodel="Chat_Thread" sourcetype="fieldvalue" field="role_display" value="Assistant"/>
+																			</renderConditions>
+																			<enableConditions/>
+																			<styleVariantConditions/>
+																		</skuid__field>
 																	</fields>
 																</section>
 															</sections>
@@ -364,23 +388,6 @@ console.log(params);</jsitem>
 								</skuid__wrapper>
 								<skuid__buttonSet model="Chat_Thread" uniqueid="sk-1zZD-51583" expandToFill="false" position="left">
 									<groups>
-										<skuid__buttonGroup uniqueId="sk-1zZD-51584" iconPosition="left">
-											<buttons>
-												<skuid__button label="Use result" uniqueId="sk-1zZD-51585" styleSettingsVariant="primary" icon="sk-webicon-material-icons:content_copy">
-													<actions>
-														<action type="custom" snippet="copy email to clipboard"/>
-													</actions>
-													<styles>
-														<spacing/>
-													</styles>
-													<renderConditions logictype="and"/>
-													<enableConditions logictype="and">
-														<condition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="Chat_Thread" sourcetype="modelproperty" sourceproperty="data.length" operator="gt" value="1"/>
-													</enableConditions>
-													<styleVariantConditions/>
-												</skuid__button>
-											</buttons>
-										</skuid__buttonGroup>
 										<skuid__buttonGroup uniqueId="sk-1zZD-51586">
 											<buttons>
 												<skuid__button label="Re-generate response" uniqueId="sk-1zZD-51587">
