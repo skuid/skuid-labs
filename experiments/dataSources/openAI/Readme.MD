@@ -53,6 +53,7 @@ Follow instructions in each sample page directory to import pages and/or design 
 
 
 ## Directory of examples
+* [Basic Chat Experience] (ChatGPT_Demo.xml)
 * [Ask ChatGPT to draft field data](draftAnswers)
 * [Menu of actions powered by GPT](menuWithGPTActions)
 * [Create sample data](createSampleData)
