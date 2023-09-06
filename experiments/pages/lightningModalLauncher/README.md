@@ -27,8 +27,8 @@ The **showScreenFlowModal** component picks up the event published by Skuid for 
 1. Open the Salesforce Developer Console
       a. Click File/New/Lightning Component
             i. Name the component “showScreenFlowModal”
-      b. Paste the code from the “showScreenFlowModal” file
-      c. Paste the code from the "showScreenFlowModal_controller" file into the “Controller” portion
+      b. Paste the code from the “[showScreenFlowModal]([url](https://github.com/skuid/skuid-labs/blob/improve_screenflow/experiments/pages/lightningModalLauncher/showScreenFlowModal))” file
+      c. Paste the code from the "[showScreenFlowModal_controller]([url](https://github.com/skuid/skuid-labs/blob/improve_screenflow/experiments/pages/lightningModalLauncher/showScreenFlowModal_controller))" file into the “Controller” portion
 
 2. Open Lightning App Builder
       a. Search for “showScreenFlowModal” and drag the custom component onto your lightning page (doesn’t matter location) where you are going to have your Skuid page that launches the Flow
@@ -43,7 +43,7 @@ The **showScreenFlowModal** component picks up the event published by Skuid for 
             i. Add the “Name” field
             ii. Add a model condition
                1. FlowInterview records where “Name” is Single specified value (leave the value blank). Filterable default on.
-      c. Create a new JS snippet (Generic JS snippet) named “callFlow” and paste the code from the callFlow file
+      c. Create a new JS snippet (Generic JS snippet) named “callFlow” and paste the code from the [callFlow]([url](https://github.com/skuid/skuid-labs/blob/improve_screenflow/experiments/pages/lightningModalLauncher/callFlow)) file
 
 4. Create a new Reusable Action Sequence named “CallFlow”
       a. Add a “Run JavaScript snippet” action and run the snippet “callFlow”
