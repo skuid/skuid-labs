@@ -25,49 +25,57 @@ The **showScreenFlowModal** component picks up the event published by Skuid for 
 
 
 1. Open the Salesforce Developer Console
-      a. Click File/New/Lightning Component
-            i. Name the component “showScreenFlowModal”
-      b. Paste the code from the “[showScreenFlowModal]([url](https://github.com/skuid/skuid-labs/blob/improve_screenflow/experiments/pages/lightningModalLauncher/showScreenFlowModal))” file
-      c. Paste the code from the "[showScreenFlowModal_controller]([url](https://github.com/skuid/skuid-labs/blob/improve_screenflow/experiments/pages/lightningModalLauncher/showScreenFlowModal_controller))" file into the “Controller” portion
+
+   - Click File/New/Lightning Component
+   - Name the component “showScreenFlowModal”
+   - Paste the code from the “[showScreenFlowModal](/showScreenFlowModal)” file
+   - Paste the code from the "[showScreenFlowModal_controller](/showScreenFlowModal_controller)" file into the “Controller” portion
 
 2. Open Lightning App Builder
-      a. Search for “showScreenFlowModal” and drag the custom component onto your lightning page (doesn’t matter location) where you are going to have your Skuid page that launches the Flow
+
+   - Search for “showScreenFlowModal” and drag the custom component onto your lightning page (doesn’t matter location) where you are going to have your Skuid page that launches the Flow
    
-4. Open Skuid App Composer
-      a. Create a new UI-only model named “FlowParams”
-            i. Add three UI-only text fields
-               1. name
-               2. type
-               3. value
-      b. Create a new model named “Flow” on the FlowInterview object and adjust the model to only return 1 record (default is 20)
-            i. Add the “Name” field
-            ii. Add a model condition
-               1. FlowInterview records where “Name” is Single specified value (leave the value blank). Filterable default on.
-      c. Create a new JS snippet (Generic JS snippet) named “callFlow” and paste the code from the [callFlow]([url](https://github.com/skuid/skuid-labs/blob/improve_screenflow/experiments/pages/lightningModalLauncher/callFlow)) file
+3. Open Skuid App Composer
+   - Create a new UI-only model named “FlowParams”
+     - Add three UI-only text fields
+       - name
+       - type
+       - value
+        
+   - Create a new model named “Flow” on the FlowInterview object and adjust the model to only return 1 record (default is 20)
+     - Add the “Name” field
+     - Add a model condition FlowInterview records where “Name” is Single specified value (leave the value blank). Filterable default on.
+
+   - Create a new JS snippet (Generic JS snippet) named “callFlow” and paste the code from the [callFlow](/callFlow) file
 
 4. Create a new Reusable Action Sequence named “CallFlow”
-      a. Add a “Run JavaScript snippet” action and run the snippet “callFlow”
-      b. Add two inputs
-            i. Name: flowName Type: Value
-            ii. Name: model Type: Model
+
+   - Add a “Run JavaScript snippet” action and run the snippet “callFlow”
+   - Add two inputs
+     - Name: flowName Type: Value
+     - Name: model Type: Model
+
 5. Add an action sequence to your Skuid page wherever you want to call the flow (e.g. From a button component, calendar interaction, etc.)
-      a. Add the following actions
-            i. Remove all rows in model: FlowParams
-            ii. Create new rows in FlowParams (this is where you define what params you want to pass into the Flow)
-                  1. name = inputStartDateTime (for this example from the screenshot). You need to navigate to the Lightning Screen Flow you want to call and then open the “Screen” element (see screenshot). For any field you want to populate, click on the field and then copy the “Default value” (not including the “{!” or “}”. Go back to your action sequence and Paste that value into your field value (see second screenshot)
-<img width="1219" alt="screenshot of inputStartDateTime" src="https://github.com/skuid/skuid-labs/assets/63868385/79a3ea4c-ba6e-4cce-8ec8-54157a9a2957">
 
-<img width="1063" alt="Screenshot 2023-09-06 at 11 30 30 AM" src="https://github.com/skuid/skuid-labs/assets/63868385/200333fc-fb75-4145-ada1-76215696cff0">
+   - Add the following actions
+     - Remove all rows in model: FlowParams
+     - Create new rows in FlowParams (this is where you define what params you want to pass into the Flow)
+       - name = inputStartDateTime (for this example from the screenshot). You need to navigate to the Lightning Screen Flow you want to call and then open the “Screen” element (see screenshot). For any field you want to populate, click on the field and then copy the “Default value” (not including the “{!” or “}”. Go back to your action sequence and Paste that value into your field value (see second screenshot)
+      - type = the metadata type for the field you are passing in (e.g. DateTime, String, etc.)
+      - value = use merge, field from another model etc.
+    - Repeat the above steps for each parameter you need to pass into the flow
+    - After you have created rows for each parameter you want to pass into your flow, add a “Run action sequence” 
+      - Action sequence: “CallFlow”
+      - flowName: Paste the api name of the Lightning flow
+      - model: FlowParams
 
-                  2. type = the metadata type for the field you are passing in (e.g. DateTime, String, etc.)
-                  3. value = use merge, field from another model etc.
-            iii. Repeat the above steps for each parameter you need to pass into the flow
-            iv. After you have created rows for each parameter you want to pass into your flow, add a “Run action sequence”
-                  1. Action sequence: “CallFlow”
-                  2. flowName: Past the api name of the Lightning flow
-                  3. model: FlowParams
+<img width="600" alt="screenshot of inputStartDateTime" src="https://github.com/skuid/skuid-labs/assets/63868385/79a3ea4c-ba6e-4cce-8ec8-54157a9a2957">
+
+<img width="600" alt="Screenshot 2023-09-06 at 11 30 30 AM" src="https://github.com/skuid/skuid-labs/assets/63868385/200333fc-fb75-4145-ada1-76215696cff0">
+
+
 6. Optional - after your Flow is finished, if you want to run any actions (e.g. re-query a model etc.), you can create an Event-triggered sequence
-      a. Sequence name: whatever you want
-      b. Event name: flowModalClosed
-      c. Listen for events published from: All active pages and Lightning components
+   - Sequence name: whatever you want
+   - Event name: flowModalClosed
+   - Listen for events published from: All active pages and Lightning components
 
