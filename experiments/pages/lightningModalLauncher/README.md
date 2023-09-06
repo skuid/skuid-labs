@@ -27,77 +27,13 @@ The **showScreenFlowModal** component picks up the event published by Skuid for 
 1. Open the Salesforce Developer Console
       a. Click File/New/Lightning Component
             i. Name the component “showScreenFlowModal”
-      b. Paste the following code into the “Component” portion:
-
-<aura:component implements="flexipage:availableForAllPageTypes" access="global" >
-    <aura:attribute name="showModal" type="Boolean" default="false" access="private" />
-    <aura:attribute name="showCancel" type="Boolean" default="true" access="private" />
-    <aura:handler event="skuid:event" action="{!c.handleShowModalFlowEvent}" />
-
- <aura:if isTrue="{!v.showModal}">
-     <section tabindex="-1" role="dialog" aria-modal="true" class="slds-modal slds-fade-in-open">
-         <div class="slds-modal__container">
-             <header class="slds-modal__header">
-                 <aura:if isTrue="{!v.showCancel}">
-                     <lightning:buttonIcon iconName="utility:close"
-                                           onclick="{! c.handleClose }"
-                                           alternativeText="close"
-                                           variant="bare-inverse"
-                                           class="slds-modal__close"/>
-                 </aura:if>
-             </header>
-             <div class="slds-modal__content">
-                 <lightning:flow aura:id="flow" onstatuschange="{!c.handleFlowStatusChange}" />
-             </div>
-             <footer class="slds-modal__footer">
-                 <div class="slds-align_absolute-center">
-                     <aura:if isTrue="{!v.showCancel}">
-                         <lightning:button variant="neutral"
-                                           label="Cancel"
-                                           title="Cancel"
-                                           onclick="{! c.handleClose }"/>
-                     </aura:if>
-                 </div>
-             </footer>
-         </div>
-     </section>
-     <div class="slds-backdrop slds-backdrop_open"></div>
- </aura:if>
-</aura:component>
-      
-   c. Paste the following code into the “Controller” portion:
-
-({
-	handleShowModalFlowEvent: function(component, event, helper) {
-        let name = event.getParam("name");
-        if (name != 'showModalFlow') return;
-        let data = event.getParam("data");
-
-        component.set("v.showModal", true);
-        let flow = component.find("flow");
-        flow.startFlow(data.flowName, data && data.params ? data.params : null);
-    },
-    handleFlowStatusChange : function(component, event, helper) {
-        if (event.getParam('status') === 'FINISHED') {
-            var action = component.get("c.refreshPage");
-        	$A.enqueueAction(action);
-            component.set("v.showModal", false);
-        }
-
-    },
-    handleClose: function (component, event, helper) {
-        component.set("v.showModal", false);
-    },
-  	refreshPage: function(component, event, helper) {
-      	var evt = $A.get("e.skuid:event");
-      	evt.setParams({"name": "flowModalClosed"});
-      	evt.fire();
-  	}
-})
+      b. Paste the code from the “showScreenFlowModal” file
+      c. Paste the code from the "showScreenFlowModal_controller" file into the “Controller” portion
 
 2. Open Lightning App Builder
       a. Search for “showScreenFlowModal” and drag the custom component onto your lightning page (doesn’t matter location) where you are going to have your Skuid page that launches the Flow
-3. Open Skuid App Composer
+   
+4. Open Skuid App Composer
       a. Create a new UI-only model named “FlowParams”
             i. Add three UI-only text fields
                1. name
@@ -107,49 +43,7 @@ The **showScreenFlowModal** component picks up the event published by Skuid for 
             i. Add the “Name” field
             ii. Add a model condition
                1. FlowInterview records where “Name” is Single specified value (leave the value blank). Filterable default on.
-      c. Create a new JS snippet (Generic JS snippet) named “callFlow” and paste the following code:
-
-const params = arguments[0],
-   eventName = "showModalFlow",
-   flowName = params.$Input.flowName,
-   model = skuid.$M(params.$Input.model);
-console.log(this, skuid, params);
-
-
-// See if there is a global application event with this name
-let auraEvt = window.$A.get("e." + eventName),
-   skuidAuraEvt = window.$A.get("e.skuid:event"),
-   paramsObject = {
-       flowName: flowName,
-       params: model.getRows()
-   };
-
-
-// If there is a matching global application event with this name,
-// then fire that event, with each Skuid Event parameter
-// being mapped directly to that Event parameter.
-if (auraEvt) {
-   if (paramsObject) {
-       auraEvt.setParams(paramsObject);
-   }
-   auraEvt.fire();
-}
-
-
-skuidAuraEvt.setParams({
-   "name": eventName,
-   "source": "skuid",
-});
-
-
-// ALSO fire a generic "Skuid Event",
-// where all of the parameters are serialized to JSON
-if (paramsObject) {
-   skuidAuraEvt.setParam("data", paramsObject);
-}
-
-
-skuidAuraEvt.fire();
+      c. Create a new JS snippet (Generic JS snippet) named “callFlow” and paste the code from the callFlow file
 
 4. Create a new Reusable Action Sequence named “CallFlow”
       a. Add a “Run JavaScript snippet” action and run the snippet “callFlow”
