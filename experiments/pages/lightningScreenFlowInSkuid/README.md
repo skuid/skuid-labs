@@ -28,8 +28,8 @@ The **showScreenFlowModal** component picks up the event published by Skuid for 
 
    - Click File/New/Lightning Component
    - Name the component “showScreenFlowModal”
-   - Paste the code from the “[showScreenFlowModal](/showScreenFlowModal)” file
-   - Paste the code from the "[showScreenFlowModal_controller](/showScreenFlowModal_controller)" file into the “Controller” portion
+   - Paste the code from the “[showScreenFlowModal](showScreenFlowModal)” file
+   - Paste the code from the "[showScreenFlowModal_controller](showScreenFlowModal_controller)" file into the “Controller” portion
 
 2. Open Lightning App Builder
 
@@ -46,7 +46,7 @@ The **showScreenFlowModal** component picks up the event published by Skuid for 
      - Add the “Name” field
      - Add a model condition FlowInterview records where “Name” is Single specified value (leave the value blank). Filterable default on.
 
-   - Create a new JS snippet (Generic JS snippet) named “callFlow” and paste the code from the [callFlow](/callFlow) file
+   - Create a new JS snippet (Generic JS snippet) named “callFlow” and paste the code from the [callFlow](callFlow) file
 
 4. Create a new Reusable Action Sequence named “CallFlow”
 
