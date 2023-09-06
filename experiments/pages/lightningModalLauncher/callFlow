@@ -1,0 +1,41 @@
+const params = arguments[0],
+   eventName = "showModalFlow",
+   flowName = params.$Input.flowName,
+   model = skuid.$M(params.$Input.model);
+console.log(this, skuid, params);
+
+
+// See if there is a global application event with this name
+let auraEvt = window.$A.get("e." + eventName),
+   skuidAuraEvt = window.$A.get("e.skuid:event"),
+   paramsObject = {
+       flowName: flowName,
+       params: model.getRows()
+   };
+
+
+// If there is a matching global application event with this name,
+// then fire that event, with each Skuid Event parameter
+// being mapped directly to that Event parameter.
+if (auraEvt) {
+   if (paramsObject) {
+       auraEvt.setParams(paramsObject);
+   }
+   auraEvt.fire();
+}
+
+
+skuidAuraEvt.setParams({
+   "name": eventName,
+   "source": "skuid",
+});
+
+
+// ALSO fire a generic "Skuid Event",
+// where all of the parameters are serialized to JSON
+if (paramsObject) {
+   skuidAuraEvt.setParam("data", paramsObject);
+}
+
+
+skuidAuraEvt.fire();
