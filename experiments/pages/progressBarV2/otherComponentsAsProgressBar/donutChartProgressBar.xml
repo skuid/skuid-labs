@@ -1,0 +1,383 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="SliderProgressBar">
+	<models>
+		<model id="DemoData" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="Task1" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="true"/>
+				<field id="Task2" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Task3" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Task4" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Task5" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="progress" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="3" scale="0">
+					<formula>IF({{Task1}}, 20, 0)+IF({{Task2}}, 20, 0)+IF({{Task3}}, 20, 0)+IF({{Task4}}, 20, 0)+IF({{Task5}}, 20, 0)</formula>
+				</field>
+			</fields>
+			<conditions/>
+			<actions>
+				<action>
+					<actions>
+						<action type="emptyModelData">
+							<models>
+								<model>ProgressBar</model>
+							</models>
+						</action>
+						<action type="createRow" model="ProgressBar" appendorprepend="append" defaultmodefornewitems="edit" affectedrows="context">
+							<defaults>
+								<default valuesource="modelmerge" field="PercentComplete" enclosevalueinquotes="false" sourcemodel="DemoData" sourcefield="progress"/>
+								<default valuesource="fieldvalue" field="IsComplete" enclosevalueinquotes="false" value="true"/>
+							</defaults>
+						</action>
+						<action type="createRow" model="ProgressBar" appendorprepend="append" defaultmodefornewitems="edit" affectedrows="context">
+							<defaults>
+								<default valuesource="formula" field="PercentComplete" enclosevalueinquotes="false">
+									<formula>100-{{PercentComplete}}</formula>
+								</default>
+								<default valuesource="fieldvalue" field="IsComplete" enclosevalueinquotes="false" value="false"/>
+							</defaults>
+						</action>
+						<action type="save">
+							<models>
+								<model>ProgressBar</model>
+							</models>
+						</action>
+					</actions>
+					<events>
+						<event>row.updated</event>
+					</events>
+					<fields>
+						<field>progress</field>
+					</fields>
+				</action>
+			</actions>
+		</model>
+		<model id="ProgressBar" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="PercentComplete" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="100" precision="3" scale="0"/>
+				<field id="IsComplete" displaytype="PICKLIST" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false" picklistsource="manual" returntype="BOOLEAN">
+					<picklistentries>
+						<entry value="true" label="Complete"/>
+						<entry value="false" label="Incomplete"/>
+					</picklistentries>
+				</field>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__wrapper uniqueid="sk-1m3R-75748">
+			<components>
+				<skuid__header title="Progress Bar using Donut Chart 🍩" uniqueid="sk-1m3E-72919" separator="false" subtitle="Skuid Sample Page">
+					<styles>
+						<spacing top="2" right="2" bottom="2" left="2"/>
+					</styles>
+				</skuid__header>
+			</components>
+			<styles>
+				<spacing/>
+			</styles>
+			<background type="color" color="#f6f8f9"/>
+		</skuid__wrapper>
+		<skuid__grid uniqueid="sk-1ctS-13971" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+			<divisions>
+				<division alignSelf="auto" minWidth="0px" ratio="1">
+					<components/>
+				</division>
+				<division alignSelf="auto" minWidth="600px" ratio="1">
+					<components>
+						<skuid__table allowColumnFreezing="dragDrop" model="DemoData" uniqueid="sk-1cy5-114019" mode="edit" showSaveCancel="false" title="Sample Data" pageSize="10" showListHeader="false" showListFooter="false">
+							<fields>
+								<field id="Task1" uniqueid="fi-1cy5-114814" displayAs="SWITCH"/>
+								<field id="Task2" uniqueid="fi-1cy5-114815" displayAs="SWITCH"/>
+								<field id="Task3" uniqueid="fi-1cy5-114816" displayAs="SWITCH"/>
+								<field id="Task4" uniqueid="fi-1cy5-114817" displayAs="SWITCH"/>
+								<field id="Task5" uniqueid="fi-1cy5-114818" displayAs="SWITCH"/>
+								<field id="progress" horizontalAlignment="right" uniqueid="fi-1cy5-114819"/>
+								<field type="CUSTOM_BUTTON_GROUP" uniqueid="fi-1mEN-18849">
+									<skuid__buttonGroup uniqueId="sk-1l-w-29699">
+										<buttons>
+											<skuid__button label="Reset" uniqueId="sk-1l-w-29700">
+												<actions>
+													<action type="action-sequence" action-sequence-id="4891f896-ac73-48be-8046-05c68419ffb7"/>
+												</actions>
+											</skuid__button>
+										</buttons>
+									</skuid__buttonGroup>
+								</field>
+							</fields>
+							<filtering enableSearch="false"/>
+							<actions/>
+							<rowActions/>
+							<massActions/>
+							<exportProperties useTableColumns="true"/>
+							<sorting enable="false"/>
+							<styles>
+								<spacing bottom="3"/>
+							</styles>
+						</skuid__table>
+						<skuid__wrapper uniqueid="sk-1mMM-93950">
+							<components>
+								<skuid__header model="ProgressBar" title="Large Donut" uniqueid="sk-1mMK-93191">
+									<styles>
+										<spacing bottom="1.5"/>
+									</styles>
+								</skuid__header>
+								<skuid__grid uniqueid="sk-1mE--24005" flexDirection="row" justifyContent="flex-start" alignItems="center">
+									<divisions>
+										<division alignSelf="auto" minWidth="0px" ratio="1">
+											<components/>
+										</division>
+										<division alignSelf="auto" minWidth="100px" ratio="1">
+											<components>
+												<skuid__chart model="ProgressBar" type="donut" uniqueid="sk-1mEe-20871" height="200px" export="off" styleSettingsVariant="4b98297b-ef06-4835-83df-26a73fe12edd" rendersnippet="ChartStyling">
+													<dataaxes>
+														<axis id="axis1"/>
+													</dataaxes>
+													<categoryaxes>
+														<axis id="categories" categorytype="field"/>
+													</categoryaxes>
+													<serieslist>
+														<series valuefield="PercentComplete" splittype="template" splitfield="IsComplete" innerContent="none" innerContentTemplate=" " splittemplate="{{#IsComplete}}Complete{{/IsComplete}}{{^IsComplete}}Incomplete{{/IsComplete}}"/>
+													</serieslist>
+													<colors/>
+													<legend layout="off" halign="center" valign="bottom" showlabels="false"/>
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="data.length" operator="=" value="1"/>
+													</renderConditions>
+													<styleVariantConditions/>
+													<conditions/>
+												</skuid__chart>
+												<skuid__chart model="ProgressBar" type="donut" uniqueid="sk-1mIr-81121" height="200px" export="off" rendersnippet="ChartStyling">
+													<dataaxes>
+														<axis id="axis1"/>
+													</dataaxes>
+													<categoryaxes>
+														<axis id="categories" categorytype="field"/>
+													</categoryaxes>
+													<serieslist>
+														<series valuefield="PercentComplete" splittype="template" splitfield="IsComplete" innerContent="none" innerContentTemplate=" " splittemplate="{{#IsComplete}}Complete{{/IsComplete}}{{^IsComplete}}Incomplete{{/IsComplete}}"/>
+													</serieslist>
+													<colors/>
+													<legend layout="off" halign="center" valign="bottom" showlabels="false"/>
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="data.length" operator="=" value="2"/>
+													</renderConditions>
+													<styleVariantConditions/>
+													<conditions/>
+												</skuid__chart>
+												<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;0/100&lt;/div&gt;&#10;" uniqueid="sk-1mF1-25603" model="ProgressBar" styleSettingsVariant="large">
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="data.length" operator="=" value="1"/>
+													</renderConditions>
+													<styleVariantConditions/>
+													<styles>
+														<spacing top="1.5"/>
+													</styles>
+												</skuid__text>
+												<skuid__text contents="&lt;div style=&quot;text-align: center;&quot;&gt;{{PercentComplete}}/100&lt;/div&gt;&#10;" uniqueid="sk-1mJX-91500" model="ProgressBar" styleSettingsVariant="large">
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="data.length" operator="=" value="2"/>
+													</renderConditions>
+													<styleVariantConditions/>
+													<styles>
+														<spacing top="1.5"/>
+													</styles>
+												</skuid__text>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="0px" ratio="1">
+											<components/>
+										</division>
+									</divisions>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
+									<interactions/>
+									<styles>
+										<spacing/>
+									</styles>
+									<background/>
+								</skuid__grid>
+							</components>
+							<styles>
+								<spacing bottom="4"/>
+							</styles>
+							<background/>
+						</skuid__wrapper>
+						<skuid__wrapper uniqueid="sk-1mPT-19965">
+							<components>
+								<skuid__header model="ProgressBar" title="Small Donut" uniqueid="sk-1mPT-19966">
+									<styles>
+										<spacing bottom="1.5"/>
+									</styles>
+								</skuid__header>
+								<skuid__grid uniqueid="sk-1mPT-19967" flexDirection="row" justifyContent="flex-start" alignItems="center">
+									<divisions>
+										<division alignSelf="auto" minWidth="0px" ratio="1">
+											<components/>
+										</division>
+										<division alignSelf="auto" minWidth="80px" ratio="1" maxWidth="80px">
+											<components>
+												<skuid__chart model="ProgressBar" type="donut" uniqueid="sk-1mPT-19968" height="80px" export="off" styleSettingsVariant="4b98297b-ef06-4835-83df-26a73fe12edd" rendersnippet="ChartStyling">
+													<dataaxes>
+														<axis id="axis1"/>
+													</dataaxes>
+													<categoryaxes>
+														<axis id="categories" categorytype="field"/>
+													</categoryaxes>
+													<serieslist>
+														<series valuefield="PercentComplete" splittype="template" splitfield="IsComplete" innerContent="none" innerContentTemplate=" " splittemplate="{{#IsComplete}}Complete{{/IsComplete}}{{^IsComplete}}Incomplete{{/IsComplete}}"/>
+													</serieslist>
+													<colors/>
+													<legend layout="off" halign="center" valign="bottom" showlabels="false"/>
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="data.length" operator="=" value="1"/>
+													</renderConditions>
+													<styleVariantConditions/>
+													<conditions/>
+												</skuid__chart>
+												<skuid__chart model="ProgressBar" type="donut" uniqueid="sk-1mPT-19969" height="80px" export="off" rendersnippet="ChartStyling">
+													<dataaxes>
+														<axis id="axis1"/>
+													</dataaxes>
+													<categoryaxes>
+														<axis id="categories" categorytype="field"/>
+													</categoryaxes>
+													<serieslist>
+														<series valuefield="PercentComplete" splittype="template" splitfield="IsComplete" innerContent="none" innerContentTemplate=" " splittemplate="{{#IsComplete}}Complete{{/IsComplete}}{{^IsComplete}}Incomplete{{/IsComplete}}"/>
+													</serieslist>
+													<colors/>
+													<legend layout="off" halign="center" valign="bottom" showlabels="false"/>
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="data.length" operator="=" value="2"/>
+													</renderConditions>
+													<styleVariantConditions/>
+													<conditions/>
+												</skuid__chart>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="100px" ratio="0">
+											<components>
+												<skuid__text contents="0/100" uniqueid="sk-1mPT-19970" model="ProgressBar" styleSettingsVariant="medium">
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="data.length" operator="=" value="1"/>
+													</renderConditions>
+													<styleVariantConditions/>
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__text>
+												<skuid__text contents="{{PercentComplete}}/100" uniqueid="sk-1mPT-19971" model="ProgressBar" styleSettingsVariant="medium">
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="modelproperty" nosourcerowbehavior="deactivate" sourceproperty="data.length" operator="=" value="2"/>
+													</renderConditions>
+													<styleVariantConditions/>
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__text>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="0px" ratio="1">
+											<components/>
+										</division>
+									</divisions>
+									<styles>
+										<spacing/>
+									</styles>
+									<background/>
+								</skuid__grid>
+							</components>
+							<styles>
+								<spacing bottom="4"/>
+							</styles>
+							<background/>
+						</skuid__wrapper>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="0px" ratio="1">
+					<components/>
+				</division>
+			</divisions>
+			<styles>
+				<spacing top="4" right="4" bottom="4" left="4"/>
+			</styles>
+			<background/>
+		</skuid__grid>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="inlinesnippet" name="ChartStyling" cachelocation="false">var chartObj = arguments[0],
+	$ = skuid.$;
+	console.log(chartObj);
+	console.log(chartObj.chart.type);
+   
+// remove hover effect on progress bar
+$.extend(true, chartObj, {
+    tooltip: {
+        enabled: false
+    }
+});</jsitem>
+		</javascript>
+		<actionsequences>
+			<actionsequence id="43325eb7-624b-4c67-92eb-1798e05dde68" label="Generate progress bar data" type="reusable" event-scope="component" event-name="page.rendered">
+				<description/>
+				<actions>
+					<action type="createRow" model="ProgressBar" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+						<defaults>
+							<default valuesource="formula" field="PercentComplete" enclosevalueinquotes="false">
+								<formula>100-{{PercentComplete}}</formula>
+							</default>
+						</defaults>
+					</action>
+				</actions>
+			</actionsequence>
+			<actionsequence id="4891f896-ac73-48be-8046-05c68419ffb7" label="Reset donut chart" type="reusable">
+				<actions>
+					<action type="emptyModelData">
+						<models>
+							<model>DemoData</model>
+						</models>
+					</action>
+					<action type="createRow" model="DemoData" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context"/>
+					<action type="emptyModelData">
+						<models>
+							<model>ProgressBar</model>
+						</models>
+					</action>
+					<action type="createRow" model="ProgressBar" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context"/>
+					<action type="updateRow" fieldmodel="DemoData" affectedrows="context">
+						<updates>
+							<update valuesource="fieldvalue" field="Task1" enclosevalueinquotes="false" value="false"/>
+						</updates>
+					</action>
+				</actions>
+				<description/>
+			</actionsequence>
+			<actionsequence id="1a0a6392-2930-41b7-b3a0-c8cb1b184721" label="Reset chart so the chart doesn't flicker " type="event-triggered" event-scope="component" event-name="page.rendered">
+				<description/>
+				<actions>
+					<action type="updateRow" fieldmodel="DemoData" affectedrows="context">
+						<updates>
+							<update valuesource="fieldvalue" field="Task1" enclosevalueinquotes="false" value="false"/>
+						</updates>
+					</action>
+				</actions>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<background/>
+	<interactions/>
+	<surfaces/>
+</skuid__page>

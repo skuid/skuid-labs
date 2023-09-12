@@ -1,0 +1,220 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="SliderProgressBar">
+	<models>
+		<model id="DemoData" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="Task1" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Task2" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Task3" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Task4" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Task5" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="progress" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="3" scale="0">
+					<formula>IF({{Task1}}, 20, 0)+IF({{Task2}}, 20, 0)+IF({{Task3}}, 20, 0)+IF({{Task4}}, 20, 0)+IF({{Task5}}, 20, 0)</formula>
+				</field>
+			</fields>
+			<conditions/>
+			<actions>
+				<action>
+					<actions>
+						<action type="updateRow" fieldmodel="ProgressBar" affectedrows="context">
+							<updates>
+								<update valuesource="modelmerge" field="PercentComplete" enclosevalueinquotes="false" sourcemodel="DemoData" sourcefield="progress"/>
+							</updates>
+						</action>
+					</actions>
+					<events>
+						<event>row.updated</event>
+					</events>
+					<fields>
+						<field>progress</field>
+					</fields>
+				</action>
+			</actions>
+		</model>
+		<model id="ProgressBar" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="PercentComplete" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="0" precision="3" scale="0"/>
+			</fields>
+			<conditions/>
+			<actions>
+				<action>
+					<actions>
+						<action type="runComponentAction" componentid="sk-1rrW-20979" action="navigateToStep" stepId="{{$Model.ProgressBar.data.0.PercentComplete}}"/>
+						<action type="runComponentAction" componentid="sk-1ruO-64176" action="navigateToStep" stepId="{{$Model.ProgressBar.data.0.PercentComplete}}"/>
+					</actions>
+					<events>
+						<event>row.updated</event>
+					</events>
+					<fields>
+						<field>PercentComplete</field>
+					</fields>
+				</action>
+			</actions>
+		</model>
+	</models>
+	<components>
+		<skuid__wrapper uniqueid="sk-1m3R-75748">
+			<components>
+				<skuid__header title="Progress Bar using Wizard 🧙‍♂️" uniqueid="sk-1m3E-72919" separator="false" subtitle="Skuid Sample Page">
+					<styles>
+						<spacing top="2" right="2" bottom="2" left="2"/>
+					</styles>
+				</skuid__header>
+			</components>
+			<styles>
+				<spacing/>
+			</styles>
+			<background type="color" color="#f6f8f9"/>
+		</skuid__wrapper>
+		<skuid__grid uniqueid="sk-1ctS-13971" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+			<divisions>
+				<division alignSelf="auto" minWidth="0px" ratio="1">
+					<components/>
+				</division>
+				<division alignSelf="auto" minWidth="600px" ratio="1">
+					<components>
+						<skuid__table allowColumnFreezing="dragDrop" model="DemoData" uniqueid="sk-1cy5-114019" mode="edit" showSaveCancel="false" title="Sample Data" pageSize="10" showListHeader="false" showListFooter="false">
+							<fields>
+								<field id="Task1" uniqueid="fi-1cy5-114814" displayAs="SWITCH"/>
+								<field id="Task2" uniqueid="fi-1cy5-114815" displayAs="SWITCH"/>
+								<field id="Task3" uniqueid="fi-1cy5-114816" displayAs="SWITCH"/>
+								<field id="Task4" uniqueid="fi-1cy5-114817" displayAs="SWITCH"/>
+								<field id="Task5" uniqueid="fi-1cy5-114818" displayAs="SWITCH"/>
+								<field id="progress" horizontalAlignment="right" uniqueid="fi-1cy5-114819"/>
+								<field type="CUSTOM_BUTTON_GROUP" uniqueid="fi-1rrS-18835">
+									<skuid__buttonGroup uniqueId="sk-1l-w-29699">
+										<buttons>
+											<skuid__button label="Reset" uniqueId="sk-1l-w-29700">
+												<actions>
+													<action type="emptyModelData">
+														<models>
+															<model>DemoData</model>
+														</models>
+													</action>
+													<action type="createRow" model="DemoData" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context"/>
+													<action type="runComponentAction" componentid="sk-1rrW-20979" action="navigateToStep" stepId="0"/>
+													<action type="runComponentAction" componentid="sk-1ruO-64176" action="navigateToStep" stepId="0"/>
+												</actions>
+											</skuid__button>
+										</buttons>
+									</skuid__buttonGroup>
+								</field>
+							</fields>
+							<filtering enableSearch="false"/>
+							<actions/>
+							<rowActions/>
+							<massActions/>
+							<exportProperties useTableColumns="true"/>
+							<sorting enable="false"/>
+							<styles>
+								<spacing bottom="4"/>
+							</styles>
+						</skuid__table>
+						<skuid__wrapper uniqueid="sk-1m0P-33226">
+							<components>
+								<skuid__header uniqueid="sk-1c_A-17134" title="Progress Indicator without labels">
+									<styles>
+										<spacing bottom="2"/>
+									</styles>
+								</skuid__header>
+								<skuid__wizard uniqueid="sk-1rrW-20979">
+									<steps>
+										<step stepId="0">
+											<components/>
+											<buttons/>
+										</step>
+										<step stepId="20">
+											<components/>
+											<buttons/>
+										</step>
+										<step stepId="40">
+											<components/>
+											<buttons/>
+										</step>
+										<step stepId="60">
+											<components/>
+											<buttons/>
+										</step>
+										<step stepId="80">
+											<components/>
+											<buttons/>
+										</step>
+										<step stepId="100">
+											<components/>
+											<buttons/>
+										</step>
+									</steps>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__wizard>
+							</components>
+							<styles>
+								<spacing bottom="2"/>
+							</styles>
+							<background/>
+						</skuid__wrapper>
+						<skuid__wrapper uniqueid="sk-1ruO-64174">
+							<components>
+								<skuid__header uniqueid="sk-1ruO-64175" title="Progress Indicator with labels">
+									<styles>
+										<spacing bottom="2"/>
+									</styles>
+								</skuid__header>
+								<skuid__wizard uniqueid="sk-1ruO-64176">
+									<steps>
+										<step stepId="0" stepLabel="0%">
+											<components/>
+											<buttons/>
+										</step>
+										<step stepId="20" stepLabel="20%">
+											<components/>
+											<buttons/>
+										</step>
+										<step stepId="40" stepLabel="40%">
+											<components/>
+											<buttons/>
+										</step>
+										<step stepId="60" stepLabel="60%">
+											<components/>
+											<buttons/>
+										</step>
+										<step stepId="80" stepLabel="80%">
+											<components/>
+											<buttons/>
+										</step>
+										<step stepId="100" stepLabel="100% Complete">
+											<components/>
+											<buttons/>
+										</step>
+									</steps>
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__wizard>
+							</components>
+							<styles>
+								<spacing/>
+							</styles>
+							<background/>
+						</skuid__wrapper>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="0px" ratio="1">
+					<components/>
+				</division>
+			</divisions>
+			<styles>
+				<spacing top="4" right="4" bottom="4" left="4"/>
+			</styles>
+			<background/>
+		</skuid__grid>
+	</components>
+	<resources>
+		<labels/>
+		<javascript/>
+		<actionsequences/>
+	</resources>
+	<background/>
+	<interactions/>
+	<surfaces/>
+</skuid__page>
