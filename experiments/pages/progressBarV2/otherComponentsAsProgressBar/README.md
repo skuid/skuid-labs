@@ -3,14 +3,17 @@ Build a custom progress bar or progress indicator with existing Skuid components
 
 ## Form with a number input displayed as Slider
 <img src="slider-progress-bar-ui.png" width="600"></img> 
+
 A creative and simple way to re-create a progress bar in Skuid using the Form component, a UI only numeric field displayed as Slider that gets updated manually. Use [sliderInputProgressBar.xml](sliderInputProgressBar.xml) to check out this solution.
 
 ## Donut chart
 <img src="donut-chart-progress-bar-ui.png" width="600"></img>
+
 Use [donutChartProgressBar.xml](donutChartProgressBar.xml) to see how you can manipulate donut chart into a circular progress bar.
 
 ## Wizard
 <img src="wizard-progress-indicator-ui.png" width="600"></img>
+
 More like progress indicator than a progress bar, use Wizard component to show user which current step is in the process. Use [wizardProgressIndicator.xml](wizardProgressIndicator.xml).
 
 ## Usage
