@@ -19,6 +19,6 @@ More like a progress indicator than a progress bar, use Wizard component step la
 ## Usage
 Note: These examples use a UI-only model for dummy data, so they should work in any Salesforce org or Skuid site without any data sources.
 
-1. Import the `SliderProgressBar.designsystem` design system into Skuid environment.
+1. Import the [SliderProgressBar.designsystem](SliderProgressBar.designsystem) design system into Skuid environment.
 2. Create a new Skuid page and paste/upload the XML file.
 3. Preview.
