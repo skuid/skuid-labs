@@ -1,5 +1,7 @@
 # Progress Bars with V2
 
+<img src="custom-progress-bar-ui.png" width="600"></img>
+
 ## Description
 Several different ways to achieve the effect of a progress bar with V2 pages and a DSS.
 

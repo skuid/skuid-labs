@@ -1,0 +1,369 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false" theme="SliderProgressBar">
+	<models>
+		<model id="DemoData" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="Task1" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Task2" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Task3" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Task4" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="Task5" displaytype="BOOLEAN" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="false"/>
+				<field id="progress" displaytype="FORMULA" length="255" ogdisplaytype="TEXT" readonly="true" returntype="DOUBLE" precision="3" scale="0">
+					<formula>IF({{Task1}}, 20, 0)+IF({{Task2}}, 20, 0)+IF({{Task3}}, 20, 0)+IF({{Task4}}, 20, 0)+IF({{Task5}}, 20, 0)</formula>
+				</field>
+			</fields>
+			<conditions/>
+			<actions>
+				<action>
+					<actions>
+						<action type="updateRow" fieldmodel="ProgressBar" affectedrows="context">
+							<updates>
+								<update valuesource="modelmerge" field="PercentComplete" enclosevalueinquotes="false" sourcemodel="DemoData" sourcefield="progress"/>
+							</updates>
+						</action>
+					</actions>
+					<events>
+						<event>row.updated</event>
+					</events>
+					<fields>
+						<field>progress</field>
+					</fields>
+				</action>
+			</actions>
+		</model>
+		<model id="ProgressBar" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="PercentComplete" displaytype="DOUBLE" length="255" ogdisplaytype="TEXT" defaultvaluetype="fieldvalue" defaultValue="0" precision="3" scale="0"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__wrapper uniqueid="sk-1m3R-75748">
+			<components>
+				<skuid__header title="Progress Bar using Slider" uniqueid="sk-1m3E-72919" separator="false" subtitle="Skuid Sample Page">
+					<styles>
+						<spacing top="2" right="2" bottom="2" left="2"/>
+					</styles>
+				</skuid__header>
+			</components>
+			<styles>
+				<spacing/>
+			</styles>
+			<background type="color" color="#f6f8f9"/>
+		</skuid__wrapper>
+		<skuid__grid uniqueid="sk-1ctS-13971" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+			<divisions>
+				<division alignSelf="auto" minWidth="0px" ratio="1">
+					<components/>
+				</division>
+				<division alignSelf="auto" minWidth="600px" ratio="1">
+					<components>
+						<skuid__table allowColumnFreezing="dragDrop" model="DemoData" uniqueid="sk-1cy5-114019" mode="edit" showSaveCancel="false" title="Sample Data" pageSize="10" showListHeader="false" showListFooter="false">
+							<fields>
+								<field id="Task1" uniqueid="fi-1cy5-114814" displayAs="SWITCH"/>
+								<field id="Task2" uniqueid="fi-1cy5-114815" displayAs="SWITCH"/>
+								<field id="Task3" uniqueid="fi-1cy5-114816" displayAs="SWITCH"/>
+								<field id="Task4" uniqueid="fi-1cy5-114817" displayAs="SWITCH"/>
+								<field id="Task5" uniqueid="fi-1cy5-114818" displayAs="SWITCH"/>
+								<field id="progress" horizontalAlignment="right" uniqueid="fi-1cy5-114819"/>
+								<field type="CUSTOM_BUTTON_GROUP">
+									<skuid__buttonGroup uniqueId="sk-1l-w-29699">
+										<buttons>
+											<skuid__button label="Reset" uniqueId="sk-1l-w-29700">
+												<actions>
+													<action type="emptyModelData">
+														<models>
+															<model>DemoData</model>
+														</models>
+													</action>
+													<action type="createRow" model="DemoData" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context"/>
+												</actions>
+											</skuid__button>
+										</buttons>
+									</skuid__buttonGroup>
+								</field>
+							</fields>
+							<filtering enableSearch="false"/>
+							<actions/>
+							<rowActions/>
+							<massActions/>
+							<exportProperties useTableColumns="true"/>
+							<sorting enable="false"/>
+							<styles>
+								<spacing bottom="3"/>
+							</styles>
+						</skuid__table>
+						<skuid__form showErrorsInline="true" model="ProgressBar" uniqueid="sk-1cuk-74501" mode="edit" styleSettingsVariant="d8531b19-a277-4b6c-9047-154afa3416cf">
+							<columns>
+								<column ratio="1">
+									<sections>
+										<section title="With default slider numbers" showHeading="true">
+											<fields>
+												<skuid__field id="PercentComplete" uniqueId="sk-1cuk-74502" displayAs="SLIDER" step="1" min="0" max="100" hideLabel="true"/>
+											</fields>
+										</section>
+									</sections>
+								</column>
+							</columns>
+							<styles>
+								<spacing bottom="4" top="3"/>
+							</styles>
+							<renderConditions logictype="and"/>
+							<styleVariantConditions/>
+						</skuid__form>
+						<skuid__wrapper uniqueid="sk-1cyv-17412">
+							<components>
+								<skuid__header uniqueid="sk-1m0s-42849" title="Current progress on top">
+									<styles>
+										<spacing bottom="1.5"/>
+									</styles>
+								</skuid__header>
+								<skuid__grid uniqueid="sk-1cy_-19621" flexDirection="row" justifyContent="flex-start" alignItems="flex-start">
+									<divisions>
+										<division alignSelf="auto" ratio="0">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: right;&quot;&gt;0%&lt;/div&gt;&#10;" uniqueid="sk-1l-i-26747" styleSettingsVariant="2f93e679-abeb-4962-aa24-51ce15d97a40">
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="PercentComplete" value="0"/>
+													</renderConditions>
+													<styleVariantConditions/>
+												</skuid__text>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="20%" ratio="1">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: right;&quot;&gt;20%&lt;/div&gt;&#10;" uniqueid="sk-1cz0-23215" styleSettingsVariant="2f93e679-abeb-4962-aa24-51ce15d97a40">
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="PercentComplete" value="20"/>
+													</renderConditions>
+													<styleVariantConditions/>
+												</skuid__text>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="20%" ratio="1">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: right;&quot;&gt;40%&lt;/div&gt;&#10;" uniqueid="sk-1cz3-24397" styleSettingsVariant="2f93e679-abeb-4962-aa24-51ce15d97a40">
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="PercentComplete" value="40"/>
+													</renderConditions>
+													<styleVariantConditions/>
+												</skuid__text>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="20%" ratio="1">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: right;&quot;&gt;60%&lt;/div&gt;&#10;" uniqueid="sk-1cz5-25782" styleSettingsVariant="2f93e679-abeb-4962-aa24-51ce15d97a40">
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="PercentComplete" value="60"/>
+													</renderConditions>
+													<styleVariantConditions/>
+												</skuid__text>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="20%" ratio="1">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: right;&quot;&gt;80%&lt;/div&gt;&#10;" uniqueid="sk-1czA-27225" styleSettingsVariant="2f93e679-abeb-4962-aa24-51ce15d97a40">
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="PercentComplete" value="80"/>
+													</renderConditions>
+													<styleVariantConditions/>
+												</skuid__text>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="20%" ratio="1">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: right;&quot;&gt;100%&lt;/div&gt;&#10;" uniqueid="sk-1czD-28655" styleSettingsVariant="2f93e679-abeb-4962-aa24-51ce15d97a40">
+													<styles>
+														<spacing/>
+													</styles>
+													<renderConditions logictype="and">
+														<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="PercentComplete" value="100"/>
+													</renderConditions>
+													<styleVariantConditions/>
+												</skuid__text>
+											</components>
+										</division>
+									</divisions>
+								</skuid__grid>
+								<skuid__form showErrorsInline="true" model="ProgressBar" uniqueid="sk-1cyw-17969" mode="edit" styleSettingsVariant="a9ddd793-e7e4-4e3a-8dc1-1f5a704c42be">
+									<columns>
+										<column ratio="1">
+											<sections>
+												<section title="Progress Bar (no number)" showHeading="false">
+													<fields>
+														<skuid__field id="PercentComplete" uniqueId="sk-1cyw-17970" displayAs="SLIDER" step="1" min="0" max="100" hideLabel="true"/>
+													</fields>
+												</section>
+											</sections>
+										</column>
+									</columns>
+									<styles>
+										<spacing/>
+									</styles>
+									<renderConditions logictype="and"/>
+									<styleVariantConditions/>
+								</skuid__form>
+							</components>
+							<styles>
+								<spacing bottom="4"/>
+							</styles>
+							<background/>
+						</skuid__wrapper>
+						<skuid__wrapper uniqueid="sk-1m2z-69682">
+							<components>
+								<skuid__header model="DemoData" title="With min max on the sides" uniqueid="sk-1cxZ-104186">
+									<styles>
+										<spacing/>
+									</styles>
+								</skuid__header>
+								<skuid__text contents="Use Responsive Grid to add min and max values to the sides of the progress bar" uniqueid="sk-1cyg-15806"/>
+								<skuid__grid uniqueid="sk-1cwt-89177" flexDirection="row" justifyContent="flex-start" alignItems="flex-start" columnGutter="1.5">
+									<divisions>
+										<division alignSelf="auto" minWidth="10px" ratio="0">
+											<components>
+												<skuid__text contents="&lt;div style=&quot;text-align: right;&quot;&gt;0&lt;/div&gt;&#10;" uniqueid="sk-1cx0-93952" styleSettingsVariant="medium">
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__text>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="600px" ratio="1">
+											<components>
+												<skuid__form showErrorsInline="true" model="ProgressBar" uniqueid="sk-1cwz-92180" mode="edit" styleSettingsVariant="a9ddd793-e7e4-4e3a-8dc1-1f5a704c42be">
+													<columns>
+														<column ratio="1">
+															<sections>
+																<section title="Progress Bar (no number)" showHeading="false">
+																	<fields>
+																		<skuid__field id="PercentComplete" uniqueId="sk-1cwz-92181" displayAs="SLIDER" step="1" min="0" max="100" hideLabel="true"/>
+																	</fields>
+																</section>
+															</sections>
+														</column>
+													</columns>
+													<styles>
+														<spacing bottom="2"/>
+													</styles>
+												</skuid__form>
+											</components>
+										</division>
+										<division alignSelf="auto" minWidth="0px" ratio="1">
+											<components>
+												<skuid__text contents="&lt;div&gt;{{PercentComplete}}%&lt;/div&gt;&#10;" uniqueid="sk-1cx7-96694" model="ProgressBar" styleSettingsVariant="medium">
+													<styles>
+														<spacing/>
+													</styles>
+												</skuid__text>
+											</components>
+										</division>
+									</divisions>
+									<styles>
+										<spacing top="2"/>
+									</styles>
+									<background/>
+								</skuid__grid>
+							</components>
+							<styles>
+								<spacing bottom="3"/>
+							</styles>
+							<background/>
+						</skuid__wrapper>
+						<skuid__wrapper uniqueid="sk-1m0P-33226">
+							<components>
+								<skuid__header uniqueid="sk-1c_A-17134" title="Just a bar">
+									<styles>
+										<spacing bottom="1.5"/>
+									</styles>
+								</skuid__header>
+								<skuid__text contents="To work around the issue of losing rounded corner at min and max value, render the form off and replace it with a wrapper instead" uniqueid="sk-1m1a-52397">
+									<styles>
+										<spacing bottom="1.5"/>
+									</styles>
+								</skuid__text>
+								<skuid__form showErrorsInline="true" model="ProgressBar" uniqueid="sk-1ctP-12803" mode="edit" styleSettingsVariant="a9ddd793-e7e4-4e3a-8dc1-1f5a704c42be">
+									<columns>
+										<column ratio="1">
+											<sections>
+												<section title="Just a bar" showHeading="false">
+													<fields>
+														<skuid__field id="PercentComplete" uniqueId="sk-1ctP-12804" displayAs="SLIDER" step="1" min="0" max="100" hideLabel="true">
+															<renderConditions logictype="and" onhidedatabehavior="keep"/>
+															<enableConditions/>
+															<styleVariantConditions/>
+														</skuid__field>
+													</fields>
+													<renderConditions logictype="and"/>
+												</section>
+											</sections>
+										</column>
+									</columns>
+									<styles>
+										<spacing bottom="3"/>
+									</styles>
+									<renderConditions logictype="and">
+										<renderCondition type="fieldvalue" operator="!=" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="PercentComplete" value="0"/>
+										<renderCondition type="fieldvalue" operator="!=" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="PercentComplete" value="100"/>
+									</renderConditions>
+									<styleVariantConditions/>
+								</skuid__form>
+								<skuid__wrapper uniqueid="sk-1m0R-34154" heightStrategy="fixed" height="custom" heightCustom="20px" styleSettingsVariant="7ffdc94b-3fc1-40db-838d-e852989e2a39">
+									<components/>
+									<styles>
+										<spacing bottom="5"/>
+									</styles>
+									<background/>
+									<renderConditions logictype="or">
+										<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="PercentComplete" value="0"/>
+										<renderCondition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="PercentComplete" value="100"/>
+									</renderConditions>
+									<styleVariantConditions>
+										<rule logictype="and" styleSettingsVariantOverride="a0f1ab30-d86f-4fc2-a3b3-d8fc71ae9ee5">
+											<condition type="fieldvalue" operator="=" enclosevalueinquotes="false" fieldmodel="ProgressBar" sourcetype="fieldvalue" nosourcerowbehavior="deactivate" field="PercentComplete" value="100"/>
+										</rule>
+									</styleVariantConditions>
+									<interactions/>
+								</skuid__wrapper>
+							</components>
+							<styles>
+								<spacing/>
+							</styles>
+							<background/>
+						</skuid__wrapper>
+					</components>
+				</division>
+				<division alignSelf="auto" minWidth="0px" ratio="1">
+					<components/>
+				</division>
+			</divisions>
+			<styles>
+				<spacing top="4" right="4" bottom="4" left="4"/>
+			</styles>
+			<background/>
+		</skuid__grid>
+	</components>
+	<resources>
+		<labels/>
+		<javascript/>
+		<actionsequences/>
+	</resources>
+	<background/>
+	<interactions/>
+	<surfaces/>
+</skuid__page>
