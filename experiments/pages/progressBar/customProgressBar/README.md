@@ -1,4 +1,6 @@
-# Progress Bars with V2
+# Custom Progress Bar
+
+<img src="custom-progress-bar-ui.png" width="600"></img>
 
 ## Description
 Several different ways to achieve the effect of a progress bar with V2 pages and a DSS.
@@ -42,6 +44,6 @@ For future flexibility and abstraction, this really ought to be in a custom comp
 ## Usage
 Note: This example uses a UI-only model for dummy data, so it should work in any Salesforce org or Skuid site.
 
-1. Import the `ProgressBarDSS.designsystem` design system into your Salesforce org.
-2. Create a new Skuid page and paste/upload the XML file.
-3. Edit away
+1. Import the [ProgressBarDSS.designsystem](ProgressBarDSS.designsystem) design system into your Salesforce org.
+2. Create a new Skuid page and paste/upload the XML file using this XML [ProgressBar.xml](ProgressBar.xml).
+3. Edit away.
