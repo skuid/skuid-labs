@@ -116,7 +116,7 @@
 										<spacing bottom="2"/>
 									</styles>
 								</skuid__header>
-								<skuid__wizard uniqueid="sk-1rrW-20979">
+								<skuid__wizard uniqueid="sk-1rrW-20979" disableStepButtons="true">
 									<steps>
 										<step stepId="0">
 											<components/>
@@ -160,7 +160,7 @@
 										<spacing bottom="2"/>
 									</styles>
 								</skuid__header>
-								<skuid__wizard uniqueid="sk-1ruO-64176">
+								<skuid__wizard uniqueid="sk-1ruO-64176" disableStepButtons="true">
 									<steps>
 										<step stepId="0" stepLabel="0%">
 											<components/>
