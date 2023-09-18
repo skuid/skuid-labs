@@ -75,7 +75,7 @@
 				<skuid__table allowColumnFreezing="dragDrop" model="Tasks" uniqueid="sk-1pHP-40054" mode="read" showSaveCancel="true" pageSize="10" cellOverflow="scroll" rowHeight="custom" rowHeightCustom="80px">
 					<fields>
 						<field id="Subject" uniqueid="fi-1pHP-40790"/>
-						<field type="COMBO" label="Description (generated)" template="{{Description}}" redirectType="datasourcedefault" uniqueid="fi-1pIC-54772">
+						<field id="Description" label="Description (generated)">
 							<interactions>
 								<interaction type="rightclick" suppressContextMenu="true">
 									<action type="action-sequence" action-sequence-id="d67abeac-4979-481c-a697-b5de3aaff045" input-TaskField="Description" input-Field_In_Context="Description">
