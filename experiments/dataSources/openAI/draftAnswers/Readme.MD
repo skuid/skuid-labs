@@ -6,7 +6,7 @@ This sample page shows how the ChatGPT API can help draft field values for any d
 - Page API:  V2
 - Data source: REST data source named "OpenAI" connecting to your OpenAI instance per [instructions](../)
 - Design system: None 
-- Page XML:  [Copy the XML from this page](UpdateAnyField_w_ChatGPT.xml?raw=true), or save it as an XML file, and upload it as a new page in Skuid's pages list.
+- Page XML:  [Copy the XML from this page](UpdateAnyField_w_ChatGPT.xml), or save it as an XML file, and upload it as a new page in Skuid's pages list.
 
 ## Notes
 
