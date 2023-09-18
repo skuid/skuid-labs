@@ -10,8 +10,8 @@ The sample page uses Task object from Salesforce but that's just an example. You
 
 ## Instructions
 - Page API:  V2
-- Data source: REST data source named "OpenAI" connecting to your OpenAI instance per [instruction](openAI)
-- Design system: This Demo uses the ChatGPT_Demo design system. [Download this Design System file](../ChatGPT_Demo.designsystem?raw=true) and use the Import function on the Design System page to add this system to your org. 
+- Data source: REST data source named "OpenAI" connecting to your OpenAI instance per [instructions](../)
+- Design system: This Demo uses the ChatGPT_Demo design system. [Download this Design System file](../ChatGPT_Demo.designsystem) and use the Import function on the Design System page to add this system to your org. 
 - Page XML:  [Copy the XML from this page](MenuWithGPTActions.xml?raw=true), or save it as an XML file, and upload it as a new page in Skuid's Pages.
 
 ## Notes
