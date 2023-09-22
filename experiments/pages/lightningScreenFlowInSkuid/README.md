@@ -38,16 +38,24 @@ The **showScreenFlowModal** component picks up the event published by Skuid for 
 
       - It doesn't matter where you place the custom component on the page
    
-3. Open Skuid App Composer
-   - Create a new UI-only model named “FlowParams”
-     - Add three UI-only text fields
-       - name
-       - type
-       - value
+### Create models for calling screen flows within the Skuid page
+
+1. Open the Composer.
+1. Create a new UI-only model named ``FlowParams`` with the following text fields:
+     - name
+     - type
+     - value
         
-   - Create a new model named “Flow” on the FlowInterview object and adjust the model to only return 1 record (default is 20)
-     - Add the “Name” field
-     - Add a model condition FlowInterview records where “Name” is Single specified value (leave the value blank). Filterable default on.
+1. Create a new model named ``Flow`` with the following properties:
+   - **Salesforce object name**: FlowInterview
+   - **Max # of records (limit)**: 1
+1. Add the **Name** field to the model
+1. Add a model condition with the following properties:
+   - **Field**: Name
+   - **Operator**: = (is)
+   - **Content**: Single specified value
+   - **Value**:  *Leave blank*
+   - **State**:  Filterable default on.
 
 ### Add JavaScript and Action Framework logic for calling screen flows
 1. Create a new JavaScript resource with the following properties:
