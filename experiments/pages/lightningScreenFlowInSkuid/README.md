@@ -24,12 +24,14 @@ The **showScreenFlowModal** component picks up the event published by Skuid for 
 
 
 
-1. Open the Salesforce Developer Console
-
-   - Click File/New/Lightning Component
-   - Name the component “showScreenFlowModal”
-   - Paste the code from the “[showScreenFlowModal](showScreenFlowModal)” file
-   - Paste the code from the "[showScreenFlowModal_controller](showScreenFlowModal_controller)" file into the “Controller” portion
+### Create the new Lightning component
+1. Open the Salesforce Developer Console.
+1. Click **File > New > Lightning Component**.
+1. Name the component ``showScreenFlowModal``.
+1. Click **Submit** to generate the bundle.
+1. Paste the code from the [showScreenFlowModal](showScreenFlowModal) file into the component code section.
+1.Paste the code from the [showScreenFlowModal_controller](showScreenFlowModal_controller) file into the controller code section.
+1. Click **File > Save All**.
 
 ### Add the screen flow container to the Lightning page
 
