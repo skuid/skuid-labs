@@ -5,7 +5,7 @@ This walkthrough explains how to launch a Lightning Screen Flow from a Skuid pag
 
 
 
-## Setup:
+## Setup
 To build this, you will need to:
 1. Create a new Lightning component (with a controller) from the code provided.
 3. Add the newly created custom component to the Lightning page (via Lightning App Builder) that your Skuid page will be on (the custom component acts as a container for the Screen Flow)
