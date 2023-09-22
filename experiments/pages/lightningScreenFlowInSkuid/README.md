@@ -31,9 +31,12 @@ The **showScreenFlowModal** component picks up the event published by Skuid for 
    - Paste the code from the “[showScreenFlowModal](showScreenFlowModal)” file
    - Paste the code from the "[showScreenFlowModal_controller](showScreenFlowModal_controller)" file into the “Controller” portion
 
-2. Open Lightning App Builder
+### Add the screen flow container to the Lightning page
 
-   - Search for “showScreenFlowModal” and drag the custom component onto your lightning page (doesn’t matter location) where you are going to have your Skuid page that launches the Flow
+1. Open Lightning App Builder.
+1. Search for ``showScreenFlowModal`` and drag the custom component onto the Lightning page that will contain your Skuid page.
+
+      - It doesn't matter where you place the custom component on the page
    
 3. Open Skuid App Composer
    - Create a new UI-only model named “FlowParams”
