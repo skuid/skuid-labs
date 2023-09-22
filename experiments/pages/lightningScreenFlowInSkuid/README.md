@@ -4,6 +4,27 @@
 
 This walkthrough explains how to launch a Lightning screen flow from a Skuid page, as well as how to pass variable values into the screen flow if necessary. This allows Skuid builders to utilize already-built Lightning screen flows from their Skuid pages without needing to rebuild existing functionality.
 
+This directory functions as a [Salesforce DX project](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_workspace_setup.htm) for ease of deployment with the Salesforce CLI. 
+
+You'll need these files for *any* flow use case in Skuid:
+
+- `force-app/main/default/aura/showScreenFlowModal/showScreenFlowModal.cmp`
+- `force-app/main/default/aura/showScreenFlowModal/controller/showScreenFlowModal_controller.js`
+
+To deploy just these component bundle files, use this command:
+
+```bash
+# Use the proper org's alias for the -o flag
+sf project deploy start --manifest path/to/package.xml -o <Org alias>
+```
+
+Alongside this general use component, this project includes an example flow, Lightning app, Lightning page, and Skuid page to illustrate this functionality.
+
+- `force-app/main/default/flows/testFlow.flow`
+- `force-app/main/default/flows/testFlow.flow`
+
+**Note**: that deploying the example Skuid page requires the [skuid-sfdx](https://docs.skuid.com/latest/en/skuid/skuid-sfdx/) plugin.
+
 ## Before you begin
 
 This experiment requires specific information about your flow to properly call it from Skuid.
