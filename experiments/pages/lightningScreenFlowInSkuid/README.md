@@ -13,7 +13,7 @@ To build this, you will need to:
 6. Add a generic JS snippet to your Skuid page
 
 
-## Note:
+## Note
 It's important to note that in this example the Lightning component is listening for an object to be passed in, (rather than a string), which is why we are using JS to publish an event rather than the declarative "Publish Event" action.  
 
 ## Detailed Directions:
