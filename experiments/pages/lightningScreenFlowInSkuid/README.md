@@ -8,22 +8,36 @@ This directory functions as a [Salesforce DX project](https://developer.salesfor
 
 You'll need these files for *any* flow use case in Skuid:
 
-- `force-app/main/default/aura/showScreenFlowModal/showScreenFlowModal.cmp`
-- `force-app/main/default/aura/showScreenFlowModal/controller/showScreenFlowModal_controller.js`
+- **Component code**: `force-app/main/default/aura/showScreenFlowModal/showScreenFlowModal.cmp`
+- **Component controller code**: `force-app/main/default/aura/showScreenFlowModal/controller/showScreenFlowModal_controller.js`
 
 To deploy just these component bundle files, use this command:
 
 ```bash
-# Use the proper org's alias for the -o flag
-sf project deploy start --manifest path/to/package.xml -o <Org alias>
+# Assumes you are running the command from this directory
+# Use the proper org alias for the -o flag
+sf project deploy start --manifest package.xml -o <Org alias>
 ```
 
 Alongside this general use component, this project includes an example flow, Lightning app, Lightning page, and Skuid page to illustrate this functionality.
 
-- `force-app/main/default/flows/testFlow.flow`
-- `force-app/main/default/flows/testFlow.flow`
+- **Example flow:**`force-app/main/default/flows/testFlow.flow-meta.xml`
+- **Example Lightning page:**`force-app/main/default/flexipages/ScreenFlowTest.flexipage`
+- **Example Skuid page:** `force-app/main/default/skuid/pages/ScreenFlow.xml` and `force-app/main/default/skuid/pages/ScreenFlow.json`
 
-**Note**: that deploying the example Skuid page requires the [skuid-sfdx](https://docs.skuid.com/latest/en/skuid/skuid-sfdx/) plugin.
+**Note**: Deploying the example Skuid page requires the [skuid-sfdx](https://docs.skuid.com/latest/en/skuid/skuid-sfdx/) plugin.
+
+To deploy all the example files, use these commands:
+
+```bash
+# Assumes you are running the command from this directory
+# Use the proper org alias for the -o flag
+# Use your username for the skuid:page:push command
+sf skuid:page:push --dir skuid/pages --targetusername <Your username>
+sf project deploy start --manifest example-package.xml -o <Org alias>
+```
+
+Then, to see the provided demo Lightning page, navigate to the **Lightning App Builder** and activate the newly added `ScreenFlowTest` Lightning page.
 
 ## Before you begin
 

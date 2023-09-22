@@ -5,20 +5,12 @@
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>ScreenFlowExample</members>
-        <name>CustomApplication</name>
-    </types>
-    <types>
         <members>screenFlowTest</members>
         <name>FlexiPage</name>
     </types>
     <types>
         <members>testFlow</members>
         <name>Flow</name>
-    </types>
-    <types>
-        <members>screenFlowTest</members>
-        <name>CustomTab</name>
     </types>
     <version>53.0</version>
 </Package>

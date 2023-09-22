@@ -3,18 +3,20 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>page</name>
-                    <value>ScreenFlow</value>
-                </componentInstanceProperties>
+                <identifier>flowModalInstance</identifier>
+                <componentName>showScreenFlowModal</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <identifier>exampleSkuidPage</identifier>
                 <componentName>skuid:page</componentName>
-                <identifier>skuid_page</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>screenFlowTest</masterLabel>
+    <masterLabel>ScreenFlowTest</masterLabel>
     <template>
         <name>flexipage:defaultAppHomeTemplate</name>
     </template>

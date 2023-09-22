@@ -1,0 +1,8 @@
+{
+	"name": "ScreenFlow",
+	"apiVersion": "v2",
+	"isMasterPage": false,
+	"maxAutoSaves": 25,
+	"type": "Desktop",
+	"uniqueId": "_ScreenFlow"
+}
