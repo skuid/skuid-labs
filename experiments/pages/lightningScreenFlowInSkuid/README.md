@@ -16,7 +16,7 @@ To build this, you will need to:
 ## Note
 It's important to note that in this example the Lightning component is listening for an object to be passed in, (rather than a string), which is why we are using JS to publish an event rather than the declarative "Publish Event" action.  
 
-## Detailed Directions:
+## Detailed Directions
 This step-by-step guide will help you configure everything you need to call a Lightning Screen Flow from your Skuid page:
 
 **Note:**
