@@ -49,15 +49,24 @@ The **showScreenFlowModal** component picks up the event published by Skuid for 
      - Add the “Name” field
      - Add a model condition FlowInterview records where “Name” is Single specified value (leave the value blank). Filterable default on.
 
-   - Create a new JS snippet (Generic JS snippet) named “callFlow” and paste the code from the [callFlow](callFlow) file
+### Add JavaScript and Action Framework logic for calling screen flows
+1. Create a new JavaScript resource with the following properties:
+   - **Resource type**: Generic JS snippet
+   - **Snippet name**: callFlow
+   - **Snippet body**: *Paste the code from the* [callFlow](callFlow) *file*
 
-4. Create a new Reusable Action Sequence named “CallFlow”
+Now to create the action sequence that'll use this snippet and take two inputs: one for the flow name and one for the parameter model:
 
-   - Add a “Run JavaScript snippet” action and run the snippet “callFlow”
-   - Add two inputs
-     - Name: flowName Type: Value
-     - Name: model Type: Model
-
+1. Create a new reusable action sequence named “CallFlow”
+1. Add a **Run JavaScript snippet** action that runs the **callFlow** snippet
+1. Click **Inputs**.
+1. Add two inputs:
+   - First input:
+     - Name: flowName 
+     - Type: Value
+   - Second input:
+     - Name: model 
+     - Type: Model
 5. Add an action sequence to your Skuid page wherever you want to call the flow (e.g. From a button component, calendar interaction, etc.)
 
    - Add the following actions
