@@ -1,6 +1,6 @@
 # Integrate Lightning Screen Flows with Skuid 
 
-## Description:
+## Description
 This walkthrough explains how to launch a Lightning Screen Flow from a Skuid page as well as pass parameters into the Screen Flow if necessary. This allows Skuid builders to utilize already-built Lightning Screen Flows from their Skuid pages wihtout needing to rebuild existing functionality.
 
 
