@@ -116,9 +116,9 @@ In this example, we'll use a button that passes in a start date time. For other 
    - **value**: Enter the value to use, which can be a merge variable or a hard-coded value 
 
 1. Add an action to run the CallFlow action sequence:
-  - Action sequence: “CallFlow”
-  - flowName: Paste the api name of the Lightning flow
-  - model: FlowParams
+  - **Action sequence**: CallFlow
+  - **flowName**: The API name of your flow
+  - **model**: FlowParams
 
 <img width="600" alt="screenshot of inputStartDateTime" src="https://github.com/skuid/skuid-labs/assets/63868385/79a3ea4c-ba6e-4cce-8ec8-54157a9a2957">
 
