@@ -4,46 +4,9 @@
 
 This walkthrough explains how to launch a Lightning screen flow from a Skuid page, as well as how to pass variable values into the screen flow if necessary. This allows Skuid builders to utilize already-built Lightning screen flows from their Skuid pages without needing to rebuild existing functionality.
 
-This directory functions as a [Salesforce DX project](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_workspace_setup.htm) for ease of deployment with the Salesforce CLI. 
-
-You'll need these files for *any* flow use case in Skuid:
-
-- **Component code**: `force-app/main/default/aura/showScreenFlowModal/showScreenFlowModal.cmp`
-- **Component controller code**: `force-app/main/default/aura/showScreenFlowModal/controller/showScreenFlowModal_controller.js`
-
-To deploy just these component bundle files, use this command:
-
-```bash
-# Assumes you are running the command from this directory
-# Use the proper org alias for the -o flag
-sf project deploy start --manifest package.xml -o <Org alias>
-```
-
-Alongside this general use component, this project includes an example flow, Lightning app, Lightning page, and Skuid page to illustrate this functionality.
-
-- **Example flow:**`force-app/main/default/flows/testFlow.flow-meta.xml`
-- **Example Lightning page:**`force-app/main/default/flexipages/ScreenFlowTest.flexipage`
-- **Example Skuid page:** `force-app/main/default/skuid/pages/ScreenFlow.xml` and `force-app/main/default/skuid/pages/ScreenFlow.json`
-
-**Note**: Deploying the example Skuid page requires the [skuid-sfdx](https://docs.skuid.com/latest/en/skuid/skuid-sfdx/) plugin.
-
-To deploy all the example files, use these commands:
-
-```bash
-# Assumes you are running the command from this directory
-# Use the proper org alias for the -o flag
-# Use your username for the skuid:page:push command
-sf skuid:page:push --dir skuid/pages --targetusername <Your username>
-sf project deploy start --manifest example-package.xml -o <Org alias>
-```
-
-Then, to see the provided demo Lightning page, navigate to the **Lightning App Builder**, edit the newly added `ScreenFlowTest` Lightning page, click **Save** and then **Activation**. 
-
-**You must Save the page before the deployed changes can appear**.
-
 ## Before you begin
 
-This experiment requires specific information about your flow to properly call it from Skuid.
+This experiment requires specific information about the flow to properly call it from Skuid.
 
 ### Find flow API name
 
@@ -71,71 +34,94 @@ Refer to [Salesforce documentation](https://developer.salesforce.com/docs/compon
 | sObject                               | Record                |
 | String                                | Text                  |
 
-## Setup
+## Deploy with `sf` CLI
 
-To build this, you will need to:
+This directory functions as a [Salesforce DX project](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_workspace_setup.htm) for ease of deployment with the Salesforce CLI. 
 
-1. Create a new Lightning component (with a controller) from the code provided.
-1. Add the newly created custom component to the Lightning page (via Lightning App Builder) that your Skuid page will be on (the custom component acts as a container for the Screen Flow)
-1. Configure two Skuid models, one to a Salesforce Object and one UI-Only
-1. Add a generic JS snippet to your Skuid page
+You'll need these files for *any* flow use case using the paradigm documented below in Skuid:
 
-   **Note:**
-   It's important to note that in this example the Lightning component is listening for an object to be passed in, (rather than a string), which is why we are using JS to publish an event rather than the declarative "Publish Event" action.  
+- **Component code**: `force-app/main/default/aura/showScreenFlowModal/showScreenFlowModal.cmp`
+- **Component controller code**: `force-app/main/default/aura/showScreenFlowModal/showScreenFlowModalController.js`
 
-## Detailed Directions
+To deploy just these component bundle files, use this command:
 
-This step-by-step guide will help you configure everything you need to call a Lightning screen flow from your Skuid page:
+```bash
+# Assumes you are running the command from this directory
+# Use the proper org alias for the -o flag
+# Tested with @salesforce/cli/2.10.2
+sf project deploy start --manifest package.xml -o <Org alias>
+```
 
-**Note:**
-The **showScreenFlowModal** component picks up the event published by Skuid for that modal based on the event params in the **callFlow.js** snippet.  
+Alongside this general use component, this project includes an example flow, Lightning app, Lightning page, and Skuid page to illustrate this functionality.
 
-### Create the new Lightning component
+- **Example flow:**`force-app/main/default/flows/testFlow.flow-meta.xml`
+- **Example Lightning page:**`force-app/main/default/flexipages/ScreenFlowTest.flexipage`
+- **Example Skuid page:** `force-app/main/default/skuid/pages/ScreenFlow.xml` and `force-app/main/default/skuid/pages/ScreenFlow.json`
+
+To deploy the component bundle *and* these example files, use these commands:
+
+**Note**: Deploying the example Skuid page requires the [skuid-sfdx](https://docs.skuid.com/latest/en/skuid/skuid-sfdx/) plugin.
+
+```bash
+# Assumes you are running these commands from this directory
+# Use the proper org alias for the -o flag
+# Use your username for the skuid:page:push command
+# Tested with @salesforce/cli/2.10.2 and skuid-sfdx 0.4.0
+sf skuid:page:push --dir skuid/pages --targetusername <Your username>
+sf project deploy start --manifest example-package.xml -o <Org alias>
+```
+
+Then, to see the provided demo Lightning page: 
+
+1. Navigate to the **Lightning App Builder**
+1. Edit the newly added `ScreenFlowTest` Lightning page
+1. Click **Save**.
+1. Click **Activation** and activate the page.
+
+**You must save and activate the page** before the deployed changes can appear.
+
+## Deploy manually 
+### Create the Lightning component
+
+First, create a new Lightning component (with a controller) from the code provided that functions as a container for the screen flow)
 
 1. Open the Salesforce Developer Console.
 1. Click **File > New > Lightning Component**.
 1. Name the component ``showScreenFlowModal``.
 1. Click **Submit** to generate the bundle.
-1. Paste the code from the [showScreenFlowModal](showScreenFlowModal.cmp) file into the component code section.
-1.Paste the code from the [showScreenFlowModal_controller](showScreenFlowModal_controller.js) file into the controller code section.
+1. Paste the code from the [showScreenFlowModal.cmp](force-app/main/default/aura/showScreenFlowModal/showScreenFlowModal.cmp) file into the component code section.
+1. Paste the code from the [showScreenFlowModal_controller.js](force-app/main/default/aura/showScreenFlowModal/showScreenFlowModalController.js) file into the controller code section.
 1. Click **File > Save All**.
 
-### Add the screen flow container to the Lightning page
+### Create the Skuid page
 
-1. Open Lightning App Builder.
-1. Search for ``showScreenFlowModal`` and drag the custom component onto the Lightning page that will contain your Skuid page.
+Next, create a new Skuid page and configure it as follows:
 
-      - It doesn't matter where you place the custom component on the page
-   
-### Create models for calling screen flows within the Skuid page
+1. Configure a UI-only model to store flow variable values
+1. Add a generic JS snippet to your Skuid page to process variable values from the Skuid model and publish an Aura event calling the screen flow
+1. Add (and call) an action sequence that creates model row values and calls the snippet
 
-1. Open the Composer.
-1. Create a new UI-only model named ``FlowParams`` with the following text fields:
-     - name
-     - type
-     - value
-        
-1. Create a new model named ``Flow`` with the following properties:
-   - **Salesforce object name**: FlowInterview
-   - **Max # of records (limit)**: 1
-1. Add the **Name** field to the model
-1. Add a model condition with the following properties:
-   - **Field**: Name
-   - **Operator**: = (is)
-   - **Content**: Single specified value
-   - **Value**:  *Leave blank*
-   - **State**:  Filterable default on.
+   **Note**: This example's Lightning component is listening for an object to be passed in rather than a string, which is why we are using JavaScript to publish an event rather than the declarative Publish event action.  
 
-### Add JavaScript and Action Framework logic for calling screen flows
-1. Create a new JavaScript resource with the following properties:
+#### Create a model for variable values
+
+Create a new UI-only model named ``FlowVariables`` with the following text fields:
+
+- name
+- type
+- value
+
+#### Add JavaScript and Action Framework logic for calling screen flows
+
+Create a new JavaScript resource with the following properties:
    - **Resource type**: Generic JS snippet
    - **Snippet name**: callFlow
    - **Snippet body**: *Paste the code from the* [callFlow](callFlow) *file*
 
 Now to create the action sequence that'll use this snippet and take two inputs: one for the flow name and one for the variables model:
 
-1. Create a new reusable action sequence named “CallFlow”
-1. Add a **Run JavaScript snippet** action that runs the **callFlow** snippet
+1. Create a new reusable action sequence named **CallFlow**.
+1. Add a **Run JavaScript snippet** action that runs the **callFlow** snippet.
 1. Click **Inputs**.
 1. Add two inputs:
    - First input:
@@ -145,48 +131,59 @@ Now to create the action sequence that'll use this snippet and take two inputs: 
      - Name: model 
      - Type: Model
 
-Now we'll create button with a set of actions that do the following:
-- Empties the model holding our flow variables
-- Creates new rows for each variable
+Now create an action trigger that does the following:
+
+- Empties the rows from the flow variables model
+- Create a new row for *for each variable* you want to pass to the flow.
 - Calls the flow using the `CallFlow` action sequence (which activates the `callFlow` JavaScript snippet)
 
-In this example, we'll use a button that passes in a start date time. For other use cases, remember you must create a new row for *for each variable* you want to pass to the flow.
+To recreate Button Set in the provided example Skuid page:
 
 1. Drag and drop a Button Set component into the canvas.
 1. Click **the newly created button**.
 1. Click **Actions**  in the Properties pane.
 1. Add an action to remove all rows in the variables model:
    - **Action type**: Remove all rows from model
-   - **Models to empty**: FlowParams
+   - **Models to empty**: FlowVariables
 1. Add a create new row action to pass in variable:
    - **Action type**: Create new rows
-   - **Model**: FlowParams
-1. Click **More options > Add default value** to add each of these values to that new row:
-
-   - **name**: Enter the variable API name, for example *dateTime*
-   - **type**: Enter the variable data type (refer to the cheatsheet above), for example *DateTime*
-   - **value**: Enter the value to use, which can be a merge variable or a hard-coded value 
-
-  To pass the variable values shown in the provided example:
-
-   - **name**: text
-   - **type**: String
-   - **value**: a string of text
-
-   - **name**: dateTime
-   - **type**: DateTime
-   - **Field value source**: Result of a formula
-   - **Formula**: NOW()
+   - **Model**: FlowVariables
+1. Click **More options > Add default value** to create this set of default values:
+   - Row 1:
+     - **name**: text
+     - **type**: String
+     - **value**: a string of text
+   - Row 2:
+     - **name**: dateTime
+     - **type**: DateTime
+     - **Field value source**: Result of a formula
+     - **Formula**: NOW()
 
    **Note**: If you'll be using merge variables to provide date/time values, use formulas as a value source. Date/time merge variables won't work in this setup.
 
-1. Add an action to run the CallFlow action sequence:
-  - **Action sequence**: CallFlow
-  - **flowName**: The API name of your flow
-  - **model**: FlowParams
-
-1. (Optional) The Lightning component controller in this experiment publishes a `flowModalClosed` event once the modal is closed. You can use this event as the trigger for an action sequence to run any actions (e.g. re-query a model) that should occur when the model is closed:
+1. Add an action to run the **CallFlow** action sequence:
+   - **Action sequence**: CallFlow
+   - **flowName**: The API name of the flow
+   - **model**: FlowVariables
+1. (Optional) The Lightning component controller in this experiment publishes a `flowModalClosed` event once the modal is closed. You can use this event as the trigger for an action sequence to run any actions that should occur when the modal is closed (e.g. re-query a model):
    - **Sequence name**: An informative name like *Flow modal closed*
    - **Event name**: flowModalClosed
    - **Listen for events published from**: All active pages and Lightning components
 
+### Add the screen flow container and Skuid page to the Lightning page
+
+Finally, add the custom component and Skuid page to a Lightning page via Lightning App Builder.
+
+In Salesforce Setup:
+
+1. Navigate to **Lightning App Builder**.
+1. Create a new Lightning page.
+1. Search for ``showScreenFlowModal`` and drag the custom component onto the Lightning page that will contain your Skuid page.
+
+      - It doesn't matter where you place the custom component on the page.
+1. Add a **Skuid Page** component targeting the Skuid page 
+   
+
+## Ideas for improvement
+
+It'd be interesting to utilize the Metadata Tooling API to query for [flow metadata](https://developer.salesforce.com/docs/atlas.en-us.246.0.api_meta.meta/api_meta/meta_visual_workflow.htm)—and retrieve a list of acceptable variables. This could be used to improve the variable-setting experience in the Composer.

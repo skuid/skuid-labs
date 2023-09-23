@@ -1,6 +1,6 @@
 <skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false">
 	<models>
-		<model id="FlowParams" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
+		<model id="FlowVariables" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
 			<fields>
 				<field id="name" displaytype="TEXT" length="255" label="name" defaultvaluetype="fieldvalue"/>
 				<field id="type" displaytype="TEXT" length="255" label="type"/>
@@ -11,7 +11,7 @@
 		</model>
 	</models>
 	<components>
-		<skuid__buttonSet uniqueid="sk-2jqZ-18876" model="FlowParams" position="center">
+		<skuid__buttonSet uniqueid="sk-2jqZ-18876" model="FlowVariables" position="center">
 			<groups>
 				<skuid__buttonGroup uniqueId="sk-2jqZ-18874">
 					<buttons>
@@ -19,17 +19,17 @@
 							<actions>
 								<action type="emptyModelData">
 									<models>
-										<model>FlowParams</model>
+										<model>FlowVariables</model>
 									</models>
 								</action>
-								<action type="createRow" model="FlowParams" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+								<action type="createRow" model="FlowVariables" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
 									<defaults>
 										<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="text"/>
 										<default valuesource="fieldvalue" field="type" enclosevalueinquotes="true" value="String"/>
 										<default valuesource="fieldvalue" field="value" enclosevalueinquotes="true" value="a string of text"/>
 									</defaults>
 								</action>
-								<action type="createRow" model="FlowParams" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+								<action type="createRow" model="FlowVariables" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
 									<defaults>
 										<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="dateTime"/>
 										<default valuesource="fieldvalue" field="type" enclosevalueinquotes="true" value="DateTime"/>
@@ -40,7 +40,7 @@
 								</action>
 								<action type="action-sequence" action-sequence-id="4b0a745a-85dc-4904-b427-b1827856656f">
 									<inputs>
-										<input name="model" value="FlowParams"/>
+										<input name="model" value="FlowVariables"/>
 										<input name="flowName" value="testFlow"/>
 									</inputs>
 								</action>
