@@ -26,7 +26,7 @@
 									<defaults>
 										<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="text"/>
 										<default valuesource="fieldvalue" field="type" enclosevalueinquotes="true" value="String"/>
-										<default valuesource="fieldvalue" field="value" enclosevalueinquotes="true" value="A name"/>
+										<default valuesource="fieldvalue" field="value" enclosevalueinquotes="true" value="a string of text"/>
 									</defaults>
 								</action>
 								<action type="createRow" model="FlowParams" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">

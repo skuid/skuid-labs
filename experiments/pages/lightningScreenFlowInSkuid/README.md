@@ -56,6 +56,21 @@ To pass variable information to a flow, define the variable as a flow resource. 
 
 Whether you're creating new variables or using existing ones, **refer to the flow Toolbox for the name and data type of each variable you'll want to update in Skuid**. For example, a variable named ``Reviewer`` may have a data type of ``Text``. 
 
+Refer to [Salesforce documentation](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.use_flow_data_types) to verify the proper API name of each data type, but here's a cheatsheet:
+
+| API Name (To use as the "type" value) | Label in Salesforce   |
+|---------------------------------------|-----------------------|
+| Apex                                  | Apex-defined          |
+| Boolean                               | Boolean               |
+| Currency                              | Integer               |
+| Date                                  | Date                  |
+| DateTime                              | Date/Time             |
+| Number                                | Number                |
+| Multipicklist                         | Multi-Select Picklist |
+| Picklist                              | String                |
+| sObject                               | Record                |
+| String                                | Text                  |
+
 ## Setup
 
 To build this, you will need to:
@@ -148,19 +163,27 @@ In this example, we'll use a button that passes in a start date time. For other 
    - **Model**: FlowParams
 1. Click **More options > Add default value** to add each of these values to that new row:
 
-   - **name**: Enter the variable API name, for example *Reviewer*
-   - **type**: Enter the variable data type, for example *DateTime*
+   - **name**: Enter the variable API name, for example *dateTime*
+   - **type**: Enter the variable data type (refer to the cheatsheet above), for example *DateTime*
    - **value**: Enter the value to use, which can be a merge variable or a hard-coded value 
+
+  To pass the variable values shown in the provided example:
+
+   - **name**: text
+   - **type**: String
+   - **value**: a string of text
+
+   - **name**: dateTime
+   - **type**: DateTime
+   - **Field value source**: Result of a formula
+   - **Formula**: NOW()
+
+   **Note**: If you'll be using merge variables to provide date/time values, use formulas as a value source. Date/time merge variables won't work in this setup.
 
 1. Add an action to run the CallFlow action sequence:
   - **Action sequence**: CallFlow
   - **flowName**: The API name of your flow
   - **model**: FlowParams
-
-<img width="600" alt="screenshot of inputStartDateTime" src="https://github.com/skuid/skuid-labs/assets/63868385/79a3ea4c-ba6e-4cce-8ec8-54157a9a2957">
-
-<img width="600" alt="Screenshot 2023-09-06 at 11 30 30 AM" src="https://github.com/skuid/skuid-labs/assets/63868385/200333fc-fb75-4145-ada1-76215696cff0">
-
 
 1. (Optional) The Lightning component controller in this experiment publishes a `flowModalClosed` event once the modal is closed. You can use this event as the trigger for an action sequence to run any actions (e.g. re-query a model) that should occur when the model is closed:
    - **Sequence name**: An informative name like *Flow modal closed*
