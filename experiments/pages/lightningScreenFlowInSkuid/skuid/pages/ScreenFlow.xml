@@ -24,9 +24,18 @@
 								</action>
 								<action type="createRow" model="FlowParams" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
 									<defaults>
-										<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="Name"/>
+										<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="text"/>
 										<default valuesource="fieldvalue" field="type" enclosevalueinquotes="true" value="String"/>
 										<default valuesource="fieldvalue" field="value" enclosevalueinquotes="true" value="A name"/>
+									</defaults>
+								</action>
+								<action type="createRow" model="FlowParams" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+									<defaults>
+										<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="dateTime"/>
+										<default valuesource="fieldvalue" field="type" enclosevalueinquotes="true" value="DateTime"/>
+										<default valuesource="formula" field="value" enclosevalueinquotes="true" value="{{Now}}">
+											<formula>NOW()</formula>
+										</default>
 									</defaults>
 								</action>
 								<action type="action-sequence" action-sequence-id="4b0a745a-85dc-4904-b427-b1827856656f">
@@ -49,7 +58,10 @@
    flowName = params.$Input.flowName,
    model = skuid.$M(params.$Input.model),
    variableRows = model.getRows();
-// Cleaning up input variables for Salesforce
+
+// Cleaning up model rows to use as flow variables
+// Otherwise, this array can cause an error when retrieved
+// by the Lightning component controller
 let allowedKeys = ['name','type','value']
 const cleanObject = (obj, allowedKeys) =&gt; {
     Object.keys(obj).forEach(key =&gt; {
@@ -62,11 +74,11 @@ const cleanObject = (obj, allowedKeys) =&gt; {
 const removeEmptyObjects = (arr) =&gt; {
     return arr.filter(obj =&gt; Object.keys(obj).length &gt; 0);
 };
-
 let variables = variableRows
     .map(obj =&gt; cleanObject(obj, allowedKeys))
     .filter(obj =&gt; Object.keys(obj).length &gt; 0);
 
+// Create the event and its payload
 let skuidAuraEvt = window.$A.get("e.skuid:event"),
     eventPayload = {
     "name": "showModalFlow",
@@ -77,7 +89,7 @@ let skuidAuraEvt = window.$A.get("e.skuid:event"),
     }
 };
 
-console.log(eventPayload.data.variables)
+// Set the event payload and publish
 skuidAuraEvt.setParams(eventPayload);
 skuidAuraEvt.fire();</jsitem>
 		</javascript>

@@ -1,41 +1,38 @@
 const params = arguments[0],
-   eventName = "showModalFlow",
    flowName = params.$Input.flowName,
-   model = skuid.$M(params.$Input.model);
-console.log(this, skuid, params);
+   model = skuid.$M(params.$Input.model),
+   variableRows = model.getRows();
 
+// Cleaning up model rows to use as flow variables
+// Otherwise, this array can cause an error when retrieved
+// by the Lightning component controller
+let allowedKeys = ['name','type','value']
+const cleanObject = (obj, allowedKeys) => {
+    Object.keys(obj).forEach(key => {
+        if (!allowedKeys.includes(key)) {
+            delete obj[key];
+        }
+    });
+    return obj;
+};
+const removeEmptyObjects = (arr) => {
+    return arr.filter(obj => Object.keys(obj).length > 0);
+};
+let variables = variableRows
+    .map(obj => cleanObject(obj, allowedKeys))
+    .filter(obj => Object.keys(obj).length > 0);
 
-// See if there is a global application event with this name
-let auraEvt = window.$A.get("e." + eventName),
-   skuidAuraEvt = window.$A.get("e.skuid:event"),
-   paramsObject = {
+// Create the event and its payload
+let skuidAuraEvt = window.$A.get("e.skuid:event"),
+    eventPayload = {
+    "name": "showModalFlow",
+    "source": "skuid",
+    "data": {
        flowName: flowName,
-       params: model.getRows()
-   };
+       variables: variables
+    }
+};
 
-
-// If there is a matching global application event with this name,
-// then fire that event, with each Skuid Event parameter
-// being mapped directly to that Event parameter.
-if (auraEvt) {
-   if (paramsObject) {
-       auraEvt.setParams(paramsObject);
-   }
-   auraEvt.fire();
-}
-
-
-skuidAuraEvt.setParams({
-   "name": eventName,
-   "source": "skuid",
-});
-
-
-// ALSO fire a generic "Skuid Event",
-// where all of the parameters are serialized to JSON
-if (paramsObject) {
-   skuidAuraEvt.setParam("data", paramsObject);
-}
-
-
+// Set the event payload and publish
+skuidAuraEvt.setParams(eventPayload);
 skuidAuraEvt.fire();

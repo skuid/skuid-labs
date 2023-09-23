@@ -37,7 +37,9 @@ sf skuid:page:push --dir skuid/pages --targetusername <Your username>
 sf project deploy start --manifest example-package.xml -o <Org alias>
 ```
 
-Then, to see the provided demo Lightning page, navigate to the **Lightning App Builder** and activate the newly added `ScreenFlowTest` Lightning page.
+Then, to see the provided demo Lightning page, navigate to the **Lightning App Builder**, edit the newly added `ScreenFlowTest` Lightning page, click **Save** and then **Activation**. 
+
+**You must Save the page before the deployed changes can appear**.
 
 ## Before you begin
 
