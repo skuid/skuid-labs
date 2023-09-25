@@ -13,11 +13,11 @@ This experiment requires specific information about the flow to properly call it
 Skuid requires the flow's API name to activate it. You can find a flow's API name within the Flow Builder or from the Flows list by clicking **Select Fields to Display** and selecting it there.
 ### Find flow variable names
 
-Salesforce Flow variables store information that appears in the flow, and this experiment passes in variables values.
+Salesforce flow variables store information that appears in the flow, and this experiment passes in variables values.
 
 To pass variable information to a flow, define the variable as a flow resource. This can be done through the **Toolbox** panel in the Flow Builder. For more information about flow variables, see [Salesforce Trailhead](https://trailhead.salesforce.com/content/learn/modules/flow-basics/learn-about-flow-variables) and [Salesforce documentation](https://help.salesforce.com/s/articleView?id=sf.flow_ref_resources_variable.htm&type=5).
 
-Whether you're creating new variables or using existing ones, **refer to the flow Toolbox for the name and data type of each variable you'll want to update in Skuid**. For example, a variable named ``Reviewer`` may have a data type of ``Text``. 
+Whether you're creating new variables or using existing ones, **refer to the flow Toolbox for the name and data type of each variable you'll want to update in Skuid**. For example, a variable named ``Name`` may have a data type of ``String``. 
 
 Refer to [Salesforce documentation](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.use_flow_data_types) to verify the proper API name of each data type, but here's a cheatsheet:
 
@@ -52,7 +52,7 @@ To deploy just these component bundle files, use this command:
 sf project deploy start --manifest package.xml -o <Org alias>
 ```
 
-Alongside this general use component, this project includes an example flow, Lightning app, Lightning page, and Skuid page to illustrate this functionality.
+Alongside this general use component, this project includes an example flow, Lightning page, and Skuid page to illustrate this functionality.
 
 - **Example flow:**`force-app/main/default/flows/testFlow.flow-meta.xml`
 - **Example Lightning page:**`force-app/main/default/flexipages/ScreenFlowTest.flexipage`
@@ -81,6 +81,7 @@ Then, to see the provided demo Lightning page:
 **You must save and activate the page** before the deployed changes can appear.
 
 ## Deploy manually 
+
 ### Create the Lightning component
 
 First, create a new Lightning component (with a controller) from the code provided that functions as a container for the screen flow)
