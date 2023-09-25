@@ -3,8 +3,8 @@ const params = arguments[0],
    model = skuid.$M(params.$Input.model),
    variableRows = model.getRows();
 
-// Cleaning up model rows to use as flow variables
-// Otherwise, this array can cause an error when retrieved
+// Cleaning up variables array retrieved from model rows 
+// Otherwise, the array can cause errors when retrieved
 // by the Lightning component controller
 let allowedKeys = ['name','type','value']
 const cleanObject = (obj, allowedKeys) => {
