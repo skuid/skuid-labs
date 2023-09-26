@@ -6,8 +6,8 @@
 .forceCode
 .out
 .vscode
+.sf
 .sfdx
-sfdx-project.json
 *.swp
 *.sublime-project
 *.sublime-settings

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <description>A Lightning component bundle designed for use with Skuid. This provides a container for modals, which then display Salesforce flows.</description>
+</AuraDefinitionBundle>

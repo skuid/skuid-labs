@@ -1,0 +1,113 @@
+<skuid__page unsavedchangeswarning="yes" personalizationmode="server" showsidebar="false" showheader="false">
+	<models>
+		<model id="FlowVariables" limit="20" query="true" datasource="Ui-Only" createrowifnonefound="true">
+			<fields>
+				<field id="name" displaytype="TEXT" length="255" label="name" defaultvaluetype="fieldvalue"/>
+				<field id="type" displaytype="TEXT" length="255" label="type"/>
+				<field id="value" displaytype="TEXT" length="255" label="value"/>
+			</fields>
+			<conditions/>
+			<actions/>
+		</model>
+	</models>
+	<components>
+		<skuid__buttonSet uniqueid="sk-2jqZ-18876" model="FlowVariables" position="center">
+			<groups>
+				<skuid__buttonGroup uniqueId="sk-2jqZ-18874">
+					<buttons>
+						<skuid__button label="Call flow" uniqueId="sk-2jqZ-18875">
+							<actions>
+								<action type="emptyModelData">
+									<models>
+										<model>FlowVariables</model>
+									</models>
+								</action>
+								<action type="createRow" model="FlowVariables" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+									<defaults>
+										<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="text"/>
+										<default valuesource="fieldvalue" field="type" enclosevalueinquotes="true" value="String"/>
+										<default valuesource="fieldvalue" field="value" enclosevalueinquotes="true" value="a string of text"/>
+									</defaults>
+								</action>
+								<action type="createRow" model="FlowVariables" appendorprepend="prepend" defaultmodefornewitems="edit" affectedrows="context">
+									<defaults>
+										<default valuesource="fieldvalue" field="name" enclosevalueinquotes="true" value="dateTime"/>
+										<default valuesource="fieldvalue" field="type" enclosevalueinquotes="true" value="DateTime"/>
+										<default valuesource="formula" field="value" enclosevalueinquotes="true" value="{{Now}}">
+											<formula>NOW()</formula>
+										</default>
+									</defaults>
+								</action>
+								<action type="action-sequence" action-sequence-id="4b0a745a-85dc-4904-b427-b1827856656f">
+									<inputs>
+										<input name="model" value="FlowVariables"/>
+										<input name="flowName" value="testFlow"/>
+									</inputs>
+								</action>
+							</actions>
+						</skuid__button>
+					</buttons>
+				</skuid__buttonGroup>
+			</groups>
+		</skuid__buttonSet>
+	</components>
+	<resources>
+		<labels/>
+		<javascript>
+			<jsitem location="inlinesnippet" name="callFlow" cachelocation="false">const params = arguments[0],
+   flowName = params.$Input.flowName,
+   model = skuid.$M(params.$Input.model),
+   variableRows = model.getRows();
+
+// Cleaning up variables array retrieved from model rows 
+// Otherwise, the array can cause errors when retrieved
+// by the Lightning component controller
+let allowedKeys = ['name','type','value']
+const cleanObject = (obj, allowedKeys) =&gt; {
+    Object.keys(obj).forEach(key =&gt; {
+        if (!allowedKeys.includes(key)) {
+            delete obj[key];
+        }
+    });
+    return obj;
+};
+const removeEmptyObjects = (arr) =&gt; {
+    return arr.filter(obj =&gt; Object.keys(obj).length &gt; 0);
+};
+let variables = variableRows
+    .map(obj =&gt; cleanObject(obj, allowedKeys))
+    .filter(obj =&gt; Object.keys(obj).length &gt; 0);
+
+// Create the event and its payload
+let skuidAuraEvt = window.$A.get("e.skuid:event"),
+    eventPayload = {
+    "name": "showModalFlow",
+    "source": "skuid",
+    "data": {
+       flowName: flowName,
+       variables: variables
+    }
+};
+
+// Set the event payload and publish
+skuidAuraEvt.setParams(eventPayload);
+skuidAuraEvt.fire();</jsitem>
+		</javascript>
+		<css/>
+		<actionsequences>
+			<actionsequence id="4b0a745a-85dc-4904-b427-b1827856656f" label="Call flow" type="reusable">
+				<description/>
+				<actions>
+					<action type="custom" snippet="callFlow"/>
+				</actions>
+				<inputs>
+					<input type="value" name="flowName"/>
+					<input type="model" name="model"/>
+				</inputs>
+			</actionsequence>
+		</actionsequences>
+	</resources>
+	<styles>
+		<styleitem type="background" bgtype="none"/>
+	</styles>
+</skuid__page>
