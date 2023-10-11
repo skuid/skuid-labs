@@ -1,5 +1,5 @@
 # Show MORE Salesforce data in Skuid using REST
-The standard Salesforce data source type allows you to connect to most sObjects and build compelling UI's with that data.  However there are some types of data within your org not accessible through the standard Salesforce Datasource.  Boo....
+The standard Salesforce data source from Skuid allows you to connect to most sObjects and build compelling UI's with that data.  However there are some types of data within your org not accessible through the standard Salesforce Datasource.  Boo....
 
 Don't worry! Salesforce provides a rich array of APIs that provide access to this type of data. In Skuid, it's easy to create a REST data source to retrieve data from these API's and create custom UIs.
 
@@ -7,8 +7,8 @@ Examples of this data include:
 
 * Access to [Data.com search](https://developer.salesforce.com/docs/atlas.en-us.datadotcom_api_dev_guide.meta/datadotcom_api_dev_guide/datadotcom_api_dev_guide_intro.htm).
 * Access to the [interface API](https://developer.salesforce.com/docs/atlas.en-us.uiapi.meta/uiapi/ui_api_get_started.htm)-  like creating a model of field picklist values or retrieving the current user's Favorite records. 
-* Access to many [setup objects](https://developer.salesforce.com/docs/atlas.en-us.220.0.object_reference.meta/object_reference/sforce_api_objects_concepts.htm) not exposed as objects to Skuid.  
-
+* Access to many [setup objects](https://developer.salesforce.com/docs/atlas.en-us.220.0.object_reference.meta/object_reference/sforce_api_objects_concepts.htm) not exposed as objects to Skuid.
+* Access to [Data Cloud data](https://developer.salesforce.com/docs/atlas.en-us.c360a_api.meta/c360a_api/c360a_api_query.htm), that is not stored as sObjects, but in the Data Lake outside of Core CRM. 
 
 ## Exploring available data - use Postman collection
 
@@ -44,7 +44,7 @@ First you'll need to create a new REST data source that connects to the  **the c
 
 
 ### Create a page with this REST model to connect to specfic APIs
-Note: You will need to replace `<latest API version>` in the URL examples below with a current version of the api,  Like `v51.0`. 
+Note: You will need to replace `<latest API version>` in the URL examples below with a current version of the api,  Like `v59.0`. 
 
 #### Access to Einstein Analytics data
 
@@ -71,6 +71,11 @@ Note: You will need to replace `<latest API version>` in the URL examples below 
 * Query method with this URL:  ``/services/data/<latest API version>/query/?q=SELECT+id,FullName,Email+from+Contact``
 * The query string accepts your full SOQL query.    
 
+###  Query Data Cloud data
+* Query method with this URL:  ``/services/data/<latest API version>/query/?q={{SOQL Query}}``
+* Copy the SOQL query from the Data Explorer tab of the Data Cloud app. 
+
+ 
 #### Retrieve current user's Favorite records
 * Query method with this URL: `/services/data/<latest API version>/ui-api/favorites`
 * Note: Make sure you have at least one record marked as favorite before you set this up - or no data will be available for Skuid to interrogate field level metadata. 
