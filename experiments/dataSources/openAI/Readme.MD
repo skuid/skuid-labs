@@ -45,7 +45,7 @@ If you are using Skuid SFX - our Salesforce managed package - you will be prompt
 
 ### Import Design System
 Several of these demos use a custom Design System.
-- [Download this Design System file](ChatGPT_Demo.designsystem?raw=true) and use the Import function on the Design System page to add this system to your org. 
+- [Download this Design System file](ChatGPT_Demo.designsystem) and use the Import function on the Design System page to add this system to your org. 
 
 
 ### Import pages
@@ -53,6 +53,7 @@ Follow instructions in each sample page directory to import pages and/or design 
 
 
 ## Directory of examples
+* [Basic Chat Experience](chatGPT_Demo)
 * [Ask ChatGPT to draft field data](draftAnswers)
 * [Menu of actions powered by GPT](menuWithGPTActions)
 * [Create sample data](createSampleData)
