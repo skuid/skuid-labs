@@ -1,12 +1,16 @@
 ({
 	handleShowModalFlowEvent: function(component, event, helper) {
-        let name = event.getParam("name");
-        if (name != 'showModalFlow') return;
+        let eventName = event.getParam("name");
+		// Verify that the event is for showing the modal
+        if (eventName != 'showModalFlow') return;
+        // Get our flow name and variable values
         let data = event.getParam("data");
-
-        component.set("v.showModal", true);
+		let flowName = data.flowName;
+        let variables = data.variables;
+        component.set("v.showModal", true);		
+		// With our modal now showing, we can access and start the flow
         let flow = component.find("flow");
-        flow.startFlow(data.flowName, data && data.params ? data.params : null);
+        flow.startFlow(flowName,variables);
     },
     handleFlowStatusChange: function(component, event, helper) {
         if (event.getParam('status') === 'FINISHED') {
