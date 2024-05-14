@@ -184,6 +184,11 @@ In Salesforce Setup:
       - It doesn't matter where you place the custom component on the page.
 1. Add a **Skuid Page** component targeting the Skuid page 
    
+## Troubleshooting
+
+### When I click my flow button nothing happens
+
+This can occur if the `showScreenFlowModal` component is not included within the Lightning page/Experience site. Be sure it is also present in the builder's canvas.
 
 ## Ideas for improvement
 
