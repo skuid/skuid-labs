@@ -15,14 +15,14 @@ The actions are pretty self explanatory. And I tried to uplevel most of the acti
 
 The Salesforce version of this page has a few additional scripts to handle the way we have to save pages on Salesforce due to field length limitations.
 
-To install, either copy and paste the XML for your platform of choice into your Skuid site, or use the XML + JSON file with the `skuid CLI`. 
+To install, either copy and paste the XML for your platform of choice into your Nintex Apps site, or use the XML + JSON file with the `skuid CLI`. 
 
 ## Caveats
 
 - When converting from a _dependent page_ to a _normal page_, all components are placed into the page based on the order they appear. If you use page regions as grids, you'll need to recreate those.
 - When converting from a  _normal page_ to a _dependent page_, all components are placed into the **the first page region available**.
 - If you reference a principal page's resources in a dependent page and convert that dependent page to a normal page, it'll mess up.
-- If you make edits to the Skuid NLX page, you will be prompted to enter sample metadata for the merge variables used in the model conditions. The following sample values will work:
+- If you make edits to the Nintex Apps platform page, you will be prompted to enter sample metadata for the merge variables used in the model conditions. The following sample values will work:
     - apiVersion:v2
     - search: page
     - .: test
@@ -40,4 +40,4 @@ Here are some sources I used while drafting this:
 - HTMLcolleciton to array: https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
 - Stringify the XML: https://developer.mozilla.org/en-US/docs/Web/Guide/Parsing_and_serializing_XML
 
-**Note**: Principal and dependent pages were previously known as master and child pages, respectively. You may still see references to this terminology in older materials or Skuid metadata. 
+**Note**: Principal and dependent pages were previously known as master and child pages, respectively. You may still see references to this terminology in older materials or Nintex Apps metadata. 
