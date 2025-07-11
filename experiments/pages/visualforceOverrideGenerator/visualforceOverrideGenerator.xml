@@ -1,0 +1,343 @@
+<skuidpage unsavedchangeswarning="" personalizationmode="server" showsidebar="false" showheader="false">
+    <models>
+        <model id="RunningUser" limit="0" query="true" createrowifnonefound="true" sobject="User" datasource="salesforce">
+            <fields>
+                <field id="Type" uionly="true" displaytype="PICKLIST" label="Type?" defaultValue="redirect" readonly="false">
+                    <picklistentries>
+                        <entry value="redirect" label="Redirect"/>
+                        <entry value="skuid:page" label="skuid:page"/>
+                    </picklistentries>
+                </field>
+                <field id="PageAssignment" uionly="true" displaytype="PICKLIST" label="Page Assignments?" defaultValue="false">
+                    <picklistentries>
+                        <entry value="true" label="Yes"/>
+                        <entry value="false" label="No"/>
+                    </picklistentries>
+                </field>
+                <field id="DetailOrTab" uionly="true" displaytype="PICKLIST" label="Detail or Tab?" defaultValue="recordSetVar=&quot;c&quot; ">
+                    <picklistentries>
+                        <entry value="&quot;&quot;asdf" label="Detail"/>
+                        <entry value="recordSetVar=&quot;c&quot; " label="Tab/List"/>
+                    </picklistentries>
+                </field>
+                <field id="SObject" uionly="true" displaytype="TEXT" label="Name of SObject?"/>
+                <field id="ActionType" uionly="true" displaytype="PICKLIST" label="Which action are you overriding?" defaultValue="Tab" readonly="false">
+                    <picklistentries>
+                        <entry value="Tab" label="Tab"/>
+                        <entry value="List" label="List"/>
+                        <entry value="View" label="View"/>
+                        <entry value="Edit" label="Edit"/>
+                        <entry value="Delete" label="Delete"/>
+                        <entry value="Clone" label="Clone"/>
+                        <entry value="New" label="New"/>
+                    </picklistentries>
+                </field>
+                <field id="SkuidPage" uionly="true" displaytype="TEXT" label="Name of Skuid Page?"/>
+            </fields>
+            <conditions/>
+            <actions/>
+        </model>
+        <model id="ApexPage" query="false" createrowifnonefound="false" datasource="ToolingAPI" processonclient="true" type="readwrite">
+            <fields>
+                <field id="name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" accessible="true" filterable="true"/>
+                <field id="ApiVersion" label="ApiVersion" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="2" scale="0" accessible="true" filterable="true"/>
+                <field id="FullName" label="FullName" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+                <field id="Id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" accessible="true" filterable="true"/>
+                <field id="Markup" label="Markup" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+                <field id="Name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+                <field id="MasterLabel" label="MasterLabel" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+                <field id="ControllerType" label="ControllerType" ispolymorphic="false" isnamepointing="false" displaytype="DOUBLE" precision="1" scale="0" accessible="true" filterable="true"/>
+                <field id="ControllerKey" label="ControllerKey" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+            </fields>
+            <conditions>
+                <condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="Id" state="filterableoff" inactive="true" name="Id"/>
+                <condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="Name" state="filterableoff" inactive="true" name="Name"/>
+            </conditions>
+            <actions>
+                <action>
+                    <actions>
+                        <action type="setCondition" model="ApexPage" condition="Name" value="{{Name}}"/>
+                    </actions>
+                    <events>
+                        <event>models.saved</event>
+                    </events>
+                </action>
+            </actions>
+            <methods>
+                <method type="query" verb="GET" endpoint="/services/data/v37.0/tooling/query/?q=select+Id,name+from+ApexPage+where+name%20=%20'{{Name}}'" pathtocontent="records"/>
+                <method type="insert" verb="POST" successif="requestsucceeds" sendchanges="asjsoninbody" insertresponse="recordinbody" endpoint="/services/data/v37.0/tooling/sobjects/ApexPage/"/>
+                <method type="update" verb="PUT" successif="requestsucceeds" sendchanges="asjsoninbody" endpoint="/services/data/v37.0/tooling/sobjects/ApexPage/{{Id}}"/>
+            </methods>
+        </model>
+        <model id="MetadataContainer" query="false" createrowifnonefound="false" datasource="ToolingAPI" processonclient="true" type="readwrite">
+            <fields>
+                <field id="name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="TEXT" accessible="true" filterable="true"/>
+                <field id="id" displaytype="TEXT" label="id"/>
+            </fields>
+            <conditions>
+                <condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="IdReal" state="filterableoff" inactive="true" name="Id"/>
+            </conditions>
+            <actions/>
+            <methods>
+                <method type="insert" verb="POST" endpoint="/services/data/v37.0/tooling/sobjects/MetadataContainer/" successif="requestsucceeds" sendchanges="asjsoninbody" insertresponse="recordinbody"/>
+                <method type="query" verb="GET" endpoint="/services/data/v37.0/tooling/query/?q=select+Id,Name+from+MetadataContainer" pathtocontent="sobjects"/>
+                <method type="delete" verb="DELETE" successif="requestsucceeds" endpoint="/services/data/v37.0/tooling/sobjects/MetadataContainer/{{IdReal}}"/>
+            </methods>
+        </model>
+        <model id="ApexPageMember" query="false" createrowifnonefound="false" datasource="ToolingAPI" processonclient="true" type="readwrite">
+            <fields>
+                <field id="MetadataContainerId" displaytype="TEXT"/>
+                <field id="ContentEntityId" displaytype="TEXT"/>
+                <field id="Body" displaytype="TEXT"/>
+            </fields>
+            <conditions/>
+            <actions/>
+            <methods>
+                <method type="insert" verb="POST" successif="requestsucceeds" sendchanges="asjsoninbody" insertresponse="recordinbody" endpoint="/services/data/v37.0/tooling/sobjects/ApexPageMember"/>
+            </methods>
+        </model>
+        <model id="ContainerAsyncRequest" query="false" createrowifnonefound="false" datasource="ToolingAPI" processonclient="true" type="readwrite">
+            <fields>
+                <field id="MetadataContainerId" displaytype="TEXT"/>
+                <field id="isCheckOnly" displaytype="TEXT"/>
+            </fields>
+            <conditions/>
+            <actions/>
+            <methods>
+                <method type="insert" verb="POST" endpoint="/services/data/v37.0/tooling/sobjects/ContainerAsyncRequest" successif="requestsucceeds" sendchanges="asjsoninbody" insertresponse="recordinbody"/>
+            </methods>
+        </model>
+        <model id="CONTAINER" query="true" createrowifnonefound="false" datasource="ToolingAPI" processonclient="true" type="readwrite">
+            <fields>
+                <field id="Name" label="Name" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+                <field id="Id" label="Id" ispolymorphic="false" isnamepointing="false" displaytype="STRING" accessible="true" filterable="true"/>
+            </fields>
+            <conditions>
+                <condition type="fieldvalue" value="" enclosevalueinquotes="true" sourcetype="param" sourceparam="Id" state="filterableoff" inactive="true" name="Id"/>
+            </conditions>
+            <actions>
+                <action>
+                    <actions>
+                        <action type="markRowsForDeletion" model="CONTAINER"/>
+                        <action type="save">
+                            <models>
+                                <model>CONTAINER</model>
+                            </models>
+                        </action>
+                    </actions>
+                    <events>
+                        <event>models.loaded</event>
+                    </events>
+                </action>
+            </actions>
+            <methods>
+                <method type="query" verb="GET" endpoint="/services/data/v37.0/tooling/query/?q=select+Id,Name+from+MetadataContainer" pathtocontent="records"/>
+                <method type="delete" verb="DELETE" successif="requestsucceeds" endpoint="/services/data/v37.0/tooling/sobjects/MetadataContainer/{{Id}}"/>
+            </methods>
+        </model>
+    </models>
+    <components>
+        <pagetitle model="CONTAINER" uniqueid="sk-2QCkFp-315">
+            <maintitle>Visualforce Override Generator</maintitle>
+            <actions/>
+        </pagetitle>
+        <template multiple="false" uniqueid="sk-16guXL-75" allowhtml="true">
+            <contents>  &lt;SCRIPT LANGUAGE="JavaScript"&gt;
+  var detailOrTab;
+  var isDetail = " ";
+  var PageAssignments;
+  var VF = document.getElementById('VFCode');
+  var VFPageName;
+  var Markup;
+  var qOrA;
+  var whichrecordSet;
+  document.forms["vfbuild"].elements["Header"].value = true;
+  document.forms["vfbuild"].elements["Sidebar"].value = true;
+  var pageTitle = "Type your preferred page title."
+  var SObject = document.forms["vfbuild"].elements["SObject"].value;
+  function headCheck() {
+      var showhead = document.forms["vfbuild"].elements["rOrC"].value;
+      if (showhead == "skuid:page") {
+          document.getElementById("headfoot").style.display="block";
+          } else {
+          document.getElementById("headfoot").style.display="none";
+          }
+      }
+  function setDetail() {
+      detailOrTab = document.forms["vfbuild"].elements["detailOrTab"].value;
+      whichrecordSet = document.forms["vfbuild"].elements["rOrC"].value;
+      if (detailOrTab == "detail"){
+          isDetail = " ";
+          qOrA = "&amp;";
+      } else if (detailOrTab == "tab"){
+          if (whichrecordSet == "redirect") {
+              isDetail = " recordSetVar=\"c\" ";
+              qOrA = "?";
+          } else if (whichrecordSet == "skuid:page") {
+              isDetail = " recordSetVar=\"a\" ";
+              qOrA = "?";
+          }
+      }
+  }
+  function showSidebarOption() {
+      var showfoot = document.forms["vfbuild"].elements["Header"].value;
+      if (showfoot == "true") {
+      document.getElementById("footer").style.display="block";
+      } else {
+      document.getElementById("footer").style.display="none";
+      document.forms["vfbuild"].elements["Sidebar"].value = "false"
+      }
+  }
+  function setPageTitle(){
+    if (detailOrTab == "detail") {
+        pageTitle = "\"{!" + SObject + ".Name}\""
+      } else if (detailOrTab == "tab") {
+        pageTitle = "\"{!$ObjectType." + SObject + ".labelPlural}\""
+      }
+  }
+  function VFBuild(form) {
+      var roc = document.forms["vfbuild"].elements["rOrC"].value;
+      SObject = document.forms["vfbuild"].elements["SObject"].value;
+      var Header = document.forms["vfbuild"].elements["Header"].value;
+      var Sidebar = document.forms["vfbuild"].elements["Sidebar"].value;
+      var ActionType = document.forms["vfbuild"].elements["ActionType"].value;
+      PageAssignments = document.forms["vfbuild"].elements["PageAssignments"].value;
+      var SkuidPage = document.forms["vfbuild"].elements["SkuidPage"].value;
+      VFPageName = document.forms["vfbuild"].elements["VFPageName"].value;
+      setPageTitle();
+      var VFr = "&lt;apex:page standardController=\"" + SObject + "\"" + isDetail + "extensions=\"skuid.Redirects\" action=\"{!redirect}" + qOrA + "page=" + SkuidPage + "\"&gt;&lt;/apex:page&gt;";
+      var VFrPA = "&lt;apex:page standardController=\"" + SObject + "\"" + isDetail + "extensions=\"skuid.Redirects\" action=\"{!redirect}" + qOrA + "objectType=" + SObject + "&amp;actionType=" + ActionType + "\"&gt;&lt;/apex:page&gt;";
+      var VFsp = "&lt;apex:page standardController=\"" + SObject + "\"" + isDetail + "extensions=\"skuid.Redirects\" showHeader=\"" + Header + "\" sidebar=\"" + Sidebar + "\" readonly=\"true\" docType=\"html-5.0\" action=\"{!IF(canUseSkuid,'',redirect)}\" title=" + pageTitle + "&gt;\&lt;\skuid:page page=\"" + SkuidPage + "\" \/&gt;&lt;/apex:page&gt;";
+      var VFspPa = "&lt;apex:page standardController=\"" + SObject + "\"" + isDetail + "extensions=\"skuid.Redirects\" showHeader=\"" + Header + "\" sidebar=\"" + Sidebar + "\" readonly=\"true\" docType=\"html-5.0\" action=\"{!IF(canUseSkuid,'',redirect)}\" title=" + pageTitle + "&gt;\&lt;\skuid:page objectType=\"" + SObject + "\" actionType=\"" + ActionType + "\"/&gt;&lt;/apex:page&gt;";
+      function generate(SObject, Header, Sidebar, ActionType, rOrC, SkuidPage) {
+        if (roc == "redirect") {
+          if (PageAssignments == "true") {
+            VF.value = VFrPA;
+            Markup = VF.value;
+          } else if (PageAssignments == "false"){
+            VF.value = VFr;
+            Markup = VF.value;
+          }
+        } else if (roc == "skuid:page") {
+          if (PageAssignments == "true") {
+            VF.value = VFspPa;
+            Markup = VF.value;
+          } else if (PageAssignments == "false") {
+            VF.value = VFsp;
+            Markup = VF.value;
+          }
+        }
+      }
+      generate()
+  }
+  function nameOrAssign() {
+    PageAssignments = document.forms["vfbuild"].elements["PageAssignments"].value;
+    if (PageAssignments == "false") {
+      document.getElementById("NameSkuidPage").style.display="block";
+      document.getElementById("RemindPageAssign").style.display="none";
+    } else {
+      document.getElementById("NameSkuidPage").style.display="none";
+      document.getElementById("RemindPageAssign").style.display="block";
+    }
+  }
+  &lt;/SCRIPT&gt;
+  &lt;/HEAD&gt;
+  &lt;BODY onload="headCheck();"&gt;
+  &lt;FORM NAME="vfbuild" ACTION="" METHOD="GET"&gt;Fill out the details of your Skuid page to generate your override Visualforce code.&lt;BR&gt; &lt;b&gt; &lt;u&gt;All fields below are required &lt;/b&gt;&lt;/u&gt;. &lt;P&gt;
+
+  Type? Redirect &lt;INPUT TYPE="radio" onclick="headCheck(); setDetail(); VFBuild(this.form) " NAME="rOrC" VALUE="redirect"&gt; skuid:page &lt;INPUT TYPE="radio" onclick="headCheck(); setDetail(); VFBuild(this.form); showSidebarOption()" NAME="rOrC" VALUE="skuid:page"&gt;&lt;P&gt;
+
+  Page Assignments? Yes &lt;INPUT TYPE="radio" onclick="nameOrAssign(); VFBuild(this.form)" NAME="PageAssignments" VALUE=true&gt; No &lt;INPUT TYPE="radio" onclick="nameOrAssign(); VFBuild(this.form)" NAME="PageAssignments" VALUE=false&gt;&lt;P&gt;
+
+  Detail &lt;INPUT TYPE="radio" onclick="setDetail(); VFBuild(this.form); setPageTitle();" NAME="detailOrTab" VALUE="detail"&gt; Tab/List &lt;INPUT TYPE="radio" onclick="setDetail(); VFBuild(this.form); setPageTitle();" NAME="detailOrTab" VALUE="tab"&gt;&lt;P&gt;
+
+  Name of SObject?  &lt;INPUT TYPE="text" onChange="VFBuild(this.form);" NAME="SObject" VALUE=""&gt;&lt;P&gt;
+
+  &lt;div id="NameSkuidPage" style="display:none"&gt; Name of Skuid page?  &lt;INPUT TYPE="text" onChange="VFBuild(this.form);" NAME="SkuidPage" VALUE=""&gt;&lt;P&gt;&lt;/div&gt;
+
+  &lt;div id="RemindPageAssign" style="display:none"&gt; Page assignment overrides rely on your Skuid page assignments instead of Skuid page names. Be sure to set them within the Deploy menu.&lt;P&gt;&lt;/div&gt;
+
+  &lt;div id="headfoot" style="display:none"&gt;Show header? Yes &lt;INPUT TYPE="radio" NAME="Header"onClick="showSidebarOption(); VFBuild(this.form);"  VALUE=true&gt; No &lt;INPUT TYPE="radio" NAME="Header" onClick="showSidebarOption(); VFBuild(this.form);"  VALUE=false&gt;&lt;P&gt;&lt;/div&gt;
+
+  &lt;div id="footer" style="display:none"&gt; Show sidebar? Yes &lt;INPUT TYPE="radio" NAME="Sidebar" onClick="VFBuild(this.form);" VALUE=true&gt; No &lt;INPUT TYPE="radio" NAME="Sidebar" onClick="VFBuild(this.form);" VALUE=false&gt;&lt;P&gt;&lt;/div&gt;
+
+  Which action are you overriding? &lt;select onChange="VFBuild(this.form);"  name="ActionType"&gt;
+    &lt;option value="Tab"&gt;Tab&lt;/option&gt;
+    &lt;option value="List"&gt;List&lt;/option&gt;
+    &lt;option value="View"&gt;View&lt;/option&gt;
+    &lt;option value="Edit"&gt;Edit&lt;/option&gt;
+    &lt;option value="Delete"&gt;Delete&lt;/option&gt;
+    &lt;option value="Clone"&gt;Clone&lt;/option&gt;
+    &lt;option value="New"&gt;New&lt;/option&gt;
+  &lt;/select&gt;&lt;p&gt;
+  What would you like your VF page to be named? &lt;INPUT TYPE="text" onChange="VFBuild(this.form);" NAME="VFPageName" VALUE=""&gt;&lt;P&gt;
+  &lt;/FORM&gt;&lt;P&gt;
+  Copy and paste the following Visualforce code: &lt;p&gt;
+  &lt;textarea id="VFCode" cols="135"&gt;
+  &lt;/textarea&gt;
+
+  &lt;/BODY&gt;</contents>
+        </template>
+        <pagetitle uniqueid="sk-1-ABaw-129" model="RunningUser">
+            <actions>
+                <action type="multi" label="Create Visualforce Page on Your Org" snippet="Crazy">
+                    <actions>
+                        <action type="blockUI" message="Creating your Visualforce page..."/>
+                        <action type="requeryModel" model="CONTAINER" behavior="standard"/>
+                        <action type="custom" snippet="Generate"/>
+                        <action type="unblockUI"/>
+                        <action type="blockUI" message="Finished!" timeout="2000"/>
+                    </actions>
+                    <renderconditions logictype="and"/>
+                    <enableconditions/>
+                </action>
+            </actions>
+            <renderconditions logictype="and"/>
+        </pagetitle>
+    </components>
+    <resources>
+        <labels/>
+        <javascript>
+            <jsitem location="inlinesnippet" name="Generate" cachelocation="false">var MetadataContainer = skuid.$M('MetadataContainer')
+var Tooling = skuid.$M('ApexPage');
+var ContainerAsync = skuid.$M('ContainerAsyncRequest');
+var APM = skuid.$M('ApexPageMember');
+Tooling.createRow();
+var AProw = Tooling.getFirstRow();
+Tooling.updateRow(AProw,{MasterLabel: VFPageName, Name: VFPageName, ControllerType: "1", ControllerKey: SObject,Markup: '&lt;apex:page&gt;&lt;/apex:page&gt;'});
+Tooling.save().done(genMDC);
+
+function genMDC(){
+  Tooling.updateData();
+    var MDCondition = MetadataContainer.getConditionByName('Id')
+  MetadataContainer.createRow();
+  var MDrow = MetadataContainer.getFirstRow();
+
+  MetadataContainer.updateRow(MDrow,{name:'VFPageCreate'});
+  MetadataContainer.save().done(genAPM);
+}
+
+function genAPM(){
+  var MDrow = MetadataContainer.getFirstRow();
+  var AProw = Tooling.getFirstRow();
+  APM.createRow();
+  var APMrow = APM.getFirstRow();
+  APM.updateRow(APMrow,{MetadataContainerId: MDrow.id, ContentEntityId: AProw.Id, Body: Markup});
+  APM.save().done(genCA);
+}
+
+function genCA(){
+  var MDrow = MetadataContainer.getFirstRow();
+  ContainerAsync.createRow();
+  var ContainerAsyncrow = ContainerAsync.getFirstRow();
+  ContainerAsync.updateRow(ContainerAsyncrow,{MetadataContainerId: MDrow.id, isCheckOnly: 'false'});
+  ContainerAsync.save();
+
+}</jsitem>
+        </javascript>
+        <css/>
+    </resources>
+    <styles>
+        <styleitem type="background" bgtype="none"/>
+    </styles>
+</skuidpage>
