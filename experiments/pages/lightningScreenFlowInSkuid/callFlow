@@ -23,7 +23,7 @@ let variables = variableRows
     .filter(obj => Object.keys(obj).length > 0);
 
 // Create the event and its payload
-let skuidAuraEvt = window.$A.get("e.skuid:event"),
+let skuidAuraEvt = window.skuid.$A.get("e.skuid:event"),
     eventPayload = {
     "name": "showModalFlow",
     "source": "skuid",
